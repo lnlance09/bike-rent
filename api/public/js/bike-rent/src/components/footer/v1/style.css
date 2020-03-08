@@ -1,0 +1,25 @@
+/*---  Colors  ---*/
+/*---  Light Colors  ---*/
+/*---   Neutrals  ---*/
+/*---   Misc  ---*/
+/*---   Social colors  ---*/
+.ui.bottom.attached.segment.footerSegment {
+  background: #FFFFFF !important;
+  border-bottom: none;
+  border-top: solid 1px #DCDDDE;
+  box-shadow: none !important;
+  margin-top: 2.5em !important;
+  padding: 1em 0em !important;
+  text-align: center; }
+  .ui.bottom.attached.segment.footerSegment .container {
+    padding-left: 30px;
+    padding-right: 30px; }
+  .ui.bottom.attached.segment.footerSegment .ui.inverted.list .item a:not(.ui) {
+    color: #545454 !important;
+    font-weight: bold; }
+    .ui.bottom.attached.segment.footerSegment .ui.inverted.list .item a:not(.ui):hover {
+      color: #545454; }
+  .ui.bottom.attached.segment.footerSegment p {
+    color: #767676 !important;
+    font-size: 12px;
+    margin-bottom: 7px; }

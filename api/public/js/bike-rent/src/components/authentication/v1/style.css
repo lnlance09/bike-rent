@@ -1,0 +1,28 @@
+/*---  Colors  ---*/
+/*---  Light Colors  ---*/
+/*---   Neutrals  ---*/
+/*---   Misc  ---*/
+/*---   Social colors  ---*/
+.authComponent .signInLogo {
+  display: inline;
+  fill: #2185D0;
+  height: 48px;
+  width: 48px; }
+
+.authComponent .authSegment .error.message {
+  margin-bottom: 14px; }
+
+.authComponent .registerText {
+  background: #FFFFFF;
+  border-top: solid 1px #DCDDDE;
+  text-align: center; }
+  .authComponent .registerText .registerLink {
+    color: #2185D0;
+    cursor: pointer; }
+    .authComponent .registerText .registerLink:hover {
+      text-decoration: underline; }
+
+.authComponent .googleBtn {
+  font-weight: bold;
+  margin-top: 12px;
+  width: 100%; }

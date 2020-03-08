@@ -1,0 +1,73 @@
+@import '../../../css/colors.scss';
+
+.pageHeader {
+    .loadingBar {
+        background: $blue;
+        height: 5px;
+        margin-top: 72px;
+        position: fixed;
+        z-index: 9999;
+    }
+
+    .menu.globalHeader {
+    	border-top: none;
+        box-shadow: none;
+        // height: 72px;
+        margin: 0;
+        z-index: 1001 !important;
+
+        .headerContainer {
+            .responsive {
+                display: flex;
+                width: 100%;
+            }
+
+            .headerMenuItem {
+                margin-right: 0 !important;
+
+                .headerLogo svg {
+                    cursor: pointer;
+                    display: inline;
+                    fill: $blue;
+                    height: 64px;
+                    line-height: 4;
+                    margin-right: 12px;
+                    vertical-align: middle;
+                    width: 64px;
+                }
+            }
+
+            .sidebarItem {
+                .icon {
+                    cursor: pointer;
+
+                    &:hover {
+                        color: $blue;
+                    }
+                }
+            }
+
+            .signInBtn {
+            	margin-left: 6px;
+            }
+
+            .translationDropdown {
+            	margin-right: 30px;
+            }
+
+            .dropDownMenu {
+                .menu.visible {
+                    z-index: 1001;
+                }
+            }
+        }
+    }
+
+    .sidebar.menu {
+        padding-top: 70px;
+
+        .sidebarSearchBtn {
+            margin-top: 8px;
+        }
+    }
+}

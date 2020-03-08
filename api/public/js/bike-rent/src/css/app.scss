@@ -1,0 +1,111 @@
+@import 'colors.scss';
+
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+	sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.homePage {
+	background: $white;
+
+	.assignContainer {
+		background-image: url("../images/skyline.jpg");
+		background-size: cover;
+	}
+
+	.mainContainer {
+		min-height: 90vh;
+		padding-bottom: 40px;
+	}
+
+	.heroHeader {
+		color: $white !important;
+		font-size: 64px !important;
+		top: 40px;
+		padding-left: 6px !important;
+		position: relative;
+	}
+
+	.heroSegment {
+		margin-top: 50px !important;
+		opacity: 0.9;
+
+		.form {
+			.fields.width {
+				margin-bottom: 0;
+
+				.react-datepicker-wrapper {
+					width: 100% !important;
+				}
+
+				.field {
+					.ui.selection.dropdown {
+						.icon {
+							float: left;
+							margin-right: 10px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.paddedSegment {
+		padding: 8em 0em !important;
+	}
+
+	.homePageSegment {
+		h3 {
+			font-size: 2em !important;
+		}
+
+		p {
+			font-size: 1.33em !important;
+		}
+
+		.divider {
+			margin: 3em 0em;
+			text-transform: uppercase;
+		}
+	}
+
+	.notPaddedSegment {
+		padding: 0 !important;
+
+		.grid .row .column {
+			padding-bottom: 5em;
+			padding-top: 5em;
+		}
+	}
+}
+
+
+
+.signInPage {
+	background: $offWhite;
+	height: 80vh;
+
+	.signInContainer {
+		background: $offWhite;
+
+		.loginForm {
+			background: $offWhite;
+			height: 100%;
+			padding: 25px 0;
+
+			.header {
+				margin-top: 0;
+			}
+
+			.grid {
+				.column {
+					max-width: 450px;
+				}
+			}
+		}
+	}
+}

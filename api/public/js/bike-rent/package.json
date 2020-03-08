@@ -1,0 +1,73 @@
+{
+  "name": "bike-rent",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "history": "^4.10.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
+    "node-sass-chokidar": "^1.4.0",
+    "numeral": "^2.0.6",
+    "prettier": "^1.19.1",
+    "prettify": "^0.1.7",
+    "react": "^16.13.0",
+    "react-datepicker": "^2.14.0",
+    "react-debounce-input": "^3.2.2",
+    "react-dom": "^16.13.0",
+    "react-dropzone": "^10.2.1",
+    "react-facebook": "^8.1.4",
+    "react-ga": "^2.7.0",
+    "react-google-login": "^5.1.1",
+    "react-linkify": "^1.0.0-alpha",
+    "react-moment": "^0.9.7",
+    "react-redux": "^7.2.0",
+    "react-redux-loading-bar": "^4.6.0",
+    "react-router-dom": "^5.1.2",
+    "react-router-scroll-top": "^0.2.1",
+    "react-scripts": "3.4.0",
+    "react-semantic-ui": "^0.2.0",
+    "react-share": "^4.0.1",
+    "react-svg": "^11.0.12",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "request": "^2.88.2",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "url-parse": "^1.4.7"
+  },
+  "scripts": {
+    "build-semantic": "cd src/semantic && gulp build-css build-assets",
+    "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "prettify": "prettier --print-width 100 --tab-width 4 --use-tabs true --no-semi true --trailing-comma none --jsx-bracket-same-line false --parser flow --write 'src/!(semantic)/**/*.js'",
+    "start": "react-scripts start",
+    "start-server": "node server/bootstrap.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "semantic-ui": "^2.4.2"
+  }
+}

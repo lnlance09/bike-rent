@@ -1,0 +1,46 @@
+/*---  Colors  ---*/
+/*---  Light Colors  ---*/
+/*---   Neutrals  ---*/
+/*---   Misc  ---*/
+/*---   Social colors  ---*/
+.pageHeader .loadingBar {
+  background: #2185D0;
+  height: 5px;
+  margin-top: 72px;
+  position: fixed;
+  z-index: 9999; }
+
+.pageHeader .menu.globalHeader {
+  border-top: none;
+  box-shadow: none;
+  margin: 0;
+  z-index: 1001 !important; }
+  .pageHeader .menu.globalHeader .headerContainer .responsive {
+    display: flex;
+    width: 100%; }
+  .pageHeader .menu.globalHeader .headerContainer .headerMenuItem {
+    margin-right: 0 !important; }
+    .pageHeader .menu.globalHeader .headerContainer .headerMenuItem .headerLogo svg {
+      cursor: pointer;
+      display: inline;
+      fill: #2185D0;
+      height: 64px;
+      line-height: 4;
+      margin-right: 12px;
+      vertical-align: middle;
+      width: 64px; }
+  .pageHeader .menu.globalHeader .headerContainer .sidebarItem .icon {
+    cursor: pointer; }
+    .pageHeader .menu.globalHeader .headerContainer .sidebarItem .icon:hover {
+      color: #2185D0; }
+  .pageHeader .menu.globalHeader .headerContainer .signInBtn {
+    margin-left: 6px; }
+  .pageHeader .menu.globalHeader .headerContainer .translationDropdown {
+    margin-right: 30px; }
+  .pageHeader .menu.globalHeader .headerContainer .dropDownMenu .menu.visible {
+    z-index: 1001; }
+
+.pageHeader .sidebar.menu {
+  padding-top: 70px; }
+  .pageHeader .sidebar.menu .sidebarSearchBtn {
+    margin-top: 8px; }
