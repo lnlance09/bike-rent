@@ -9,50 +9,15 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.mainContainer {
+	min-height: 100vh;
+    margin: 1.4em 0;
+    // padding: 15px;
+}
+
+
 .homePage {
 	background: $white;
-
-	.assignContainer {
-		background-image: url("../images/skyline.jpg");
-		background-size: cover;
-	}
-
-	.mainContainer {
-		min-height: 90vh;
-		padding-bottom: 40px;
-	}
-
-	.heroHeader {
-		color: $white !important;
-		font-size: 64px !important;
-		top: 40px;
-		padding-left: 6px !important;
-		position: relative;
-	}
-
-	.heroSegment {
-		margin-top: 50px !important;
-		opacity: 0.9;
-
-		.form {
-			.fields.width {
-				margin-bottom: 0;
-
-				.react-datepicker-wrapper {
-					width: 100% !important;
-				}
-
-				.field {
-					.ui.selection.dropdown {
-						.icon {
-							float: left;
-							margin-right: 10px;
-						}
-					}
-				}
-			}
-		}
-	}
 
 	.paddedSegment {
 		padding: 8em 0em !important;
@@ -83,6 +48,12 @@ body {
 	}
 }
 
+
+.adminPage {
+	.blogEditorContainer {
+		min-height: 560px;
+	}
+}
 
 
 .signInPage {

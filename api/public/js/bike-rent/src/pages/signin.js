@@ -52,7 +52,7 @@ class Signin extends Component {
 
 		return (
 			<Provider store={store}>
-				<PageHeader {...this.props} />
+				<PageHeader activeItem="signin" {...this.props} />
 
 				<div className="signInPage">
 					<Container className="signInContainer" textAlign="center">

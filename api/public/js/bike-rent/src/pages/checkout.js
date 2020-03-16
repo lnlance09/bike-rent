@@ -1,21 +1,6 @@
 import { connect, Provider } from "react-redux"
 import { Link } from "react-router-dom"
-import {
-	Button,
-	Container,
-	Divider,
-	Form,
-	Grid,
-	Header,
-	Icon,
-	Image,
-	Input,
-	List,
-	Message,
-	Segment,
-	Select,
-	TextArea
-} from "semantic-ui-react"
+import { Container } from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PropTypes from "prop-types"

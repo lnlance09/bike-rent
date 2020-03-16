@@ -9,8 +9,8 @@ class Users extends CI_Controller {
 		$this->baseUrl = $this->config->base_url();
 
 		$this->load->library('My_PHPMailer');
-		$this->load->model('MediaModel', 'media');
-		$this->load->model('ReviewsModel', 'reviews');
+
+		$this->load->model('UsersModel', 'users');
 	}
 
 	public function changePassword() {
@@ -18,7 +18,8 @@ class Users extends CI_Controller {
 		$newPassword = $this->input->post('new_password');
 		$confirmPassword = $this->input->post('confirm_password');
 
-		if (!$this->user) {
+		$user = $this->user;
+		if (!$user) {
 			echo json_encode([
 				'error' => 'You must be logged in to change your password'
 			]);
@@ -32,7 +33,7 @@ class Users extends CI_Controller {
 			exit;
 		}
 
-		$exists = $this->users->getUserByCurrentPassword($this->user->id, $currentPassword);
+		$exists = $this->users->getUserByCurrentPassword($user->id, $currentPassword);
 
 		if (!$exists) {
 			echo json_encode([
@@ -62,7 +63,7 @@ class Users extends CI_Controller {
 			exit;
 		}
 
-		$this->users->updateUser($this->user->id, [
+		$this->users->updateUser($user->id, [
 			'password' => sha1($newPassword),
 		]);
 
@@ -214,6 +215,20 @@ class Users extends CI_Controller {
 			'verification_code' => generateAlphaNumString(10)
 		];
 
+		if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
+			echo json_encode([
+				'error' => 'A valid email is required'
+			]);
+			exit;
+		}
+
+		if (strlen($params['password']) < 7) {
+			echo json_encode([
+				'error' => 'Your password is not long enough'
+			]);
+			exit;
+		}
+
 		if (empty($params['name'])) {
 			echo json_encode([
 				'error' => 'A name is required'
@@ -224,13 +239,6 @@ class Users extends CI_Controller {
 		if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $params['name'])) {
 			echo json_encode([
 				'error' => 'Your name cannot contain special characters'
-			]);
-			exit;
-		}
-
-		if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
-			echo json_encode([
-				'error' => 'A valid email is required'
 			]);
 			exit;
 		}
@@ -257,16 +265,6 @@ class Users extends CI_Controller {
 			exit;
 		}
 
-		if (strlen($params['password']) < 7) {
-			echo json_encode([
-				'error' => 'Your password is not long enough'
-			]);
-			exit;
-		}
-
-		// Set school to west point
-		$params['school_id'] = 2766;
-
 		$register = $this->users->register($params);
 
 		if (!$register) {
@@ -282,7 +280,7 @@ class Users extends CI_Controller {
 			]);
 			exit;
 		}
-		
+
 		$msg = "Hi ".$params['name'].',<br><br>Your verification code is '.$params['verification_code'];
 
 		$mail = new PHPMailer();
@@ -298,7 +296,7 @@ class Users extends CI_Controller {
 		$mail->Body = $msg;
 		$mail->AltBody = $msg;
 		$mail->AddAddress($params['email'], $params['name']);
-		
+
 		if ($mail->Send()) {
 			echo json_encode($register);
 			exit;

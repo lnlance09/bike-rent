@@ -5,6 +5,7 @@ let authenticated = false
 let localData = {}
 let verify = false
 const token = localStorage.getItem("jwtToken")
+
 jwt.verify(token, "secret", (err, decoded) => {
 	if (decoded) {
 		authenticated = true
@@ -18,7 +19,6 @@ const initial = () => ({
 	bearer: token,
 	data: localData,
 	passwordError: false,
-	patreonLoading: false,
 	verify
 })
 
@@ -89,8 +89,6 @@ const test = (state = initial(), action) => {
 
 				authenticated = true
 				user = {
-					bio: action.payload.user.bio,
-					dateCreated: action.payload.user.dateCreated,
 					email: action.payload.user.email,
 					emailVerified: action.payload.user.emailVerified,
 					name: action.payload.user.name,

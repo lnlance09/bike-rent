@@ -9,30 +9,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+.mainContainer {
+  min-height: 100vh;
+  margin: 1.4em 0; }
+
 .homePage {
   background: #FFFFFF; }
-  .homePage .assignContainer {
-    background-image: url("../images/skyline.jpg");
-    background-size: cover; }
-  .homePage .mainContainer {
-    min-height: 90vh;
-    padding-bottom: 40px; }
-  .homePage .heroHeader {
-    color: #FFFFFF !important;
-    font-size: 64px !important;
-    top: 40px;
-    padding-left: 6px !important;
-    position: relative; }
-  .homePage .heroSegment {
-    margin-top: 50px !important;
-    opacity: 0.9; }
-    .homePage .heroSegment .form .fields.width {
-      margin-bottom: 0; }
-      .homePage .heroSegment .form .fields.width .react-datepicker-wrapper {
-        width: 100% !important; }
-      .homePage .heroSegment .form .fields.width .field .ui.selection.dropdown .icon {
-        float: left;
-        margin-right: 10px; }
   .homePage .paddedSegment {
     padding: 8em 0em !important; }
   .homePage .homePageSegment h3 {
@@ -47,6 +29,9 @@ body {
     .homePage .notPaddedSegment .grid .row .column {
       padding-bottom: 5em;
       padding-top: 5em; }
+
+.adminPage .blogEditorContainer {
+  min-height: 560px; }
 
 .signInPage {
   background: #F9FAFB;

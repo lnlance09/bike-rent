@@ -1,73 +1,144 @@
 @import '../../../css/colors.scss';
 
+@font-face {
+	font-family: logoFont;
+	src: url('../../../css/fonts/dealerplate california.ttf');
+}
+
 .pageHeader {
-    .loadingBar {
-        background: $blue;
-        height: 5px;
-        margin-top: 72px;
-        position: fixed;
-        z-index: 9999;
-    }
+	.mobileSegment, .desktopSegment {
+		min-height: 700px;
+		padding: 0;
 
-    .menu.globalHeader {
-    	border-top: none;
-        box-shadow: none;
-        // height: 72px;
-        margin: 0;
-        z-index: 1001 !important;
+		.globalHeaderMenu {
+			background: $blue !important;
+			border-radius: 0 !important;
+			height: 60px;
+			margin-bottom: 0;
+			padding: 0;
+			z-index: 1000 !important;
 
-        .headerContainer {
-            .responsive {
-                display: flex;
-                width: 100%;
-            }
+			.headerLink {
+				color: $white !important;
+				font-size: 15px !important;
+				font-weight: bold !important;
+			}
 
-            .headerMenuItem {
-                margin-right: 0 !important;
+			.headerLogo svg {
+				cursor: pointer;
+				display: inline;
+				fill: $white;
+				line-height: 1;
+				margin-right: 12px;
+				vertical-align: middle;
+			}
 
-                .headerLogo svg {
-                    cursor: pointer;
-                    display: inline;
-                    fill: $blue;
-                    height: 64px;
-                    line-height: 4;
-                    margin-right: 12px;
-                    vertical-align: middle;
-                    width: 64px;
-                }
-            }
+			.logoText {
+				color: $white;
+				font-family: logoFont;
+				font-size: 45px;
+				margin: 10px 10px 0 0;
+			}
+		}
+	}
+}
 
-            .sidebarItem {
-                .icon {
-                    cursor: pointer;
+.ui.sidebarContainer {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
 
-                    &:hover {
-                        color: $blue;
-                    }
-                }
-            }
+.homePage {
+	.gridSegment {
+		padding: 4em 0;
 
-            .signInBtn {
-            	margin-left: 6px;
-            }
+		&.noPadding {
+			padding: 0;
 
-            .translationDropdown {
-            	margin-right: 30px;
-            }
+			.grid .row .column {
+				padding-bottom: 4em;
+				padding-top: 4em;
+			}
+		}
 
-            .dropDownMenu {
-                .menu.visible {
-                    z-index: 1001;
-                }
-            }
-        }
-    }
+		.divider {
+			margin: 3em 0em;
+			text-transform: uppercase;
+		}
 
-    .sidebar.menu {
-        padding-top: 70px;
+		h3 {
+			font-size: 1.8em;
+		}
 
-        .sidebarSearchBtn {
-            margin-top: 8px;
-        }
-    }
+		p {
+			font-size: 1.25em;
+		}
+	}
+
+	.heroContainer {
+		background: rgba(255,255,255,0);
+		background-size: cover;
+		background-image: url('../../../images/skyline.jpg');
+		height: 600px;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		padding-top: 50px;
+		width: 100% !important;
+
+		.heroHeaderOne, .heroHeaderTwo {
+			color: $black;
+			font-size: 4em;
+			font-weight: bold;
+		}
+
+		.heroHeaderTwo {
+			font-size: 1.7em;
+			font-weight: normal;
+		}
+
+		.button {
+			margin-top: 15px;
+		}
+
+		.container {
+			padding: 0 20px;
+		}
+
+		.heroSegment {
+			margin-top: 50px !important;
+			opacity: 0.9;
+
+			.grid {
+				.column {
+					margin-bottom: 0;
+
+					.react-datepicker-wrapper {
+						width: 100% !important;
+					}
+
+					.storeDropdown, .timeDropdown {
+						font-size: 18px;
+						height: 98.5%;
+						min-height: 98.5%;
+					}
+
+					.ui.selection.dropdown {
+						.icon {
+							float: left;
+							margin-right: 10px;
+						}
+					}
+
+					.button {
+						margin-top: 0 !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+.ui.vertical.ui.push.left.sidebar.menu {
+	background: $blue !important;
+	z-index: 1001 !important;
 }

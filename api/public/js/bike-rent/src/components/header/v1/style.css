@@ -3,44 +3,93 @@
 /*---   Neutrals  ---*/
 /*---   Misc  ---*/
 /*---   Social colors  ---*/
-.pageHeader .loadingBar {
-  background: #2185D0;
-  height: 5px;
-  margin-top: 72px;
-  position: fixed;
-  z-index: 9999; }
+@font-face {
+  font-family: logoFont;
+  src: url("../../../css/fonts/dealerplate california.ttf"); }
 
-.pageHeader .menu.globalHeader {
-  border-top: none;
-  box-shadow: none;
-  margin: 0;
-  z-index: 1001 !important; }
-  .pageHeader .menu.globalHeader .headerContainer .responsive {
-    display: flex;
-    width: 100%; }
-  .pageHeader .menu.globalHeader .headerContainer .headerMenuItem {
-    margin-right: 0 !important; }
-    .pageHeader .menu.globalHeader .headerContainer .headerMenuItem .headerLogo svg {
+.pageHeader .mobileSegment, .pageHeader .desktopSegment {
+  min-height: 700px;
+  padding: 0; }
+  .pageHeader .mobileSegment .globalHeaderMenu, .pageHeader .desktopSegment .globalHeaderMenu {
+    background: #2185D0 !important;
+    border-radius: 0 !important;
+    height: 60px;
+    margin-bottom: 0;
+    padding: 0;
+    z-index: 1000 !important; }
+    .pageHeader .mobileSegment .globalHeaderMenu .headerLink, .pageHeader .desktopSegment .globalHeaderMenu .headerLink {
+      color: #FFFFFF !important;
+      font-size: 15px !important;
+      font-weight: bold !important; }
+    .pageHeader .mobileSegment .globalHeaderMenu .headerLogo svg, .pageHeader .desktopSegment .globalHeaderMenu .headerLogo svg {
       cursor: pointer;
       display: inline;
-      fill: #2185D0;
-      height: 64px;
-      line-height: 4;
+      fill: #FFFFFF;
+      line-height: 1;
       margin-right: 12px;
-      vertical-align: middle;
-      width: 64px; }
-  .pageHeader .menu.globalHeader .headerContainer .sidebarItem .icon {
-    cursor: pointer; }
-    .pageHeader .menu.globalHeader .headerContainer .sidebarItem .icon:hover {
-      color: #2185D0; }
-  .pageHeader .menu.globalHeader .headerContainer .signInBtn {
-    margin-left: 6px; }
-  .pageHeader .menu.globalHeader .headerContainer .translationDropdown {
-    margin-right: 30px; }
-  .pageHeader .menu.globalHeader .headerContainer .dropDownMenu .menu.visible {
-    z-index: 1001; }
+      vertical-align: middle; }
+    .pageHeader .mobileSegment .globalHeaderMenu .logoText, .pageHeader .desktopSegment .globalHeaderMenu .logoText {
+      color: #FFFFFF;
+      font-family: logoFont;
+      font-size: 45px;
+      margin: 10px 10px 0 0; }
 
-.pageHeader .sidebar.menu {
-  padding-top: 70px; }
-  .pageHeader .sidebar.menu .sidebarSearchBtn {
-    margin-top: 8px; }
+.ui.sidebarContainer {
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
+.homePage .gridSegment {
+  padding: 4em 0; }
+  .homePage .gridSegment.noPadding {
+    padding: 0; }
+    .homePage .gridSegment.noPadding .grid .row .column {
+      padding-bottom: 4em;
+      padding-top: 4em; }
+  .homePage .gridSegment .divider {
+    margin: 3em 0em;
+    text-transform: uppercase; }
+  .homePage .gridSegment h3 {
+    font-size: 1.8em; }
+  .homePage .gridSegment p {
+    font-size: 1.25em; }
+
+.homePage .heroContainer {
+  background: rgba(255, 255, 255, 0);
+  background-size: cover;
+  background-image: url("../../../images/skyline.jpg");
+  height: 600px;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: 50px;
+  width: 100% !important; }
+  .homePage .heroContainer .heroHeaderOne, .homePage .heroContainer .heroHeaderTwo {
+    color: #1B1C1D;
+    font-size: 4em;
+    font-weight: bold; }
+  .homePage .heroContainer .heroHeaderTwo {
+    font-size: 1.7em;
+    font-weight: normal; }
+  .homePage .heroContainer .button {
+    margin-top: 15px; }
+  .homePage .heroContainer .container {
+    padding: 0 20px; }
+  .homePage .heroContainer .heroSegment {
+    margin-top: 50px !important;
+    opacity: 0.9; }
+    .homePage .heroContainer .heroSegment .grid .column {
+      margin-bottom: 0; }
+      .homePage .heroContainer .heroSegment .grid .column .react-datepicker-wrapper {
+        width: 100% !important; }
+      .homePage .heroContainer .heroSegment .grid .column .storeDropdown, .homePage .heroContainer .heroSegment .grid .column .timeDropdown {
+        font-size: 18px;
+        height: 98.5%;
+        min-height: 98.5%; }
+      .homePage .heroContainer .heroSegment .grid .column .ui.selection.dropdown .icon {
+        float: left;
+        margin-right: 10px; }
+      .homePage .heroContainer .heroSegment .grid .column .button {
+        margin-top: 0 !important; }
+
+.ui.vertical.ui.push.left.sidebar.menu {
+  background: #2185D0 !important;
+  z-index: 1001 !important; }

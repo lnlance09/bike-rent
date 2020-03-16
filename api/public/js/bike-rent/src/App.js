@@ -8,6 +8,7 @@ import history from "history.js"
 import Admin from "pages/admin"
 import Bikes from "pages/bikes"
 import Checkout from "pages/checkout"
+import Cities from "pages/cities"
 import Home from "pages/home"
 import Signin from "pages/signin"
 import Stores from "pages/stores"
@@ -43,13 +44,21 @@ class App extends Component {
 								)}
 							/>
 
-							<Route
-								exact
-								path="/bikes"
-								render={props => (
-									<Bikes key={window.location.pathname} {...props} />
-								)}
-							/>
+							<Switch>
+								<Route
+									exact
+									path="/bikes"
+									render={props => (
+										<Bikes key={window.location.pathname} {...props} />
+									)}
+								/>
+								<Route
+									path="/bikes/:type"
+									render={props => (
+										<Bikes key={window.location.pathname} {...props} />
+									)}
+								/>
+							</Switch>
 
 							<Route
 								exact
@@ -58,6 +67,22 @@ class App extends Component {
 									<Checkout key={window.location.pathname} {...props} />
 								)}
 							/>
+
+							<Switch>
+								<Route
+									exact
+									path="/cities"
+									render={props => (
+										<Cities key={window.location.pathname} {...props} />
+									)}
+								/>
+								<Route
+									path="/bikes/:type"
+									render={props => (
+										<Cities key={window.location.pathname} {...props} />
+									)}
+								/>
+							</Switch>
 
 							<Route
 								exact

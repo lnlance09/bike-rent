@@ -20,7 +20,7 @@ import {
 	Segment
 } from "semantic-ui-react"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import store from "store"
 
 class Authentication extends Component {
@@ -31,7 +31,7 @@ class Authentication extends Component {
 
 		this.state = {
 			email: "",
-			headerText: isSignIn ? "Sign In" : "Sign Up",
+			headerText: this.props.verify ? "Verify your email" : isSignIn ? "Sign In" : "Sign Up",
 			loadingLogin: false,
 			loadingRegistration: false,
 			login: isSignIn,
@@ -106,7 +106,7 @@ class Authentication extends Component {
 			regButton,
 			regText
 		}, () => {
-			// this.props.switchTab(login)
+			this.props.switchTab(login)
 		})
 	}
 
@@ -308,15 +308,17 @@ class Authentication extends Component {
 						{MainForm(this.props)}
 						{ErrorMsg(this.props)}
 
-						<Divider />
-
 						{!this.props.verify && (
-							<Label attached="bottom" className="registerText">
-								{regText}{" "}
-								<span className="registerLink" onClick={this.onClick}>
-									{regButton}
-								</span>
-							</Label>
+							<Fragment>
+								<Divider />
+
+								<Label attached="bottom" className="registerText">
+									{regText}{" "}
+									<span className="registerLink" onClick={this.onClick}>
+										{regButton}
+									</span>
+								</Label>
+							</Fragment>
 						)}
 					</Segment>
 
@@ -332,8 +334,6 @@ Authentication.propTypes = {
 	authenticated: PropTypes.bool,
 	bearer: PropTypes.string,
 	data: PropTypes.shape({
-		bio: PropTypes.string,
-		dateCreated: PropTypes.string,
 		email: PropTypes.string,
 		emailVerified: PropTypes.bool,
 		name: PropTypes.string,

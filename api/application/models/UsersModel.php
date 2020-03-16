@@ -104,16 +104,13 @@ class UsersModel extends CI_Model {
 
 		if (count($query) === 0) {
 			$password = $data['password'];
-			$data['date_created'] = date('Y-m-d H:i:s');
 			$data['password'] = sha1($password);
-			$data['raw_password'] = $password;
 			$this->db->insert('users', $data);
 
 			return [
 				'error' => false,
 				'user' => [
 					'bio' => null,
-					'dateCreated' => $data['date_created'],
 					'email' => $data['email'],
 					'emailVerified' => false,
 					'id' => $this->db->insert_id(),

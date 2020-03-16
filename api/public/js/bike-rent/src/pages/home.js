@@ -17,8 +17,6 @@ import {
 	Select,
 	TextArea
 } from "semantic-ui-react"
-import { timeOptions } from "utils/timeOptions"
-import DatePicker from "react-datepicker"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PropTypes from "prop-types"
@@ -48,53 +46,6 @@ class Home extends Component {
 	render() {
 		const { startDate } = this.state
 		const {} = this.props
-
-		const CustomDateInput = ({ value, onClick }) => (
-			<Input
-				className="example-custom-input"
-				icon="calendar"
-				iconPosition="left"
-				onClick={onClick}
-				value={value}
-			/>
-		)
-
-		const BookingForm = (
-			<Form size="big">
-				<Form.Group widths='equal'>
-					<div className="field">
-						<DatePicker
-							customInput={<CustomDateInput />}
-							minDate={new Date()}
-							onChange={this.handleChange}
-							selected={startDate}
-						/>
-					</div>
-					<Form.Field
-						control={Select}
-						icon="clock"
-						iconPosition="left"
-						options={timeOptions}
-						placeholder="Time"
-					/>
-					<Form.Field
-						control={Select}
-						// options={genderOptions}
-						placeholder='Gender'
-						search
-						searchInput={{ id: 'form-select-control-gender' }}
-					/>
-					<Form.Field>
-						<Button
-							color="blue"
-							content="Let's go"
-							fluid
-							size="big"
-						/>
-					</Form.Field>
-				</Form.Group>
-			</Form>
-		)
 
 		const HomePageContent = (
 			<div>
@@ -161,9 +112,6 @@ class Home extends Component {
 							art of doing nothing by providing massive amounts of whitespace and generic content that
 							can seem massive, monolithic and worth your attention.
 						</p>
-						<Button as='a' size='large'>
-							Read More
-						</Button>
 
 						<Divider
 							as='h4'
@@ -181,9 +129,6 @@ class Home extends Component {
 							it's really true. It took years of gene splicing and combinatory DNA research, but our
 							bananas can really dance.
 						</p>
-						<Button as='a' size='large'>
-							I'm Still Quite Interested
-						</Button>
 					</Container>
 				</Segment>
 			</div>
@@ -193,17 +138,6 @@ class Home extends Component {
 			<Provider store={store}>
 				<div className="homePage">
 					<PageHeader {...this.props} />
-
-					<div className="assignContainer">
-						<Container className="mainContainer" textAlign="center">
-							<Header as="h1" className="heroHeader" size="huge">
-								Pick up a bike today
-							</Header>
-							<Segment className="heroSegment">
-								{BookingForm}
-							</Segment>
-						</Container>
-					</div>
 
 					{HomePageContent}
 

@@ -1,0 +1,239 @@
+{
+	"bikesPages": {
+		"seo": {
+			"desciption": "",
+			"img": "",
+			"keywords": [
+				""
+			],
+			"title": ""
+		},
+		"sort": "alphabetical",
+		"useCards": true,
+		"useList": false
+	},
+	"citiesPages": {
+		"seo": {
+			"desciption": "",
+			"img": "",
+			"keywords": [
+				""
+			],
+			"title": ""
+		},
+		"useCards": true,
+		"useList": false
+	},
+	"footer": {
+		"backgroundColor": "",
+		"firstList": {
+			"title": "",
+			"items": [
+				{
+					"link": "",
+					"text": ""
+				},
+				{
+					"link": "",
+					"text": ""
+				},
+				{
+					"link": "",
+					"text": ""
+				}
+			]
+		},
+		"secondList": {
+			"title": "",
+			"items": [
+				{
+					"link": "",
+					"text": ""
+				},
+				{
+					"link": "",
+					"text": ""
+				},
+				{
+					"link": "",
+					"text": ""
+				}
+			]
+		},
+		"subtitle": "",
+		"textColor": "",
+		"title": ""
+	},
+	"header": {
+		"backgroundColor": "",
+		"list": {
+			"items": [
+				"cities",
+				"stores",
+				"bikes"
+			],
+			"textColor": ""
+		},
+		"logo": "",
+		"signInButton": {
+			"basic": "",
+			"color": "green",
+			"inverted": false,
+			"text": "Sign In"
+		},
+		"signUpButton": {
+			"basic": "",
+			"color": "green",
+			"inverted": false,
+			"text": "Sign Up"
+		}
+	},
+	"homePage": {
+		"hero": {
+			"button": {
+				"basic": "",
+				"color": "green",
+				"inverted": false,
+				"text": ""
+			},
+			"img": "",
+			"subtitle": "",
+			"title": ""
+		},
+		"firstSection": {
+			"button": {
+				"basic": "",
+				"color": "green",
+				"inverted": false,
+				"link": "",
+				"text": ""
+			},
+			"img": "",
+			"items": [
+				{
+					"subtitle": "",
+					"title": ""
+				},
+				{
+					"subtitle": "",
+					"title": ""
+				}
+			]
+		},
+		"secondSection": {
+			"leftItem": {
+				"subtitle": "",
+				"title": ""
+			},
+			"rightItem": {
+				"subtitle": "",
+				"title": ""
+			}
+		},
+		"seo": {
+			"desciption": "",
+			"img": "",
+			"keywords": [
+				""
+			],
+			"title": ""
+		},
+		"thirdSection": {
+			"divider": {
+				"color": "",
+				"text": ""
+			},
+			"firstItem": {
+				"subtitle": "",
+				"title": ""
+			},
+			"secondItem": {
+				"subtitle": "",
+				"title": ""
+			}
+		}
+	},
+	"stores": [
+
+	],
+	"storesPages": {
+		"defaultLocation": "",
+		"defaultRadius": "",
+		"seo": {
+			"desciption": "",
+			"img": "",
+			"keywords": [
+				""
+			],
+			"title": ""
+		},
+		"useCards": true,
+		"useList": false
+	},
+	"theme": "default",
+	"themes": [
+		{
+			"title": "cerulean"
+		},
+		{
+			"title": "cosmo"
+		},
+		{
+			"title": "cyborg"
+		},
+		{
+			"title": "darkly"
+		},
+		{
+			"title": "flatly"
+		},
+		{
+			"title": "journal"
+		},
+		{
+			"title": "litera"
+		},
+		{
+			"title": "lumen"
+		},
+		{
+			"title": "lux"
+		},
+		{
+			"title": "materia"
+		},
+		{
+			"title": "minty"
+		},
+		{
+			"title": "pulse"
+		},
+		{
+			"title": "sandstone"
+		},
+		{
+			"title": "simplex"
+		},
+		{
+			"title": "sketchy"
+		},
+		{
+			"title": "slate"
+		},
+		{
+			"title": "solar"
+		},
+		{
+			"title": "spacelab"
+		},
+		{
+			"title": "superhero"
+		},
+		{
+			"title": "united"
+		},
+		{
+			"title": "yeti"
+		}
+	]
+}
