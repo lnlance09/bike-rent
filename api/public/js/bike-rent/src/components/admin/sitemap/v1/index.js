@@ -6,7 +6,7 @@ import React, { Component } from "react"
 import AceEditor from "react-ace"
 import PropTypes from "prop-types"
 import "ace-builds/src-noconflict/mode-xml"
-import "ace-builds/src-noconflict/theme-terminal"
+import "ace-builds/src-noconflict/theme-monokai"
 
 class AdminSitemap extends Component {
 	constructor(props) {
@@ -22,7 +22,7 @@ class AdminSitemap extends Component {
 
 	render() {
 		const { code } = this.state
-		const { bearer, edited, sitemap } = this.props
+		const { bearer } = this.props
 
 		return (
 			<div className="adminSitemap">
@@ -31,13 +31,17 @@ class AdminSitemap extends Component {
 				<List relaxed size="big">
 					<List.Item>
 						<b>Live Sitemap</b>:{" "}
-						<a href={this.props.sitemapUrl} target="_blank">
+						<a href={this.props.sitemapUrl} rel="noopener noreferrer" target="_blank">
 							{this.props.sitemapUrl}
 						</a>
 					</List.Item>
 					<List.Item>
 						<b>Google Webmaster Console</b>:{" "}
-						<a href="https://search.google.com/search-console" target="_blank">
+						<a
+							href="https://search.google.com/search-console"
+							rel="noopener noreferrer"
+							target="_blank"
+						>
 							https://search.google.com/search-console
 						</a>
 					</List.Item>
@@ -53,7 +57,7 @@ class AdminSitemap extends Component {
 						enableLiveAutocompletion: false,
 						enableSnippets: false
 					}}
-					theme="terminal"
+					theme="monokai"
 					value={code}
 				/>
 				<Divider />

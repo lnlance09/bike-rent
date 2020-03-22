@@ -7,21 +7,16 @@ import {
 	Button,
 	Container,
 	Dropdown,
-	Grid,
 	Header,
 	Icon,
 	Image,
-	Input,
 	Menu,
 	Responsive,
 	Segment,
 	Sidebar,
 	Visibility
 } from "semantic-ui-react"
-import { timeOptions } from "utils/timeOptions"
-import DatePicker from "react-datepicker"
-// import ImagePic from "images/images/image-square.png"
-// import TrumpPic from "images/images/maga-cap-square.jpeg"
+import ImagePic from "images/avatar/default-profile.jpg"
 import Logo from "./images/logo.svg"
 import PropTypes from "prop-types"
 import React, { Component } from "react"
@@ -32,6 +27,20 @@ const getWidth = () => {
 	const isSSR = typeof window === "undefined"
 	return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
+
+const HeroContent = ({ content, headerOne, headerTwo }) => (
+	<Container className="heroContainer">
+		<Header as="h1" className="heroHeaderOne" content={headerOne} />
+		<Header as="h2" className="heroHeaderTwo" content={headerTwo} />
+		{content && (
+			<Container>
+				<Segment className="heroSegment" raised size="big">
+					{content}
+				</Segment>
+			</Container>
+		)}
+	</Container>
+)
 
 class AppHeader extends Component {
 	constructor(props) {
@@ -64,72 +73,35 @@ class AppHeader extends Component {
 	showFixedMenu = () => this.setState({ fixed: true })
 
 	render() {
-		const { fixed, sidebarOpened, startDate } = this.state
+		const {
+			activeItem,
+			authenticated,
+			content,
+			headerOne,
+			headerTwo,
+			items,
+			language,
+			languages,
+			showMainContent,
+			signInButton,
+			signUpButton
+		} = this.props
+		const { fixed, sidebarOpened } = this.state
 
-		const CustomDateInput = ({ value, onClick }) => (
-			<Input
-				fluid
-				icon="calendar"
-				iconPosition="left"
-				onClick={onClick}
-				placeholder="Pick a date"
-				size="big"
-				value={value}
-			/>
-		)
-
-		const BookingForm = (
-			<Grid columns={4} stackable>
-				<Grid.Row>
-					<Grid.Column stretched width={4}>
-						<DatePicker
-							customInput={<CustomDateInput />}
-							minDate={new Date()}
-							onChange={this.handleChange}
-						/>
-					</Grid.Column>
-
-					<Grid.Column>
-						<Dropdown
-							className="timeDropdown"
-							fluid
-							icon="clock"
-							options={timeOptions}
-							placeholder="Time"
-							selection
-						/>
-					</Grid.Column>
-
-					<Grid.Column>
-						<Dropdown
-							className="storeDropdown"
-							fluid
-							icon="clock"
-							options={timeOptions}
-							placeholder="Store"
-							selection
-						/>
-					</Grid.Column>
-
-					<Grid.Column>
-						<Button color="blue" content="Let's go" fluid size="big" />
-					</Grid.Column>
-				</Grid.Row>
-			</Grid>
-		)
-
-		const HeroContent = (
-			<Container className="heroContainer">
-				<Header as="h1" className="heroHeaderOne" content="Call Out Liberal Propaganda" />
-				<Header
-					as="h2"
-					className="heroHeaderTwo"
-					content="We won't let liberals bully us anymore"
-				/>
-				<Container>
-					<Segment className="heroSegment">{BookingForm}</Segment>
-				</Container>
-			</Container>
+		const LanguageSelection = (
+			<Dropdown
+				className="languageMenu"
+				defaultValue="English"
+				inline
+				pointing="top"
+				text={language}
+			>
+				<Dropdown.Menu>
+					{languages.map(item => (
+						<Dropdown.Item key={item} text={item} value={item} />
+					))}
+				</Dropdown.Menu>
+			</Dropdown>
 		)
 
 		const LoginButton = props => {
@@ -139,9 +111,9 @@ class AppHeader extends Component {
 						avatar
 						bordered
 						circular
-						// onError={i => (i.target.src = ImagePic)}
+						onError={i => (i.target.src = ImagePic)}
 						rounded
-						// src={props.data.img ? props.data.img : TrumpPic}
+						src={props.data.img ? props.data.img : ImagePic}
 					/>
 				)
 
@@ -170,13 +142,15 @@ class AppHeader extends Component {
 			return (
 				<Menu.Item className="signInLink" direction="right" position="right">
 					<Button
-						content="Sign In"
-						inverted
+						color={signInButton.color}
+						content={signInButton.text}
+						inverted={signInButton.inverted}
 						onClick={() => props.history.push("/signin?type=signin")}
 					/>
 					<Button
-						content="Sign Up"
-						inverted
+						color={signUpButton.color}
+						content={signUpButton.text}
+						inverted={signUpButton.inverted}
 						onClick={() => props.history.push("/signin?type=join")}
 						style={{ marginLeft: "0.5em" }}
 					/>
@@ -222,28 +196,28 @@ class AppHeader extends Component {
 									/>
 									<span className="logoText">Bike Rent</span>
 								</Menu.Item>
-								<Menu.Item
-									active={this.props.activeItem === "cities"}
-									className="headerLink"
-									name="cities"
-									onClick={() => this.props.history.push("/cities")}
-								/>
-								<Menu.Item
-									active={this.props.activeItem === "stores"}
-									className="headerLink"
-									name="stores"
-									onClick={() => this.props.history.push("/stores")}
-								/>
-								<Menu.Item
-									active={this.props.activeItem === "bikes"}
-									className="headerLink"
-									name="bikes"
-									onClick={() => this.props.history.push("/bikes")}
-								/>
+								{items.map((item, i) => (
+									<Menu.Item
+										active={activeItem === item.text}
+										className="headerLink"
+										key={`${item.link}${i}`}
+										name={item.text}
+										onClick={() => this.props.history.push(`/${item.link}`)}
+									/>
+								))}
 								{LoginButton(this.props)}
 							</Container>
 						</Menu>
-						{this.props.activeItem === "home" && HeroContent}
+						<Container className="languageContainer" textAlign="left">
+							{LanguageSelection}
+						</Container>
+						{showMainContent && (
+							<HeroContent
+								content={content}
+								headerOne={headerOne}
+								headerTwo={headerTwo}
+							/>
+						)}
 					</Segment>
 				</Visibility>
 			</Responsive>
@@ -286,7 +260,13 @@ class AppHeader extends Component {
 								</Menu.Item>
 							</Menu>
 						</Container>
-						{this.props.activeItem === "home" && HeroContent}
+						{showMainContent && (
+							<HeroContent
+								content={content}
+								headerOne={headerOne}
+								headerTwo={headerTwo}
+							/>
+						)}
 					</Segment>
 				</Sidebar.Pusher>
 			</Responsive>
@@ -309,36 +289,71 @@ class AppHeader extends Component {
 				>
 					<Menu.Item
 						onClick={() => {
-							if (this.props.authenticated) {
+							if (authenticated) {
 								this.onLogout()
 							} else {
 								this.props.history.push("/signin")
 							}
 						}}
 					>
-						{this.props.authenticated ? "Sign Out" : "Sign In"}
+						{authenticated ? "Sign Out" : "Sign In"}
 					</Menu.Item>
-					<Menu.Item onClick={() => this.props.history.push("/cities")}>Cities</Menu.Item>
-					<Menu.Item onClick={() => this.props.history.push("/stores")}>Stores</Menu.Item>
-					<Menu.Item onClick={() => this.props.history.push("/bikes")}>Bikes</Menu.Item>
+					{items.map((item, i) => (
+						<Menu.Item
+							key={`${item.link}${i}`}
+							onClick={() => this.props.history.push(`/${item.link}`)}
+						>
+							{item.text}
+						</Menu.Item>
+					))}
 				</Sidebar>
 			</Provider>
 		)
 	}
 }
 
-AppHeader.defaultProps = {
-	activeItem: "home",
-	authenticated: false,
-	logout,
-	minHeight: "0px"
-}
-
 AppHeader.propTypes = {
 	activeItem: PropTypes.string,
 	authenticated: PropTypes.bool,
+	content: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
+	headerOne: PropTypes.string,
+	headerTwo: PropTypes.string,
+	inverted: PropTypes.bool,
+	items: PropTypes.arrayOf(
+		PropTypes.shape({
+			link: PropTypes.string,
+			text: PropTypes.string
+		})
+	),
+	languages: PropTypes.array,
 	logout: PropTypes.func,
-	minHeight: PropTypes.string
+	minHeight: PropTypes.string,
+	showMainContent: PropTypes.bool,
+	signInButton: PropTypes.shape({
+		basic: PropTypes.string,
+		color: PropTypes.string,
+		inverted: PropTypes.bool,
+		text: PropTypes.string
+	}),
+	signUpButton: PropTypes.shape({
+		basic: PropTypes.string,
+		color: PropTypes.string,
+		inverted: PropTypes.bool,
+		text: PropTypes.string
+	})
+}
+
+AppHeader.defaultProps = {
+	activeItem: "home",
+	authenticated: false,
+	inverted: false,
+	items: [],
+	languages: [],
+	logout,
+	minHeight: "0px",
+	showMainContent: false,
+	signInButton: {},
+	signUpButton: {}
 }
 
 const mapStateToProps = (state, ownProps) => ({

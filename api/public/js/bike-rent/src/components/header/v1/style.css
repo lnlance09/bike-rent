@@ -7,29 +7,29 @@
   font-family: logoFont;
   src: url("../../../css/fonts/dealerplate california.ttf"); }
 
+.pageHeader .languageContainer {
+  padding: 10px 0; }
+
 .pageHeader .mobileSegment, .pageHeader .desktopSegment {
   min-height: 700px;
   padding: 0; }
   .pageHeader .mobileSegment .globalHeaderMenu, .pageHeader .desktopSegment .globalHeaderMenu {
-    background: #2185D0 !important;
     border-radius: 0 !important;
     height: 60px;
     margin-bottom: 0;
     padding: 0;
     z-index: 1000 !important; }
     .pageHeader .mobileSegment .globalHeaderMenu .headerLink, .pageHeader .desktopSegment .globalHeaderMenu .headerLink {
-      color: #FFFFFF !important;
       font-size: 15px !important;
       font-weight: bold !important; }
     .pageHeader .mobileSegment .globalHeaderMenu .headerLogo svg, .pageHeader .desktopSegment .globalHeaderMenu .headerLogo svg {
       cursor: pointer;
       display: inline;
-      fill: #FFFFFF;
+      fill: #2185D0;
       line-height: 1;
       margin-right: 12px;
       vertical-align: middle; }
     .pageHeader .mobileSegment .globalHeaderMenu .logoText, .pageHeader .desktopSegment .globalHeaderMenu .logoText {
-      color: #FFFFFF;
       font-family: logoFont;
       font-size: 45px;
       margin: 10px 10px 0 0; }
@@ -38,22 +38,22 @@
   margin-left: 0 !important;
   margin-right: 0 !important; }
 
-.homePage .gridSegment {
+.mainWrapper .gridSegment {
   padding: 4em 0; }
-  .homePage .gridSegment.noPadding {
+  .mainWrapper .gridSegment.noPadding {
     padding: 0; }
-    .homePage .gridSegment.noPadding .grid .row .column {
+    .mainWrapper .gridSegment.noPadding .grid .row .column {
       padding-bottom: 4em;
       padding-top: 4em; }
-  .homePage .gridSegment .divider {
+  .mainWrapper .gridSegment .divider {
     margin: 3em 0em;
     text-transform: uppercase; }
-  .homePage .gridSegment h3 {
+  .mainWrapper .gridSegment h3 {
     font-size: 1.8em; }
-  .homePage .gridSegment p {
+  .mainWrapper .gridSegment p {
     font-size: 1.25em; }
 
-.homePage .heroContainer {
+.mainWrapper .heroContainer {
   background: rgba(255, 255, 255, 0);
   background-size: cover;
   background-image: url("../../../images/skyline.jpg");
@@ -62,32 +62,29 @@
   margin-right: 0 !important;
   padding-top: 50px;
   width: 100% !important; }
-  .homePage .heroContainer .heroHeaderOne, .homePage .heroContainer .heroHeaderTwo {
+  .mainWrapper .heroContainer .heroHeaderOne, .mainWrapper .heroContainer .heroHeaderTwo {
     color: #1B1C1D;
     font-size: 4em;
     font-weight: bold; }
-  .homePage .heroContainer .heroHeaderTwo {
+  .mainWrapper .heroContainer .heroHeaderTwo {
     font-size: 1.7em;
     font-weight: normal; }
-  .homePage .heroContainer .button {
+  .mainWrapper .heroContainer .button {
     margin-top: 15px; }
-  .homePage .heroContainer .container {
+  .mainWrapper .heroContainer .container {
     padding: 0 20px; }
-  .homePage .heroContainer .heroSegment {
+  .mainWrapper .heroContainer .heroSegment {
     margin-top: 50px !important;
     opacity: 0.9; }
-    .homePage .heroContainer .heroSegment .grid .column {
+    .mainWrapper .heroContainer .heroSegment .grid .column {
       margin-bottom: 0; }
-      .homePage .heroContainer .heroSegment .grid .column .react-datepicker-wrapper {
+      .mainWrapper .heroContainer .heroSegment .grid .column .react-datepicker-wrapper {
         width: 100% !important; }
-      .homePage .heroContainer .heroSegment .grid .column .storeDropdown, .homePage .heroContainer .heroSegment .grid .column .timeDropdown {
+      .mainWrapper .heroContainer .heroSegment .grid .column .storeDropdown, .mainWrapper .heroContainer .heroSegment .grid .column .timeDropdown {
         font-size: 18px;
         height: 98.5%;
         min-height: 98.5%; }
-      .homePage .heroContainer .heroSegment .grid .column .ui.selection.dropdown .icon {
-        float: left;
-        margin-right: 10px; }
-      .homePage .heroContainer .heroSegment .grid .column .button {
+      .mainWrapper .heroContainer .heroSegment .grid .column .button {
         margin-top: 0 !important; }
 
 .ui.vertical.ui.push.left.sidebar.menu {

@@ -17,6 +17,11 @@ body {
   height: 100%; }
   .adminContainer .adminHeaderMenu {
     border-radius: 0 !important; }
+    .adminContainer .adminHeaderMenu .logoText {
+      color: #2185D0;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: bold; }
   .adminContainer .grid .leftSide {
     padding-bottom: 0 !important;
     padding-right: 0 !important; }
@@ -29,33 +34,31 @@ body {
     .adminContainer .grid .rightSide .mainContent {
       padding: 6px 20px !important; }
 
-.homePage {
+.mainWrapper {
   background: #FFFFFF; }
-  .homePage .paddedSegment {
+  .mainWrapper .paddedSegment {
     padding: 8em 0em !important; }
-  .homePage .homePageSegment h3 {
+  .mainWrapper .homePageSegment h3 {
     font-size: 2em !important; }
-  .homePage .homePageSegment p {
+  .mainWrapper .homePageSegment p {
     font-size: 1.33em !important; }
-  .homePage .homePageSegment .divider {
+  .mainWrapper .homePageSegment .divider {
     margin: 3em 0em;
     text-transform: uppercase; }
-  .homePage .notPaddedSegment {
+  .mainWrapper .notPaddedSegment {
     padding: 0 !important; }
-    .homePage .notPaddedSegment .grid .row .column {
+    .mainWrapper .notPaddedSegment .grid .row .column {
       padding-bottom: 5em;
       padding-top: 5em; }
 
 .signInPage {
   background: #F9FAFB;
-  height: 80vh; }
-  .signInPage .signInContainer {
-    background: #F9FAFB; }
-    .signInPage .signInContainer .loginForm {
-      background: #F9FAFB;
-      height: 100%;
-      padding: 25px 0; }
-      .signInPage .signInContainer .loginForm .header {
-        margin-top: 0; }
-      .signInPage .signInContainer .loginForm .grid .column {
-        max-width: 450px; }
+  min-height: 100vh; }
+  .signInPage .signInContainer .loginForm {
+    background: #F9FAFB;
+    height: 100%;
+    padding: 25px 0; }
+    .signInPage .signInContainer .loginForm .header {
+      margin-top: 0; }
+    .signInPage .signInContainer .loginForm .grid .column {
+      max-width: 450px; }

@@ -1,239 +1,459 @@
 {
-	"bikesPages": {
-		"seo": {
-			"desciption": "",
-			"img": "",
-			"keywords": [
-				""
-			],
-			"title": ""
-		},
-		"sort": "alphabetical",
-		"useCards": true,
-		"useList": false
-	},
-	"citiesPages": {
-		"seo": {
-			"desciption": "",
-			"img": "",
-			"keywords": [
-				""
-			],
-			"title": ""
-		},
-		"useCards": true,
-		"useList": false
-	},
-	"footer": {
-		"backgroundColor": "",
-		"firstList": {
-			"title": "",
-			"items": [
-				{
-					"link": "",
-					"text": ""
-				},
-				{
-					"link": "",
-					"text": ""
-				},
-				{
-					"link": "",
-					"text": ""
-				}
-			]
-		},
-		"secondList": {
-			"title": "",
-			"items": [
-				{
-					"link": "",
-					"text": ""
-				},
-				{
-					"link": "",
-					"text": ""
-				},
-				{
-					"link": "",
-					"text": ""
-				}
-			]
-		},
-		"subtitle": "",
-		"textColor": "",
-		"title": ""
-	},
-	"header": {
-		"backgroundColor": "",
-		"list": {
-			"items": [
-				"cities",
-				"stores",
-				"bikes"
-			],
-			"textColor": ""
-		},
-		"logo": "",
-		"signInButton": {
-			"basic": "",
-			"color": "green",
-			"inverted": false,
-			"text": "Sign In"
-		},
-		"signUpButton": {
-			"basic": "",
-			"color": "green",
-			"inverted": false,
-			"text": "Sign Up"
-		}
-	},
-	"homePage": {
-		"hero": {
-			"button": {
-				"basic": "",
-				"color": "green",
-				"inverted": false,
-				"text": ""
-			},
-			"img": "",
-			"subtitle": "",
-			"title": ""
-		},
-		"firstSection": {
-			"button": {
-				"basic": "",
-				"color": "green",
-				"inverted": false,
-				"link": "",
-				"text": ""
-			},
-			"img": "",
-			"items": [
-				{
-					"subtitle": "",
-					"title": ""
-				},
-				{
-					"subtitle": "",
-					"title": ""
-				}
-			]
-		},
-		"secondSection": {
-			"leftItem": {
-				"subtitle": "",
-				"title": ""
-			},
-			"rightItem": {
-				"subtitle": "",
-				"title": ""
-			}
-		},
-		"seo": {
-			"desciption": "",
-			"img": "",
-			"keywords": [
-				""
-			],
-			"title": ""
-		},
-		"thirdSection": {
-			"divider": {
-				"color": "",
-				"text": ""
-			},
-			"firstItem": {
-				"subtitle": "",
-				"title": ""
-			},
-			"secondItem": {
-				"subtitle": "",
-				"title": ""
-			}
-		}
-	},
-	"stores": [
+   "aboutPage":{
+      "desciption": "",
+      "hero": {
+         "headerOne": "",
+         "headerTwo": "",
+         "img": ""
+      },
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title": ""
+   },
+   "applyPage":{
+      "applyButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Apply"
+      },
+      "backgroundImg":"",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":""
+   },
+   "bikesPage":{
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "sort":"alphabetical",
+      "title":"",
+      "useCards":true,
+      "useList":false
+   },
+   "checkoutPage":{
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":""
+   },
+   "citiesPage":{
+      "cityButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Get some wheels now"
+      },
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":"",
+      "useCards":true,
+      "useList":false
+   },
+   "contactPage":{
+      "placeholderText":"",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":"",
+      "toastMsg":""
+   },
+   "faqPage":{
+      "desciption": "",
+      "hero": {
+         "headerOne": "",
+         "headerTwo": "",
+         "img": ""
+      },
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title": ""
+   },
+   "footer":{
+      "firstList":{
+         "items":[
+            {
+               "link":"",
+               "text":"Item 1"
+            },
+            {
+               "link":"",
+               "text":"Item 2"
+            },
+            {
+               "link":"",
+               "text":"Item 3"
+            },
+            {
+               "link":"",
+               "text":""
+            }
+         ],
+         "title":"List One Title"
+      },
+      "inverted":0,
+      "secondList":{
+         "items":[
+            {
+               "link":"",
+               "text":"Item 21"
+            },
+            {
+               "link":"",
+               "text":"Item 22"
+            },
+            {
+               "link":"",
+               "text":"Item 23"
+            },
+            {
+               "link":"",
+               "text":"Item 24"
+            },
+            {
+               "link":"",
+               "text":""
+            }
+         ],
+         "title":"List Two Title"
+      },
+      "subtitle":"sub header",
+      "title":"Header"
+   },
+   "header":{
+      "backgroundColor":"",
+      "items": [
+            {
+               "link":"cities",
+               "text":"cities"
+            },
+            {
+               "link":"stores",
+               "text":"stores"
+            },
+            {
+               "link":"bikes",
+               "text":"bikes"
+            }
+      ],
+      "logo":"",
+      "signInButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Sign In"
+      },
+      "signUpButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Sign Up"
+      }
+   },
+   "homePage":{
+      "hero":{
+         "button":{
+            "basic":"",
+            "color":"green",
+            "inverted":false,
+            "text":""
+         },
+         "img":"",
+         "subtitle":"",
+         "title":""
+      },
+      "firstSection":{
+         "button":{
+            "basic":"",
+            "color":"green",
+            "inverted":false,
+            "link":"",
+            "text":""
+         },
+         "img":"",
+         "items":[
+            {
+               "subtitle":"",
+               "title":""
+            },
+            {
+               "subtitle":"",
+               "title":""
+            }
+         ]
+      },
+      "secondSection":{
+         "leftItem":{
+            "subtitle":"",
+            "title":""
+         },
+         "rightItem":{
+            "subtitle":"",
+            "title":""
+         }
+      },
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "thirdSection":{
+         "divider":{
+            "color":"",
+            "text":""
+         },
+         "firstItem":{
+            "subtitle":"",
+            "title":""
+         },
+         "secondItem":{
+            "subtitle":"",
+            "title":""
+         }
+      }
+   },
+   "languages":[
+      "en",
+      "zu"
+   ],
+   "partnersPage":{
+      "desciption": "",
+      "hero": {
+         "headerOne": "",
+         "headerTwo": "",
+         "img": ""
+      },
+      "partners":[
+         {
+            "img":"",
+            "title":""
+         },
+         {
+            "img":"",
+            "title":""
+         }
+      ],
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title": ""
+   },
+   "searchPage":{
+      "desciption": "",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title": ""
+   },
+   "signInPage":{
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "signInButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Sign In"
+      },
+      "signUpButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Sign Up"
+      }
+   },
+   "stores":[
 
-	],
-	"storesPages": {
-		"defaultLocation": "",
-		"defaultRadius": "",
-		"seo": {
-			"desciption": "",
-			"img": "",
-			"keywords": [
-				""
-			],
-			"title": ""
-		},
-		"useCards": true,
-		"useList": false
-	},
-	"theme": "default",
-	"themes": [
-		{
-			"title": "cerulean"
-		},
-		{
-			"title": "cosmo"
-		},
-		{
-			"title": "cyborg"
-		},
-		{
-			"title": "darkly"
-		},
-		{
-			"title": "flatly"
-		},
-		{
-			"title": "journal"
-		},
-		{
-			"title": "litera"
-		},
-		{
-			"title": "lumen"
-		},
-		{
-			"title": "lux"
-		},
-		{
-			"title": "materia"
-		},
-		{
-			"title": "minty"
-		},
-		{
-			"title": "pulse"
-		},
-		{
-			"title": "sandstone"
-		},
-		{
-			"title": "simplex"
-		},
-		{
-			"title": "sketchy"
-		},
-		{
-			"title": "slate"
-		},
-		{
-			"title": "solar"
-		},
-		{
-			"title": "spacelab"
-		},
-		{
-			"title": "superhero"
-		},
-		{
-			"title": "united"
-		},
-		{
-			"title": "yeti"
-		}
-	]
+   ],
+   "storesPage":{
+      "defaultLocation":"",
+      "defaultRadius":"",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "useCards":true,
+      "useList":false
+   },
+   "termsPage":{
+      "desciption": "",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title": ""
+   },
+   "theme":"default",
+   "themes":[
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cerulean.png",
+         "tag":"A calm blue sky",
+         "title":"cerulean"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cosmo.png",
+         "tag":"An ode to Metro",
+         "title":"cosmo"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cyborg.png",
+         "tag":"Jet black and electric blue",
+         "title":"cyborg"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/darkly.png",
+         "tag":"Flatly in night mode",
+         "title":"darkly"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/flatly.png",
+         "tag":"Flat and modern",
+         "title":"flatly"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/journal.png",
+         "tag":"Crisp like a new sheet of paper",
+         "title":"journal"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/litera.png",
+         "tag":"The medium is the message",
+         "title":"litera"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/lumen.png",
+         "tag":"Light and shadow",
+         "title":"lumen"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/lux.png",
+         "tag":"A touch of class",
+         "title":"lux"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/materia.png",
+         "tag":"Material is the metaphor",
+         "title":"materia"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/minty.png",
+         "tag":"A fresh feel",
+         "title":"minty"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/pulse.png",
+         "tag":"A trace of purple",
+         "title":"pulse"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/sandstone.png",
+         "tag":"A touch of warmth",
+         "title":"sandstone"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/simplex.png",
+         "tag":"Mini and minimalist",
+         "title":"simplex"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/sketchy.png",
+         "tag":"A hand-drawn look for mockups and mirth",
+         "title":"sketchy"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/slate.png",
+         "tag":"Shades of gunmetal gray",
+         "title":"slate"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/solar.png",
+         "tag":"A spin on Solarized",
+         "title":"solar"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/spacelab.png",
+         "tag":"Silvery and sleek",
+         "title":"spacelab"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/superhero.png",
+         "tag":"The brave and the blue",
+         "title":"superhero"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/united.png",
+         "tag":"Ubuntu orange and unique font",
+         "title":"united"
+      },
+      {
+         "img":"https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/yeti.png",
+         "tag":"A friendly foundation",
+         "title":"yeti"
+      }
+   ]
 }

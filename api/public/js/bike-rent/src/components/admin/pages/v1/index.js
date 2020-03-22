@@ -1,7 +1,7 @@
 import "./style.css"
 // import { fetchData } from "./actions"
 import { connect } from "react-redux"
-import { Divider, Form, Header } from "semantic-ui-react"
+import { Divider, Form, Header, Icon } from "semantic-ui-react"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
@@ -9,11 +9,14 @@ class AdminPages extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {}
+		this.state = {
+			url: ""
+		}
 	}
 
 	render() {
 		const { bearer, type } = this.props
+		const { url } = this.state
 
 		const MainContent = () => {
 			if (type === "about-page") {
@@ -76,6 +79,16 @@ class AdminPages extends Component {
 				<Form.Input fluid placeholder="Description" />
 				<Form.Input fluid placeholder="Keywords" />
 				<Form.Input fluid placeholder="Image" />
+				<Form.Field>
+					<Icon color="blue" name="facebook" />
+					<a
+						href={`https://developers.facebook.com/tools/debug/?q=${url}`}
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						See how Facebook views this page
+					</a>
+				</Form.Field>
 			</Form>
 		)
 

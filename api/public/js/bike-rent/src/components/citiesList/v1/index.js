@@ -37,12 +37,9 @@ class CitiesList extends Component {
 
 	render() {
 		const { emptyMsgContent, itemsPerRow, results, useCards } = this.props
-		console.log("cities list")
-		console.log(this.props)
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {
-				console.log(result)
 				if (result.id) {
 					return (
 						<ResultItem

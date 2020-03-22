@@ -1,5 +1,40 @@
 {
-   "bikesPages":{
+   "aboutPage":{
+      "desciption":"",
+      "hero":{
+         "headerOne":"",
+         "headerTwo":"",
+         "img":""
+      },
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":""
+   },
+   "applyPage":{
+      "applyButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Apply"
+      },
+      "backgroundImg":"",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":""
+   },
+   "bikesPage":{
       "seo":{
          "desciption":"",
          "img":"",
@@ -9,10 +44,11 @@
          "title":""
       },
       "sort":"alphabetical",
+      "title":"",
       "useCards":true,
       "useList":false
    },
-   "citiesPages":{
+   "checkoutPage":{
       "seo":{
          "desciption":"",
          "img":"",
@@ -21,8 +57,56 @@
          ],
          "title":""
       },
+      "title":""
+   },
+   "citiesPage":{
+      "cityButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Get some wheels now"
+      },
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":"",
       "useCards":true,
       "useList":false
+   },
+   "contactPage":{
+      "placeholderText":"",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":"",
+      "toastMsg":""
+   },
+   "faqPage":{
+      "desciption":"",
+      "hero":{
+         "headerOne":"",
+         "headerTwo":"",
+         "img":""
+      },
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":""
    },
    "footer":{
       "firstList":{
@@ -77,14 +161,20 @@
    },
    "header":{
       "backgroundColor":"",
-      "list":{
-         "items":[
-            "cities",
-            "stores",
-            "bikes"
-         ],
-         "textColor":""
-      },
+      "items":[
+         {
+            "link":"cities",
+            "text":"cities"
+         },
+         {
+            "link":"stores",
+            "text":"stores"
+         },
+         {
+            "link":"bikes",
+            "text":"bikes"
+         }
+      ],
       "logo":"",
       "signInButton":{
          "basic":"",
@@ -117,28 +207,28 @@
             "color":"green",
             "inverted":false,
             "link":"",
-            "text":""
+            "text":"Check Them Out"
          },
          "img":"",
          "items":[
             {
-               "subtitle":"",
-               "title":""
+               "subtitle":"We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs... through pure data analytics.",
+               "title":"We Help Companies and Companions"
             },
             {
-               "subtitle":"",
-               "title":""
+               "subtitle":"Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.",
+               "title":"We Make Bananas That Can Dance"
             }
          ]
       },
       "secondSection":{
          "leftItem":{
-            "subtitle":"",
-            "title":""
+            "subtitle":"That is what they all say about us",
+            "title":"What a Company"
          },
          "rightItem":{
-            "subtitle":"",
-            "title":""
+            "subtitle":"Chief Fun Officer Acme Toys",
+            "title":"I shouldn't have gone with their competitor."
          }
       },
       "seo":{
@@ -151,27 +241,89 @@
       },
       "thirdSection":{
          "divider":{
-            "color":"",
-            "text":""
+            "text":"Case Studies"
          },
          "firstItem":{
-            "subtitle":"",
-            "title":""
+            "subtitle":"Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.",
+            "title":"Breaking The Grid, Grabs Your Attention"
          },
          "secondItem":{
-            "subtitle":"",
-            "title":""
+            "subtitle":"Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but it's really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.",
+            "title":"Did We Tell You About Our Bananas?"
          }
       }
    },
+   "language":"English",
    "languages":[
-      "en",
-      "zu"
+      "German",
+      "English",
+      "Armenian"
    ],
+   "partnersPage":{
+      "desciption":"",
+      "hero":{
+         "headerOne":"",
+         "headerTwo":"",
+         "img":""
+      },
+      "partners":[
+         {
+            "img":"",
+            "title":""
+         },
+         {
+            "img":"",
+            "title":""
+         }
+      ],
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":""
+   },
+   "searchPage":{
+      "desciption":"",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":""
+   },
+   "signInPage":{
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "signInButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Sign In"
+      },
+      "signUpButton":{
+         "basic":"",
+         "color":"green",
+         "inverted":false,
+         "text":"Sign Up"
+      }
+   },
    "stores":[
 
    ],
-   "storesPages":{
+   "storesPage":{
       "defaultLocation":"",
       "defaultRadius":"",
       "seo":{
@@ -184,6 +336,18 @@
       },
       "useCards":true,
       "useList":false
+   },
+   "termsPage":{
+      "desciption":"",
+      "seo":{
+         "desciption":"",
+         "img":"",
+         "keywords":[
+            ""
+         ],
+         "title":""
+      },
+      "title":""
    },
    "theme":"default",
    "themes":[

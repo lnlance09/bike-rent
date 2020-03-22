@@ -302,6 +302,28 @@ export const submitFooterForm = ({
 	)
 }
 
+export const submitHeaderForm = ({ bearer, signInButton, signUpButton }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/settings/updateFooter`,
+		{
+			form: {
+				signInButton,
+				signUpButton
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.GET_SETTINGS
+			})
+		}
+	)
+}
+
 export const toggleAddCityModal = () => dispatch => {
 	dispatch({
 		type: constants.TOGGLE_ADD_CITY_MODAL

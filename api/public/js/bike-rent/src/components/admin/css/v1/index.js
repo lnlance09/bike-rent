@@ -6,7 +6,7 @@ import React, { Component } from "react"
 import AceEditor from "react-ace"
 import PropTypes from "prop-types"
 import "ace-builds/src-noconflict/mode-css"
-import "ace-builds/src-noconflict/theme-terminal"
+import "ace-builds/src-noconflict/theme-monokai"
 
 class AdminCss extends Component {
 	constructor(props) {
@@ -29,7 +29,7 @@ class AdminCss extends Component {
 					mode="css"
 					name="cssEditor"
 					onChange={code => this.setState({ code })}
-					theme="terminal"
+					theme="monokai"
 					value={code}
 				/>
 				<Divider />

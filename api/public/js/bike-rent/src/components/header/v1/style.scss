@@ -6,12 +6,16 @@
 }
 
 .pageHeader {
+	.languageContainer {
+		padding: 10px 0;
+	}
+
 	.mobileSegment, .desktopSegment {
 		min-height: 700px;
 		padding: 0;
 
 		.globalHeaderMenu {
-			background: $blue !important;
+			// background: $blue !important;
 			border-radius: 0 !important;
 			height: 60px;
 			margin-bottom: 0;
@@ -19,7 +23,6 @@
 			z-index: 1000 !important;
 
 			.headerLink {
-				color: $white !important;
 				font-size: 15px !important;
 				font-weight: bold !important;
 			}
@@ -27,14 +30,13 @@
 			.headerLogo svg {
 				cursor: pointer;
 				display: inline;
-				fill: $white;
+				fill: $blue;
 				line-height: 1;
 				margin-right: 12px;
 				vertical-align: middle;
 			}
 
 			.logoText {
-				color: $white;
 				font-family: logoFont;
 				font-size: 45px;
 				margin: 10px 10px 0 0;
@@ -48,7 +50,7 @@
 	margin-right: 0 !important;
 }
 
-.homePage {
+.mainWrapper {
 	.gridSegment {
 		padding: 4em 0;
 
@@ -120,13 +122,6 @@
 						font-size: 18px;
 						height: 98.5%;
 						min-height: 98.5%;
-					}
-
-					.ui.selection.dropdown {
-						.icon {
-							float: left;
-							margin-right: 10px;
-						}
 					}
 
 					.button {

@@ -1,7 +1,18 @@
 import "react-datepicker/dist/react-datepicker.css"
 import { connect, Provider } from "react-redux"
-import { Button, Container, Divider, Grid, Header, Image, Segment } from "semantic-ui-react"
-import React, { Component } from "react"
+import {
+	Button,
+	Container,
+	Divider,
+	Grid,
+	Header,
+	Image,
+	Input,
+	Segment,
+	Select
+} from "semantic-ui-react"
+import React, { Component, Fragment } from "react"
+import DatePicker from "react-datepicker"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PropTypes from "prop-types"
@@ -26,7 +37,45 @@ class Home extends Component {
 	componentDidMount() {}
 
 	render() {
+		const { auth } = this.state
 		const { settings } = this.props
+		const { homePage } = settings
+
+		const CustomDateInput = ({ value, onClick }) => (
+			<Input
+				fluid
+				icon="calendar"
+				iconPosition="left"
+				onClick={onClick}
+				placeholder="Pick a date"
+				value={value}
+			/>
+		)
+
+		const BookingForm = (
+			<Grid columns={3} stackable>
+				<Grid.Row>
+					<Grid.Column stretched width={6}>
+						<DatePicker
+							customInput={<CustomDateInput />}
+							minDate={new Date()}
+							onChange={this.handleChange}
+						/>
+					</Grid.Column>
+					<Grid.Column width={6}>
+						<Select
+							className="cityDropdown"
+							fluid
+							// options={timeOptions}
+							placeholder="City"
+						/>
+					</Grid.Column>
+					<Grid.Column width={4}>
+						<Button color="blue" content="Let's go" fluid size="big" />
+					</Grid.Column>
+				</Grid.Row>
+			</Grid>
+		)
 
 		const HomePageContent = (
 			<div>
@@ -34,30 +83,35 @@ class Home extends Component {
 					<Grid container stackable verticalAlign="middle">
 						<Grid.Row>
 							<Grid.Column width={8}>
-								<Header as="h3">We Help Companies and Companions</Header>
-								<p>
-									We can give your company superpowers to do things that they
-									never thought possible. Let us delight your customers and
-									empower your needs... through pure data analytics.
-								</p>
-								<Header as="h3">We Make Bananas That Can Dance</Header>
-								<p>
-									Yes that's right, you thought it was the stuff of dreams, but
-									even bananas can be bioengineered.
-								</p>
+								{homePage.firstSection.items.map(item => (
+									<Fragment>
+										<Header as="h3">{item.title}</Header>
+										<p>{item.subtitle}</p>
+									</Fragment>
+								))}
 							</Grid.Column>
 							<Grid.Column floated="right" width={6}>
 								<Image
 									bordered
 									rounded
 									size="large"
-									src="/images/wireframe/white-image.png"
+									src={homePage.firstSection.img}
 								/>
 							</Grid.Column>
 						</Grid.Row>
 						<Grid.Row>
 							<Grid.Column textAlign="center">
-								<Button size="huge">Check Them Out</Button>
+								<Button
+									basic={homePage.firstSection.button.basic}
+									color={homePage.firstSection.button.color}
+									inverted={homePage.firstSection.button.inverted}
+									onClick={() => {
+										this.props.history.push(homePage.firstSection.button.link)
+									}}
+									size="huge"
+								>
+									{homePage.firstSection.button.text}
+								</Button>
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>
@@ -67,17 +121,12 @@ class Home extends Component {
 					<Grid celled="internally" columns="equal" stackable>
 						<Grid.Row textAlign="center">
 							<Grid.Column>
-								<Header as="h3">"What a Company"</Header>
-								<p>That is what they all say about us</p>
+								<Header as="h3">{homePage.secondSection.leftItem.title}</Header>
+								<p>{homePage.secondSection.leftItem.subtitle}</p>
 							</Grid.Column>
 							<Grid.Column>
-								<Header as="h3">
-									"I shouldn't have gone with their competitor."
-								</Header>
-								<p>
-									<Image avatar src="/images/avatar/large/nan.jpg" />
-									<b>Nan</b> Chief Fun Officer Acme Toys
-								</p>
+								<Header as="h3">{homePage.secondSection.rightItem.title}</Header>
+								<p>{homePage.secondSection.rightItem.subtitle}</p>
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>
@@ -85,24 +134,15 @@ class Home extends Component {
 
 				<Segment className="homePageSegment paddedSegment" vertical>
 					<Container text>
-						<Header as="h3">Breaking The Grid, Grabs Your Attention</Header>
-						<p>
-							Instead of focusing on content creation and hard work, we have learned
-							how to master the art of doing nothing by providing massive amounts of
-							whitespace and generic content that can seem massive, monolithic and
-							worth your attention.
-						</p>
+						<Header as="h3">{homePage.thirdSection.firstItem.title}</Header>
+						<p>{homePage.thirdSection.firstItem.subtitle}</p>
 
 						<Divider as="h4" className="header" horizontal>
-							<a href="#top">Case Studies</a>
+							{homePage.thirdSection.divider.text}
 						</Divider>
 
-						<Header as="h3">Did We Tell You About Our Bananas?</Header>
-						<p>
-							Yes I know you probably disregarded the earlier boasts as non-sequitur
-							filler content, but it's really true. It took years of gene splicing and
-							combinatory DNA research, but our bananas can really dance.
-						</p>
+						<Header as="h3">{homePage.thirdSection.secondItem.title}</Header>
+						<p>{homePage.thirdSection.secondItem.subtitle}</p>
 					</Container>
 				</Segment>
 			</div>
@@ -110,8 +150,19 @@ class Home extends Component {
 
 		return (
 			<Provider store={store}>
-				<div className="homePage">
-					<PageHeader {...this.props} />
+				<div className="mainWrapper homePage">
+					<PageHeader
+						activeItem="home"
+						authenticated={auth}
+						content={BookingForm}
+						items={settings.header.items}
+						language={settings.language}
+						languages={settings.languages}
+						showMainContent
+						signInButton={settings.header.signInButton}
+						signUpButton={settings.header.signUpButton}
+						{...this.props}
+					/>
 
 					{HomePageContent}
 
@@ -130,7 +181,7 @@ Home.defaultProps = {}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.Admin,
+		...state.app,
 		...ownProps
 	}
 }

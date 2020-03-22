@@ -31,7 +31,7 @@ class AdminEmail extends Component {
 	onChangeEmail = (e, { value }) => this.setState({ email: value })
 
 	render() {
-		const { bearer, emails, sendEmailError, type } = this.props
+		const { bearer, sendEmailError, type } = this.props
 		const {
 			applicationConfirmation,
 			confirmYourEmail,

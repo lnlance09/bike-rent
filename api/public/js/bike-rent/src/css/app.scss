@@ -20,6 +20,13 @@ body {
 
 	.adminHeaderMenu {
 		border-radius: 0 !important;
+
+		.logoText {
+			color: $blue;
+			font-size: 24px;
+			font-style: italic;
+			font-weight: bold;
+		}
 	}
 
 	.grid {
@@ -45,7 +52,7 @@ body {
 }
 
 
-.homePage {
+.mainWrapper {
 	background: $white;
 
 	.paddedSegment {
@@ -80,11 +87,9 @@ body {
 
 .signInPage {
 	background: $offWhite;
-	height: 80vh;
+	min-height: 100vh;
 
 	.signInContainer {
-		background: $offWhite;
-
 		.loginForm {
 			background: $offWhite;
 			height: 100%;

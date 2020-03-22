@@ -329,7 +329,7 @@ class Admin extends Component {
 						}}
 						style={{ padding: "7px" }}
 					>
-						<span className="logoText">Bike Rent</span>
+						<span className="logoText">Admin Panel</span>
 					</Menu.Item>
 				</Container>
 			</Menu>
@@ -425,7 +425,7 @@ class Admin extends Component {
 			if (activeItem === "header") {
 				return (
 					<div>
-						<AdminHeader />
+						<AdminHeader headerData={settings.header} />
 					</div>
 				)
 			}

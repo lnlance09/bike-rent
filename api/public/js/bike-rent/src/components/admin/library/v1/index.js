@@ -53,7 +53,7 @@ class AdminLibrary extends Component {
 	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen })
 
 	render() {
-		const { baseUrl, bearer, images, s3Url } = this.props
+		const { baseUrl, images, s3Url } = this.props
 		const { active, addModalOpen, currentImg, inverted, modalOpen } = this.state
 
 		const content = (

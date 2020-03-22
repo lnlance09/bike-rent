@@ -257,7 +257,38 @@ class App extends Component {
 App.propTypes = {
 	cities: PropTypes.array,
 	settings: PropTypes.shape({
-		bikesPages: PropTypes.shape({
+		aboutPage: PropTypes.shape({
+			desciption: PropTypes.string,
+			hero: PropTypes.shape({
+				headerOne: PropTypes.string,
+				headerTwo: PropTypes.string,
+				img: PropTypes.string
+			}),
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			title: PropTypes.string
+		}),
+		applyPage: PropTypes.shape({
+			applyButton: PropTypes.shape({
+				basic: PropTypes.string,
+				color: PropTypes.string,
+				inverted: PropTypes.bool,
+				text: PropTypes.string
+			}),
+			backgroundImg: PropTypes.string,
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			title: PropTypes.string
+		}),
+		bikesPage: PropTypes.shape({
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
@@ -265,10 +296,26 @@ App.propTypes = {
 				title: PropTypes.string
 			}),
 			sort: PropTypes.string,
+			title: PropTypes.string,
 			useCards: PropTypes.bool,
 			useList: PropTypes.bool
 		}),
-		citiesPages: PropTypes.shape({
+		checkoutPage: PropTypes.shape({
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			title: PropTypes.string
+		}),
+		citiesPage: PropTypes.shape({
+			cityButton: PropTypes.shape({
+				basic: PropTypes.string,
+				color: PropTypes.string,
+				inverted: PropTypes.bool,
+				text: PropTypes.string
+			}),
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
@@ -276,8 +323,35 @@ App.propTypes = {
 				title: PropTypes.string
 			}),
 			sort: PropTypes.string,
+			title: PropTypes.string,
 			useCards: PropTypes.bool,
 			useList: PropTypes.bool
+		}),
+		contactPage: PropTypes.shape({
+			placeholderText: PropTypes.string,
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			title: PropTypes.string,
+			toastMsg: PropTypes.string
+		}),
+		faqPage: PropTypes.shape({
+			desciption: PropTypes.string,
+			hero: PropTypes.shape({
+				headerOne: PropTypes.string,
+				headerTwo: PropTypes.string,
+				img: PropTypes.string
+			}),
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			title: PropTypes.string
 		}),
 		footer: PropTypes.shape({
 			firstList: PropTypes.shape({
@@ -300,10 +374,10 @@ App.propTypes = {
 		}),
 		header: PropTypes.shape({
 			backgroundColor: PropTypes.string,
-			list: PropTypes.shape({
-				items: PropTypes.array,
-				textColor: PropTypes.string
-			}),
+			items: PropTypes.arrayOf(PropTypes.shape({
+				link: PropTypes.string,
+				text: PropTypes.string
+			})),
 			logo: PropTypes.string,
 			signInButton: PropTypes.shape({
 				basic: PropTypes.string,
@@ -362,7 +436,6 @@ App.propTypes = {
 			}),
 			thirdSection: PropTypes.shape({
 				divider: PropTypes.shape({
-					color: PropTypes.string,
 					text: PropTypes.string
 				}),
 				firstItem: PropTypes.shape({
@@ -375,9 +448,59 @@ App.propTypes = {
 				})
 			})
 		}),
+		language: PropTypes.string,
 		languages: PropTypes.array,
+		partnersPage: PropTypes.shape({
+			desciption: PropTypes.string,
+			hero: PropTypes.shape({
+				headerOne: PropTypes.string,
+				headerTwo: PropTypes.string,
+				img: PropTypes.string
+			}),
+			partners: PropTypes.arrayOf(PropTypes.shape({
+				img: PropTypes.string,
+				title: PropTypes.string
+			})),
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			title: PropTypes.string
+		}),
+		searchPage: PropTypes.shape({
+			desciption: PropTypes.string,
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			signInButton: PropTypes.shape({
+				basic: PropTypes.string,
+				color: PropTypes.string,
+				inverted: PropTypes.bool,
+				text: PropTypes.string
+			}),
+			signUpButton: PropTypes.shape({
+				basic: PropTypes.string,
+				color: PropTypes.string,
+				inverted: PropTypes.bool,
+				text: PropTypes.string
+			})
+		}),
+		signInPage: PropTypes.shape({
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			title: PropTypes.string
+		}),
 		stores: PropTypes.array,
-		storesPages: PropTypes.shape({
+		storesPage: PropTypes.shape({
 			defaultLocation: PropTypes.string,
 			defaultRadius: PropTypes.string,
 			seo: PropTypes.shape({
@@ -388,6 +511,16 @@ App.propTypes = {
 			}),
 			useCards: PropTypes.bool,
 			useList: PropTypes.bool
+		}),
+		termsPage: PropTypes.shape({
+			desciption: PropTypes.string,
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			title: PropTypes.string
 		}),
 		theme: PropTypes.string,
 		themes: PropTypes.arrayOf(PropTypes.shape({

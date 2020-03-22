@@ -2,7 +2,7 @@ import "./style.css"
 import { setLanguages } from "redux/actions/app"
 import { connect } from "react-redux"
 import { Button, Checkbox, Divider, Form } from "semantic-ui-react"
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import languages from "languages.json"
 import PropTypes from "prop-types"
 
@@ -42,10 +42,10 @@ class AdminLanguages extends Component {
 							{languages.map((item, i) => (
 								<Form.Field>
 									<Checkbox
-										checked={selectedLanguages.indexOf(item.alpha2) !== -1}
+										checked={selectedLanguages.indexOf(item.English) !== -1}
 										label={item.English}
 										onClick={this.handleClick}
-										value={item.alpha2}
+										value={item.English}
 									/>
 								</Form.Field>
 							))}

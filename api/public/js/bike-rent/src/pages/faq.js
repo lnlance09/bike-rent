@@ -24,12 +24,24 @@ class Faq extends Component {
 	componentDidMount() {}
 
 	render() {
+		const { auth } = this.state
 		const { settings } = this.props
 
 		return (
 			<Provider store={store}>
-				<div className="homePage">
-					<PageHeader {...this.props} />
+				<div className="mainWrapper faqPage">
+					<PageHeader
+						activeItem="faq"
+						authenticated={auth}
+						// content={BookingForm}
+						items={settings.header.items}
+						language={settings.language}
+						languages={settings.languages}
+						showMainContent
+						signInButton={settings.header.signInButton}
+						signUpButton={settings.header.signUpButton}
+						{...this.props}
+					/>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
@@ -46,7 +58,7 @@ Faq.defaultProps = {}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.Admin,
+		...state.app,
 		...ownProps
 	}
 }

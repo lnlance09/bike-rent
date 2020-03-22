@@ -31,12 +31,23 @@ class Cities extends Component {
 
 	render() {
 		const { settings } = this.props
-		const { name } = this.state
+		const { auth, name } = this.state
 
 		return (
 			<Provider store={store}>
-				<div className="homePage">
-					<PageHeader activeItem="cities" {...this.props} />
+				<div className="citiesPage">
+					<PageHeader
+						activeItem="cities"
+						authenticated={auth}
+						// content={BookingForm}
+						items={settings.header.items}
+						language={settings.language}
+						languages={settings.languages}
+						showMainContent
+						signInButton={settings.header.signInButton}
+						signUpButton={settings.header.signUpButton}
+						{...this.props}
+					/>
 
 					<Container className="mainContainer">
 						{name ? (
@@ -73,7 +84,7 @@ Cities.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.Admin,
+		...state.app,
 		...ownProps
 	}
 }

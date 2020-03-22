@@ -29,14 +29,24 @@ class Signin extends Component {
 	componentDidMount() {}
 
 	render() {
+		const { auth, type } = this.state
 		const { settings } = this.props
-		const { type } = this.state
 
 		return (
 			<Provider store={store}>
-				<PageHeader activeItem="signin" {...this.props} />
-
-				<div className="signInPage">
+				<div className="mainWrapper signInPage">
+					<PageHeader
+						activeItem="signin"
+						authenticated={auth}
+						// content={BookingForm}
+						items={settings.header.items}
+						language={settings.language}
+						languages={settings.languages}
+						showMainContent={false}
+						signInButton={settings.header.signInButton}
+						signUpButton={settings.header.signUpButton}
+						{...this.props}
+					/>
 					<Container className="signInContainer" textAlign="center">
 						<div className="loginForm">
 							<Grid textAlign="center" verticalAlign="middle">
@@ -46,9 +56,9 @@ class Signin extends Component {
 							</Grid>
 						</div>
 					</Container>
-				</div>
 
-				<PageFooter footerData={settings.footer} history={this.props.history} />
+					<PageFooter footerData={settings.footer} history={this.props.history} />
+				</div>
 			</Provider>
 		)
 	}
@@ -62,7 +72,7 @@ Signin.defaultProps = {}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.Admin,
+		...state.app,
 		...ownProps
 	}
 }
