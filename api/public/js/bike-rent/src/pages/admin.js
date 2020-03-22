@@ -1,22 +1,30 @@
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import { connect, Provider } from "react-redux"
-import { Link } from "react-router-dom"
-import { Editor as BlogEditor } from "react-draft-wysiwyg"
-import { EditorState } from "draft-js"
-import { Accordion, Button, Container, Divider, Dropdown, Grid, Icon, Input, Menu, Responsive, Segment } from "semantic-ui-react"
+import { getCities, getCss, getEmail, getSitemap } from "redux/actions/app"
+import { Accordion, Container, Grid, Menu, Responsive } from "semantic-ui-react"
 import React, { Component } from "react"
-import AceEditor from "react-ace"
-import config from "config.json"
-import PageFooter from "components/footer/v1/"
-import PageHeader from "components/header/v1/"
+import AdminBikes from "components/admin/bikes/v1/"
+import AdminBlog from "components/admin/blog/v1/"
+import AdminCities from "components/admin/cities/v1/"
+import AdminCss from "components/admin/css/v1/"
+import AdminEmail from "components/admin/email/v1/"
+import AdminFooter from "components/admin/footer/v1/"
+import AdminHeader from "components/admin/header/v1/"
+import AdminLanguages from "components/admin/languages/v1/"
+import AdminLibrary from "components/admin/library/v1/"
+import AdminOrders from "components/admin/orders/v1/"
+import AdminPages from "components/admin/pages/v1/"
+import AdminSitemap from "components/admin/sitemap/v1/"
+import AdminStores from "components/admin/stores/v1/"
+import AdminThemes from "components/admin/themes/v1/"
 import PropTypes from "prop-types"
 import store from "store"
-import "ace-builds/src-noconflict/mode-css"
-import "ace-builds/src-noconflict/theme-textmate"
 
 class Admin extends Component {
 	constructor(props) {
 		super(props)
+
+		const params = this.props.match.params
+		let { tab } = params
 
 		const currentState = store.getState()
 		const user = currentState.user
@@ -24,37 +32,40 @@ class Admin extends Component {
 		const bearer = user.bearer
 
 		this.state = {
-			activeItem: "change themes",
-			blogTitle: "",
-			cssCode: "",
-			editorState: EditorState.createEmpty(),
-			tagOptions: [],
-			tagValue: ""
+			activeItem: tab === undefined ? "change-themes" : tab,
+			auth,
+			bearer
 		}
 	}
 
-	componentDidMount() {}
-
-	handleItemClick = (e, { name }) => {
-		this.setState({ activeItem: name })
+	componentDidMount() {
+		this.props.getCities()
+		this.props.getSitemap({ url: this.props.sitemapUrl })
+		this.props.getCss({ url: this.props.cssUrl })
+		this.props.getEmail({ type: "application-confirmation" })
+		this.props.getEmail({ type: "confirm-your-email" })
+		this.props.getEmail({ type: "order-confirmation" })
+		this.props.getEmail({ type: "refund" })
 	}
 
-	onChangeBlogTitle = (e, { value }) => this.setState({ blogTitle: value })
-
-	onEditorStateChange = editorState => this.setState({ editorState })
+	handleItemClick = (e, { name }) => {
+		this.setState({ activeItem: name }, () => {
+			this.props.history.push(`/admin/${name}`)
+		})
+	}
 
 	render() {
-		const { activeItem, blogTitle, cssCode, editorState, tagOptions, tagValue } = this.state
-		const {} = this.props
+		const { activeItem, bearer } = this.state
+		const { cities, css, emails, settings, sitemap, sitemapUrl } = this.props
 
 		const AdminMenu = props => (
-			<Accordion as={Menu} borderless className="adminMenu" fluid vertical>
+			<Accordion as={Menu} className="adminMenu" fluid inverted vertical>
 				<Menu.Item>
 					Apperance
 					<Menu.Menu>
 						<Menu.Item
-							active={activeItem === "change themes"}
-							name="change themes"
+							active={activeItem === "change-themes"}
+							name="change-themes"
 							onClick={this.handleItemClick}
 						>
 							Change themes
@@ -65,15 +76,15 @@ class Admin extends Component {
 					Blog
 					<Menu.Menu>
 						<Menu.Item
-							active={activeItem === "add a new post"}
-							name="add a new post"
+							active={activeItem === "add-a-new-post"}
+							name="add-a-new-post"
 							onClick={this.handleItemClick}
 						>
 							Add a new post
 						</Menu.Item>
 						<Menu.Item
-							active={activeItem === "blog posts"}
-							name="blog posts"
+							active={activeItem === "blog-posts"}
+							name="blog-posts"
 							onClick={this.handleItemClick}
 						/>
 					</Menu.Menu>
@@ -82,18 +93,11 @@ class Admin extends Component {
 					Cities
 					<Menu.Menu>
 						<Menu.Item
-							active={activeItem === "feature a new city"}
-							name="feature a new city"
+							active={activeItem === "edit-featured-cities"}
+							name="edit-featured-cities"
 							onClick={this.handleItemClick}
 						>
-							Feature a new city
-						</Menu.Item>
-						<Menu.Item
-							active={activeItem === "view featured cities"}
-							name="view featured cities"
-							onClick={this.handleItemClick}
-						>
-							View featured cities
+							Edit featured cities
 						</Menu.Item>
 					</Menu.Menu>
 				</Menu.Item>
@@ -116,8 +120,8 @@ class Admin extends Component {
 					CSS
 					<Menu.Menu>
 						<Menu.Item
-							active={activeItem === "add custom styling"}
-							name="add custom styling"
+							active={activeItem === "add-custom-styling"}
+							name="add-custom-styling"
 							onClick={this.handleItemClick}
 						>
 							Add custom styling
@@ -128,15 +132,22 @@ class Admin extends Component {
 					Emails
 					<Menu.Menu>
 						<Menu.Item
-							active={activeItem === "confirm your email"}
-							name="confirm your email"
+							active={activeItem === "application-confirmation"}
+							name="application-confirmation"
+							onClick={this.handleItemClick}
+						>
+							Application confirmation
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "confirm-your-email"}
+							name="confirm-your-email"
 							onClick={this.handleItemClick}
 						>
 							Confirm your email
 						</Menu.Item>
 						<Menu.Item
-							active={activeItem === "order confirmation"}
-							name="order confirmation"
+							active={activeItem === "order-confirmation"}
+							name="order-confirmation"
 							onClick={this.handleItemClick}
 						>
 							Order confirmation
@@ -151,21 +162,134 @@ class Admin extends Component {
 					</Menu.Menu>
 				</Menu.Item>
 				<Menu.Item>
+					Languages
+					<Menu.Menu>
+						<Menu.Item
+							active={activeItem === "languages"}
+							name="languages"
+							onClick={this.handleItemClick}
+						>
+							Edit supported languages
+						</Menu.Item>
+					</Menu.Menu>
+				</Menu.Item>
+				<Menu.Item>
+					Library
+					<Menu.Menu>
+						<Menu.Item
+							active={activeItem === "images"}
+							name="images"
+							onClick={this.handleItemClick}
+						>
+							Images
+						</Menu.Item>
+					</Menu.Menu>
+				</Menu.Item>
+				<Menu.Item>
 					Orders
 					<Menu.Menu>
 						<Menu.Item
-							active={activeItem === "all orders"}
-							name="all orders"
+							active={activeItem === "view-orders"}
+							name="view-orders"
 							onClick={this.handleItemClick}
 						>
-							All orders
+							View orders
+						</Menu.Item>
+					</Menu.Menu>
+				</Menu.Item>
+				<Menu.Item>
+					Pages
+					<Menu.Menu>
+						<Menu.Item
+							active={activeItem === "about-page"}
+							name="about-page"
+							onClick={this.handleItemClick}
+						>
+							About page
 						</Menu.Item>
 						<Menu.Item
-							active={activeItem === "refunded orders"}
-							name="refunded orders"
+							active={activeItem === "apply-page"}
+							name="apply-page"
 							onClick={this.handleItemClick}
 						>
-							Refunded orders
+							Apply page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "bikes-page"}
+							name="bikes-page"
+							onClick={this.handleItemClick}
+						>
+							Bikes page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "checkout-page"}
+							name="checkout-page"
+							onClick={this.handleItemClick}
+						>
+							Checkout page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "cities-page"}
+							name="cities-page"
+							onClick={this.handleItemClick}
+						>
+							Cities page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "contact-page"}
+							name="contact-page"
+							onClick={this.handleItemClick}
+						>
+							Contact page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "faq-page"}
+							name="faq-page"
+							onClick={this.handleItemClick}
+						>
+							FAQ page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "home-page"}
+							name="home-page"
+							onClick={this.handleItemClick}
+						>
+							Home page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "partners-page"}
+							name="partners-page"
+							onClick={this.handleItemClick}
+						>
+							Partners page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "search-page"}
+							name="search-page"
+							onClick={this.handleItemClick}
+						>
+							Search page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "signin-page"}
+							name="signin-page"
+							onClick={this.handleItemClick}
+						>
+							Sign In page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "stores-page"}
+							name="stores-page"
+							onClick={this.handleItemClick}
+						>
+							Stores page
+						</Menu.Item>
+						<Menu.Item
+							active={activeItem === "terms-page"}
+							name="terms-page"
+							onClick={this.handleItemClick}
+						>
+							Terms page
 						</Menu.Item>
 					</Menu.Menu>
 				</Menu.Item>
@@ -173,32 +297,11 @@ class Admin extends Component {
 					SEO
 					<Menu.Menu>
 						<Menu.Item
-							active={activeItem === "home page"}
-							name="home page"
+							active={activeItem === "sitemap-editor"}
+							name="sitemap-editor"
 							onClick={this.handleItemClick}
 						>
-							Home page
-						</Menu.Item>
-						<Menu.Item
-							active={activeItem === "bikes page"}
-							name="bikes page"
-							onClick={this.handleItemClick}
-						>
-							Bikes page
-						</Menu.Item>
-						<Menu.Item
-							active={activeItem === "cities page"}
-							name="cities page"
-							onClick={this.handleItemClick}
-						>
-							Cities page
-						</Menu.Item>
-						<Menu.Item
-							active={activeItem === "stores page"}
-							name="stores page"
-							onClick={this.handleItemClick}
-						>
-							Stores page
+							Sitemap editor
 						</Menu.Item>
 					</Menu.Menu>
 				</Menu.Item>
@@ -206,227 +309,170 @@ class Admin extends Component {
 					Stores
 					<Menu.Menu>
 						<Menu.Item
-							active={activeItem === "all stores"}
-							name="all stores"
+							active={activeItem === "view-stores"}
+							name="view-stores"
 							onClick={this.handleItemClick}
 						>
-							All stores
-						</Menu.Item>
-						<Menu.Item
-							active={activeItem === "highest grossing"}
-							name="highest grossing"
-							onClick={this.handleItemClick}
-						>
-							Highest grossing
+							View stores
 						</Menu.Item>
 					</Menu.Menu>
 				</Menu.Item>
 			</Accordion>
 		)
 
+		const Header = (
+			<Menu borderless className="adminHeaderMenu" secondary={false} size="large">
+				<Container>
+					<Menu.Item
+						onClick={() => {
+							this.props.history.push("/admin")
+						}}
+						style={{ padding: "7px" }}
+					>
+						<span className="logoText">Bike Rent</span>
+					</Menu.Item>
+				</Container>
+			</Menu>
+		)
+
 		const MainContent = () => {
-			if (activeItem === "add a new post") {
+			if (
+				activeItem === "about-page" ||
+				activeItem === "apply-page" ||
+				activeItem === "bikes-page" ||
+				activeItem === "checkout-page" ||
+				activeItem === "cities-page" ||
+				activeItem === "contact-page" ||
+				activeItem === "faq-page" ||
+				activeItem === "home-page" ||
+				activeItem === "partners-page" ||
+				activeItem === "search-page" ||
+				activeItem === "signin-page" ||
+				activeItem === "stores-page" ||
+				activeItem === "terms-page"
+			) {
 				return (
-					<Segment>
-						<Input
-							fluid
-							onChange={this.onChangeBlogTitle}
-							placeholder="Title"
-							value={blogTitle}
-						/>
-						<Divider />
-						
-						<BlogEditor
-							editorClassName="blogEditorContainer"
-							editorState={editorState}
-							onEditorStateChange={this.onEditorStateChange}
-							toolbar={{
-								options: ['inline', 'blockType', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
-							}}
-							toolbarClassName="toolbarClassName"
-							wrapperClassName="wrapperClassName"
-						/>
-
-						<Divider />
-						<Dropdown
-							allowAdditions
-							fluid
-							multiple
-							onAddItem={this.handleAddition}
-							onChange={this.handleChange}
-							options={tagOptions}
-							placeholder="Add tags"
-							search
-							selection
-							value={tagValue}
-						/>
-
-						<Divider />
-						<Button
-							color="green"
-							content="Publish"
-							fluid
-						/>
-					</Segment>
+					<div>
+						<AdminPages bearer={bearer} type={activeItem} />
+					</div>
 				)
 			}
 
-			if (activeItem === "add custom styling") {
+			if (activeItem === "add-a-new-post") {
 				return (
-					<Segment>
-						<AceEditor
-							// editorProps={{ $blockScrolling: true }}
-							highlightActiveLine={false}
-							fontSize={16}
-							mode="css"
-							name="UNIQUE_ID_OF_DIV"
-							onChange={cssCode => this.setState({ cssCode })}
-							theme="textmate"
-							value={cssCode}
-						/>
-						<Divider />
-						<Button
-							color="blue"
-							content="Update"
-							fluid
-						/>
-					</Segment>
+					<div>
+						<AdminBlog createNewBlog />
+					</div>
 				)
 			}
 
-			if (activeItem === "all orders") {
-				return (
-					<Segment>
+			if (activeItem === "add-custom-styling") {
+				return <div>{css && <AdminCss bearer={bearer} css={css} />}</div>
+			}
 
-					</Segment>
+			if (
+				activeItem === "application-confirmation" ||
+				activeItem === "confirm-your-email" ||
+				activeItem === "order-confirmation" ||
+				activeItem === "refund"
+			) {
+				if (
+					emails.applicationConfirmation &&
+					emails.confirmYourEmail &&
+					emails.orderConfirmation &&
+					emails.refund
+				) {
+					return (
+						<div>
+							<AdminEmail emails={emails} type={activeItem} />
+						</div>
+					)
+				}
+			}
+
+			if (activeItem === "blog-posts") {
+				return (
+					<div>
+						<AdminBlog />
+					</div>
 				)
 			}
 
-			if (activeItem === "all stores") {
+			if (activeItem === "change-themes") {
 				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						<AdminThemes themes={settings.themes} />
+					</div>
 				)
 			}
 
-			if (activeItem === "bikes page") {
+			if (activeItem === "edit-featured-cities") {
 				return (
-					<Segment>
-
-					</Segment>
-				)
-			}
-
-			if (activeItem === "blog posts") {
-				return (
-					<Segment>
-
-					</Segment>
-				)
-			}
-
-			if (activeItem === "change themes") {
-				return (
-					<Segment>
-
-					</Segment>
-				)
-			}
-
-			if (activeItem === "cities page") {
-				return (
-					<Segment>
-
-					</Segment>
-				)
-			}
-
-			if (activeItem === "confirm your email") {
-				return (
-					<Segment>
-
-					</Segment>
-				)
-			}
-
-			if (activeItem === "feature a new city") {
-				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						<AdminCities bearer={bearer} cities={cities} />
+					</div>
 				)
 			}
 
 			if (activeItem === "footer") {
 				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						<AdminFooter footerData={settings.footer} />
+					</div>
 				)
 			}
 
 			if (activeItem === "header") {
 				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						<AdminHeader />
+					</div>
 				)
 			}
 
-			if (activeItem === "highest grossing") {
+			if (activeItem === "images") {
 				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						<AdminLibrary />
+					</div>
 				)
 			}
 
-			if (activeItem === "home page") {
+			if (activeItem === "languages") {
 				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						<AdminLanguages bearer={bearer} languages={settings.languages} />
+					</div>
 				)
 			}
 
-			if (activeItem === "order confirmation") {
+			if (activeItem === "sitemap-editor") {
 				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						{sitemap && (
+							<AdminSitemap
+								bearer={bearer}
+								sitemap={sitemap}
+								sitemapUrl={sitemapUrl}
+							/>
+						)}
+					</div>
 				)
 			}
 
-			if (activeItem === "refund") {
+			if (activeItem === "view-orders") {
 				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						<AdminOrders />
+					</div>
 				)
 			}
 
-			if (activeItem === "refunded orders") {
+			if (activeItem === "view-stores") {
 				return (
-					<Segment>
-
-					</Segment>
-				)
-			}
-
-			if (activeItem === "stores page") {
-				return (
-					<Segment>
-
-					</Segment>
-				)
-			}
-
-			if (activeItem === "view featured cities") {
-				return (
-					<Segment>
-
-					</Segment>
+					<div>
+						<AdminStores />
+					</div>
 				)
 			}
 		}
@@ -434,9 +480,7 @@ class Admin extends Component {
 		return (
 			<Provider store={store}>
 				<div className="adminPage">
-					<PageHeader activeItem="admin" {...this.props} />
-
-					<Container className="mainContainer" textAlign="left">
+					<div className="adminContainer">
 						<Responsive maxWidth={1024}>
 							<Grid>
 								<Grid.Row>{AdminMenu(this.props)}</Grid.Row>
@@ -446,30 +490,69 @@ class Admin extends Component {
 
 						<Responsive minWidth={1025}>
 							<Grid>
-								<Grid.Column width={4}>{AdminMenu(this.props)}</Grid.Column>
-								<Grid.Column className="rightSide" width={12}>
-									{MainContent()}
+								<Grid.Column className="leftSide" width={3}>
+									{AdminMenu(this.props)}
+								</Grid.Column>
+								<Grid.Column className="rightSide" width={13}>
+									{Header}
+									<div className="mainContent">{MainContent()}</div>
 								</Grid.Column>
 							</Grid>
 						</Responsive>
-					</Container>
-
-					<PageFooter />
+					</div>
 				</div>
 			</Provider>
 		)
 	}
 }
 
-Admin.propTypes = {}
+Admin.propTypes = {
+	cities: PropTypes.object,
+	css: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+	cssUrl: PropTypes.string,
+	emails: PropTypes.shape({
+		applicationConfirmation: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+		confirmYourEmail: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+		orderConfirmation: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+		refund: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+	}),
+	getCities: PropTypes.func,
+	getCss: PropTypes.func,
+	getEmail: PropTypes.func,
+	getSitemap: PropTypes.func,
+	settings: PropTypes.object,
+	sitemap: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+	sitemapUrl: PropTypes.string
+}
 
-Admin.defaultProps = {}
+Admin.defaultProps = {
+	cities: [{}, {}, {}, {}],
+	css: false,
+	cssUrl: "https://bike-rent.s3-us-west-2.amazonaws.com/css/style.css",
+	emails: {
+		applicationConfirmation: false,
+		confirmYourEmail: false,
+		orderConfirmation: false,
+		refund: false
+	},
+	getCities,
+	getCss,
+	getEmail,
+	getSitemap,
+	sitemap: false,
+	sitemapUrl: "https://bike-rent.s3-us-west-2.amazonaws.com/sitemaps/sitemap.xml"
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.Admin,
+		...state.app,
 		...ownProps
 	}
 }
 
-export default connect(mapStateToProps, {})(Admin)
+export default connect(mapStateToProps, {
+	getCities,
+	getCss,
+	getEmail,
+	getSitemap
+})(Admin)

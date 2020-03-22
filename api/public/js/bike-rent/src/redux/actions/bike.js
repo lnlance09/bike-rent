@@ -12,8 +12,8 @@ export const selectBike = ({ msg }) => dispatch => {
 		},
 		function(err, response, body) {
 			dispatch({
-				type: constants.SELECT_BIKE,
-				payload: body
+				payload: body,
+				type: constants.SELECT_BIKE
 			})
 		}
 	)

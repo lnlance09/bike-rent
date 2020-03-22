@@ -5,7 +5,7 @@
 /*---   Social colors  ---*/
 .citiesList {
   width: 100%; }
-  .citiesList .emptyFallaciesContainer {
+  .citiesList .emptyContainer {
     text-align: center; }
   @media only screen and (max-width: 1025px) {
     .citiesList .cards {
@@ -16,6 +16,8 @@
       max-height: 240px;
       overflow: hidden;
       white-space: pre-line; }
+  .citiesList .cards .card .image img {
+    height: 225px !important; }
   .citiesList .cards .card .image.parent {
     background: #2185D0 !important;
     height: 300px !important;

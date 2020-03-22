@@ -1,15 +1,19 @@
 import { connect, Provider } from "react-redux"
-import { Link } from "react-router-dom"
-import { Container } from "semantic-ui-react"
+import { getCities } from "redux/actions/city"
+import { Container, Header } from "semantic-ui-react"
+import React, { Component } from "react"
+import CitiesList from "components/citiesList/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
 import store from "store"
 
 class Cities extends Component {
 	constructor(props) {
 		super(props)
+
+		const params = this.props.match.params
+		let { name } = params
 
 		const currentState = store.getState()
 		const user = currentState.user
@@ -17,37 +21,63 @@ class Cities extends Component {
 		const bearer = user.bearer
 
 		this.state = {
-
+			auth,
+			bearer,
+			name
 		}
 	}
 
 	componentDidMount() {}
 
 	render() {
-		const { startDate } = this.state
-		const {} = this.props
+		const { settings } = this.props
+		const { name } = this.state
 
 		return (
 			<Provider store={store}>
 				<div className="homePage">
 					<PageHeader activeItem="cities" {...this.props} />
 
-					<PageFooter />
+					<Container className="mainContainer">
+						{name ? (
+							<div></div>
+						) : (
+							<div>
+								<Header size="huge">Pick a city</Header>
+
+								<CitiesList
+									key="city"
+									retrieveItems={() => this.props.getCities({})}
+									useCards={true}
+									{...this.props}
+								/>
+							</div>
+						)}
+					</Container>
+
+					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
 			</Provider>
 		)
 	}
 }
 
-Cities.propTypes = {}
+Cities.propTypes = {
+	getCities: PropTypes.func,
+	settings: PropTypes.object
+}
 
-Cities.defaultProps = {}
+Cities.defaultProps = {
+	getCities
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.cities,
+		...state.Admin,
 		...ownProps
 	}
 }
 
-export default connect(mapStateToProps, {})(Cities)
+export default connect(mapStateToProps, {
+	getCities
+})(Cities)

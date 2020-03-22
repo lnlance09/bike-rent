@@ -1,40 +1,52 @@
 import "./style.css"
-import { Link } from "react-router-dom"
 import { Container, Grid, Header, List, Segment } from "semantic-ui-react"
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 
 class Footer extends Component {
 	componentDidMount() {}
 
 	render() {
+		const { footerData } = this.props
+		const { firstList, inverted, secondList, subtitle, title } = footerData
+		const isInverted = inverted === 1
+
 		return (
-			<Segment inverted vertical style={{ padding: '5em 0em' }}>
+			<Segment className="footerSegment" inverted={isInverted} vertical>
 				<Container>
-					<Grid divided inverted stackable>
+					<Grid divided inverted={isInverted} stackable>
 						<Grid.Row>
 							<Grid.Column width={3}>
-								<Header inverted as='h4' content='About' />
-								<List link inverted>
-									<List.Item as='a'>Sitemap</List.Item>
-									<List.Item as='a'>Contact Us</List.Item>
-									<List.Item as='a'>Religious Ceremonies</List.Item>
+								<Header as="h4" content={firstList.title} inverted={isInverted} />
+								<List inverted={isInverted} link>
+									{firstList.items.map((item, i) => (
+										<List.Item
+											as="a"
+											key={`${item.text}${i}`}
+											onClick={() => this.props.history.push(item.link)}
+										>
+											{item.text}
+										</List.Item>
+									))}
 								</List>
 							</Grid.Column>
 							<Grid.Column width={3}>
-								<Header inverted as='h4' content='Services' />
-								<List link inverted>
-									<List.Item as='a'>Banana Pre-Order</List.Item>
-									<List.Item as='a'>DNA FAQ</List.Item>
-									<List.Item as='a'>How To Access</List.Item>
+								<Header as="h4" content={secondList.title} inverted={isInverted} />
+								<List inverted={isInverted} link>
+									{secondList.items.map((item, i) => (
+										<List.Item
+											as="a"
+											key={`${item.text}${i}`}
+											onClick={() => this.props.history.push(item.link)}
+										>
+											{item.text}
+										</List.Item>
+									))}
 								</List>
 							</Grid.Column>
 							<Grid.Column width={7}>
-								<Header as='h4' inverted>
-									Footer Header
-								</Header>
-								<p>
-									Extra space for a call to action inside the footer that could help re-engage users.
-								</p>
+								<Header as="h4" content={title} inverted={isInverted} />
+								<p>{subtitle}</p>
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>
@@ -43,5 +55,11 @@ class Footer extends Component {
 		)
 	}
 }
+
+Footer.propTypes = {
+	footerData: PropTypes.object
+}
+
+Footer.defaultProps = {}
 
 export default Footer

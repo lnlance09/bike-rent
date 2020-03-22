@@ -29,7 +29,7 @@ class Aws {
 					'key' => $this->CI->config->item('s3key'),
 					'secret' => $this->CI->config->item('s3secret')
 				],
-				'region'  => 'us-east-1',
+				'region'  => 'us-west-2',
 				'version' => 'latest'
 			]);
 		}
@@ -37,7 +37,7 @@ class Aws {
 		if (!$this->s3hd) {
 			$this->s3hd = S3Client::factory([
 				'version' => 'latest',
-				'region'  => 'us-east-1',
+				'region'  => 'us-west-2',
 				'credentials' => [
 					'key' => $this->CI->config->item('s3key'),
 					'secret' => $this->CI->config->item('s3secret')

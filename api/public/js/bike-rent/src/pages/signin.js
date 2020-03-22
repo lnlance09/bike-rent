@@ -1,27 +1,11 @@
 import { connect, Provider } from "react-redux"
-import { Link } from "react-router-dom"
-import {
-	Button,
-	Container,
-	Divider,
-	Form,
-	Grid,
-	Header,
-	Icon,
-	Image,
-	Input,
-	List,
-	Message,
-	Segment,
-	Select,
-	TextArea
-} from "semantic-ui-react"
+import { Container, Grid } from "semantic-ui-react"
+import React, { Component } from "react"
 import queryString from "query-string"
 import Authentication from "components/authentication/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
 import store from "store"
 
 class Signin extends Component {
@@ -31,8 +15,6 @@ class Signin extends Component {
 		const currentState = store.getState()
 		const user = currentState.user
 		const auth = user.authenticated
-		const bearer = user.bearer
-
 		const qs = queryString.parse(this.props.location.search)
 
 		if (auth && (!user.verify || user.emailVerified)) {
@@ -47,8 +29,8 @@ class Signin extends Component {
 	componentDidMount() {}
 
 	render() {
+		const { settings } = this.props
 		const { type } = this.state
-		const {} = this.props
 
 		return (
 			<Provider store={store}>
@@ -66,19 +48,21 @@ class Signin extends Component {
 					</Container>
 				</div>
 
-				<PageFooter />
+				<PageFooter footerData={settings.footer} history={this.props.history} />
 			</Provider>
 		)
 	}
 }
 
-Signin.propTypes = {}
+Signin.propTypes = {
+	settings: PropTypes.object
+}
 
 Signin.defaultProps = {}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.Signin,
+		...state.Admin,
 		...ownProps
 	}
 }

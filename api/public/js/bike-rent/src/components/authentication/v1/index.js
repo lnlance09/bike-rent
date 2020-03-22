@@ -64,9 +64,7 @@ class Authentication extends Component {
 		this.submitEmailVerificationForm = this.submitEmailVerificationForm.bind(this)
 	}
 
-	componentDidMount() {
-
-	}
+	componentDidMount() {}
 
 	googleResponse(e) {
 		const accessToken = e.tokenObj.access_token
@@ -98,16 +96,19 @@ class Authentication extends Component {
 			regText = login ? "Already have an account?" : "New to bikerent.com?"
 		}
 
-		this.setState({
-			headerText,
-			loadingLogin: false,
-			loadingRegistration: false,
-			login: !login,
-			regButton,
-			regText
-		}, () => {
-			this.props.switchTab(login)
-		})
+		this.setState(
+			{
+				headerText,
+				loadingLogin: false,
+				loadingRegistration: false,
+				login: !login,
+				regButton,
+				regText
+			},
+			() => {
+				this.props.switchTab(login)
+			}
+		)
 	}
 
 	onChangeEmail = (e, { value }) => this.setState({ email: value })

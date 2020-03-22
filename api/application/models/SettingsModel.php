@@ -2,27 +2,157 @@
 class SettingsModel extends CI_Model {
 	public function __construct() {
 		parent:: __construct();
+
+		$this->configFile = APPPATH.'third_party/settings.json';
+		$this->config = file_get_contents(APPPATH.'third_party/settings.json');
 	}
 
-	public function create($title, $entry, $tags) {
-		$this->db->insert('blog_posts', [
-			'title' => $title,
-			'entry' => $entry
-		]);
+	public function decodeSettings() {
+		return @json_decode($this->config, true);
 	}
 
-	public function get($id) {
-		$this->db->select('');
-		$this->db->where('id', $id);
-		$result = $this->db->get('blog_posts')->result_array();
+	public function updateFooter(
+		$listOneItems,
+		$listOneTitle,
+		$inverted,
+		$listTwoItems,
+		$listTwoTitle,
+		$subTitle,
+		$title
+	) {
+		$decode = $this->decodeSettings();
+		$decode['footer'] = [
+			'firstList' => [
+				'items' => $listOneItems,
+				'title' => $listOneTitle
+			],
+			'inverted' => $inverted,
+			'secondList' => [
+				'items' => $listTwoItems,
+				'title' => $listTwoTitle
+			],
+			'subtitle' => $subTitle,
+			'title' => $title
+		];
+
+		$json = json_encode($decode);
+		file_put_contents($this->configFile, $json);
+
+		return $json;
 	}
 
-	public function getAll($where, $sort) {
+	public function updateHeader(
 		
+	) {
+		$decode = $this->decodeSettings();
+		$decode['header'] = [
+			'backgroundColor' => '',
+			'list' => [
+				'items' => $items
+			],
+			'logo' => '',
+			'signInButton' => [
+				'basic' => '',
+				'color' => 'green',
+				'inverted' => false,
+				'text' => 'Sign In'
+			],
+			'signUpButton' => [
+				'basic' => '',
+				'color' => 'green',
+				'inverted' => false,
+				'text' => 'Sign Up'
+			]
+		];
+
+		$json = json_encode($decode);
+		file_put_contents($this->configFile, $json);
+
+		return $json;
 	}
 
-	public function update($id, $data, $tags) {
-		$this->db->where('id', $id);
-		$this->db->update('blog_posts', $data);
+	public function updateHomePage(
+		
+	) {
+		$decode = $this->decodeSettings();
+		$decode['homePage'] = [
+			'hero' => [
+				'button' => [
+					'basic' => '',
+					'color' => 'green',
+					'inverted' => false,
+					'text' => ''
+				],
+				'img' => '',
+				'subtitle' => '',
+				'title' => ''
+			],
+			'firstSection' => [
+				'button' => [
+					'basic' => '',
+					'color' => 'green',
+					'inverted' => false,
+					'link' => '',
+					'text' => ''
+				],
+				'img' => '',
+				'items' => [
+					[
+						'subtitle' => '',
+						'title' => ''
+					],
+					[
+						'subtitle' => '',
+						'title' => ''
+					]
+				]
+			],
+			'secondSection' => [
+				'leftItem' => [
+					'subtitle' => '',
+					'title' => ''
+				],
+				'rightItem' => [
+					'subtitle' => '',
+					'title' => ''
+				]
+			],
+			'seo' => [
+				'desciption' => '',
+				'img' => '',
+				'keywords' => [
+					''
+				],
+				'title' => ''
+			],
+			'thirdSection' => [
+				'divider' => [
+					'color' => '',
+					'text' => ''
+				],
+				'firstItem' => [
+					'subtitle' => '',
+					'title' => ''
+				],
+				'secondItem' => [
+					'subtitle' => '',
+					'title' => ''
+				]
+			]
+		];
+
+		$json = json_encode($decode);
+		file_put_contents($this->configFile, $json);
+
+		return $json;
+	}
+
+	public function updateLanguages($languages) {
+		$decode = $this->decodeSettings();
+		$decode['languages'] = $languages;
+		$json = json_encode($decode);
+		file_put_contents($this->configFile, $json);
+
+		return $json;
 	}
 }

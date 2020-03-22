@@ -1,17 +1,26 @@
 import "css/app.css"
 import "semantic/dist/semantic.min.css"
+import "react-toastify/dist/ReactToastify.css"
 import { Provider } from "react-redux"
 import { Route, Router, Switch } from "react-router-dom"
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 import ScrollToTop from "react-router-scroll-top"
 import history from "history.js"
+import About from "pages/about"
 import Admin from "pages/admin"
+import Apply from "pages/apply"
 import Bikes from "pages/bikes"
 import Checkout from "pages/checkout"
 import Cities from "pages/cities"
+import Contact from "pages/contact"
+import Faq from "pages/faq"
 import Home from "pages/home"
+import Partners from "pages/partners"
+import Search from "pages/search"
 import Signin from "pages/signin"
 import Stores from "pages/stores"
+import Terms from "pages/terms"
 import store from "store"
 
 class App extends Component {
@@ -20,9 +29,14 @@ class App extends Component {
 		this.state = {
 			title: ""
 		}
+
+		console.log("props")
+		console.log(this.props)
 	}
 
 	render() {
+		const { settings } = this.props
+
 		return (
 			<div className="app">
 				<Provider store={store}>
@@ -32,15 +46,60 @@ class App extends Component {
 								exact
 								path="/"
 								render={props => (
-									<Home key={window.location.pathname} {...props} />
+									<Home
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
 								)}
 							/>
 
 							<Route
 								exact
-								path="/admin"
+								path="/about"
 								render={props => (
-									<Admin key={window.location.pathname} {...props} />
+									<About
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
+								)}
+							/>
+
+							<Switch>
+								<Route
+									exact
+									path="/admin"
+									render={props => (
+										<Admin
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path="/admin/:tab"
+									render={props => (
+										<Admin
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
+									)}
+								/>
+							</Switch>
+
+							<Route
+								exact
+								path="/apply"
+								render={props => (
+									<Apply
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
 								)}
 							/>
 
@@ -49,13 +108,21 @@ class App extends Component {
 									exact
 									path="/bikes"
 									render={props => (
-										<Bikes key={window.location.pathname} {...props} />
+										<Bikes
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
 									)}
 								/>
 								<Route
 									path="/bikes/:type"
 									render={props => (
-										<Bikes key={window.location.pathname} {...props} />
+										<Bikes
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
 									)}
 								/>
 							</Switch>
@@ -64,7 +131,11 @@ class App extends Component {
 								exact
 								path="/checkout"
 								render={props => (
-									<Checkout key={window.location.pathname} {...props} />
+									<Checkout
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
 								)}
 							/>
 
@@ -73,22 +144,82 @@ class App extends Component {
 									exact
 									path="/cities"
 									render={props => (
-										<Cities key={window.location.pathname} {...props} />
+										<Cities
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
 									)}
 								/>
 								<Route
-									path="/bikes/:type"
+									path="/cities/:name"
 									render={props => (
-										<Cities key={window.location.pathname} {...props} />
+										<Cities
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
 									)}
 								/>
 							</Switch>
 
 							<Route
 								exact
+								path="/contact"
+								render={props => (
+									<Contact
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
+								)}
+							/>
+
+							<Route
+								exact
+								path="/faq"
+								render={props => (
+									<Faq
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
+								)}
+							/>
+
+							<Route
+								exact
+								path="/partners"
+								render={props => (
+									<Partners
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
+								)}
+							/>
+
+							<Route
+								exact
+								path="/search"
+								render={props => (
+									<Search
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
+								)}
+							/>
+
+							<Route
+								exact
 								path="/signin"
 								render={props => (
-									<Signin key={window.location.pathname} {...props} />
+									<Signin
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
 								)}
 							/>
 
@@ -96,7 +227,23 @@ class App extends Component {
 								exact
 								path="/stores"
 								render={props => (
-									<Stores key={window.location.pathname} {...props} />
+									<Stores
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
+								)}
+							/>
+
+							<Route
+								exact
+								path="/terms"
+								render={props => (
+									<Terms
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
 								)}
 							/>
 						</ScrollToTop>
@@ -105,6 +252,154 @@ class App extends Component {
 			</div>
 		)
 	}
+}
+
+App.propTypes = {
+	cities: PropTypes.array,
+	settings: PropTypes.shape({
+		bikesPages: PropTypes.shape({
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			sort: PropTypes.string,
+			useCards: PropTypes.bool,
+			useList: PropTypes.bool
+		}),
+		citiesPages: PropTypes.shape({
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			sort: PropTypes.string,
+			useCards: PropTypes.bool,
+			useList: PropTypes.bool
+		}),
+		footer: PropTypes.shape({
+			firstList: PropTypes.shape({
+				items: PropTypes.arrayOf(PropTypes.shape({
+					link: PropTypes.string,
+					text: PropTypes.string
+				})),
+				title: PropTypes.string
+			}),
+			inverted: PropTypes.number,
+			secondList: PropTypes.shape({
+				items: PropTypes.arrayOf(PropTypes.shape({
+					link: PropTypes.string,
+					text: PropTypes.string
+				})),
+				title: PropTypes.string
+			}),
+			subtitle: PropTypes.string,
+			title: PropTypes.string
+		}),
+		header: PropTypes.shape({
+			backgroundColor: PropTypes.string,
+			list: PropTypes.shape({
+				items: PropTypes.array,
+				textColor: PropTypes.string
+			}),
+			logo: PropTypes.string,
+			signInButton: PropTypes.shape({
+				basic: PropTypes.string,
+				color: PropTypes.string,
+				inverted: PropTypes.bool,
+				text: PropTypes.string
+			}),
+			signUpButton: PropTypes.shape({
+				basic: PropTypes.string,
+				color: PropTypes.string,
+				inverted: PropTypes.bool,
+				text: PropTypes.string
+			}),
+		}),
+		homePage: PropTypes.shape({
+			hero: PropTypes.shape({
+				button: PropTypes.shape({
+					basic: PropTypes.string,
+					color: PropTypes.string,
+					inverted: PropTypes.bool,
+					text: PropTypes.string
+				}),
+				img: PropTypes.string,
+				subtitle: PropTypes.string,
+				title: PropTypes.string
+			}),
+			firstSection: PropTypes.shape({
+				button: PropTypes.shape({
+					basic: PropTypes.string,
+					color: PropTypes.string,
+					inverted: PropTypes.bool,
+					link: PropTypes.string,
+					text: PropTypes.string
+				}),
+				img: PropTypes.string,
+				items: PropTypes.arrayOf(PropTypes.shape({
+					subtitle: PropTypes.string,
+					title: PropTypes.string
+				}))
+			}),
+			secondSection: PropTypes.shape({
+				leftItem: PropTypes.shape({
+					subtitle: PropTypes.string,
+					title: PropTypes.string
+				}),
+				rightItem: PropTypes.shape({
+					subtitle: PropTypes.string,
+					title: PropTypes.string
+				})
+			}),
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string
+			}),
+			thirdSection: PropTypes.shape({
+				divider: PropTypes.shape({
+					color: PropTypes.string,
+					text: PropTypes.string
+				}),
+				firstItem: PropTypes.shape({
+					subtitle: PropTypes.string,
+					title: PropTypes.string
+				}),
+				secondItem: PropTypes.shape({
+					subtitle: PropTypes.string,
+					title: PropTypes.string
+				})
+			})
+		}),
+		languages: PropTypes.array,
+		stores: PropTypes.array,
+		storesPages: PropTypes.shape({
+			defaultLocation: PropTypes.string,
+			defaultRadius: PropTypes.string,
+			seo: PropTypes.shape({
+				desciption: PropTypes.string,
+				img: PropTypes.string,
+				keywords: PropTypes.array,
+				title: PropTypes.string,
+			}),
+			useCards: PropTypes.bool,
+			useList: PropTypes.bool
+		}),
+		theme: PropTypes.string,
+		themes: PropTypes.arrayOf(PropTypes.shape({
+			img: PropTypes.string,
+			tag: PropTypes.string,
+			title: PropTypes.string
+		}))
+	})
+}
+
+App.defaultProps = {
+	
 }
 
 export default App

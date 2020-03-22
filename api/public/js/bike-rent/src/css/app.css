@@ -13,6 +13,22 @@ body {
   min-height: 100vh;
   margin: 1.4em 0; }
 
+.adminContainer {
+  height: 100%; }
+  .adminContainer .adminHeaderMenu {
+    border-radius: 0 !important; }
+  .adminContainer .grid .leftSide {
+    padding-bottom: 0 !important;
+    padding-right: 0 !important; }
+    .adminContainer .grid .leftSide .menu {
+      border-radius: 0 !important;
+      height: 100%; }
+  .adminContainer .grid .rightSide {
+    margin-left: 0 !important;
+    padding-left: 0 !important; }
+    .adminContainer .grid .rightSide .mainContent {
+      padding: 6px 20px !important; }
+
 .homePage {
   background: #FFFFFF; }
   .homePage .paddedSegment {
@@ -29,9 +45,6 @@ body {
     .homePage .notPaddedSegment .grid .row .column {
       padding-bottom: 5em;
       padding-top: 5em; }
-
-.adminPage .blogEditorContainer {
-  min-height: 560px; }
 
 .signInPage {
   background: #F9FAFB;

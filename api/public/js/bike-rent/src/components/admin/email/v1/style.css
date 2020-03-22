@@ -1,0 +1,7 @@
+.adminEmail #emailEditor {
+  height: 400px !important;
+  width: 100% !important; }
+
+.adminEmail .emailRendering {
+  min-height: 400px !important;
+  width: 100% !important; }

@@ -1,10 +1,14 @@
 import { combineReducers } from "redux"
-import { loadingBarReducer } from "react-redux-loading-bar"
+import app from "redux/reducers/app"
 import bike from "redux/reducers/bike"
+import city from "redux/reducers/city"
+import library from "redux/reducers/library"
 import user from "components/authentication/v1/reducer"
 
 export default combineReducers({
+	app,
 	bike,
-	loadingBar: loadingBarReducer,
+	city,
+	library,
 	user
 })

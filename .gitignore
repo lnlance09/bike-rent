@@ -10,7 +10,7 @@ application/logs/*
 
 composer.lock
 
-api/vendor/
+vendor/
 
 # IDE Files
 #-------------------------
@@ -26,4 +26,4 @@ api/vendor/
 /tests/tests/
 /tests/results/
 
-node_modules
+node_modules/

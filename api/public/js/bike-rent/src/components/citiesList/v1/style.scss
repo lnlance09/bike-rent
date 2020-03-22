@@ -3,7 +3,7 @@
 .citiesList {
     width: 100%;
 
-    .emptyFallaciesContainer {
+    .emptyContainer {
         text-align: center;
     }
 
@@ -20,6 +20,12 @@
                     max-height: 240px;
                     overflow: hidden;
                     white-space: pre-line;
+                }
+            }
+
+            .image {
+                img {
+                    height: 225px !important;
                 }
             }
 

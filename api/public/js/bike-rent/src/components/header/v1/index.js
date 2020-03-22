@@ -7,7 +7,6 @@ import {
 	Button,
 	Container,
 	Dropdown,
-	Form,
 	Grid,
 	Header,
 	Icon,
@@ -16,7 +15,6 @@ import {
 	Menu,
 	Responsive,
 	Segment,
-	Select,
 	Sidebar,
 	Visibility
 } from "semantic-ui-react"
@@ -47,9 +45,7 @@ class AppHeader extends Component {
 		this.onLogout = this.onLogout.bind(this)
 	}
 
-	handleChange = date => {
-		this.setState({ startDate: date })
-	}
+	handleChange = date => this.setState({ startDate: date })
 
 	handleSidebarHide = () => this.setState({ sidebarOpened: false })
 
@@ -116,12 +112,7 @@ class AppHeader extends Component {
 					</Grid.Column>
 
 					<Grid.Column>
-						<Button
-							color="blue"
-							content="Let's go"
-							fluid
-							size="big"
-						/>
+						<Button color="blue" content="Let's go" fluid size="big" />
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
@@ -136,9 +127,7 @@ class AppHeader extends Component {
 					content="We won't let liberals bully us anymore"
 				/>
 				<Container>
-					<Segment className="heroSegment">
-						{BookingForm}
-					</Segment>
+					<Segment className="heroSegment">{BookingForm}</Segment>
 				</Container>
 			</Container>
 		)
@@ -329,15 +318,9 @@ class AppHeader extends Component {
 					>
 						{this.props.authenticated ? "Sign Out" : "Sign In"}
 					</Menu.Item>
-					<Menu.Item onClick={() => this.props.history.push("/cities")}>
-						Cities
-					</Menu.Item>
-					<Menu.Item onClick={() => this.props.history.push("/stores")}>
-						Stores
-					</Menu.Item>
-					<Menu.Item onClick={() => this.props.history.push("/bikes")}>
-						Bikes
-					</Menu.Item>
+					<Menu.Item onClick={() => this.props.history.push("/cities")}>Cities</Menu.Item>
+					<Menu.Item onClick={() => this.props.history.push("/stores")}>Stores</Menu.Item>
+					<Menu.Item onClick={() => this.props.history.push("/bikes")}>Bikes</Menu.Item>
 				</Sidebar>
 			</Provider>
 		)
