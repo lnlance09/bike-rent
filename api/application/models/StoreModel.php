@@ -40,14 +40,14 @@ class StoreModel extends CI_Model {
 		$page = false,
 		$limit = 25
 	) {
-		$select = "sb.quantity, b. description, b.image, b.name";
+		$select = "sb.quantity, b.id, b.description, b.image, b.name";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';
 		}
 
 		$this->db->select($select);
-		$this->db->where('sb store_id', $id);
+		$this->db->where('sb.store_id', $id);
 		$this->db->join('bikes b', 'sb.bike_id = b.id');
 
 		if (!$just_count) {

@@ -88,7 +88,14 @@ class ResultItem extends Component {
 
 		const FullCard = (
 			<Card onClick={this.redirectToUrl}>
-				{img && <Image onError={i => (i.target.src = ImagePic)} src={img} wrapped ui={false} />}
+				{img && (
+					<Image
+						onError={i => (i.target.src = ImagePic)}
+						src={img === null ? ImagePic : img}
+						wrapped
+						ui={false}
+					/>
+				)}
 				<Card.Content>
 					<Card.Header>{title}</Card.Header>
 					{meta && <Card.Meta>{meta}</Card.Meta>}

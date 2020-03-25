@@ -26,19 +26,6 @@ const store = (state = initial(), action) => {
 				}
 			}
 
-		case constants.GET_STORES:
-			const results =
-				payload.page > 0 ? [...state.results, ...payload.results] : payload.results
-
-			return {
-				...state,
-				count: payload.count,
-				hasMore: payload.pagination.hasMore,
-				loadingMore: false,
-				page: payload.pagination.nextPage,
-				results
-			}
-
 		default:
 			return state
 	}

@@ -1,18 +1,22 @@
 export const ADD_CITY = "app:ADD_CITY"
-export const ADD_IMAGE = "library:ADD_IMAGE"
 export const EDIT_CITY = "app:EDIT_CITY"
 export const EDIT_CSS = "app:EDIT_CSS"
 export const EDIT_EMAIL = "app:EDIT_EMAIL"
 export const EDIT_SITEMAP = "app:EDIT_SITEMAP"
-export const GET_CITIES = "city:GET_CITIES"
 export const GET_CSS = "app:GET_CSS"
 export const GET_EMAIL = "app:GET_EMAIL"
-export const GET_IMAGES = "library:GET_IMAGES"
 export const GET_SITEMAP = "app:GET_SITEMAP"
 export const GET_SETTINGS = "app:GET_SETTINGS"
-export const GET_STORE = "store:GET_STORE"
-export const GET_STORES = "store:GET_STORES"
-export const SELECT_BIKE = "bike:SELECT_BIKE"
 export const SEND_EMAIL = "app:SEND_EMAIL"
 export const SET_LANGUAGES = "app:SET_LANGUAGES"
 export const TOGGLE_ADD_CITY_MODAL = "app:TOGGLE_ADD_CITY_MODAL"
+
+export const SELECT_BIKE = "bike:SELECT_BIKE"
+export const GET_BIKES = "bike:GET_BIKES"
+
+export const GET_CITIES = "city:GET_CITIES"
+
+export const ADD_IMAGE = "library:ADD_IMAGE"
+export const GET_IMAGES = "library:GET_IMAGES"
+
+export const GET_STORE = "store:GET_STORE"

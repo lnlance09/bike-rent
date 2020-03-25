@@ -3,7 +3,7 @@ import request from "request"
 
 export const getStores = ({ page, q, sort }) => dispatch => {
 	request.get(
-		`${window.location.origin}/api/stores/search`,
+		`${window.location.origin}/api/store/search`,
 		{
 			json: true,
 			qs: {

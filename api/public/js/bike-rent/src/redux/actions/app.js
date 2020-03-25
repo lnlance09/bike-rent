@@ -302,11 +302,12 @@ export const submitFooterForm = ({
 	)
 }
 
-export const submitHeaderForm = ({ bearer, signInButton, signUpButton }) => dispatch => {
+export const submitHeaderForm = ({ bearer, listItems, signInButton, signUpButton }) => dispatch => {
 	request.post(
-		`${window.location.origin}/api/settings/updateFooter`,
+		`${window.location.origin}/api/settings/updateHeader`,
 		{
 			form: {
+				listItems,
 				signInButton,
 				signUpButton
 			},

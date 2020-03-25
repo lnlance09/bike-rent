@@ -4,7 +4,7 @@ const initial = () => ({
 	loadingMore: false
 })
 
-const cities = (state = initial(), action) => {
+const stores = (state = initial(), action) => {
 	switch (action.type) {
 		case constants.GET_STORES:
 			const results =
@@ -32,4 +32,4 @@ const cities = (state = initial(), action) => {
 	}
 }
 
-export default cities
+export default stores

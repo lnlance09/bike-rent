@@ -15,18 +15,3 @@ export const getStore = ({ id }) => dispatch => {
 		}
 	)
 }
-
-export const getStores = ({ lat, lon }) => dispatch => {
-	request.get(
-		`${window.location.origin}/api/store/search`,
-		{
-			json: true
-		},
-		function(err, response, body) {
-			dispatch({
-				payload: body,
-				type: constants.GET_STORES
-			})
-		}
-	)
-}

@@ -5,19 +5,23 @@ const initial = () => ({
 })
 
 const bikes = (state = initial(), action) => {
+	const { payload } = action
+
 	switch (action.type) {
 		case constants.GET_BIKES:
+		case constants.GET_BIKES_BY_STORE:
+
 			const results =
-				action.payload.page > 0
-					? [...state.results, ...action.payload.results]
-					: action.payload.results
+				payload.page > 0
+					? [...state.results, ...payload.results]
+					: payload.results
 			return {
 				...state,
-				count: action.payload.count,
-				hasMore: action.payload.hasMore,
+				count: payload.count,
+				hasMore: payload.pagination.hasMore,
 				loadingMore: false,
-				page: action.payload.page,
-				pages: action.payload.pages,
+				page: payload.pagination.nextPage,
+				pages: payload.pagination.pages,
 				results
 			}
 

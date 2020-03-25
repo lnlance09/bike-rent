@@ -14,14 +14,14 @@ class AdminHeader extends Component {
 
 		this.state = {
 			listItems: headerData.items,
-			signInBasic: false,
-			signInColor: "red",
-			signInInverted: false,
-			signInText: "",
-			signUpBasic: false,
-			signUpColor: "red",
-			signUpInverted: false,
-			signUpText: ""
+			signInBasic: headerData.signInButton.basic,
+			signInColor: headerData.signInButton.color,
+			signInInverted: headerData.signInButton.inverted,
+			signInText: headerData.signInButton.text,
+			signUpBasic: headerData.signUpButton.basic,
+			signUpColor: headerData.signUpButton.color,
+			signUpInverted: headerData.signUpButton.inverted,
+			signUpText: headerData.signUpButton.text
 		}
 	}
 
@@ -33,6 +33,16 @@ class AdminHeader extends Component {
 	}
 
 	changeSignInText = (e, { value }) => this.setState({ signInText: value })
+
+	handleItemLinkChange(e, index) {
+		this.state.listItems[index].link = e.target.value
+		this.setState({ listItems: this.state.listItems })
+	}
+
+	handleItemTextChange(e, index) {
+		this.state.listItems[index].text = e.target.value
+		this.setState({ listItems: this.state.listItems })
+	}
 
 	toggleBasic = (e, { value }) => this.setState({ basic: value })
 
@@ -63,27 +73,22 @@ class AdminHeader extends Component {
 
 					{listItems.map((item, i) => (
 						<Form.Group key={`headerListItem${i}`}>
-							<Form.Field width={1}>
-								<Button
-									color="red"
-									icon="close"
-									onClick={() => this.handleFirstRemove(i)}
-								/>
-							</Form.Field>
 							<Form.Field width={8}>
 								<Input
-									onChange={e => this.handleFirstChange(e, i)}
+									onChange={e => this.handleItemTextChange(e, i)}
 									placeholder="Text"
 									value={item.text}
 								/>
 							</Form.Field>
-							<Form.Field width={7}>
+							<Form.Field width={8}>
 								<Select
+									onChange={e => this.handleItemLinkChange(e, i)}
 									options={[
 										{ key: "about", value: "about", text: "About" },
 										{ key: "contact", value: "contact", text: "Contact" }
 									]}
 									placeholder="Links to"
+									value={item.link}
 								/>
 							</Form.Field>
 						</Form.Group>
@@ -237,7 +242,31 @@ class AdminHeader extends Component {
 					</Form.Field>
 				</Form>
 
-				<Button color="blue" content="Submit" fluid />
+				<Divider />
+
+				<Button
+					color="blue"
+					content="Submit"
+					fluid
+					onClick={() => {
+						this.props.submitHeaderForm({
+							bearer,
+							listItems,
+							signInButton: {
+								signInBasic,
+								signInColor,
+								signInInverted,
+								signInText
+							},
+							signUpButton: {
+								signUpBasic,
+								signUpColor,
+								signUpInverted,
+								signUpText
+							}
+						})
+					}}
+				/>
 			</div>
 		)
 	}

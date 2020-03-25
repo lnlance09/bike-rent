@@ -1,8 +1,9 @@
 import { connect, Provider } from "react-redux"
-import { getStore, getStores } from "redux/actions/store"
+import { getStore } from "redux/actions/store"
 import { fetchLocations } from "utils/selectOptions"
 import { Container, Divider, Dropdown, Grid, Header, Icon, List, Menu, Responsive, Segment } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
+import BikesList from "components/bikesList/v1/"
 import LazyLoad from "components/lazyLoad/v1/"
 import MapBox from "components/mapBox/v1/"
 import PageFooter from "components/footer/v1/"
@@ -58,6 +59,88 @@ class Stores extends Component {
 		console.log("eee")
 		console.log(this.props)
 
+		const StoreList = props => {
+			return (
+				<List divided relaxed="very" size="large">
+					<List.Item>
+						<List.Icon color="red" name="marker" />
+						<List.Content>
+							<List.Header>
+								{props.address}
+							</List.Header>
+							<List.Description>
+								{props.city}, {props.state}
+							</List.Description>
+						</List.Content>
+					</List.Item>
+					<List.Item>
+						<List.Icon color="yellow" name="clock" />
+						<List.Content>
+							<List.Header>
+								Hours
+							</List.Header>
+							<List.Description>
+								8:00 AM - 10:00 PM
+							</List.Description>
+						</List.Content>
+					</List.Item>
+					<List.Item>
+						<List.Icon color="green" name="phone" />
+						<List.Content>
+							<List.Header>
+								Phone
+							</List.Header>
+							<List.Description>
+								(646) 923-2715
+							</List.Description>
+						</List.Content>
+					</List.Item>
+				</List>
+			)
+		}
+
+		const StoreMenu = props => {
+			return (
+				<Menu tabular>
+					<Menu.Item
+						active={activeItem === "bicycles"}
+						name="bicycles"
+						onClick={this.handleItemClick}
+					/>
+					<Menu.Item
+						active={activeItem === "reviews"}
+						name="reviews"
+						onClick={this.handleItemClick}
+					/>
+				</Menu>
+			)
+		}
+
+		const StoreMenuContent = props => {
+			if (activeItem === "accessories") {
+				
+			}
+
+			if (activeItem === "bicycles") {
+				return (
+					<BikesList
+						bikesByStore
+						emptyMsgContent="There are no bikes available"
+						history={props.history}
+						itemsPerRow={2}
+						storeId={id}
+						useCard={true}
+					/>
+				)
+			}
+
+			if (activeItem === "reviews") {
+				
+			}
+
+			return null
+		}
+
 		const SingleStore = props => {
 			const { address, city, description, name, state } = props.store
 
@@ -86,74 +169,26 @@ class Stores extends Component {
 
 									<Divider hidden section />
 
-									<Menu tabular>
-										<Menu.Item
-											active={activeItem === "bicycles"}
-											name="bicycles"
-											onClick={this.handleItemClick}
-										/>
-										<Menu.Item
-											active={activeItem === "accessories"}
-											name="accessories"
-											onClick={this.handleItemClick}
-										/>
-										<Menu.Item
-											active={activeItem === "reviews"}
-											name="reviews"
-											onClick={this.handleItemClick}
-										/>
-									</Menu>
+									{StoreMenu(props)}
+
+									{StoreMenuContent(props)}
 								</div>
 							</Grid.Column>
 							<Grid.Column className="rightSide" width={5}>
 								{name ? (
 									<div>
 										<MapBox
+											apiKey="AIzaSyD0Hd-I0mmRVa3WxTy-lpNJ-xAyDqWWTxM"
 											defaultCenter={{
 												lat: 59.95,
 												lng: 30.33
 											}}
-											key="AIzaSyD0Hd-I0mmRVa3WxTy-lpNJ-xAyDqWWTxM"
 											lat={59.955413}
 											lng={30.337844}
 										/>
 										<Divider hidden />
 										<div>
-											<List divided relaxed="very" size="large">
-												<List.Item>
-													<List.Icon color="red" name="marker" />
-													<List.Content>
-														<List.Header>
-															{address}
-														</List.Header>
-														<List.Description>
-															{city}, {state}
-														</List.Description>
-													</List.Content>
-												</List.Item>
-												<List.Item>
-													<List.Icon color="yellow" name="clock" />
-													<List.Content>
-														<List.Header>
-															Hours
-														</List.Header>
-														<List.Description>
-															8:00 AM - 10:00 PM
-														</List.Description>
-													</List.Content>
-												</List.Item>
-												<List.Item>
-													<List.Icon color="green" name="phone" />
-													<List.Content>
-														<List.Header>
-															Phone
-														</List.Header>
-														<List.Description>
-															(646) 923-2715
-														</List.Description>
-													</List.Content>
-												</List.Item>
-											</List>
+											{StoreList(props)}
 										</div>
 									</div>
 								) : (
@@ -204,10 +239,9 @@ class Stores extends Component {
 								<Divider />
 
 								<StoresList
-									key="city"
-									retrieveItems={() => this.props.getStores({})}
+									history={this.props.history}
+									key="store"
 									useCards={true}
-									{...this.props}
 								/>
 							</div>
 						)}
@@ -222,18 +256,31 @@ class Stores extends Component {
 
 Stores.propTypes = {
 	getStore: PropTypes.func,
-	getStores: PropTypes.func,
 	settings: PropTypes.object,
 	store: PropTypes.shape({
 		address: PropTypes.string,
+		bikes: PropTypes.arrayOf(PropTypes.shape({
+			description: PropTypes.string,
+			name: PropTypes.string,
+			image: PropTypes.string,
+			quantity: PropTypes.number
+		})),
 		city: PropTypes.string,
 		description: PropTypes.string,
 		error: PropTypes.bool,
 		id: PropTypes.number,
 		image: PropTypes.string,
+		images: PropTypes.arrayOf(PropTypes.shape({
+			image: PropTypes.string
+		})),
 		lat: PropTypes.string,
 		lon: PropTypes.string,
 		name: PropTypes.string,
+		reviews: PropTypes.arrayOf(PropTypes.shape({
+			date_created: PropTypes.string,
+			review: PropTypes.string,
+			stars: PropTypes.number
+		})),
 		state: PropTypes.string,
 		zipCode: PropTypes.number
 	})
@@ -241,7 +288,6 @@ Stores.propTypes = {
 
 Stores.defaultProps = {
 	getStore,
-	getStores,
 	store: {
 		error: false
 	}
@@ -255,6 +301,5 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(mapStateToProps, {
-	getStore,
-	getStores
+	getStore
 })(Stores)

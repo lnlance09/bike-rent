@@ -116,11 +116,18 @@ class City extends CI_Controller {
 			$limit
 		);
 
-		$pages = ceil($count/$limit);
-		$has_more = $page+1 < $pages ? true : false;
+		if ($count > 0) {
+			$count = count($results);
+			$pages = ceil($count/$limit);
+			$has_more = $page+1 < $pages ? true : false;
+		} else {
+			$count = 0;
+			$pages = 0;
+			$has_more = false;
+		}
 
 		echo json_encode([
-			'count' => count($results),
+			'count' => $count,
 			'pagination' => [
 				'hasMore' => $has_more,
 				'nextPage' => $page+1,

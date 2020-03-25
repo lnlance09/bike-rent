@@ -34,31 +34,30 @@ class Signin extends Component {
 
 		return (
 			<Provider store={store}>
-				<div className="mainWrapper signInPage">
-					<PageHeader
-						activeItem="signin"
-						authenticated={auth}
-						// content={BookingForm}
-						items={settings.header.items}
-						language={settings.language}
-						languages={settings.languages}
-						showMainContent={false}
-						signInButton={settings.header.signInButton}
-						signUpButton={settings.header.signUpButton}
-						{...this.props}
-					/>
-					<Container className="signInContainer" textAlign="center">
-						<div className="loginForm">
-							<Grid textAlign="center" verticalAlign="middle">
-								<Grid.Column>
-									<Authentication type={type} />
-								</Grid.Column>
-							</Grid>
-						</div>
-					</Container>
-
-					<PageFooter footerData={settings.footer} history={this.props.history} />
-				</div>
+				<PageHeader
+					activeItem="signin"
+					authenticated={auth}
+					// content={BookingForm}
+					items={settings.header.items}
+					language={settings.language}
+					languages={settings.languages}
+					showMainContent={false}
+					signInButton={settings.header.signInButton}
+					signUpButton={settings.header.signUpButton}
+					{...this.props}
+				/>
+					<div className="mainWrapper signInPage">
+						<Container className="signInContainer" textAlign="center">
+							<div className="loginForm">
+								<Grid textAlign="center" verticalAlign="middle">
+									<Grid.Column>
+										<Authentication type={type} />
+									</Grid.Column>
+								</Grid>
+							</div>
+						</Container>
+					</div>
+				<PageFooter footerData={settings.footer} history={this.props.history} />
 			</Provider>
 		)
 	}

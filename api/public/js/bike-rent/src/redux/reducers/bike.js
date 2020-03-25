@@ -4,6 +4,11 @@ const initial = () => ({})
 
 const bike = (state = initial(), action) => {
 	switch (action.type) {
+		case constants.GET_BIKES:
+			return {
+				messageSent: false
+			}
+
 		case constants.SELECT_BIKE:
 			return {
 				messageSent: false

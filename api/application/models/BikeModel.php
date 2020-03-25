@@ -19,8 +19,40 @@ class BikeModel extends CI_Model {
 		$result = $this->db->get('bikes')->result_array();
 	}
 
-	public function getAll($where, $sort) {
-		
+	public function getAll($sort = null) {
+		$this->db->select('id, description, image, name');
+		// $this->db->join('locations l', 'fl.id = l.location_id');
+		$results = $this->db->get('bikes b')->result_array();
+		return $results;
+	}
+
+	public function search(
+		$just_count,
+		$page = false,
+		$limit = 25
+	) {
+		$select = "id, description, image, name";
+
+		if ($just_count) {
+			$select = 'COUNT(*) AS count';
+		}
+
+		$this->db->select($select);
+		// $this->db->join('locations l', 'fl.location_id = l.id');
+
+		if (!$just_count) {
+			$limit = 25;
+			$start = $page*$limit;
+			$this->db->limit($limit, $start);
+		}
+
+		$results = $this->db->get('bikes b')->result_array();
+
+		if ($just_count) {
+			return $results[0]['count'];
+		}
+
+		return $results;
 	}
 
 	public function update($id, $data, $tags) {

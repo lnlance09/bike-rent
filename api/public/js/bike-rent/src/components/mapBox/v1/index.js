@@ -5,22 +5,28 @@ import GoogleMapReact from "google-map-react"
 import ImagePic from "images/images/image-square.png"
 import PropTypes from "prop-types"
 
+const MapMarker = ({ lat, lng }) => {
+	return (
+		<Icon
+			lat={lat}
+			lng={lng}
+			name="marker"
+		/>
+	)
+}
+
 class MapBox extends Component {
 	render() {
-		const { defaultCenter, key, lat, lng } = this.props
+		const { apiKey, defaultCenter, lat, lng } = this.props
 
 		return (
 			<div className="googleMapsBox">
 				<GoogleMapReact
-					bootstrapURLKeys={{ key }}
+					bootstrapURLKeys={{ key: apiKey }}
 					defaultCenter={defaultCenter}
 					defaultZoom={11}
 				>
-					<Icon
-						lat={lat}
-						lng={lng}
-						name="marker"
-					/>
+					<MapMarker lat={lat} lng={lng} />
 				</GoogleMapReact>
 			</div>
 		)
@@ -28,11 +34,11 @@ class MapBox extends Component {
 }
 
 MapBox.propTypes = {
+	apiKey: PropTypes.string,
 	defaultCenter: PropTypes.shape({
 		lat: PropTypes.number,
 		lng: PropTypes.number
 	}),
-	key: PropTypes.string,
 	lat: PropTypes.number,
 	lng: PropTypes.number
 }

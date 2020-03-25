@@ -1,5 +1,5 @@
 import { connect, Provider } from "react-redux"
-// import { Container } from "semantic-ui-react"
+import { Container, Header } from "semantic-ui-react"
 import React, { Component } from "react"
 import BikesList from "components/bikesList/v1/"
 import PageFooter from "components/footer/v1/"
@@ -34,15 +34,25 @@ class Bikes extends Component {
 					<PageHeader
 						activeItem="bikes"
 						authenticated={auth}
-						// content={BookingForm}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
-						showMainContent
+						showMainContent={false}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}
 						{...this.props}
 					/>
+
+					<Container className="mainContainer">
+						<Header size="huge">View our bikes</Header>
+
+						<BikesList
+							emptyMsgContent="There are no bikes available"
+							history={this.props.history}
+							key="bike"
+							useCards={true}
+						/>
+					</Container>
 
 					<PageFooter
 						footerData={settings.footer}
@@ -58,7 +68,9 @@ Bikes.propTypes = {
 	settings: PropTypes.object
 }
 
-Bikes.defaultProps = {}
+Bikes.defaultProps = {
+
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -67,4 +79,6 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-export default connect(mapStateToProps, {})(Bikes)
+export default connect(mapStateToProps, {
+
+})(Bikes)

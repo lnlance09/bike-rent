@@ -37,7 +37,7 @@ class Faq extends Component {
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
-						showMainContent
+						showMainContent={false}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}
 						{...this.props}

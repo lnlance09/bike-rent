@@ -1,5 +1,5 @@
 import "./style.css"
-import { toggleLoading } from "./actions"
+import { getStores, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
 import { Card, Button, Header, Item, List, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
@@ -18,12 +18,12 @@ class StoresList extends Component {
 	}
 
 	componentDidMount() {
-		this.props.retrieveItems()
+		this.props.getStores({ page: 0 })
 	}
 
 	componentDidUpdate(prevProps) {
 		if (prevProps !== this.props) {
-			// this.props.retrieveItems()
+			
 		}
 	}
 
@@ -31,11 +31,13 @@ class StoresList extends Component {
 		if (this.props.hasMore && !this.props.loadingMore) {
 			const newPage = parseInt(this.props.page + 1, 10)
 			this.props.toggleLoading()
-			this.props.retrieveItems()
+			this.props.getStore({ page: 0 })
 		}
 	}
 
 	render() {
+		console.log("stores list")
+		console.log(this.props)
 		const { emptyMsgContent, itemsPerRow, results, useCards } = this.props
 
 		const RenderItems = ({ props }) => {
@@ -103,15 +105,16 @@ class StoresList extends Component {
 }
 
 StoresList.propTypes = {
-	count: PropTypes.string,
+	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
+	getStores: PropTypes.func,
 	hasMore: PropTypes.bool,
+	history: PropTypes.object,
 	itemsPerRow: PropTypes.number,
 	key: PropTypes.string,
 	loadingMore: PropTypes.bool,
 	page: PropTypes.number,
 	results: PropTypes.array,
-	retrieveItems: PropTypes.func,
 	showPics: PropTypes.bool,
 	toggleLoading: PropTypes.func,
 	useCards: PropTypes.bool
@@ -120,6 +123,7 @@ StoresList.propTypes = {
 StoresList.defaultProps = {
 	count: 10,
 	emptyMsgContent: "",
+	getStores,
 	itemsPerRow: 3,
 	loadingMore: false,
 	page: 0,
@@ -130,10 +134,11 @@ StoresList.defaultProps = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	...state.store,
+	...state.stores,
 	...ownProps
 })
 
 export default connect(mapStateToProps, {
+	getStores,
 	toggleLoading
 })(StoresList)

@@ -1,5 +1,5 @@
 import "./style.css"
-import { toggleLoading } from "./actions"
+import { getBikes, getBikesByStore, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
 import { Card, Button, Header, Item, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
@@ -18,7 +18,14 @@ class BikesList extends Component {
 	}
 
 	componentDidMount() {
-		this.props.retrieveItems()
+		if (this.props.bikesByStore) {
+			this.props.getBikesByStore({
+				page: 0,
+				storeId: this.props.storeId
+			})
+		} else {
+			this.props.getBikes({ page: 0 })
+		}
 	}
 
 	componentDidUpdate(prevProps) {
@@ -39,6 +46,8 @@ class BikesList extends Component {
 		const { emptyMsgContent, itemsPerRow, results, useCards } = this.props
 
 		const RenderItems = ({ props }) => {
+			console.log("render items")
+			console.log(props)
 			return props.results.map((result, i) => {
 				if (result.id) {
 					return (
@@ -52,7 +61,7 @@ class BikesList extends Component {
 							meta={result.meta}
 							redirect
 							tags={[result.tags]}
-							title={result.title}
+							title={result.name}
 							url={result.url}
 							useCard={useCards}
 						/>
@@ -65,7 +74,7 @@ class BikesList extends Component {
 
 		return (
 			<Provider store={store}>
-				<div className="citiesList">
+				<div className="bikesList">
 					{results.length > 0 ? (
 						<div>
 							<Visibility
@@ -87,7 +96,7 @@ class BikesList extends Component {
 					) : (
 						<div className="emptyContainer">
 							<Segment placeholder>
-								<Header>{emptyMsgContent}</Header>
+								<Header icon>{emptyMsgContent}</Header>
 							</Segment>
 						</div>
 					)}
@@ -98,37 +107,48 @@ class BikesList extends Component {
 }
 
 BikesList.propTypes = {
-	count: PropTypes.string,
+	bikesByStore: PropTypes.bool,
+	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
+	getBikes: PropTypes.func,
+	getBikesByStore: PropTypes.func,
 	hasMore: PropTypes.bool,
+	history: PropTypes.object,
 	itemsPerRow: PropTypes.number,
 	key: PropTypes.string,
 	loadingMore: PropTypes.bool,
 	page: PropTypes.number,
 	results: PropTypes.array,
-	retrieveItems: PropTypes.func,
 	showPics: PropTypes.bool,
+	storeId: PropTypes.string,
 	toggleLoading: PropTypes.func,
-	useCards: PropTypes.bool
+	useCards: PropTypes.bool,
+	useInternally: PropTypes.bool
 }
 
 BikesList.defaultProps = {
+	bikesByStore: false,
 	count: 10,
 	emptyMsgContent: "",
+	getBikes,
+	getBikesByStore,
 	itemsPerRow: 3,
 	loadingMore: false,
 	page: 0,
 	results: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
 	showPics: true,
 	toggleLoading,
-	useCards: true
+	useCards: true,
+	useInternally: true
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	...state.bike,
+	...state.bikes,
 	...ownProps
 })
 
 export default connect(mapStateToProps, {
+	getBikes,
+	getBikesByStore,
 	toggleLoading
 })(BikesList)

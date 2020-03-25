@@ -15,7 +15,7 @@ class AdminStores extends Component {
 	render() {
 		const { bearer } = this.props
 
-		return <div className="adminCss"></div>
+		return <div className="adminStores"></div>
 	}
 }
 
