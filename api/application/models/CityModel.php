@@ -12,7 +12,7 @@ class CityModel extends CI_Model {
 	public function checkIfExists($id) {
 		$this->db->select("COUNT(*) AS count");
 		$this->db->where('location_id', $id);
-		$result = $this->db->get('featured_locations')->result();
+		$result = $this->db->get($this->table)->result();
 		if ($result[0]->count == 0) {
 			return false;
 		}

@@ -2,13 +2,15 @@
 class BikeModel extends CI_Model {
 	public function __construct() {
 		parent:: __construct();
+
+		$this->load->database();
+		$this->load->helper('common_helper');
+
+		$this->table = 'bikes';
 	}
 
-	public function create($title, $entry, $tags) {
-		$this->db->insert('blog_posts', [
-			'title' => $title,
-			'entry' => $entry
-		]);
+	public function create($data) {
+		$this->db->insert($this->table, $data);
 	}
 
 	public function get($id) {
@@ -26,7 +28,7 @@ class BikeModel extends CI_Model {
 		$this->db->update('blog_posts', $data);
 
 		if ($tags) {
-			// $this->tags->insertTags($id, $tags, 'fallacy', $userId);
+			
 		}
 	}
 }

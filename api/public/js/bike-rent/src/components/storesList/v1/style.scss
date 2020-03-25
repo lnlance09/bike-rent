@@ -1,0 +1,41 @@
+@import '../../../css/colors.scss';
+
+.storesList {
+    width: 100%;
+
+    .emptyContainer {
+        text-align: center;
+    }
+
+    .cards {
+        @media only screen and (max-width: 1025px) {
+            margin-top: 10px;
+        }
+
+        .card {
+            .meta {
+                .ui.list {
+                    .item {
+                        padding-top: 0 !important;
+                    }
+                }
+            }
+
+            .content {
+                word-break: break-word;
+
+                .description {
+                    max-height: 240px;
+                    overflow: hidden;
+                    white-space: pre-line;
+                }
+            }
+
+            .image {
+                img {
+                    height: 225px !important;
+                }
+            }
+        }
+    }
+}

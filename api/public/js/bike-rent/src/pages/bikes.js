@@ -1,6 +1,7 @@
 import { connect, Provider } from "react-redux"
 // import { Container } from "semantic-ui-react"
 import React, { Component } from "react"
+import BikesList from "components/bikesList/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PropTypes from "prop-types"
@@ -43,7 +44,10 @@ class Bikes extends Component {
 						{...this.props}
 					/>
 
-					<PageFooter footerData={settings.footer} history={this.props.history} />
+					<PageFooter
+						footerData={settings.footer}
+						history={this.props.history}
+					/>
 				</div>
 			</Provider>
 		)

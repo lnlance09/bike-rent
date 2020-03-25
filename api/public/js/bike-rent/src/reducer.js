@@ -3,6 +3,7 @@ import app from "redux/reducers/app"
 import bike from "redux/reducers/bike"
 import city from "redux/reducers/city"
 import library from "redux/reducers/library"
+import store from "redux/reducers/store"
 import user from "components/authentication/v1/reducer"
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
 	bike,
 	city,
 	library,
+	store,
 	user
 })

@@ -1,0 +1,22 @@
+/*---  Colors  ---*/
+/*---  Light Colors  ---*/
+/*---   Neutrals  ---*/
+/*---   Misc  ---*/
+/*---   Social colors  ---*/
+.storesList {
+  width: 100%; }
+  .storesList .emptyContainer {
+    text-align: center; }
+  @media only screen and (max-width: 1025px) {
+    .storesList .cards {
+      margin-top: 10px; } }
+  .storesList .cards .card .meta .ui.list .item {
+    padding-top: 0 !important; }
+  .storesList .cards .card .content {
+    word-break: break-word; }
+    .storesList .cards .card .content .description {
+      max-height: 240px;
+      overflow: hidden;
+      white-space: pre-line; }
+  .storesList .cards .card .image img {
+    height: 225px !important; }

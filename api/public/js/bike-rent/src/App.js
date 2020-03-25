@@ -223,17 +223,30 @@ class App extends Component {
 								)}
 							/>
 
-							<Route
-								exact
-								path="/stores"
-								render={props => (
-									<Stores
-										key={window.location.pathname}
-										settings={settings}
-										{...props}
-									/>
-								)}
-							/>
+							<Switch>
+								<Route
+									exact
+									path="/stores"
+									render={props => (
+										<Stores
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path="/stores/:id"
+									render={props => (
+										<Stores
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
+									)}
+								/>
+							</Switch>
 
 							<Route
 								exact

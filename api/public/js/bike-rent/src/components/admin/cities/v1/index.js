@@ -35,6 +35,7 @@ class AdminCities extends Component {
 		this.fetchLocations("")
 	}
 
+	// TODO - Replace this with one used in selectOptions
 	fetchLocations(q) {
 		return fetch(`${window.location.origin}/api/city/getLocations?q=${q}`, {
 			headers: {

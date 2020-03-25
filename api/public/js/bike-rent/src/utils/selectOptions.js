@@ -28,3 +28,13 @@ export const pageOptions = [
 	{ key: "stores", text: "stores", value: "stores" },
 	{ key: "terms", text: "terms", value: "terms" }
 ]
+
+export const fetchLocations = async q => {
+	const response = await fetch(`${window.location.origin}/api/city/getLocations?q=${q}`, {
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+	const data = await response.json()
+	return data.locations
+}

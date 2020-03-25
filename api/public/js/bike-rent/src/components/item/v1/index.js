@@ -88,7 +88,7 @@ class ResultItem extends Component {
 
 		const FullCard = (
 			<Card onClick={this.redirectToUrl}>
-				{img && <Image src={img} wrapped ui={false} />}
+				{img && <Image onError={i => (i.target.src = ImagePic)} src={img} wrapped ui={false} />}
 				<Card.Content>
 					<Card.Header>{title}</Card.Header>
 					{meta && <Card.Meta>{meta}</Card.Meta>}
@@ -127,7 +127,7 @@ ResultItem.propTypes = {
 	key: PropTypes.string,
 	label: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 	menu: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-	meta: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.string]),
+	meta: PropTypes.oneOfType([PropTypes.bool, PropTypes.node, PropTypes.string]),
 	redirect: PropTypes.bool,
 	tags: PropTypes.array,
 	title: PropTypes.string,

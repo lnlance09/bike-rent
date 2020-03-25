@@ -6,8 +6,16 @@
 }
 
 .pageHeader {
-	.languageContainer {
-		padding: 10px 0;
+	.languageMenu {
+		background: $offWhite;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		margin-top: 0 !important;
+
+		.languageContainer {
+			border-bottom: solid 1px $darkWhite;
+			padding: 10px 0;
+		}
 	}
 
 	.mobileSegment, .desktopSegment {

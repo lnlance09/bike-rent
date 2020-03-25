@@ -62,3 +62,7 @@ body {
       margin-top: 0; }
     .signInPage .signInContainer .loginForm .grid .column {
       max-width: 450px; }
+
+.storesPage .googleMapsBox {
+  height: 270px;
+  width: 100%; }

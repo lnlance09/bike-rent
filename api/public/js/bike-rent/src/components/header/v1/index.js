@@ -208,9 +208,11 @@ class AppHeader extends Component {
 								{LoginButton(this.props)}
 							</Container>
 						</Menu>
-						<Container className="languageContainer" textAlign="left">
-							{LanguageSelection}
-						</Container>
+						<Menu className="languageMenu">
+							<Container className="languageContainer" textAlign="left">
+								{LanguageSelection}
+							</Container>
+						</Menu>
 						{showMainContent && (
 							<HeroContent
 								content={content}

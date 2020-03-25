@@ -7,8 +7,14 @@
   font-family: logoFont;
   src: url("../../../css/fonts/dealerplate california.ttf"); }
 
-.pageHeader .languageContainer {
-  padding: 10px 0; }
+.pageHeader .languageMenu {
+  background: #F9FAFB;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin-top: 0 !important; }
+  .pageHeader .languageMenu .languageContainer {
+    border-bottom: solid 1px #F3F4F5;
+    padding: 10px 0; }
 
 .pageHeader .mobileSegment, .pageHeader .desktopSegment {
   min-height: 700px;
