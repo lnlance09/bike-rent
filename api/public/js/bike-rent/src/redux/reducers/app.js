@@ -1,6 +1,10 @@
 import * as constants from "../constants"
 
 const initial = () => ({
+	blog: {
+		error: false,
+		modalOpen: false
+	},
 	modalOpen: false
 	// settings: {}
 })
@@ -16,6 +20,15 @@ const settings = (state = initial(), action) => {
 				errorMsg: payload.error
 			}
 
+		case constants.ADD_BLOG:
+			return {
+				...state,
+				blog: {
+					error: payload.error !== false,
+					errorMsg: payload.error
+				}
+			}
+
 		case constants.EDIT_CSS:
 			return {
 				...state,
@@ -26,6 +39,21 @@ const settings = (state = initial(), action) => {
 			return {
 				...state,
 				sitemap: payload
+			}
+
+		case constants.GET_BLOGS:
+			const blogs =
+				payload.page > 0 ? [...state.blogs.results, ...payload.results] : payload.results
+
+			return {
+				...state,
+				blogs: {
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: blogs
+				}
 			}
 
 		case constants.GET_CITIES:
@@ -111,6 +139,15 @@ const settings = (state = initial(), action) => {
 			return {
 				...state,
 				modalOpen: !state.modalOpen
+			}
+
+		case constants.TOGGLE_EDIT_BLOG_MODAL:
+			return {
+				...state,
+				blog: {
+					...state.blog,
+					modalOpen: !state.blog.modalOpen
+				}
 			}
 
 		default:

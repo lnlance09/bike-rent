@@ -1,5 +1,5 @@
 import { connect, Provider } from "react-redux"
-import { getCities, getCss, getEmail, getSitemap } from "redux/actions/app"
+import { getBlogs, getCities, getCss, getEmail, getSitemap } from "redux/actions/app"
 import { Accordion, Container, Grid, Menu, Responsive } from "semantic-ui-react"
 import React, { Component } from "react"
 import AdminBikes from "components/admin/bikes/v1/"
@@ -39,6 +39,7 @@ class Admin extends Component {
 	}
 
 	componentDidMount() {
+		this.props.getBlogs()
 		this.props.getCities()
 		this.props.getSitemap({ url: this.props.sitemapUrl })
 		this.props.getCss({ url: this.props.cssUrl })
@@ -56,7 +57,7 @@ class Admin extends Component {
 
 	render() {
 		const { activeItem, bearer } = this.state
-		const { cities, css, emails, settings, sitemap, sitemapUrl } = this.props
+		const { blogs, cities, css, emails, settings, sitemap, sitemapUrl } = this.props
 
 		const AdminMenu = props => (
 			<Accordion as={Menu} className="adminMenu" fluid inverted vertical>
@@ -393,7 +394,7 @@ class Admin extends Component {
 			if (activeItem === "blog-posts") {
 				return (
 					<div>
-						<AdminBlog />
+						<AdminBlog bearer={bearer} blogs={blogs} />
 					</div>
 				)
 			}
@@ -511,7 +512,34 @@ class Admin extends Component {
 }
 
 Admin.propTypes = {
-	cities: PropTypes.object,
+	blogs: PropTypes.shape({
+		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		hasMore: PropTypes.bool,
+		loadingMore: PropTypes.bool,
+		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		results: PropTypes.arrayOf(
+			PropTypes.shape({
+				date_created: PropTypes.string,
+				date_updated: PropTypes.string,
+				entry: PropTypes.string,
+				title: PropTypes.string
+			})
+		)
+	}),
+	cities: PropTypes.shape({
+		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		hasMore: PropTypes.bool,
+		loadingMore: PropTypes.bool,
+		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		results: PropTypes.arrayOf(
+			PropTypes.shape({
+				date_created: PropTypes.string,
+				date_updated: PropTypes.string,
+				entry: PropTypes.string,
+				title: PropTypes.string
+			})
+		)
+	}),
 	css: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 	cssUrl: PropTypes.string,
 	emails: PropTypes.shape({
@@ -520,6 +548,7 @@ Admin.propTypes = {
 		orderConfirmation: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 		refund: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 	}),
+	getBlogs: PropTypes.func,
 	getCities: PropTypes.func,
 	getCss: PropTypes.func,
 	getEmail: PropTypes.func,
@@ -530,7 +559,20 @@ Admin.propTypes = {
 }
 
 Admin.defaultProps = {
-	cities: [{}, {}, {}, {}],
+	blogs: {
+		count: "0",
+		hasMore: false,
+		loadingMore: false,
+		page: 0,
+		results: [{}, {}, {}, {}]
+	},
+	cities: {
+		count: 0,
+		hasMore: false,
+		loadingMore: false,
+		page: 0,
+		results: [{}, {}, {}, {}]
+	},
 	css: false,
 	cssUrl: "https://bike-rent.s3-us-west-2.amazonaws.com/css/style.css",
 	emails: {
@@ -539,6 +581,7 @@ Admin.defaultProps = {
 		orderConfirmation: false,
 		refund: false
 	},
+	getBlogs,
 	getCities,
 	getCss,
 	getEmail,
@@ -555,6 +598,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(mapStateToProps, {
+	getBlogs,
 	getCities,
 	getCss,
 	getEmail,

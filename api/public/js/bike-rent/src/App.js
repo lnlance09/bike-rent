@@ -283,7 +283,6 @@ class App extends Component {
 }
 
 App.propTypes = {
-	cities: PropTypes.array,
 	settings: PropTypes.shape({
 		aboutPage: PropTypes.shape({
 			desciption: PropTypes.string,

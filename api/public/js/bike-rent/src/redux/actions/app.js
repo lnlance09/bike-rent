@@ -7,6 +7,33 @@ toast.configure({
 	draggable: false
 })
 
+export const addBlog = ({ bearer, entry, title }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/blog/create`,
+		{
+			form: {
+				entry,
+				title
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.ADD_BLOG
+			})
+
+			if (!body.error) {
+				toast.success("Blog has been added")
+				dispatch(getBlogs())
+			}
+		}
+	)
+}
+
 export const addCity = ({ bearer, description, id, image }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/city/create`,
@@ -31,6 +58,35 @@ export const addCity = ({ bearer, description, id, image }) => dispatch => {
 				toast.success("The city has been added")
 				dispatch(getCities())
 				dispatch(toggleAddCityModal())
+			}
+		}
+	)
+}
+
+export const editBlog = ({ bearer, entry, id, title }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/blog/update`,
+		{
+			form: {
+				id,
+				entry,
+				title
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.EDIT_BLOG
+			})
+
+			if (!body.error) {
+				toast.success("Your edit was successful")
+				dispatch(toggleEditBlogModal())
+				dispatch(getBlogs())
 			}
 		}
 	)
@@ -137,6 +193,21 @@ export const editSitemap = ({ bearer, sitemap }) => dispatch => {
 			dispatch({
 				payload: body,
 				type: constants.EDIT_SITEMAP
+			})
+		}
+	)
+}
+
+export const getBlogs = () => dispatch => {
+	request.get(
+		`${window.location.origin}/api/blog/search`,
+		{
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.GET_BLOGS
 			})
 		}
 	)
@@ -354,5 +425,11 @@ export const submitHeaderForm = ({ bearer, listItems, signInButton, signUpButton
 export const toggleAddCityModal = () => dispatch => {
 	dispatch({
 		type: constants.TOGGLE_ADD_CITY_MODAL
+	})
+}
+
+export const toggleEditBlogModal = () => dispatch => {
+	dispatch({
+		type: constants.TOGGLE_EDIT_BLOG_MODAL
 	})
 }
