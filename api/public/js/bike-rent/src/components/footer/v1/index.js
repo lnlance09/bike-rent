@@ -18,10 +18,9 @@ class Footer extends Component {
 						<Grid.Row>
 							<Grid.Column width={3}>
 								<Header as="h4" content={firstList.title} inverted={isInverted} />
-								<List inverted={isInverted} link>
+								<List inverted={isInverted}>
 									{firstList.items.map((item, i) => (
 										<List.Item
-											as="a"
 											key={`${item.text}${i}`}
 											onClick={() => this.props.history.push(item.link)}
 										>
@@ -32,10 +31,9 @@ class Footer extends Component {
 							</Grid.Column>
 							<Grid.Column width={3}>
 								<Header as="h4" content={secondList.title} inverted={isInverted} />
-								<List inverted={isInverted} link>
+								<List inverted={isInverted}>
 									{secondList.items.map((item, i) => (
 										<List.Item
-											as="a"
 											key={`${item.text}${i}`}
 											onClick={() => this.props.history.push(item.link)}
 										>

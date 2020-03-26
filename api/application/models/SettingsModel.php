@@ -35,7 +35,7 @@ class SettingsModel extends CI_Model {
 			'title' => $title
 		];
 
-		$json = json_encode($decode);
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
 		file_put_contents($this->configFile, $json);
 
 		return $json;
@@ -65,7 +65,7 @@ class SettingsModel extends CI_Model {
 			]
 		];
 
-		$json = json_encode($decode);
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
 		file_put_contents($this->configFile, $json);
 
 		return $json;
@@ -141,7 +141,7 @@ class SettingsModel extends CI_Model {
 			]
 		];
 
-		$json = json_encode($decode);
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
 		file_put_contents($this->configFile, $json);
 
 		return $json;
@@ -150,7 +150,16 @@ class SettingsModel extends CI_Model {
 	public function updateLanguages($languages) {
 		$decode = $this->decodeSettings();
 		$decode['languages'] = $languages;
-		$json = json_encode($decode);
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
+		file_put_contents($this->configFile, $json);
+
+		return $json;
+	}
+
+	public function updateTheme($theme) {
+		$decode = $this->decodeSettings();
+		$decode['theme'] = $theme;
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
 		file_put_contents($this->configFile, $json);
 
 		return $json;

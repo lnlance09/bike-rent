@@ -401,7 +401,11 @@ class Admin extends Component {
 			if (activeItem === "change-themes") {
 				return (
 					<div>
-						<AdminThemes themes={settings.themes} />
+						<AdminThemes
+							bearer={bearer}
+							theme={settings.theme}
+							themes={settings.themes}
+						/>
 					</div>
 				)
 			}

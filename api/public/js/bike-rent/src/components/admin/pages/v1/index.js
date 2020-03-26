@@ -1,7 +1,7 @@
 import "./style.css"
 // import { fetchData } from "./actions"
 import { connect } from "react-redux"
-import { Divider, Form, Header, Icon, Input } from "semantic-ui-react"
+import { Divider, Form, Header, Icon } from "semantic-ui-react"
 import Bikes from "./stores"
 import Stores from "./stores"
 import React, { Component } from "react"
@@ -30,7 +30,7 @@ class AdminPages extends Component {
 			}
 
 			if (type === "bikes-page") {
-				return <Form></Form>
+				return <Bikes />
 			}
 
 			if (type === "checkout-page") {
@@ -66,9 +66,7 @@ class AdminPages extends Component {
 			}
 
 			if (type === "stores-page") {
-				return (
-					<Stores />
-				)
+				return <Stores />
 			}
 
 			if (type === "terms-page") {

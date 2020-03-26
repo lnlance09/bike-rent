@@ -59,9 +59,7 @@ class Checkout extends Component {
 
 								<Divider />
 							</Grid.Column>
-							<Grid.Column className="rightSide" width={5}>
-
-							</Grid.Column>
+							<Grid.Column className="rightSide" width={5}></Grid.Column>
 						</Grid>
 					</Container>
 

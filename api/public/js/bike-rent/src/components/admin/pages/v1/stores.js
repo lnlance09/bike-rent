@@ -1,7 +1,7 @@
 import "./style.css"
 // import { fetchData } from "./actions"
 import { connect } from "react-redux"
-import { Divider, Form, Header, Icon, Input, Radio, Select } from "semantic-ui-react"
+import { Divider, Form, Header, Input, Radio, Select } from "semantic-ui-react"
 import { colorOptions } from "utils/selectOptions"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
@@ -34,7 +34,7 @@ class Stores extends Component {
 	onChangeAddToCartText = (e, { value }) => this.setState({ addToCartInverted: value })
 
 	render() {
-		const { bearer } = this.props
+		// const { bearer } = this.props
 		const {
 			aboutTitle,
 			activeTab,
@@ -47,9 +47,7 @@ class Stores extends Component {
 
 		return (
 			<div className="adminStores">
-				<Header size="huge">
-					Individual Store Page
-				</Header>
+				<Header size="huge">Individual Store Page</Header>
 				<Form>
 					<Form.Field>
 						<Input

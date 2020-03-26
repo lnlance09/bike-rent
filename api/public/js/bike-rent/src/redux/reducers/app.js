@@ -101,6 +101,12 @@ const settings = (state = initial(), action) => {
 				...state
 			}
 
+		case constants.SET_THEME:
+			return {
+				...state,
+				theme: payload.theme
+			}
+
 		case constants.TOGGLE_ADD_CITY_MODAL:
 			return {
 				...state,

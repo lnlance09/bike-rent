@@ -53,8 +53,6 @@ body {
 
 
 .mainWrapper {
-	background: $white;
-
 	.paddedSegment {
 		padding: 8em 0em !important;
 	}
@@ -86,12 +84,10 @@ body {
 
 
 .signInPage {
-	background: $offWhite;
 	min-height: 100vh;
 
 	.signInContainer {
 		.loginForm {
-			background: $offWhite;
 			height: 100%;
 			padding: 25px 0;
 

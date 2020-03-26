@@ -266,6 +266,32 @@ export const setLanguages = ({ bearer, languages }) => dispatch => {
 	)
 }
 
+export const setTheme = ({ bearer, theme }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/settings/updateTheme`,
+		{
+			form: {
+				theme
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.SET_THEME
+			})
+
+			if (!body.error) {
+				toast.success("Theme updated!")
+				window.location.reload()
+			}
+		}
+	)
+}
+
 export const submitFooterForm = ({
 	bearer,
 	inverted,

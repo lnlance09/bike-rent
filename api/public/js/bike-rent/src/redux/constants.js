@@ -9,6 +9,7 @@ export const GET_SITEMAP = "app:GET_SITEMAP"
 export const GET_SETTINGS = "app:GET_SETTINGS"
 export const SEND_EMAIL = "app:SEND_EMAIL"
 export const SET_LANGUAGES = "app:SET_LANGUAGES"
+export const SET_THEME = "app:SET_THEME"
 export const TOGGLE_ADD_CITY_MODAL = "app:TOGGLE_ADD_CITY_MODAL"
 
 export const SELECT_BIKE = "bike:SELECT_BIKE"

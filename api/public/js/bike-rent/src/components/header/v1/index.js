@@ -172,6 +172,7 @@ class AppHeader extends Component {
 						vertical
 					>
 						<Menu
+							color="red" // TODO - make editable
 							className="globalHeaderMenu"
 							fixed={fixed ? "top" : null}
 							inverted={!fixed}

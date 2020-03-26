@@ -47,9 +47,7 @@ class Bikes extends Component {
 
 		return (
 			<div className="adminStores">
-				<Header size="huge">
-					Stores Page
-				</Header>
+				<Header size="huge">Stores Page</Header>
 				<Form>
 					<Form.Field>
 						<Input

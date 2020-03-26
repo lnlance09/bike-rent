@@ -1,10 +1,11 @@
 import "./style.css"
-// import { fetchData } from "./actions"
-import { connect } from "react-redux"
-import { Button, Card, Divider, Image } from "semantic-ui-react"
+import { setTheme } from "redux/actions/app"
+import { connect, Provider } from "react-redux"
+import { Button, Card, Image } from "semantic-ui-react"
 import { capitalizeWord } from "utils/textFunctions"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import store from "store"
 
 class AdminThemes extends Component {
 	constructor(props) {
@@ -14,37 +15,49 @@ class AdminThemes extends Component {
 	}
 
 	render() {
-		const { bearer, themes } = this.props
+		const { bearer, theme, themes } = this.props
 
 		return (
-			<div className="adminThemes">
-				<Card.Group itemsPerRow={3}>
-					{themes.map((item, i) => (
-						<Card>
-							<Image src={item.img} wrapped ui={false} />
-							<Card.Content>
-								<Card.Header>{capitalizeWord(item.title)}</Card.Header>
-								<Card.Description>{item.tag}</Card.Description>
-							</Card.Content>
-							<Card.Content extra>
-								<Button color="green" fluid>
-									Use this theme
-								</Button>
-							</Card.Content>
-						</Card>
-					))}
-				</Card.Group>
-			</div>
+			<Provider store={store}>
+				<div className="adminThemes">
+					<Card.Group itemsPerRow={3}>
+						{themes.map((item, i) => (
+							<Card key={item.title} raised={item.title === theme}>
+								<Image src={item.img} wrapped ui={false} />
+								<Card.Content>
+									<Card.Header>{capitalizeWord(item.title)}</Card.Header>
+									<Card.Description>{item.tag}</Card.Description>
+								</Card.Content>
+								<Card.Content extra>
+									<Button
+										color={item.title === theme ? "red" : "green"}
+										fluid
+										onClick={() =>
+											this.props.setTheme({ bearer, theme: item.title })
+										}
+									>
+										{item.title === theme ? "Current theme" : "Use this theme"}
+									</Button>
+								</Card.Content>
+							</Card>
+						))}
+					</Card.Group>
+				</div>
+			</Provider>
 		)
 	}
 }
 
 AdminThemes.propTypes = {
 	bearer: PropTypes.string,
+	setTheme: PropTypes.func,
+	theme: PropTypes.string,
 	themes: PropTypes.array
 }
 
-AdminThemes.defaultProps = {}
+AdminThemes.defaultProps = {
+	setTheme
+}
 
 const mapStateToProps = (state, ownProps) => ({
 	...state.app,
@@ -52,5 +65,5 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export default connect(mapStateToProps, {
-	// fetchData
+	setTheme
 })(AdminThemes)

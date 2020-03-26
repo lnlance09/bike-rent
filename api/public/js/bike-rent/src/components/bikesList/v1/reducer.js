@@ -10,11 +10,8 @@ const bikes = (state = initial(), action) => {
 	switch (action.type) {
 		case constants.GET_BIKES:
 		case constants.GET_BIKES_BY_STORE:
-
 			const results =
-				payload.page > 0
-					? [...state.results, ...payload.results]
-					: payload.results
+				payload.page > 0 ? [...state.results, ...payload.results] : payload.results
 			return {
 				...state,
 				count: payload.count,

@@ -23,13 +23,12 @@ class StoresList extends Component {
 
 	componentDidUpdate(prevProps) {
 		if (prevProps !== this.props) {
-			
 		}
 	}
 
 	loadMore = () => {
 		if (this.props.hasMore && !this.props.loadingMore) {
-			const newPage = parseInt(this.props.page + 1, 10)
+			// const newPage = parseInt(this.props.page + 1, 10)
 			this.props.toggleLoading()
 			this.props.getStore({ page: 0 })
 		}
@@ -51,12 +50,14 @@ class StoresList extends Component {
 							id={`${props.key}${i}`}
 							img={props.showPics ? result.image : null}
 							key={`${props.key}${i}`}
-							meta={(
+							meta={
 								<List>
 									<List.Item>{result.address}</List.Item>
-									<List.Item>{result.city}, {result.state}</List.Item>
+									<List.Item>
+										{result.city}, {result.state}
+									</List.Item>
 								</List>
-							)}
+							}
 							redirect
 							tags={[result.tags]}
 							title={result.name}

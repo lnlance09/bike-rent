@@ -1,7 +1,7 @@
 import "./style.css"
 // import { fetchData } from "./actions"
 import { connect } from "react-redux"
-import { Divider } from "semantic-ui-react"
+// import { Divider } from "semantic-ui-react"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
@@ -13,8 +13,6 @@ class AdminBikes extends Component {
 	}
 
 	render() {
-		const { bearer } = this.props
-
 		return <div className="adminBikes"></div>
 	}
 }

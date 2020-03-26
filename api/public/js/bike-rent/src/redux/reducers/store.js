@@ -7,7 +7,6 @@ const store = (state = initial(), action) => {
 
 	switch (action.type) {
 		case constants.GET_STORE:
-
 			const { error } = payload.error
 			return {
 				...state,

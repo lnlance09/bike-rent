@@ -54,10 +54,7 @@ class Bikes extends Component {
 						/>
 					</Container>
 
-					<PageFooter
-						footerData={settings.footer}
-						history={this.props.history}
-					/>
+					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
 			</Provider>
 		)
@@ -68,9 +65,7 @@ Bikes.propTypes = {
 	settings: PropTypes.object
 }
 
-Bikes.defaultProps = {
-
-}
+Bikes.defaultProps = {}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -79,6 +74,4 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-export default connect(mapStateToProps, {
-
-})(Bikes)
+export default connect(mapStateToProps, {})(Bikes)

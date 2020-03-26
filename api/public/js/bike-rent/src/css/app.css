@@ -34,28 +34,28 @@ body {
     .adminContainer .grid .rightSide .mainContent {
       padding: 6px 20px !important; }
 
-.mainWrapper {
-  background: #FFFFFF; }
-  .mainWrapper .paddedSegment {
-    padding: 8em 0em !important; }
-  .mainWrapper .homePageSegment h3 {
-    font-size: 2em !important; }
-  .mainWrapper .homePageSegment p {
-    font-size: 1.33em !important; }
-  .mainWrapper .homePageSegment .divider {
-    margin: 3em 0em;
-    text-transform: uppercase; }
-  .mainWrapper .notPaddedSegment {
-    padding: 0 !important; }
-    .mainWrapper .notPaddedSegment .grid .row .column {
-      padding-bottom: 5em;
-      padding-top: 5em; }
+.mainWrapper .paddedSegment {
+  padding: 8em 0em !important; }
+
+.mainWrapper .homePageSegment h3 {
+  font-size: 2em !important; }
+
+.mainWrapper .homePageSegment p {
+  font-size: 1.33em !important; }
+
+.mainWrapper .homePageSegment .divider {
+  margin: 3em 0em;
+  text-transform: uppercase; }
+
+.mainWrapper .notPaddedSegment {
+  padding: 0 !important; }
+  .mainWrapper .notPaddedSegment .grid .row .column {
+    padding-bottom: 5em;
+    padding-top: 5em; }
 
 .signInPage {
-  background: #F9FAFB;
   min-height: 100vh; }
   .signInPage .signInContainer .loginForm {
-    background: #F9FAFB;
     height: 100%;
     padding: 25px 0; }
     .signInPage .signInContainer .loginForm .header {

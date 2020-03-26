@@ -46,17 +46,17 @@ class Signin extends Component {
 					signUpButton={settings.header.signUpButton}
 					{...this.props}
 				/>
-					<div className="mainWrapper signInPage">
-						<Container className="signInContainer" textAlign="center">
-							<div className="loginForm">
-								<Grid textAlign="center" verticalAlign="middle">
-									<Grid.Column>
-										<Authentication type={type} />
-									</Grid.Column>
-								</Grid>
-							</div>
-						</Container>
-					</div>
+				<div className="mainWrapper signInPage">
+					<Container className="signInContainer" textAlign="center">
+						<div className="loginForm">
+							<Grid textAlign="center" verticalAlign="middle">
+								<Grid.Column>
+									<Authentication type={type} />
+								</Grid.Column>
+							</Grid>
+						</div>
+					</Container>
+				</div>
 				<PageFooter footerData={settings.footer} history={this.props.history} />
 			</Provider>
 		)

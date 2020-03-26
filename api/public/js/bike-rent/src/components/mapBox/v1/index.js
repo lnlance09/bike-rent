@@ -2,17 +2,10 @@ import "./style.css"
 import { Icon } from "semantic-ui-react"
 import React, { Component } from "react"
 import GoogleMapReact from "google-map-react"
-import ImagePic from "images/images/image-square.png"
 import PropTypes from "prop-types"
 
 const MapMarker = ({ lat, lng }) => {
-	return (
-		<Icon
-			lat={lat}
-			lng={lng}
-			name="marker"
-		/>
-	)
+	return <Icon lat={lat} lng={lng} name="marker" />
 }
 
 class MapBox extends Component {

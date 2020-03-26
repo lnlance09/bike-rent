@@ -34,12 +34,27 @@ class App extends Component {
 		console.log(this.props)
 	}
 
+	componentDidMount() {
+		const theme = this.props.settings.theme
+		const cssUrl = `https://bike-rent.s3-us-west-2.amazonaws.com/css/themes/semantic.${theme}.min.css`
+		this.addStyle(cssUrl)
+	}
+
+	addStyle = url => {
+		const style = document.createElement("link")
+		style.href = url
+		style.rel = "stylesheet"
+		style.async = true
+
+		document.head.appendChild(style)
+	}
+
 	render() {
 		const { settings } = this.props
 
 		return (
-			<div className="app">
-				<Provider store={store}>
+			<Provider store={store}>
+				<div className="app">
 					<Router history={history}>
 						<ScrollToTop>
 							<Route
@@ -261,8 +276,8 @@ class App extends Component {
 							/>
 						</ScrollToTop>
 					</Router>
-				</Provider>
-			</div>
+				</div>
+			</Provider>
 		)
 	}
 }

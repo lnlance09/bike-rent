@@ -1,7 +1,16 @@
 import { connect, Provider } from "react-redux"
 import { getStore } from "redux/actions/store"
 import { fetchLocations } from "utils/selectOptions"
-import { Container, Divider, Dropdown, Grid, Header, Icon, List, Menu, Responsive, Segment } from "semantic-ui-react"
+import {
+	Container,
+	Divider,
+	Dropdown,
+	Grid,
+	Header,
+	List,
+	Menu,
+	Responsive
+} from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import BikesList from "components/bikesList/v1/"
 import LazyLoad from "components/lazyLoad/v1/"
@@ -48,16 +57,12 @@ class Stores extends Component {
 	}
 
 	handleItemClick = (e, { name }) => {
-		this.setState({ activeItem: name }, () => {
-			
-		})
+		this.setState({ activeItem: name }, () => {})
 	}
 
 	render() {
-		const { activeItem, auth, cityId, cityOptions, id } = this.state
+		const { activeItem, auth, cityOptions, id } = this.state
 		const { settings } = this.props
-		console.log("eee")
-		console.log(this.props)
 
 		const StoreList = props => {
 			return (
@@ -65,9 +70,7 @@ class Stores extends Component {
 					<List.Item>
 						<List.Icon color="red" name="marker" />
 						<List.Content>
-							<List.Header>
-								{props.address}
-							</List.Header>
+							<List.Header>{props.address}</List.Header>
 							<List.Description>
 								{props.city}, {props.state}
 							</List.Description>
@@ -76,23 +79,15 @@ class Stores extends Component {
 					<List.Item>
 						<List.Icon color="yellow" name="clock" />
 						<List.Content>
-							<List.Header>
-								Hours
-							</List.Header>
-							<List.Description>
-								8:00 AM - 10:00 PM
-							</List.Description>
+							<List.Header>Hours</List.Header>
+							<List.Description>8:00 AM - 10:00 PM</List.Description>
 						</List.Content>
 					</List.Item>
 					<List.Item>
 						<List.Icon color="green" name="phone" />
 						<List.Content>
-							<List.Header>
-								Phone
-							</List.Header>
-							<List.Description>
-								(646) 923-2715
-							</List.Description>
+							<List.Header>Phone</List.Header>
+							<List.Description>(646) 923-2715</List.Description>
 						</List.Content>
 					</List.Item>
 				</List>
@@ -118,7 +113,6 @@ class Stores extends Component {
 
 		const StoreMenuContent = props => {
 			if (activeItem === "accessories") {
-				
 			}
 
 			if (activeItem === "bicycles") {
@@ -135,14 +129,13 @@ class Stores extends Component {
 			}
 
 			if (activeItem === "reviews") {
-				
 			}
 
 			return null
 		}
 
 		const SingleStore = props => {
-			const { address, city, description, name, state } = props.store
+			const { description, name } = props.store
 
 			return (
 				<Fragment>
@@ -160,12 +153,10 @@ class Stores extends Component {
 						<Grid className="storeGrid">
 							<Grid.Column className="leftSide" width={11}>
 								<Header size="huge">{name}</Header>
-								
+
 								<div>
 									<Header>About this business</Header>
-									<p>
-										{description}
-									</p>
+									<p>{description}</p>
 
 									<Divider hidden section />
 
@@ -187,9 +178,7 @@ class Stores extends Component {
 											lng={30.337844}
 										/>
 										<Divider hidden />
-										<div>
-											{StoreList(props)}
-										</div>
+										<div>{StoreList(props)}</div>
 									</div>
 								) : (
 									<LazyLoad header={false} />
@@ -228,7 +217,9 @@ class Stores extends Component {
 								<div className="ui form big">
 									<Dropdown
 										fluid
-										onChange={(e, { value }) => this.setState({ newCityId: value })}
+										onChange={(e, { value }) =>
+											this.setState({ newCityId: value })
+										}
 										options={cityOptions}
 										placeholder="Select a city"
 										search
@@ -259,28 +250,34 @@ Stores.propTypes = {
 	settings: PropTypes.object,
 	store: PropTypes.shape({
 		address: PropTypes.string,
-		bikes: PropTypes.arrayOf(PropTypes.shape({
-			description: PropTypes.string,
-			name: PropTypes.string,
-			image: PropTypes.string,
-			quantity: PropTypes.number
-		})),
+		bikes: PropTypes.arrayOf(
+			PropTypes.shape({
+				description: PropTypes.string,
+				name: PropTypes.string,
+				image: PropTypes.string,
+				quantity: PropTypes.number
+			})
+		),
 		city: PropTypes.string,
 		description: PropTypes.string,
 		error: PropTypes.bool,
 		id: PropTypes.number,
 		image: PropTypes.string,
-		images: PropTypes.arrayOf(PropTypes.shape({
-			image: PropTypes.string
-		})),
+		images: PropTypes.arrayOf(
+			PropTypes.shape({
+				image: PropTypes.string
+			})
+		),
 		lat: PropTypes.string,
 		lon: PropTypes.string,
 		name: PropTypes.string,
-		reviews: PropTypes.arrayOf(PropTypes.shape({
-			date_created: PropTypes.string,
-			review: PropTypes.string,
-			stars: PropTypes.number
-		})),
+		reviews: PropTypes.arrayOf(
+			PropTypes.shape({
+				date_created: PropTypes.string,
+				review: PropTypes.string,
+				stars: PropTypes.number
+			})
+		),
 		state: PropTypes.string,
 		zipCode: PropTypes.number
 	})

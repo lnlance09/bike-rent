@@ -14,11 +14,7 @@ class StepProcess extends Component {
 				widths={3}
 			>
 				{steps.map((step, i) => (
-					<Step
-						active={activeItem === step.name}
-						disabled={i > index}
-						key={step.name}
-					>
+					<Step active={activeItem === step.name} disabled={i > index} key={step.name}>
 						<Icon
 							color={i >= index ? "black" : "green"}
 							name={i >= index ? step.icon : "checkmark"}
@@ -38,12 +34,13 @@ StepProcess.propTypes = {
 	activeItem: PropTypes.string,
 	index: PropTypes.number,
 	noMargin: PropTypes.bool,
-	steps: PropTypes.arrayOf(PropTypes.shape({
-		description: PropTypes.string,
-		icon: PropTypes.string,
-		icon: PropTypes.name,
-		title: PropTypes.string
-	}))
+	steps: PropTypes.arrayOf(
+		PropTypes.shape({
+			description: PropTypes.string,
+			icon: PropTypes.string,
+			title: PropTypes.string
+		})
+	)
 }
 
 StepProcess.defaultProps = {

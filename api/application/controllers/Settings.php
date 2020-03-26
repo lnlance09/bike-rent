@@ -18,6 +18,30 @@ class Settings extends CI_Controller {
 			'order-confirmation',
 			'refund'
 		];
+
+		$this->themes = [
+			'cerulean',
+			'cosmo',
+			'cyborg',
+			'darkly',
+			'flatly',
+			'journal',
+			'litera',
+			'lumen',
+			'lux',
+			'materia',
+			'minty',
+			'pulse',
+			'sandstone',
+			'simplex',
+			'sketchy',
+			'slate',
+			'solar',
+			'spacelab',
+			'superhero',
+			'united',
+			'yeti'
+		];
 	}
 
 	public function index() {
@@ -204,6 +228,33 @@ class Settings extends CI_Controller {
 		$newLanguages = $settings->updateLanguages($languages);
 
 		echo $newLanguages;
+	}
+
+	public function updateTheme() {
+		$theme = $this->input->post('theme');
+
+		if (!in_array($theme, $this->themes)) {
+			echo json_encode([
+				'error' => 'This is not a valid theme'
+			]);
+			exit;
+		}
+
+		/*
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to make changes'
+			]);
+			exit;
+		}
+		*/
+
+		$settings = $this->settings;
+		$settings = new $settings();
+		$newTheme = $settings->updateTheme($theme);
+
+		echo $newTheme;
 	}
 
 	public function updateSitemap() {
