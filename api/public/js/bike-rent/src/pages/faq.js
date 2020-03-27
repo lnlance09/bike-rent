@@ -33,6 +33,7 @@ class Faq extends Component {
 					<PageHeader
 						activeItem="faq"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						// content={BookingForm}
 						items={settings.header.items}
 						language={settings.language}

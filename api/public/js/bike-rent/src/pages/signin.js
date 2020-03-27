@@ -37,6 +37,7 @@ class Signin extends Component {
 				<PageHeader
 					activeItem="signin"
 					authenticated={auth}
+					backgroundColor={settings.header.backgroundColor}
 					// content={BookingForm}
 					items={settings.header.items}
 					language={settings.language}

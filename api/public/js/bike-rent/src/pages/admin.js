@@ -430,7 +430,7 @@ class Admin extends Component {
 			if (activeItem === "header") {
 				return (
 					<div>
-						<AdminHeader headerData={settings.header} />
+						<AdminHeader bearer={bearer} headerData={settings.header} />
 					</div>
 				)
 			}

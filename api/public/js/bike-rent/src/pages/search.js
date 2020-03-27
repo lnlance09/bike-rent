@@ -33,6 +33,7 @@ class Search extends Component {
 					<PageHeader
 						activeItem="search"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						// content={BookingForm}
 						items={settings.header.items}
 						language={settings.language}

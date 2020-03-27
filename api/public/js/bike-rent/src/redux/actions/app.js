@@ -332,7 +332,10 @@ export const setLanguages = ({ bearer, languages }) => dispatch => {
 				payload: body,
 				type: constants.SET_LANGUAGES
 			})
-			toast.success("Languages have been updated")
+
+			if (!body.error) {
+				toast.success("Languages have been updated")
+			}
 		}
 	)
 }
@@ -395,15 +398,26 @@ export const submitFooterForm = ({
 				payload: body,
 				type: constants.GET_SETTINGS
 			})
+
+			if (!body.error) {
+				toast.success("Footer updated!")
+			}
 		}
 	)
 }
 
-export const submitHeaderForm = ({ bearer, listItems, signInButton, signUpButton }) => dispatch => {
+export const submitHeaderForm = ({
+	backgroundColor,
+	bearer,
+	listItems,
+	signInButton,
+	signUpButton
+}) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/settings/updateHeader`,
 		{
 			form: {
+				backgroundColor,
 				listItems,
 				signInButton,
 				signUpButton
@@ -418,6 +432,10 @@ export const submitHeaderForm = ({ bearer, listItems, signInButton, signUpButton
 				payload: body,
 				type: constants.GET_SETTINGS
 			})
+
+			if (!body.error) {
+				toast.success("Header updated!")
+			}
 		}
 	)
 }

@@ -33,6 +33,7 @@ class Partners extends Component {
 					<PageHeader
 						activeItem="partners"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						// content={BookingForm}
 						items={settings.header.items}
 						language={settings.language}

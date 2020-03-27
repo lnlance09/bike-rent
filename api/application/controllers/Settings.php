@@ -154,7 +154,7 @@ class Settings extends CI_Controller {
 	}
 
 	public function updateFooter() {
-		$inverted = (int)$this->input->post('inverted');
+		$inverted = $this->input->post('inverted');
 		$listOneItems = $this->input->post('listOneItems');
 		$listOneTitle = $this->input->post('listOneTitle');
 		$listTwoItems = $this->input->post('listTwoItems');
@@ -188,11 +188,31 @@ class Settings extends CI_Controller {
 	}
 
 	public function updateHeader() {
+		$backgroundColor = $this->input->post('backgroundColor');
+		$listItems = $this->input->post('listItems');
+		$signInButton = $this->input->post('signInButton');
+		$signUpButton = $this->input->post('signUpButton');
+
+		/*
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to make changes'
+			]);
+			exit;
+		}
+		*/
+
 		$settings = $this->settings;
 		$settings = new $settings();
-		$decode = $settings->decodeSettings();
+		$header = $settings->updateHeader(
+			$backgroundColor,
+			$listItems,
+			$signInButton,
+			$signUpButton
+		);
 
-		print_r($decode);
+		echo $header;
 	}
 
 	public function updateHomePage() {

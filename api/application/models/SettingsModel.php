@@ -26,7 +26,7 @@ class SettingsModel extends CI_Model {
 				'items' => $listOneItems,
 				'title' => $listOneTitle
 			],
-			'inverted' => $inverted,
+			'inverted' => (int)$inverted,
 			'secondList' => [
 				'items' => $listTwoItems,
 				'title' => $listTwoTitle
@@ -42,27 +42,27 @@ class SettingsModel extends CI_Model {
 	}
 
 	public function updateHeader(
-		
+		$color,
+		$listItems,
+		$signIn,
+		$signUp
 	) {
 		$decode = $this->decodeSettings();
 		$decode['header'] = [
-			'backgroundColor' => '',
-			'list' => [
-				'items' => $items
-			],
-			'logo' => '',
+			'backgroundColor' => $color,
+			'items' => $listItems,
 			'signInButton' => [
-				'basic' => '',
-				'color' => 'green',
-				'inverted' => false,
-				'text' => 'Sign In'
+				'basic' => (int)$signIn['signInBasic'],
+				'color' => $signIn['signInColor'],
+				'inverted' => (int)$signIn['signInInverted'],
+				'text' => $signIn['signInText']
 			],
 			'signUpButton' => [
-				'basic' => '',
-				'color' => 'green',
-				'inverted' => false,
-				'text' => 'Sign Up'
-			]
+				'basic' => (int)$signUp['signUpBasic'],
+				'color' => $signUp['signUpColor'],
+				'inverted' => (int)$signUp['signUpInverted'],
+				'text' => $signUp['signUpText']
+			],
 		];
 
 		$json = json_encode($decode, JSON_PRETTY_PRINT);

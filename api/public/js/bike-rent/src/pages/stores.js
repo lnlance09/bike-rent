@@ -196,6 +196,7 @@ class Stores extends Component {
 					<PageHeader
 						activeItem="stores"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}

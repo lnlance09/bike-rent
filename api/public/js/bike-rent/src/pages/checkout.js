@@ -40,6 +40,7 @@ class Checkout extends Component {
 					<PageHeader
 						activeItem="checkout"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}

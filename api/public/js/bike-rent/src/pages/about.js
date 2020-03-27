@@ -33,6 +33,7 @@ class About extends Component {
 					<PageHeader
 						activeItem="about"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						// content={BookingForm}
 						items={settings.header.items}
 						language={settings.language}

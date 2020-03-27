@@ -154,6 +154,7 @@ class Home extends Component {
 					<PageHeader
 						activeItem="home"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						content={BookingForm}
 						items={settings.header.items}
 						language={settings.language}

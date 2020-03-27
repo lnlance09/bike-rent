@@ -34,6 +34,7 @@ class Bikes extends Component {
 					<PageHeader
 						activeItem="bikes"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}

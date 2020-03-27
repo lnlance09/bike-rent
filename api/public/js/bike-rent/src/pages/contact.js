@@ -33,6 +33,7 @@ class Contact extends Component {
 					<PageHeader
 						activeItem="contact"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						// content={BookingForm}
 						items={settings.header.items}
 						language={settings.language}

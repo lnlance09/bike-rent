@@ -160,33 +160,32 @@
         "title": "Header"
     },
     "header": {
-        "backgroundColor": "",
+        "backgroundColor": "yellow",
         "items": [
             {
-                "link": "cities",
+                "link": "cities111",
                 "text": "cities"
             },
             {
-                "link": "stores",
+                "link": "stores2",
                 "text": "stores"
             },
             {
-                "link": "bikes",
+                "link": "bikes2",
                 "text": "bikes"
             }
         ],
-        "logo": "",
         "signInButton": {
-            "basic": "",
-            "color": "green",
-            "inverted": false,
-            "text": "Sign In"
+            "basic": 1,
+            "color": "orange",
+            "inverted": 0,
+            "text": "Sign In 1"
         },
         "signUpButton": {
-            "basic": "",
-            "color": "green",
-            "inverted": false,
-            "text": "Sign Up"
+            "basic": 1,
+            "color": "teal",
+            "inverted": 0,
+            "text": "Sign Up 2"
         }
     },
     "homePage": {

@@ -33,6 +33,7 @@ class Terms extends Component {
 					<PageHeader
 						activeItem="terms"
 						authenticated={auth}
+						backgroundColor={settings.header.backgroundColor}
 						// content={BookingForm}
 						items={settings.header.items}
 						language={settings.language}

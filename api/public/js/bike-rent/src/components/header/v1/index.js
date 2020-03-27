@@ -76,6 +76,7 @@ class AppHeader extends Component {
 		const {
 			activeItem,
 			authenticated,
+			backgroundColor,
 			content,
 			headerOne,
 			headerTwo,
@@ -172,7 +173,7 @@ class AppHeader extends Component {
 						vertical
 					>
 						<Menu
-							color="red" // TODO - make editable
+							color={backgroundColor}
 							className="globalHeaderMenu"
 							fixed={fixed ? "top" : null}
 							inverted={!fixed}
@@ -240,7 +241,7 @@ class AppHeader extends Component {
 						vertical
 					>
 						<Container className="sidebarContainer">
-							<Menu className="globalHeaderMenu" size="large">
+							<Menu className="globalHeaderMenu" color={backgroundColor} size="large">
 								<Menu.Item
 									onClick={() => {
 										this.props.history.push("/")
@@ -284,7 +285,7 @@ class AppHeader extends Component {
 				<Sidebar
 					animation="push"
 					as={Menu}
-					inverted
+					color={backgroundColor}
 					onHide={this.handleSidebarHide}
 					size="large"
 					vertical
@@ -318,6 +319,7 @@ class AppHeader extends Component {
 AppHeader.propTypes = {
 	activeItem: PropTypes.string,
 	authenticated: PropTypes.bool,
+	backgroundColor: PropTypes.string,
 	content: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
 	headerOne: PropTypes.string,
 	headerTwo: PropTypes.string,

@@ -251,7 +251,7 @@ AdminFooter.defaultProps = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	...state.app,
+	...state.app.footer,
 	...ownProps
 })
 

@@ -11,17 +11,19 @@ class AdminHeader extends Component {
 		super(props)
 
 		const { headerData } = this.props
+		const { backgroundColor, items, signInButton, signUpButton } = headerData
 
 		this.state = {
-			listItems: headerData.items,
-			signInBasic: headerData.signInButton.basic,
-			signInColor: headerData.signInButton.color,
-			signInInverted: headerData.signInButton.inverted,
-			signInText: headerData.signInButton.text,
-			signUpBasic: headerData.signUpButton.basic,
-			signUpColor: headerData.signUpButton.color,
-			signUpInverted: headerData.signUpButton.inverted,
-			signUpText: headerData.signUpButton.text
+			backgroundColor,
+			listItems: items,
+			signInBasic: signInButton.basic,
+			signInColor: signInButton.color,
+			signInInverted: signInButton.inverted,
+			signInText: signInButton.text,
+			signUpBasic: signUpButton.basic,
+			signUpColor: signUpButton.color,
+			signUpInverted: signUpButton.inverted,
+			signUpText: signUpButton.text
 		}
 	}
 
@@ -44,11 +46,30 @@ class AdminHeader extends Component {
 		this.setState({ listItems: this.state.listItems })
 	}
 
-	toggleBasic = (e, { value }) => this.setState({ basic: value })
+	onChangeBackgroundColor = (e, { value }) => this.setState({ backgroundColor: value })
+
+	onChangeSignInColor = (e, { value }) => this.setState({ signInColor: value })
+
+	onChangeSignInText = (e, { value }) => this.setState({ signInText: value })
+
+	onChangeSignUpColor = (e, { value }) => this.setState({ signUpColor: value })
+
+	onChangeSignUpText = (e, { value }) => this.setState({ signUpText: value })
+
+	toggleSignInBasic = (e, { value }) => this.setState({ signInBasic: value === "on" ? 1 : 0 })
+
+	toggleSignInInverted = (e, { value }) =>
+		this.setState({ signInInverted: value === "on" ? 1 : 0 })
+
+	toggleSignUpBasic = (e, { value }) => this.setState({ signUpBasic: value === "on" ? 1 : 0 })
+
+	toggleSignUpInverted = (e, { value }) =>
+		this.setState({ signUpInverted: value === "on" ? 1 : 0 })
 
 	render() {
 		const { bearer } = this.props
 		const {
+			backgroundColor,
 			colorOptions,
 			listItems,
 			pageOptions,
@@ -66,6 +87,18 @@ class AdminHeader extends Component {
 			<div className="adminHeader">
 				<Form>
 					<Form.Field>
+						<Header size="small">Background Color</Header>
+					</Form.Field>
+					<Form.Field>
+						<Select
+							onChange={this.onChangeBackgroundColor}
+							options={colorOptions}
+							placeholder="Select a color"
+							value={backgroundColor}
+						/>
+					</Form.Field>
+
+					<Form.Field>
 						<Header>List Items</Header>
 					</Form.Field>
 
@@ -81,13 +114,11 @@ class AdminHeader extends Component {
 								/>
 							</Form.Field>
 							<Form.Field width={8}>
-								<Select
+								<Input
+									icon="linkify"
+									iconPosition="left"
 									onChange={e => this.handleItemLinkChange(e, i)}
-									options={[
-										{ key: "about", value: "about", text: "About" },
-										{ key: "contact", value: "contact", text: "Contact" }
-									]}
-									placeholder="Links to"
+									placeholder="Url"
 									value={item.link}
 								/>
 							</Form.Field>
@@ -99,7 +130,6 @@ class AdminHeader extends Component {
 					<Form.Field>
 						<Header>Sign In button</Header>
 					</Form.Field>
-					<Divider hidden />
 					<Form.Field>
 						<Header size="small">Basic</Header>
 					</Form.Field>
@@ -108,18 +138,18 @@ class AdminHeader extends Component {
 							<Radio
 								checked={signInBasic}
 								label="Yes"
-								name="basic"
+								name="signInBasic"
 								onChange={this.toggleSignInBasic}
-								value={true}
+								value="on"
 							/>
 						</Form.Field>
 						<Form.Field>
 							<Radio
 								checked={!signInBasic}
 								label="No"
-								name="basic"
+								name="signInBasic"
 								onChange={this.toggleSignInBasic}
-								value={false}
+								value="off"
 							/>
 						</Form.Field>
 					</Form.Group>
@@ -131,18 +161,18 @@ class AdminHeader extends Component {
 							<Radio
 								checked={signInInverted}
 								label="Yes"
-								name="basic"
+								name="signInInverted"
 								onChange={this.toggleSignInInverted}
-								value={true}
+								value="on"
 							/>
 						</Form.Field>
 						<Form.Field>
 							<Radio
 								checked={!signInInverted}
 								label="No"
-								name="basic"
+								name="signInInverted"
 								onChange={this.toggleSignInInverted}
-								value={false}
+								value="off"
 							/>
 						</Form.Field>
 					</Form.Group>
@@ -162,7 +192,7 @@ class AdminHeader extends Component {
 					</Form.Field>
 					<Form.Field>
 						<Input
-							onChange={this.changeSignInText}
+							onChange={this.onChangeSignInText}
 							placeholder="Text"
 							value={signInText}
 						/>
@@ -172,7 +202,6 @@ class AdminHeader extends Component {
 					<Form.Field>
 						<Header>Sign Up button</Header>
 					</Form.Field>
-					<Divider hidden />
 					<Form.Field>
 						<Header size="small">Basic</Header>
 					</Form.Field>
@@ -181,18 +210,18 @@ class AdminHeader extends Component {
 							<Radio
 								checked={signUpBasic}
 								label="Yes"
-								name="basic"
+								name="signUpBasic"
 								onChange={this.toggleSignUpBasic}
-								value={true}
+								value="on"
 							/>
 						</Form.Field>
 						<Form.Field>
 							<Radio
-								checked={!signInBasic}
+								checked={!signUpBasic}
 								label="No"
-								name="basic"
+								name="signUpBasic"
 								onChange={this.toggleSignUpBasic}
-								value={false}
+								value="off"
 							/>
 						</Form.Field>
 					</Form.Group>
@@ -204,18 +233,18 @@ class AdminHeader extends Component {
 							<Radio
 								checked={signUpInverted}
 								label="Yes"
-								name="basic"
+								name="signUpInverted"
 								onChange={this.toggleSignUpInverted}
-								value={true}
+								value="on"
 							/>
 						</Form.Field>
 						<Form.Field>
 							<Radio
 								checked={!signUpInverted}
 								label="No"
-								name="basic"
+								name="signUpInverted"
 								onChange={this.toggleSignUpInverted}
-								value={false}
+								value="off"
 							/>
 						</Form.Field>
 					</Form.Group>
@@ -235,7 +264,7 @@ class AdminHeader extends Component {
 					</Form.Field>
 					<Form.Field>
 						<Input
-							onChange={this.changeSignUpText}
+							onChange={this.onChangeSignUpText}
 							placeholder="Text"
 							value={signUpText}
 						/>
@@ -250,6 +279,7 @@ class AdminHeader extends Component {
 					fluid
 					onClick={() => {
 						this.props.submitHeaderForm({
+							backgroundColor,
 							bearer,
 							listItems,
 							signInButton: {
@@ -283,7 +313,7 @@ AdminHeader.defaultProps = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	...state.app,
+	...state.app.header,
 	...ownProps
 })
 
