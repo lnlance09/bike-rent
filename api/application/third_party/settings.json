@@ -50,12 +50,10 @@
     },
     "checkoutPage": {
         "seo": {
-            "desciption": "",
-            "img": "",
-            "keywords": [
-                ""
-            ],
-            "title": ""
+            "description": "tes1",
+            "image": "test",
+            "keywords": "keywords",
+            "title": "Lance"
         },
         "title": ""
     },
@@ -128,9 +126,9 @@
                     "text": ""
                 }
             ],
-            "title": "List One Title"
+            "title": "List One"
         },
-        "inverted": 0,
+        "inverted": 1,
         "secondList": {
             "items": [
                 {
@@ -144,34 +142,26 @@
                 {
                     "link": "",
                     "text": "Item 23"
-                },
-                {
-                    "link": "",
-                    "text": "Item 24"
-                },
-                {
-                    "link": "",
-                    "text": ""
                 }
             ],
-            "title": "List Two Title"
+            "title": "List Two"
         },
-        "subtitle": "sub header",
-        "title": "Header"
+        "subtitle": "sub header1",
+        "title": "Header1"
     },
     "header": {
         "backgroundColor": "yellow",
         "items": [
             {
-                "link": "cities111",
+                "link": "cities",
                 "text": "cities"
             },
             {
-                "link": "stores2",
+                "link": "stores",
                 "text": "stores"
             },
             {
-                "link": "bikes2",
+                "link": "bikes",
                 "text": "bikes"
             }
         ],
@@ -256,7 +246,10 @@
     "languages": [
         "German",
         "English",
-        "Armenian"
+        "Armenian",
+        "Avestan",
+        "Afar",
+        "Abkhazian"
     ],
     "partnersPage": {
         "desciption": "",
@@ -346,7 +339,7 @@
         },
         "title": ""
     },
-    "theme": "cosmo",
+    "theme": null,
     "themes": [
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cerulean.png",

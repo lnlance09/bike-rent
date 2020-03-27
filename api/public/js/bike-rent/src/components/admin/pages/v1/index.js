@@ -1,7 +1,7 @@
 import "./style.css"
-// import { fetchData } from "./actions"
+import { updateSeo } from "redux/actions/app"
 import { connect } from "react-redux"
-import { Divider, Form, Header, Icon } from "semantic-ui-react"
+import { Button, Divider, Form, Header, Icon } from "semantic-ui-react"
 import Bikes from "./stores"
 import Stores from "./stores"
 import React, { Component } from "react"
@@ -11,14 +11,27 @@ class AdminPages extends Component {
 	constructor(props) {
 		super(props)
 
+		const { seo } = this.props
+
 		this.state = {
-			url: ""
+			seoDescription: seo.description,
+			seoImage: seo.image,
+			seoKeywords: seo.keywords,
+			seoTitle: seo.title
 		}
 	}
 
+	onChangeSeoDescription = (e, { value }) => this.setState({ seoDescription: value })
+
+	onChangeSeoImage = (e, { value }) => this.setState({ seoImage: value })
+
+	onChangeSeoKeywords = (e, { value }) => this.setState({ seoKeywords: value })
+
+	onChangeSeoTitle = (e, { value }) => this.setState({ seoTitle: value })
+
 	render() {
-		const { bearer, type } = this.props
-		const { url } = this.state
+		const { bearer, page, type, url } = this.props
+		const { seoDescription, seoImage, seoKeywords, seoTitle } = this.state
 
 		const MainContent = () => {
 			if (type === "about-page") {
@@ -77,10 +90,35 @@ class AdminPages extends Component {
 		const SeoPanel = (
 			<Form>
 				<Header as="h1" content="Seo - Meta Tags" />
-				<Form.Input fluid placeholder="Title" />
-				<Form.Input fluid placeholder="Description" />
-				<Form.Input fluid placeholder="Keywords" />
-				<Form.Input fluid placeholder="Image" />
+				<Form.Input
+					fluid
+					label="Title"
+					onChange={this.onChangeSeoTitle}
+					placeholder="Title"
+					value={seoTitle}
+				/>
+				<Form.Input
+					fluid
+					label="Description"
+					maxLength={140}
+					onChange={this.onChangeSeoDescription}
+					placeholder="Description"
+					value={seoDescription}
+				/>
+				<Form.Input
+					fluid
+					label="Keywords (comma seperated)"
+					onChange={this.onChangeSeoKeywords}
+					placeholder="Keywords"
+					value={seoKeywords}
+				/>
+				<Form.Input
+					fluid
+					label="Image"
+					onChange={this.onChangeSeoImage}
+					placeholder="Image"
+					value={seoImage}
+				/>
 				<Form.Field>
 					<Icon color="blue" name="facebook" />
 					<a
@@ -91,6 +129,23 @@ class AdminPages extends Component {
 						See how Facebook views this page
 					</a>
 				</Form.Field>
+				<Button
+					color="blue"
+					content="Update SEO"
+					fluid
+					onClick={() => {
+						this.props.updateSeo({
+							bearer,
+							page,
+							seo: {
+								description: seoDescription,
+								image: seoImage,
+								keywords: seoKeywords,
+								title: seoTitle
+							}
+						})
+					}}
+				/>
 			</Form>
 		)
 
@@ -106,16 +161,28 @@ class AdminPages extends Component {
 
 AdminPages.propTypes = {
 	bearer: PropTypes.string,
-	type: PropTypes.string
+	page: PropTypes.string,
+	seo: PropTypes.shape({
+		description: PropTypes.string,
+		image: PropTypes.string,
+		keywords: PropTypes.string,
+		title: PropTypes.string
+	}),
+	type: PropTypes.string,
+	updateSeo: PropTypes.func,
+	url: PropTypes.string
 }
 
-AdminPages.defaultProps = {}
+AdminPages.defaultProps = {
+	seo: {},
+	updateSeo
+}
 
 const mapStateToProps = (state, ownProps) => ({
-	...state.app,
+	...state.app.admin,
 	...ownProps
 })
 
 export default connect(mapStateToProps, {
-	// fetchData
+	updateSeo
 })(AdminPages)

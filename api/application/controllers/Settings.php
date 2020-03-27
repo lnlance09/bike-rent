@@ -250,6 +250,65 @@ class Settings extends CI_Controller {
 		echo $newLanguages;
 	}
 
+	public function updateSeo() {
+		$page = $this->input->post('page');
+		$seo = $this->input->post('seo');
+
+		/*
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to make changes'
+			]);
+			exit;
+		}
+		*/
+
+		$settings = $this->settings;
+		$settings = new $settings();
+		$newSeo = $settings->updateSeo($page, $seo);
+
+		echo $newSeo;
+	}
+
+	public function updateSitemap() {
+		$sitemap = $this->input->post('sitemap');
+
+		if (empty($sitemap)) {
+			echo json_encode([
+				'error' => 'Your sitemap cannot be empty'
+			]);
+			exit;
+		}
+
+		/*
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to make changes'
+			]);
+			exit;
+		}
+		*/
+
+		$file = APPPATH.'third_party/sitemap.xml';
+		file_put_contents($file, $sitemap);
+		$this->media->addToS3('sitemaps/sitemap.xml', $file, true, true);
+
+		echo json_encode([
+			'error' => false,
+			'sitemap' => $sitemap
+		]);
+	}
+
+	public function updateStoresPage() {
+		$settings = $this->settings;
+		$settings = new $settings();
+		$decode = $settings->decodeSettings();
+
+		print_r($decode);
+	}
+
 	public function updateTheme() {
 		$theme = $this->input->post('theme');
 
@@ -275,33 +334,5 @@ class Settings extends CI_Controller {
 		$newTheme = $settings->updateTheme($theme);
 
 		echo $newTheme;
-	}
-
-	public function updateSitemap() {
-		$sitemap = $this->input->post('sitemap');
-
-		if (empty($sitemap)) {
-			echo json_encode([
-				'error' => 'Your sitemap cannot be empty'
-			]);
-			exit;
-		}
-
-		$file = APPPATH.'third_party/sitemap.xml';
-		file_put_contents($file, $sitemap);
-		$this->media->addToS3('sitemaps/sitemap.xml', $file, true, true);
-
-		echo json_encode([
-			'error' => false,
-			'sitemap' => $sitemap
-		]);
-	}
-
-	public function updateStoresPage() {
-		$settings = $this->settings;
-		$settings = new $settings();
-		$decode = $settings->decodeSettings();
-
-		print_r($decode);
 	}
 }

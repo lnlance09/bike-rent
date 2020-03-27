@@ -2,6 +2,7 @@ import { connect, Provider } from "react-redux"
 import { getBlogs, getCities, getCss, getEmail, getSitemap } from "redux/actions/app"
 import { Accordion, Container, Grid, Menu, Responsive } from "semantic-ui-react"
 import React, { Component } from "react"
+import camelCase from "camelcase"
 import AdminBikes from "components/admin/bikes/v1/"
 import AdminBlog from "components/admin/blog/v1/"
 import AdminCities from "components/admin/cities/v1/"
@@ -33,12 +34,30 @@ class Admin extends Component {
 
 		this.state = {
 			activeItem: tab === undefined ? "change-themes" : tab,
+			adminPages: [
+				"about-page",
+				"apply-page",
+				"bikes-page",
+				"checkout-page",
+				"cities-page",
+				"contact-page",
+				"faq-page",
+				"home-page",
+				"partners-page",
+				"search-page",
+				"signin-page",
+				"stores-page",
+				"terms-page"
+			],
 			auth,
-			bearer
+			bearer,
+			url: ""
 		}
 	}
 
 	componentDidMount() {
+		this.setSeo(this.state.activeItem)
+
 		this.props.getBlogs()
 		this.props.getCities()
 		this.props.getSitemap({ url: this.props.sitemapUrl })
@@ -52,11 +71,23 @@ class Admin extends Component {
 	handleItemClick = (e, { name }) => {
 		this.setState({ activeItem: name }, () => {
 			this.props.history.push(`/admin/${name}`)
+			this.setSeo(name)
 		})
 	}
 
+	setSeo = name => {
+		if (this.state.adminPages.includes(name)) {
+			const key = camelCase(name)
+			const seo = this.props.settings[key].seo
+			this.setState({
+				seo,
+				url: `${window.location.origin}/${name.replace("-page", "")}`
+			})
+		}
+	}
+
 	render() {
-		const { activeItem, bearer } = this.state
+		const { activeItem, adminPages, bearer, seo, url } = this.state
 		const { blogs, cities, css, emails, settings, sitemap, sitemapUrl } = this.props
 
 		const AdminMenu = props => (
@@ -337,24 +368,16 @@ class Admin extends Component {
 		)
 
 		const MainContent = () => {
-			if (
-				activeItem === "about-page" ||
-				activeItem === "apply-page" ||
-				activeItem === "bikes-page" ||
-				activeItem === "checkout-page" ||
-				activeItem === "cities-page" ||
-				activeItem === "contact-page" ||
-				activeItem === "faq-page" ||
-				activeItem === "home-page" ||
-				activeItem === "partners-page" ||
-				activeItem === "search-page" ||
-				activeItem === "signin-page" ||
-				activeItem === "stores-page" ||
-				activeItem === "terms-page"
-			) {
+			if (adminPages.includes(activeItem) && seo) {
 				return (
 					<div>
-						<AdminPages bearer={bearer} type={activeItem} />
+						<AdminPages
+							bearer={bearer}
+							page={camelCase(activeItem)}
+							seo={seo}
+							type={activeItem}
+							url={url}
+						/>
 					</div>
 				)
 			}

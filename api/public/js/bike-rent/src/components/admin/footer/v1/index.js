@@ -18,7 +18,7 @@ class AdminFooter extends Component {
 
 		this.state = {
 			bearer,
-			inverted: footerData.inverted === 1 ? 1 : 0,
+			inverted: footerData.inverted,
 			listOneItems: footerData.firstList.items,
 			listOneTitle: footerData.firstList.title,
 			listTwoItems: footerData.secondList.items,

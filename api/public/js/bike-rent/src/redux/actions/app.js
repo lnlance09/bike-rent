@@ -451,3 +451,29 @@ export const toggleEditBlogModal = () => dispatch => {
 		type: constants.TOGGLE_EDIT_BLOG_MODAL
 	})
 }
+
+export const updateSeo = ({ bearer, page, seo }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/settings/updateSeo`,
+		{
+			form: {
+				page,
+				seo
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.EDIT_SEO
+			})
+
+			if (!body.error) {
+				toast.success("SEO has been updated!")
+			}
+		}
+	)
+}

@@ -156,6 +156,15 @@ class SettingsModel extends CI_Model {
 		return $json;
 	}
 
+	public function updateSeo($page, $seo) {
+		$decode = $this->decodeSettings();
+		$decode[$page]['seo'] = $seo;
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
+		file_put_contents($this->configFile, $json);
+
+		return $json;
+	}
+
 	public function updateTheme($theme) {
 		$decode = $this->decodeSettings();
 		$decode['theme'] = $theme;
