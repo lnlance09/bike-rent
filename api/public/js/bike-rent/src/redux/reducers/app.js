@@ -112,6 +112,11 @@ const settings = (state = initial(), action) => {
 				emails
 			}
 
+		case constants.EDIT_PAGE:
+			return {
+				...state
+			}
+
 		case constants.GET_SITEMAP:
 			return {
 				...state,

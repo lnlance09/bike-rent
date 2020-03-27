@@ -2,8 +2,7 @@ import "./style.css"
 import { updateSeo } from "redux/actions/app"
 import { connect } from "react-redux"
 import { Button, Divider, Form, Header, Icon } from "semantic-ui-react"
-import Bikes from "./stores"
-import Stores from "./stores"
+import MainPage from "./main"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
@@ -11,7 +10,7 @@ class AdminPages extends Component {
 	constructor(props) {
 		super(props)
 
-		const { seo } = this.props
+		const { seo } = this.props.pageData
 
 		this.state = {
 			seoDescription: seo.description,
@@ -30,62 +29,8 @@ class AdminPages extends Component {
 	onChangeSeoTitle = (e, { value }) => this.setState({ seoTitle: value })
 
 	render() {
-		const { bearer, page, type, url } = this.props
+		const { bearer, page, pageData, type, url } = this.props
 		const { seoDescription, seoImage, seoKeywords, seoTitle } = this.state
-
-		const MainContent = () => {
-			if (type === "about-page") {
-				return <Form></Form>
-			}
-
-			if (type === "apply-page") {
-				return <Form></Form>
-			}
-
-			if (type === "bikes-page") {
-				return <Bikes />
-			}
-
-			if (type === "checkout-page") {
-				return <Form></Form>
-			}
-
-			if (type === "cities-page") {
-				return <Form></Form>
-			}
-
-			if (type === "contact-page") {
-				return <Form></Form>
-			}
-
-			if (type === "faq-page") {
-				return <Form></Form>
-			}
-
-			if (type === "home-page") {
-				return <Form></Form>
-			}
-
-			if (type === "partners-page") {
-				return <Form></Form>
-			}
-
-			if (type === "search-page") {
-				return <Form></Form>
-			}
-
-			if (type === "signin-page") {
-				return <Form></Form>
-			}
-
-			if (type === "stores-page") {
-				return <Stores />
-			}
-
-			if (type === "terms-page") {
-				return <Form></Form>
-			}
-		}
 
 		const SeoPanel = (
 			<Form>
@@ -153,7 +98,7 @@ class AdminPages extends Component {
 			<div className="adminPages">
 				{SeoPanel}
 				<Divider hidden />
-				{MainContent()}
+				<MainPage bearer={bearer} page={page} pageData={pageData} type={type} />
 			</div>
 		)
 	}
@@ -162,11 +107,72 @@ class AdminPages extends Component {
 AdminPages.propTypes = {
 	bearer: PropTypes.string,
 	page: PropTypes.string,
-	seo: PropTypes.shape({
+	pageData: PropTypes.shape({
+		backgroundImg: PropTypes.string,
+		ctaButton: PropTypes.shape({
+			basic: PropTypes.bool,
+			color: PropTypes.string,
+			inverted: PropTypes.bool,
+			title: PropTypes.string
+		}),
 		description: PropTypes.string,
-		image: PropTypes.string,
-		keywords: PropTypes.string,
-		title: PropTypes.string
+		firstSection: PropTypes.shape({
+			button: PropTypes.shape({
+				basic: PropTypes.bool,
+				color: PropTypes.string,
+				inverted: PropTypes.bool,
+				link: PropTypes.string,
+				text: PropTypes.string
+			}),
+			img: PropTypes.string,
+			items: PropTypes.arrayOf(
+				PropTypes.shape({
+					subtitle: PropTypes.string,
+					title: PropTypes.string
+				})
+			)
+		}),
+		hero: PropTypes.shape({
+			headerOne: PropTypes.string,
+			headerTwo: PropTypes.string,
+			img: PropTypes.string
+		}),
+		partners: PropTypes.arrayOf(
+			PropTypes.shape({
+				img: PropTypes.string,
+				title: PropTypes.string
+			})
+		),
+		placeholderText: PropTypes.string,
+		secondSection: PropTypes.arrayOf(
+			PropTypes.shape({
+				subtitle: PropTypes.string,
+				title: PropTypes.string
+			})
+		),
+		signInButton: PropTypes.shape({
+			basic: PropTypes.bool,
+			color: PropTypes.string,
+			inverted: PropTypes.bool,
+			text: PropTypes.string
+		}),
+		thirdSection: PropTypes.shape({
+			divider: PropTypes.shape({
+				text: PropTypes.string
+			}),
+			firstItem: PropTypes.shape({
+				subtitle: PropTypes.string,
+				title: PropTypes.string
+			}),
+			secondItem: PropTypes.shape({
+				subtitle: PropTypes.string,
+				title: PropTypes.string
+			})
+		}),
+		title: PropTypes.string,
+		toastMsg: PropTypes.string,
+		useCards: PropTypes.bool,
+		useHeroImage: PropTypes.bool
 	}),
 	type: PropTypes.string,
 	updateSeo: PropTypes.func,
@@ -174,7 +180,9 @@ AdminPages.propTypes = {
 }
 
 AdminPages.defaultProps = {
-	seo: {},
+	pageData: {
+		seo: {}
+	},
 	updateSeo
 }
 

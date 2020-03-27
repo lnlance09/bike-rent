@@ -173,6 +173,32 @@ export const editEmail = ({ bearer, email, type }) => dispatch => {
 	)
 }
 
+export const editPage = ({ bearer, data, page }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/settings/updatePage`,
+		{
+			form: {
+				data,
+				page
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				toast.success("Your edit was successful")
+			}
+
+			dispatch({
+				payload: body,
+				type: constants.EDIT_PAGE
+			})
+		}
+	)
+}
+
 export const editSitemap = ({ bearer, sitemap }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/settings/updateSitemap`,

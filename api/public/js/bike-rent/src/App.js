@@ -517,7 +517,7 @@ App.propTypes = {
 				text: PropTypes.string
 			})
 		}),
-		signInPage: PropTypes.shape({
+		signinPage: PropTypes.shape({
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,

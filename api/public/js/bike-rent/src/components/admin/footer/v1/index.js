@@ -79,7 +79,6 @@ class AdminFooter extends Component {
 			subTitle,
 			title
 		} = this.state
-		console.log(this.state)
 
 		return (
 			<div className="adminFooter">

@@ -51,6 +51,7 @@ class Admin extends Component {
 			],
 			auth,
 			bearer,
+			pageData: null,
 			url: ""
 		}
 	}
@@ -78,16 +79,16 @@ class Admin extends Component {
 	setSeo = name => {
 		if (this.state.adminPages.includes(name)) {
 			const key = camelCase(name)
-			const seo = this.props.settings[key].seo
+			const pageData = this.props.settings[key]
 			this.setState({
-				seo,
+				pageData,
 				url: `${window.location.origin}/${name.replace("-page", "")}`
 			})
 		}
 	}
 
 	render() {
-		const { activeItem, adminPages, bearer, seo, url } = this.state
+		const { activeItem, adminPages, bearer, pageData, url } = this.state
 		const { blogs, cities, css, emails, settings, sitemap, sitemapUrl } = this.props
 
 		const AdminMenu = props => (
@@ -296,13 +297,6 @@ class Admin extends Component {
 							Partners page
 						</Menu.Item>
 						<Menu.Item
-							active={activeItem === "search-page"}
-							name="search-page"
-							onClick={this.handleItemClick}
-						>
-							Search page
-						</Menu.Item>
-						<Menu.Item
 							active={activeItem === "signin-page"}
 							name="signin-page"
 							onClick={this.handleItemClick}
@@ -368,13 +362,13 @@ class Admin extends Component {
 		)
 
 		const MainContent = () => {
-			if (adminPages.includes(activeItem) && seo) {
+			if (adminPages.includes(activeItem) && pageData) {
 				return (
 					<div>
 						<AdminPages
 							bearer={bearer}
 							page={camelCase(activeItem)}
-							seo={seo}
+							pageData={pageData}
 							type={activeItem}
 							url={url}
 						/>

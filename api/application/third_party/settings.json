@@ -7,21 +7,25 @@
             "img": ""
         },
         "seo": {
-            "desciption": "",
-            "img": "",
-            "keywords": [
-                ""
-            ],
-            "title": ""
+            "description": "Description for about page",
+            "image": "https:\/\/s3.console.aws.amazon.com\/s3\/object\/bike-rent\/images\/117-west-58th-street.jpg",
+            "keywords": "about, bikes, rent",
+            "title": "About Page"
         },
-        "title": ""
+        "title": "",
+        "useHeroImage": 0
     },
     "applyPage": {
-        "applyButton": {
+        "ctaButton": {
             "basic": "",
             "color": "green",
             "inverted": false,
-            "text": "Apply"
+            "title": "Apply"
+        },
+        "hero": {
+            "headerOne": "",
+            "headerTwo": "",
+            "img": ""
         },
         "backgroundImg": "",
         "seo": {
@@ -32,9 +36,21 @@
             ],
             "title": ""
         },
-        "title": ""
+        "title": "",
+        "useHeroImage": 0
     },
     "bikesPage": {
+        "ctaButton": {
+            "basic": "",
+            "color": "green",
+            "inverted": false,
+            "title": "Apply"
+        },
+        "hero": {
+            "headerOne": "",
+            "headerTwo": "",
+            "img": ""
+        },
         "seo": {
             "desciption": "",
             "img": "",
@@ -43,26 +59,37 @@
             ],
             "title": ""
         },
-        "sort": "alphabetical",
         "title": "",
         "useCards": true,
+        "useHeroImage": 0,
         "useList": false
     },
     "checkoutPage": {
+        "hero": {
+            "headerOne": "",
+            "headerTwo": "",
+            "img": ""
+        },
         "seo": {
             "description": "tes1",
             "image": "test",
             "keywords": "keywords",
             "title": "Lance"
         },
-        "title": ""
+        "title": "",
+        "useHeroImage": 0
     },
     "citiesPage": {
-        "cityButton": {
+        "ctaButton": {
             "basic": "",
             "color": "green",
             "inverted": false,
             "text": "Get some wheels now"
+        },
+        "hero": {
+            "headerOne": "",
+            "headerTwo": "",
+            "img": ""
         },
         "seo": {
             "desciption": "",
@@ -74,9 +101,15 @@
         },
         "title": "",
         "useCards": true,
+        "useHeroImage": 0,
         "useList": false
     },
     "contactPage": {
+        "hero": {
+            "headerOne": "",
+            "headerTwo": "",
+            "img": ""
+        },
         "placeholderText": "",
         "seo": {
             "desciption": "",
@@ -87,7 +120,8 @@
             "title": ""
         },
         "title": "",
-        "toastMsg": ""
+        "toastMsg": "",
+        "useHeroImage": 0
     },
     "faqPage": {
         "desciption": "",
@@ -104,7 +138,8 @@
             ],
             "title": ""
         },
-        "title": ""
+        "title": "",
+        "useHeroImage": 0
     },
     "footer": {
         "firstList": {
@@ -276,7 +311,8 @@
             ],
             "title": ""
         },
-        "title": ""
+        "title": "",
+        "useHeroImage": 0
     },
     "searchPage": {
         "desciption": "",
@@ -290,7 +326,12 @@
         },
         "title": ""
     },
-    "signInPage": {
+    "signinPage": {
+        "hero": {
+            "headerOne": "",
+            "headerTwo": "",
+            "img": ""
+        },
         "seo": {
             "desciption": "",
             "img": "",
@@ -305,17 +346,15 @@
             "inverted": false,
             "text": "Sign In"
         },
-        "signUpButton": {
-            "basic": "",
-            "color": "green",
-            "inverted": false,
-            "text": "Sign Up"
-        }
+        "useHeroImage": 0
     },
     "stores": [],
     "storesPage": {
-        "defaultLocation": "",
-        "defaultRadius": "",
+        "hero": {
+            "headerOne": "",
+            "headerTwo": "",
+            "img": ""
+        },
         "seo": {
             "desciption": "",
             "img": "",
@@ -325,10 +364,16 @@
             "title": ""
         },
         "useCards": true,
-        "useList": false
+        "useList": false,
+        "useHeroImage": 0
     },
     "termsPage": {
         "desciption": "",
+        "hero": {
+            "headerOne": "",
+            "headerTwo": "",
+            "img": ""
+        },
         "seo": {
             "desciption": "",
             "img": "",
@@ -337,9 +382,10 @@
             ],
             "title": ""
         },
-        "title": ""
+        "title": "",
+        "useHeroImage": 0
     },
-    "theme": null,
+    "theme": "cosmo",
     "themes": [
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cerulean.png",

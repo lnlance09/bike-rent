@@ -130,10 +130,12 @@ class AdminHeader extends Component {
 					<Form.Field>
 						<Header>Sign In button</Header>
 					</Form.Field>
-					<Form.Field>
-						<Header size="small">Basic</Header>
-					</Form.Field>
 					<Form.Group>
+						<Form.Field>
+							<label>
+								<b>Basic</b>
+							</label>
+						</Form.Field>
 						<Form.Field>
 							<Radio
 								checked={signInBasic}
@@ -153,10 +155,12 @@ class AdminHeader extends Component {
 							/>
 						</Form.Field>
 					</Form.Group>
-					<Form.Field>
-						<Header size="small">Inverted</Header>
-					</Form.Field>
 					<Form.Group>
+						<Form.Field>
+							<label>
+								<b>Inverted</b>
+							</label>
+						</Form.Field>
 						<Form.Field>
 							<Radio
 								checked={signInInverted}
@@ -177,9 +181,7 @@ class AdminHeader extends Component {
 						</Form.Field>
 					</Form.Group>
 					<Form.Field>
-						<Header size="small">Color</Header>
-					</Form.Field>
-					<Form.Field>
+						<label>Color</label>
 						<Select
 							onChange={this.onChangeSignInColor}
 							options={colorOptions}
@@ -188,9 +190,7 @@ class AdminHeader extends Component {
 						/>
 					</Form.Field>
 					<Form.Field>
-						<Header size="small">Text</Header>
-					</Form.Field>
-					<Form.Field>
+						<label>Text</label>
 						<Input
 							onChange={this.onChangeSignInText}
 							placeholder="Text"
@@ -202,10 +202,12 @@ class AdminHeader extends Component {
 					<Form.Field>
 						<Header>Sign Up button</Header>
 					</Form.Field>
-					<Form.Field>
-						<Header size="small">Basic</Header>
-					</Form.Field>
 					<Form.Group>
+						<Form.Field>
+							<label>
+								<b>Basic</b>
+							</label>
+						</Form.Field>
 						<Form.Field>
 							<Radio
 								checked={signUpBasic}
@@ -225,10 +227,12 @@ class AdminHeader extends Component {
 							/>
 						</Form.Field>
 					</Form.Group>
-					<Form.Field>
-						<Header size="small">Inverted</Header>
-					</Form.Field>
 					<Form.Group>
+						<Form.Field>
+							<label>
+								<b>Inverted</b>
+							</label>
+						</Form.Field>
 						<Form.Field>
 							<Radio
 								checked={signUpInverted}
@@ -249,9 +253,7 @@ class AdminHeader extends Component {
 						</Form.Field>
 					</Form.Group>
 					<Form.Field>
-						<Header size="small">Color</Header>
-					</Form.Field>
-					<Form.Field>
+						<label>Color</label>
 						<Select
 							onChange={this.onChangeSignUpColor}
 							options={colorOptions}
@@ -260,9 +262,7 @@ class AdminHeader extends Component {
 						/>
 					</Form.Field>
 					<Form.Field>
-						<Header size="small">Text</Header>
-					</Form.Field>
-					<Form.Field>
+						<label>Text</label>
 						<Input
 							onChange={this.onChangeSignUpText}
 							placeholder="Text"
