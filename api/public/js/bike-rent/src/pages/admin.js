@@ -1,5 +1,5 @@
 import { connect, Provider } from "react-redux"
-import { getBlogs, getCities, getCss, getEmail, getSitemap } from "redux/actions/app"
+import { getBikes, getBlogs, getCities, getCss, getEmail, getSitemap } from "redux/actions/app"
 import { Accordion, Container, Grid, Menu, Responsive } from "semantic-ui-react"
 import React, { Component } from "react"
 import camelCase from "camelcase"
@@ -59,6 +59,7 @@ class Admin extends Component {
 	componentDidMount() {
 		this.setSeo(this.state.activeItem)
 
+		this.props.getBikes()
 		this.props.getBlogs()
 		this.props.getCities()
 		this.props.getSitemap({ url: this.props.sitemapUrl })
@@ -89,7 +90,7 @@ class Admin extends Component {
 
 	render() {
 		const { activeItem, adminPages, bearer, pageData, url } = this.state
-		const { blogs, cities, css, emails, settings, sitemap, sitemapUrl } = this.props
+		const { bikes, blogs, cities, css, emails, settings, sitemap, sitemapUrl } = this.props
 
 		const AdminMenu = props => (
 			<Accordion as={Menu} className="adminMenu" fluid inverted vertical>
@@ -102,6 +103,18 @@ class Admin extends Component {
 							onClick={this.handleItemClick}
 						>
 							Change themes
+						</Menu.Item>
+					</Menu.Menu>
+				</Menu.Item>
+				<Menu.Item>
+					Bikes
+					<Menu.Menu>
+						<Menu.Item
+							active={activeItem === "bikes"}
+							name="bikes"
+							onClick={this.handleItemClick}
+						>
+							Edit bikes
 						</Menu.Item>
 					</Menu.Menu>
 				</Menu.Item>
@@ -408,6 +421,14 @@ class Admin extends Component {
 				}
 			}
 
+			if (activeItem === "bikes") {
+				return (
+					<div>
+						<AdminBikes bearer={bearer} cities={bikes} />
+					</div>
+				)
+			}
+
 			if (activeItem === "blog-posts") {
 				return (
 					<div>
@@ -529,6 +550,20 @@ class Admin extends Component {
 }
 
 Admin.propTypes = {
+	bikes: PropTypes.shape({
+		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		hasMore: PropTypes.bool,
+		loadingMore: PropTypes.bool,
+		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		results: PropTypes.arrayOf(
+			PropTypes.shape({
+				description: PropTypes.string,
+				image: PropTypes.string,
+				name: PropTypes.string,
+				visible: PropTypes.bool
+			})
+		)
+	}),
 	blogs: PropTypes.shape({
 		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		hasMore: PropTypes.bool,
@@ -565,6 +600,7 @@ Admin.propTypes = {
 		orderConfirmation: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 		refund: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 	}),
+	getBikes: PropTypes.func,
 	getBlogs: PropTypes.func,
 	getCities: PropTypes.func,
 	getCss: PropTypes.func,
@@ -576,6 +612,13 @@ Admin.propTypes = {
 }
 
 Admin.defaultProps = {
+	bikes: {
+		count: 0,
+		hasMore: false,
+		loadingMore: false,
+		page: 0,
+		results: [{}, {}, {}, {}]
+	},
 	blogs: {
 		count: "0",
 		hasMore: false,
@@ -598,6 +641,7 @@ Admin.defaultProps = {
 		orderConfirmation: false,
 		refund: false
 	},
+	getBikes,
 	getBlogs,
 	getCities,
 	getCss,
@@ -615,6 +659,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(mapStateToProps, {
+	getBikes,
 	getBlogs,
 	getCities,
 	getCss,

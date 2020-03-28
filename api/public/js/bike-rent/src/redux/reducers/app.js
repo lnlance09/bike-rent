@@ -1,6 +1,10 @@
 import * as constants from "../constants"
 
 const initial = () => ({
+	bike: {
+		error: false,
+		modalOpen: false
+	},
 	blog: {
 		error: false,
 		modalOpen: false
@@ -13,11 +17,14 @@ const settings = (state = initial(), action) => {
 	const { emailType, payload } = action
 
 	switch (action.type) {
-		case constants.ADD_CITY:
+		case constants.ADD_BIKE:
 			return {
 				...state,
-				error: payload.error !== false,
-				errorMsg: payload.error
+				bike: {
+					...state.bike,
+					error: payload.error !== false,
+					errorMsg: payload.error
+				}
 			}
 
 		case constants.ADD_BLOG:
@@ -27,6 +34,13 @@ const settings = (state = initial(), action) => {
 					error: payload.error !== false,
 					errorMsg: payload.error
 				}
+			}
+
+		case constants.ADD_CITY:
+			return {
+				...state,
+				error: payload.error !== false,
+				errorMsg: payload.error
 			}
 
 		case constants.EDIT_CSS:
@@ -39,6 +53,23 @@ const settings = (state = initial(), action) => {
 			return {
 				...state,
 				sitemap: payload
+			}
+
+		case constants.GET_BIKES:
+			const bikes =
+				payload.page > 0 ? [...state.bikes.results, ...payload.results] : payload.results
+
+			return {
+				...state,
+				bike: {
+					bikes: {
+						count: payload.count,
+						hasMore: payload.pagination.hasMore,
+						loadingMore: false,
+						page: payload.pagination.nextPage,
+						results: bikes
+					}
+				}
 			}
 
 		case constants.GET_BLOGS:
@@ -146,6 +177,15 @@ const settings = (state = initial(), action) => {
 				apply: {
 					error: payload.error !== false,
 					errorMsg: payload.error
+				}
+			}
+
+		case constants.TOGGLE_ADD_BIKE_MODAL:
+			return {
+				...state,
+				bike: {
+					...state.bike,
+					modalOpen: !state.bike.modalOpen
 				}
 			}
 

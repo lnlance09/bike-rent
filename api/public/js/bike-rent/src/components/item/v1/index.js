@@ -131,7 +131,6 @@ ResultItem.propTypes = {
 	extra: PropTypes.oneOfType([PropTypes.array, PropTypes.bool, PropTypes.object]),
 	img: PropTypes.string,
 	id: PropTypes.string,
-	key: PropTypes.string,
 	label: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 	menu: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 	meta: PropTypes.oneOfType([PropTypes.bool, PropTypes.node, PropTypes.string]),

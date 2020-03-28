@@ -1,5 +1,5 @@
 import { connect, Provider } from "react-redux"
-import { Container, Header } from "semantic-ui-react"
+import { Button, Container, Divider, Header } from "semantic-ui-react"
 import React, { Component } from "react"
 import BikesList from "components/bikesList/v1/"
 import PageFooter from "components/footer/v1/"
@@ -27,6 +27,18 @@ class Bikes extends Component {
 	render() {
 		const { auth } = this.state
 		const { settings } = this.props
+		const { bikesPage } = settings
+		const { ctaButton } = bikesPage
+
+		const CtaButton = (
+			<Button
+				basic={ctaButton.basic === "1"}
+				color={ctaButton.color}
+				content={ctaButton.text}
+				inverted={ctaButton.inverted === "1"}
+				fluid
+			/>
+		)
 
 		return (
 			<Provider store={store}>
@@ -35,23 +47,29 @@ class Bikes extends Component {
 						activeItem="bikes"
 						authenticated={auth}
 						backgroundColor={settings.header.backgroundColor}
+						backgroundImage={bikesPage.hero.img}
+						headerOne={bikesPage.hero.headerOne}
+						headerTwo={bikesPage.hero.headerTwo}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
-						showMainContent={false}
+						showMainContent={bikesPage.useHeroImage === "1"}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}
 						{...this.props}
 					/>
 
 					<Container className="mainContainer">
-						<Header size="huge">View our bikes</Header>
+						<Header size="huge">{bikesPage.title}</Header>
+
+						{bikesPage.useCards === "0" && <Divider />}
 
 						<BikesList
 							emptyMsgContent="There are no bikes available"
+							extra={ctaButton.visible === "1" ? CtaButton : null}
 							history={this.props.history}
 							key="bike"
-							useCards={true}
+							useCards={bikesPage.useCards === "1"}
 						/>
 					</Container>
 

@@ -1,7 +1,7 @@
 import * as constants from "./constants"
 import request from "request"
 
-export const getBikes = ({ limit = 25, page = 0, q, sort }) => dispatch => {
+export const getBikes = ({ limit = 25, page = 0, q, sort, visible }) => dispatch => {
 	request.get(
 		`${window.location.origin}/api/bike/search`,
 		{
@@ -10,7 +10,8 @@ export const getBikes = ({ limit = 25, page = 0, q, sort }) => dispatch => {
 				limit,
 				page,
 				q,
-				sort
+				sort,
+				visible
 			}
 		},
 		function(err, response, body) {

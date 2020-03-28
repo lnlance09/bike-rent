@@ -31,35 +31,32 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         }
     },
     "bikesPage": {
-        "ctaButton": {
-            "basic": "",
-            "color": "green",
-            "inverted": false,
-            "title": "Apply"
-        },
         "hero": {
             "headerOne": "",
             "headerTwo": "",
             "img": ""
         },
+        "title": "View our bikesss1",
+        "useHeroImage": "0",
+        "ctaButton": {
+            "basic": "1",
+            "color": "green",
+            "inverted": "1",
+            "text": "Test",
+            "visible": "0"
+        },
+        "useCards": "1",
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
-        },
-        "title": "",
-        "useCards": true,
-        "useHeroImage": 0
+        }
     },
     "checkoutPage": {
         "description": "",
@@ -93,9 +90,7 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         },
         "title": "",
@@ -114,9 +109,7 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         },
         "title": "",
@@ -133,9 +126,7 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         },
         "title": "",
@@ -258,9 +249,7 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         },
         "thirdSection": {
@@ -306,9 +295,7 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         },
         "title": "",
@@ -323,9 +310,7 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         },
         "signInButton": {
@@ -347,9 +332,7 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         },
         "useCards": true,
@@ -366,9 +349,7 @@
         "seo": {
             "description": "",
             "img": "",
-            "keywords": [
-                ""
-            ],
+            "keywords": "",
             "title": ""
         },
         "title": "",

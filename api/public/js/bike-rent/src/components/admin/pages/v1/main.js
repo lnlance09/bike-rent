@@ -31,21 +31,28 @@ class MainPage extends Component {
 			useHeroImage
 		} = this.props.pageData
 
-		let ctaBasic,
-			ctaColor,
-			ctaInverted,
-			ctaText = null
+		let ctaBasic = 0
+		let ctaColor = ""
+		let ctaInverted = 0
+		let ctaText = ""
+		let ctaVisible = 0
 		if (ctaButton) {
-			let { ctaBasic, ctaColor, ctaInverted, ctaText } = ctaButton
+			const { basic, color, inverted, text, visible } = ctaButton
+			ctaBasic = basic
+			ctaColor = color
+			ctaInverted = inverted
+			ctaText = text
+			ctaVisible = visible
 		}
 
 		this.state = {
 			backgroundImg,
 			cardsPages: ["bikes-page", "cities-page", "stores-page"],
-			ctaBasic,
+			ctaBasic: ctaBasic === "1" ? 1 : 0,
 			ctaColor,
-			ctaInverted,
+			ctaInverted: ctaInverted === "1" ? 1 : 0,
 			ctaText,
+			ctaVisible: ctaVisible === "1" ? 1 : 0,
 			description,
 			firstSection,
 			header: hero.headerTwo,
@@ -57,7 +64,7 @@ class MainPage extends Component {
 			thirdSection,
 			title,
 			toastMsg,
-			useCards,
+			useCards: useCards === "1" ? 1 : 0,
 			useHeroImage: useHeroImage === "1" ? 1 : 0
 		}
 	}
@@ -90,6 +97,8 @@ class MainPage extends Component {
 
 	toggleHeroImage = (e, { value }) => this.setState({ useHeroImage: value === "on" ? 1 : 0 })
 
+	toggleCtaVisibility = (e, { value }) => this.setState({ ctaVisible: value === "on" ? 1 : 0 })
+
 	render() {
 		const { bearer, page, type } = this.props
 		const {
@@ -99,6 +108,7 @@ class MainPage extends Component {
 			ctaColor,
 			ctaInverted,
 			ctaText,
+			ctaVisible,
 			description,
 			header,
 			image,
@@ -112,9 +122,6 @@ class MainPage extends Component {
 			useCards,
 			useHeroImage
 		} = this.state
-		console.log("main")
-		console.log(this.state)
-		console.log(this.props)
 
 		const payload = formatPayload(type, this.state)
 
@@ -230,19 +237,22 @@ class MainPage extends Component {
 						</Fragment>
 					)}
 
-					{type === "contact-page" && (
+					{type === "bikes-page" && (
 						<Fragment>
 							<EditButton
 								basic={ctaBasic}
+								changeColor={this.onChangeCtaColor}
+								changeText={this.onChangeCtaText}
 								color={ctaColor}
 								inverted={ctaInverted}
 								text={ctaText}
 								title="Call-to-action button"
 								toggleBasic={this.toggleCtaBasic}
 								toggleInverted={this.toggleCtaInverted}
-								changeColor={this.onChangeCtaColor}
-								changeText={this.onChangeCtaText}
+								toggleVisibility={this.toggleCtaVisibility}
+								visible={ctaVisible}
 							/>
+							<Divider hidden />
 						</Fragment>
 					)}
 
@@ -250,18 +260,20 @@ class MainPage extends Component {
 						<label>Title</label>
 						<Input onChange={this.onChangeTitle} placeholder="Title" value={title} />
 					</Form.Field>
-					<Form.Field>
-						<label>Description</label>
-						<AceEditor
-							fontSize={16}
-							highlightActiveLine
-							mode="html"
-							name="cssEditor"
-							onChange={code => this.setState({ description: code })}
-							theme="monokai"
-							value={description}
-						/>
-					</Form.Field>
+					{!cardsPages.includes(type) && (
+						<Form.Field>
+							<label>Description</label>
+							<AceEditor
+								fontSize={16}
+								highlightActiveLine
+								mode="html"
+								name="cssEditor"
+								onChange={code => this.setState({ description: code })}
+								theme="monokai"
+								value={description}
+							/>
+						</Form.Field>
+					)}
 
 					<Divider />
 
@@ -290,10 +302,11 @@ MainPage.propTypes = {
 	pageData: PropTypes.shape({
 		backgroundImg: PropTypes.string,
 		ctaButton: PropTypes.shape({
-			basic: PropTypes.bool,
+			basic: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 			color: PropTypes.string,
-			inverted: PropTypes.bool,
-			title: PropTypes.string
+			inverted: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+			title: PropTypes.string,
+			visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 		}),
 		description: PropTypes.string,
 		firstSection: PropTypes.shape({
@@ -351,8 +364,8 @@ MainPage.propTypes = {
 		}),
 		title: PropTypes.string,
 		toastMsg: PropTypes.string,
-		useCards: PropTypes.bool,
-		useHeroImage: PropTypes.bool
+		useCards: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+		useHeroImage: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 	}),
 	type: PropTypes.string
 }

@@ -14,21 +14,80 @@ class Bike extends CI_Controller {
 
 	}
 
+	public function create() {
+		$description = $this->input->post('description');
+		$image = $this->input->post('image');
+		$name = $this->input->post('name');
+
+		if (empty($name)) {
+			echo json_encode([
+				'error' => 'You must provide a name'
+			]);
+			exit;
+		}
+
+		if (empty($description)) {
+			echo json_encode([
+				'error' => 'You must provide a description'
+			]);
+			exit;
+		}
+
+		if (empty($image)) {
+			echo json_encode([
+				'error' => 'You must provide an image'
+			]);
+			exit;
+		}
+
+		$this->bike->create([
+			'description' => $description,
+			'image' => $image,
+			'name' => $name
+		]);
+
+		echo json_encode([
+			'error' => false
+		]);
+	}
+
+	public function edit() {
+		$id = $this->input->post('id');
+		$description = $this->input->post('description');
+		$image = $this->input->post('image');
+		$name = $this->input->post('name');
+		$visible = $this->input->post('visible');
+
+		$this->bike->update($id, [
+			'description' => $description,
+			'image' => $image,
+			'name' => $name,
+			'visible' => $visible
+		]);
+
+		echo json_encode([
+			'error' => false
+		]);
+	}
+
 	public function search() {
 		$page = $this->input->get('page');
 		$limit = $this->input->get('limit');
+		$visible = $this->input->get('visible');
 
 		if ($limit === null) {
 			$limit = 25;
 		}
 
 		$count = $this->bike->search(
+			$visible,
 			true,
 			$page,
 			$limit
 		);
 
 		$results = $this->bike->search(
+			$visible,
 			false,
 			$page,
 			$limit

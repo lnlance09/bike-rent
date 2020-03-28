@@ -5,6 +5,7 @@ export const formatPayload = (page, state) => {
 		ctaColor,
 		ctaInverted,
 		ctaText,
+		ctaVisible,
 		description,
 		header,
 		image,
@@ -45,7 +46,8 @@ export const formatPayload = (page, state) => {
 			basic: ctaBasic,
 			color: ctaColor,
 			inverted: ctaInverted,
-			text: ctaText
+			text: ctaText,
+			visible: ctaVisible
 		}
 	}
 

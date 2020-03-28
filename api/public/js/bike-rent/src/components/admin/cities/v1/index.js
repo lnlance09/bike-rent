@@ -164,15 +164,14 @@ class AdminCities extends Component {
 				{cities.count > 0 ? (
 					<Item.Group divided relaxed>
 						{cities.results.map((item, i) => {
-							const description = item.description
-							const image = item.image
+							const { description, image, title } = item
 							const isActive = currentItem === i
 
 							return (
 								<Item key={`adminCity${i}`}>
-									<Item.Image rounded size="large" src={item.image} />
+									<Item.Image rounded size="large" src={image} />
 									<Item.Content>
-										<Item.Header as="h1">{item.title}</Item.Header>
+										<Item.Header as="h1">{title}</Item.Header>
 										<Item.Description>
 											<Form>
 												<TextArea

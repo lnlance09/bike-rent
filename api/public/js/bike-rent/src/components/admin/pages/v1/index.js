@@ -110,10 +110,11 @@ AdminPages.propTypes = {
 	pageData: PropTypes.shape({
 		backgroundImg: PropTypes.string,
 		ctaButton: PropTypes.shape({
-			basic: PropTypes.bool,
+			basic: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 			color: PropTypes.string,
-			inverted: PropTypes.bool,
-			title: PropTypes.string
+			inverted: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+			title: PropTypes.string,
+			visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 		}),
 		description: PropTypes.string,
 		firstSection: PropTypes.shape({
@@ -150,6 +151,12 @@ AdminPages.propTypes = {
 				title: PropTypes.string
 			})
 		),
+		seo: PropTypes.shape({
+			desciption: PropTypes.string,
+			img: PropTypes.string,
+			keywords: PropTypes.string,
+			title: PropTypes.string
+		}),
 		signInButton: PropTypes.shape({
 			basic: PropTypes.bool,
 			color: PropTypes.string,
@@ -171,8 +178,8 @@ AdminPages.propTypes = {
 		}),
 		title: PropTypes.string,
 		toastMsg: PropTypes.string,
-		useCards: PropTypes.bool,
-		useHeroImage: PropTypes.bool
+		useCards: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+		useHeroImage: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 	}),
 	type: PropTypes.string,
 	updateSeo: PropTypes.func,

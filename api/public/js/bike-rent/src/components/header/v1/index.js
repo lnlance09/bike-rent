@@ -143,15 +143,17 @@ class AppHeader extends Component {
 			return (
 				<Menu.Item className="signInLink" direction="right" position="right">
 					<Button
+						basic={signInButton.basic === 1}
 						color={signInButton.color}
 						content={signInButton.text}
-						inverted={signInButton.inverted}
+						inverted={signInButton.inverted === 1}
 						onClick={() => props.history.push("/signin?type=signin")}
 					/>
 					<Button
+						basic={signUpButton.basic === 1}
 						color={signUpButton.color}
 						content={signUpButton.text}
-						inverted={signUpButton.inverted}
+						inverted={signUpButton.inverted === 1}
 						onClick={() => props.history.push("/signin?type=join")}
 						style={{ marginLeft: "0.5em" }}
 					/>
@@ -338,15 +340,15 @@ AppHeader.propTypes = {
 	minHeight: PropTypes.string,
 	showMainContent: PropTypes.bool,
 	signInButton: PropTypes.shape({
-		basic: PropTypes.string,
+		basic: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		color: PropTypes.string,
-		inverted: PropTypes.bool,
+		inverted: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		text: PropTypes.string
 	}),
 	signUpButton: PropTypes.shape({
-		basic: PropTypes.string,
+		basic: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		color: PropTypes.string,
-		inverted: PropTypes.bool,
+		inverted: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		text: PropTypes.string
 	})
 }

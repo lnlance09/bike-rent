@@ -50,9 +50,7 @@ class About extends Component {
 					<Container className="mainContainer">
 						<Header as="h1">{aboutPage.title}</Header>
 
-						<div
-							dangerouslySetInnerHTML={{ __html: aboutPage.description }}
-						/>
+						<div dangerouslySetInnerHTML={{ __html: aboutPage.description }} />
 					</Container>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />

@@ -1,6 +1,16 @@
 import { submitApplication } from "redux/actions/app"
 import { connect, Provider } from "react-redux"
-import { Button, Container, Divider, Form, Header, Input, Message, Segment, TextArea } from "semantic-ui-react"
+import {
+	Button,
+	Container,
+	Divider,
+	Form,
+	Header,
+	Input,
+	Message,
+	Segment,
+	TextArea
+} from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import React, { Component } from "react"
@@ -58,13 +68,9 @@ class Apply extends Component {
 					/>
 
 					<Container className="mainContainer">
-						<Header as="h1">
-							{applyPage.title}
-						</Header>
+						<Header as="h1">{applyPage.title}</Header>
 
-						<p>
-							{applyPage.description}
-						</p>
+						<p>{applyPage.description}</p>
 
 						<Divider hidden />
 
@@ -97,16 +103,13 @@ class Apply extends Component {
 										color="blue"
 										content="Apply"
 										fluid
-										onClick={() => this.props.submitApplication({ email, msg, name })}
+										onClick={() =>
+											this.props.submitApplication({ email, msg, name })
+										}
 										type="submit"
 									/>
 								</Form.Field>
-								{error && (
-									<Message
-										content={errorMsg}
-										error
-									/>
-								)}
+								{error && <Message content={errorMsg} error />}
 							</Form>
 						</Segment>
 					</Container>

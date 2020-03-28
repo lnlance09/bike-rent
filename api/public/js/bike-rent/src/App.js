@@ -294,7 +294,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			title: PropTypes.string
@@ -310,7 +310,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			title: PropTypes.string
@@ -319,7 +319,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			sort: PropTypes.string,
@@ -331,7 +331,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			title: PropTypes.string
@@ -346,7 +346,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			sort: PropTypes.string,
@@ -359,7 +359,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			title: PropTypes.string,
@@ -375,7 +375,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			title: PropTypes.string
@@ -458,7 +458,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			thirdSection: PropTypes.shape({
@@ -491,7 +491,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			title: PropTypes.string
@@ -501,7 +501,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			signInButton: PropTypes.shape({
@@ -521,7 +521,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			title: PropTypes.string
@@ -533,7 +533,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string,
 			}),
 			useCards: PropTypes.bool,
@@ -544,7 +544,7 @@ App.propTypes = {
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
-				keywords: PropTypes.array,
+				keywords: PropTypes.string,
 				title: PropTypes.string
 			}),
 			title: PropTypes.string

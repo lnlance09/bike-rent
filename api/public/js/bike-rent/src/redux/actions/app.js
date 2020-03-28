@@ -7,6 +7,35 @@ toast.configure({
 	draggable: false
 })
 
+export const addBike = ({ bearer, description, image, name }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/bike/create`,
+		{
+			form: {
+				description,
+				image,
+				name
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.ADD_BIKE
+			})
+
+			if (!body.error) {
+				toast.success("The bike has been added")
+				dispatch(getBikes())
+				dispatch(toggleAddBikeModal())
+			}
+		}
+	)
+}
+
 export const addBlog = ({ bearer, entry, title }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/blog/create`,
@@ -59,6 +88,38 @@ export const addCity = ({ bearer, description, id, image }) => dispatch => {
 				dispatch(getCities())
 				dispatch(toggleAddCityModal())
 			}
+		}
+	)
+}
+
+export const editBike = ({ bearer, description, id, image, name, order, visible }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/bike/edit`,
+		{
+			form: {
+				description,
+				id,
+				image,
+				name,
+				order,
+				visible
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				toast.success("Your edit was successful")
+			}
+
+			dispatch({
+				payload: body,
+				type: constants.EDIT_BIKE
+			})
+
+			dispatch(getBikes())
 		}
 	)
 }
@@ -219,6 +280,21 @@ export const editSitemap = ({ bearer, sitemap }) => dispatch => {
 			dispatch({
 				payload: body,
 				type: constants.EDIT_SITEMAP
+			})
+		}
+	)
+}
+
+export const getBikes = () => dispatch => {
+	request.get(
+		`${window.location.origin}/api/bike/search`,
+		{
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.GET_BIKES
 			})
 		}
 	)
@@ -493,6 +569,12 @@ export const submitHeaderForm = ({
 export const toggleAddCityModal = () => dispatch => {
 	dispatch({
 		type: constants.TOGGLE_ADD_CITY_MODAL
+	})
+}
+
+export const toggleAddBikeModal = () => dispatch => {
+	dispatch({
+		type: constants.TOGGLE_ADD_BIKE_MODAL
 	})
 }
 

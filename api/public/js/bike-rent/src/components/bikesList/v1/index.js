@@ -24,7 +24,7 @@ class BikesList extends Component {
 				storeId: this.props.storeId
 			})
 		} else {
-			this.props.getBikes({ page: 0 })
+			this.props.getBikes({ page: 0, visible: 1 })
 		}
 	}
 
@@ -43,7 +43,7 @@ class BikesList extends Component {
 	}
 
 	render() {
-		const { emptyMsgContent, itemsPerRow, results, useCards } = this.props
+		const { emptyMsgContent, extra, itemsPerRow, results, useCards } = this.props
 
 		const RenderItems = ({ props }) => {
 			console.log("render items")
@@ -53,14 +53,14 @@ class BikesList extends Component {
 					return (
 						<ResultItem
 							description={result.description}
-							extra={<Button color="green" content="Get some wheels now" fluid />}
+							extra={extra}
 							history={props.history}
 							id={`${props.key}${i}`}
 							img={props.showPics ? result.image : null}
 							key={`${props.key}${i}`}
 							meta={result.meta}
 							redirect
-							tags={[result.tags]}
+							// tags={[result.tags]}
 							title={result.name}
 							url={result.url}
 							useCard={useCards}
@@ -68,7 +68,7 @@ class BikesList extends Component {
 					)
 				}
 
-				return <LazyLoad card={useCards} key={`${props.key}${i}`} segment={false} />
+				return <LazyLoad card={useCards} key={`${props.key}${i}`} segment={!useCards} />
 			})
 		}
 
@@ -110,6 +110,7 @@ BikesList.propTypes = {
 	bikesByStore: PropTypes.bool,
 	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
+	extra: PropTypes.node,
 	getBikes: PropTypes.func,
 	getBikesByStore: PropTypes.func,
 	hasMore: PropTypes.bool,
