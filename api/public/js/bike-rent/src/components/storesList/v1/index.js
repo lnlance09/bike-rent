@@ -1,5 +1,5 @@
 import "./style.css"
-import { getStores, toggleLoading } from "./actions"
+import { getStores, getStoresByBike, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
 import { Card, Button, Header, Item, List, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
@@ -18,7 +18,14 @@ class StoresList extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getStores({ page: 0 })
+		if (this.props.storesByBike) {
+			this.props.getStoresByBike({
+				bikeId: this.props.bikeId,
+				page: 0
+			})
+		} else {
+			this.props.getStores({ page: 0 })
+		}
 	}
 
 	componentDidUpdate(prevProps) {
@@ -106,9 +113,11 @@ class StoresList extends Component {
 }
 
 StoresList.propTypes = {
+	bikeId: PropTypes.string,
 	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
 	getStores: PropTypes.func,
+	getStoresByBike: PropTypes.func,
 	hasMore: PropTypes.bool,
 	history: PropTypes.object,
 	itemsPerRow: PropTypes.number,
@@ -117,6 +126,7 @@ StoresList.propTypes = {
 	page: PropTypes.number,
 	results: PropTypes.array,
 	showPics: PropTypes.bool,
+	storesByBike: PropTypes.bool,
 	toggleLoading: PropTypes.func,
 	useCards: PropTypes.bool
 }
@@ -125,11 +135,13 @@ StoresList.defaultProps = {
 	count: 10,
 	emptyMsgContent: "",
 	getStores,
+	getStoresByBike,
 	itemsPerRow: 3,
 	loadingMore: false,
 	page: 0,
 	results: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
 	showPics: true,
+	storesByBike: false,
 	toggleLoading,
 	useCards: true
 }
@@ -141,5 +153,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 export default connect(mapStateToProps, {
 	getStores,
+	getStoresByBike,
 	toggleLoading
 })(StoresList)

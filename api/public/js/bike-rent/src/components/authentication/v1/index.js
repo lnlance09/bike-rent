@@ -15,7 +15,6 @@ import {
 	Header,
 	Icon,
 	Input,
-	Label,
 	Message,
 	Segment
 } from "semantic-ui-react"

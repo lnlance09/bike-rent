@@ -22,8 +22,9 @@ export const TOGGLE_ADD_BIKE_MODAL = "app:TOGGLE_ADD_BIKE_MODAL"
 export const TOGGLE_ADD_CITY_MODAL = "app:TOGGLE_ADD_CITY_MODAL"
 export const TOGGLE_EDIT_BLOG_MODAL = "app:TOGGLE_EDIT_BLOG_MODAL"
 
-export const SELECT_BIKE = "bike:SELECT_BIKE"
+export const GET_BIKE = "bike:GET_BIKE"
 export const GET_BIKES = "bike:GET_BIKES"
+export const SELECT_BIKE = "bike:SELECT_BIKE"
 
 export const GET_CITIES = "city:GET_CITIES"
 

@@ -14,9 +14,14 @@ class BikeModel extends CI_Model {
 	}
 
 	public function get($id) {
-		$this->db->select('');
+		$this->db->select('id, description, image, name, visible');
 		$this->db->where('id', $id);
 		$result = $this->db->get('bikes')->result_array();
+		if (empty($result)) {
+			return false;
+		}
+
+		return $result[0];
 	}
 
 	public function getAll($sort = null) {

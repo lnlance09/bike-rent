@@ -63,6 +63,9 @@ body {
 .applyPage {
   height: 100vh; }
 
+.bikesPage .container.mainContainer {
+  padding-top: 0 !important; }
+
 .signInPage {
   min-height: 100vh; }
   .signInPage .signInContainer .loginForm {

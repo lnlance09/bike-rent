@@ -218,7 +218,7 @@ class AdminBikes extends Component {
 														checked={
 															isActive
 																? visibleVal === 1
-																: visible == 1
+																: visible === 1
 														}
 														label="Yes"
 														name="visible"
@@ -240,7 +240,7 @@ class AdminBikes extends Component {
 														checked={
 															isActive
 																? visibleVal === 0
-																: visible == 0
+																: visible === 0
 														}
 														label="No"
 														name="visible"

@@ -1,7 +1,7 @@
 import "./style.css"
 import { getBikes, getBikesByStore, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
-import { Card, Button, Header, Item, Segment, Visibility } from "semantic-ui-react"
+import { Card, Header, Item, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
 import LazyLoad from "components/lazyLoad/v1/"
 import PropTypes from "prop-types"
@@ -62,7 +62,7 @@ class BikesList extends Component {
 							redirect
 							// tags={[result.tags]}
 							title={result.name}
-							url={result.url}
+							url={`/bikes/${result.id}`}
 							useCard={useCards}
 						/>
 					)

@@ -24,7 +24,7 @@ class StoreModel extends CI_Model {
 	}
 
 	public function get($id) {
-		$this->db->select('address, city, description, id, image, lat, lon, name, order, state, zip_code');
+		$this->db->select('address, city, closing_time, description, id, image, lat, lon, name, opening_time, order, phone_number, state, zip_code');
 		$this->db->where('s.id', $id);
 		$result = $this->db->get('stores s')->result_array();
 		if (empty($result)) {
@@ -35,20 +35,35 @@ class StoreModel extends CI_Model {
 	}
 
 	public function getBikes(
-		$id,
+		$store_id,
+		$bike_id,
 		$just_count,
 		$page = false,
 		$limit = 25
 	) {
-		$select = "sb.quantity, b.id, b.description, b.image, b.name";
+		if ($store_id) {
+			$select = "sb.quantity, b.id, b.description, b.image, b.name";
+		}
+
+		if ($bike_id) {
+			$select = "s.address, s.city, s.description, s.id, s.image, s.lat, s.lon, s.name, s.order, s.state, s.zip_code";
+		}
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';
 		}
 
 		$this->db->select($select);
-		$this->db->where('sb.store_id', $id);
-		$this->db->join('bikes b', 'sb.bike_id = b.id');
+
+		if ($store_id) {
+			$this->db->where('sb.store_id', $store_id);
+			$this->db->join('bikes b', 'sb.bike_id = b.id');
+		}
+
+		if ($bike_id) {
+			$this->db->where('sb.bike_id', $bike_id);
+			$this->db->join('stores s', 'sb.store_id = s.id');
+		}
 
 		if (!$just_count) {
 			$limit = 25;

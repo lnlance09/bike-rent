@@ -29,7 +29,7 @@ export const getBikesByStore = ({ limit = 25, page = 0, storeId }) => dispatch =
 		{
 			json: true,
 			qs: {
-				id: storeId,
+				storeId,
 				limit,
 				page
 			}

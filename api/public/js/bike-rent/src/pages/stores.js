@@ -2,11 +2,13 @@ import { connect, Provider } from "react-redux"
 import { getStore } from "redux/actions/store"
 import { fetchLocations } from "utils/selectOptions"
 import {
+	Button,
 	Container,
 	Divider,
 	Dropdown,
 	Grid,
 	Header,
+	Image,
 	List,
 	Menu,
 	Responsive
@@ -65,6 +67,7 @@ class Stores extends Component {
 		const { settings } = this.props
 
 		const StoreList = props => {
+			const { closingTime, openingTime, phoneNumber } = props.store
 			return (
 				<List divided relaxed="very" size="large">
 					<List.Item>
@@ -80,14 +83,16 @@ class Stores extends Component {
 						<List.Icon color="yellow" name="clock" />
 						<List.Content>
 							<List.Header>Hours</List.Header>
-							<List.Description>8:00 AM - 10:00 PM</List.Description>
+							<List.Description>
+								{openingTime} - {closingTime}
+							</List.Description>
 						</List.Content>
 					</List.Item>
 					<List.Item>
 						<List.Icon color="green" name="phone" />
 						<List.Content>
 							<List.Header>Phone</List.Header>
-							<List.Description>(646) 923-2715</List.Description>
+							<List.Description>{phoneNumber}</List.Description>
 						</List.Content>
 					</List.Item>
 				</List>
@@ -96,7 +101,7 @@ class Stores extends Component {
 
 		const StoreMenu = props => {
 			return (
-				<Menu tabular>
+				<Menu pointing secondary>
 					<Menu.Item
 						active={activeItem === "bicycles"}
 						name="bicycles"
@@ -123,7 +128,7 @@ class Stores extends Component {
 						history={props.history}
 						itemsPerRow={2}
 						storeId={id}
-						useCard={true}
+						useCards={false}
 					/>
 				)
 			}
@@ -135,8 +140,7 @@ class Stores extends Component {
 		}
 
 		const SingleStore = props => {
-			const { description, name } = props.store
-
+			const { description, image, lat, lon, name } = props.store
 			return (
 				<Fragment>
 					<Responsive maxWidth={1024}>
@@ -152,7 +156,13 @@ class Stores extends Component {
 
 						<Grid className="storeGrid">
 							<Grid.Column className="leftSide" width={11}>
-								<Header size="huge">{name}</Header>
+								<Header dividing size="huge">
+									{name}
+								</Header>
+
+								<Image fluid rounded src={image} />
+
+								<Divider hidden />
 
 								<div>
 									<Header>About this business</Header>
@@ -171,14 +181,30 @@ class Stores extends Component {
 										<MapBox
 											apiKey="AIzaSyD0Hd-I0mmRVa3WxTy-lpNJ-xAyDqWWTxM"
 											defaultCenter={{
-												lat: 59.95,
-												lng: 30.33
+												lat: lat,
+												lng: lon
 											}}
-											lat={59.955413}
-											lng={30.337844}
+											height="280px"
+											lat={lat}
+											lng={lon}
+											width="100%"
 										/>
 										<Divider hidden />
 										<div>{StoreList(props)}</div>
+										<Divider hidden />
+										<Button
+											color="blue"
+											content="Leave a review"
+											fluid
+											icon="star"
+										/>
+										<Divider />
+										<Button
+											color="olive"
+											content="Proceed to checkout"
+											fluid
+											icon="cart"
+										/>
 									</div>
 								) : (
 									<LazyLoad header={false} />
@@ -260,6 +286,7 @@ Stores.propTypes = {
 			})
 		),
 		city: PropTypes.string,
+		closingTime: PropTypes.string,
 		description: PropTypes.string,
 		error: PropTypes.bool,
 		id: PropTypes.number,
@@ -272,6 +299,8 @@ Stores.propTypes = {
 		lat: PropTypes.string,
 		lon: PropTypes.string,
 		name: PropTypes.string,
+		openingTime: PropTypes.string,
+		phoneNumber: PropTypes.string,
 		reviews: PropTypes.arrayOf(
 			PropTypes.shape({
 				date_created: PropTypes.string,

@@ -7,6 +7,7 @@ const initial = () => ({
 const stores = (state = initial(), action) => {
 	switch (action.type) {
 		case constants.GET_STORES:
+		case constants.GET_STORES_BY_BIKE:
 			const results =
 				action.payload.page > 0
 					? [...state.results, ...action.payload.results]

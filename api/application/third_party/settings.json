@@ -192,16 +192,16 @@
             }
         ],
         "signInButton": {
-            "basic": 1,
-            "color": "orange",
+            "basic": 0,
+            "color": "olive",
             "inverted": 0,
-            "text": "Sign In 1"
+            "text": "Sign In"
         },
         "signUpButton": {
-            "basic": 1,
-            "color": "teal",
+            "basic": 0,
+            "color": "olive",
             "inverted": 0,
-            "text": "Sign Up 2"
+            "text": "Sign Up"
         }
     },
     "homePage": {
@@ -355,7 +355,7 @@
         "title": "",
         "useHeroImage": 0
     },
-    "theme": "yeti",
+    "theme": "cosmo",
     "themes": [
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cerulean.png",

@@ -97,19 +97,22 @@ class Store extends CI_Controller {
 	}
 
 	public function getBikes() {
-		$id = $this->input->get('id');
+		$bike_id = $this->input->get('bikeId');
+		$store_id = $this->input->get('storeId');
 		$page = $this->input->get('page');
 		$limit = $this->input->get('limit');
 
 		$count = $this->store->getBikes(
-			$id,
+			$store_id,
+			$bike_id,
 			true,
 			$page,
 			$limit
 		);
 
 		$results = $this->store->getBikes(
-			$id,
+			$store_id,
+			$bike_id,
 			false,
 			$page,
 			$limit

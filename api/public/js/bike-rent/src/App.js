@@ -131,7 +131,7 @@ class App extends Component {
 									)}
 								/>
 								<Route
-									path="/bikes/:type"
+									path="/bikes/:id"
 									render={props => (
 										<Bikes
 											key={window.location.pathname}

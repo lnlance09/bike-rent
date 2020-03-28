@@ -1,43 +1,57 @@
 import "./style.css"
-import { Icon } from "semantic-ui-react"
 import React, { Component } from "react"
-import GoogleMapReact from "google-map-react"
+import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 import PropTypes from "prop-types"
 
-const MapMarker = ({ lat, lng }) => {
-	return <Icon lat={lat} lng={lng} name="marker" />
-}
+const Map = ReactMapboxGl({
+	accessToken:
+		"pk.eyJ1IjoibG5sYW5jZTA5IiwiYSI6ImNrOGM0bXNwZDBkMDgzbW4yanExOWV3d3UifQ.-d8NKcr5Iry-6bIYpq53EA"
+})
 
 class MapBox extends Component {
 	render() {
-		const { apiKey, defaultCenter, lat, lng } = this.props
+		const { circlePaint, height, lat, lng, width } = this.props
 
 		return (
-			<div className="googleMapsBox">
-				<GoogleMapReact
-					bootstrapURLKeys={{ key: apiKey }}
-					defaultCenter={defaultCenter}
-					defaultZoom={11}
-				>
-					<MapMarker lat={lat} lng={lng} />
-				</GoogleMapReact>
-			</div>
+			<Map
+				center={[lng, lat]}
+				containerStyle={{
+					height,
+					width
+				}}
+				style="mapbox://styles/mapbox/streets-v9"
+				zoom={[12]}
+			>
+				<Layer type="circle" paint={circlePaint}>
+					<Feature coordinates={[lng, lat]} />
+				</Layer>
+			</Map>
 		)
 	}
 }
 
 MapBox.propTypes = {
-	apiKey: PropTypes.string,
-	defaultCenter: PropTypes.shape({
-		lat: PropTypes.number,
-		lng: PropTypes.number
+	circlePaint: PropTypes.shape({
+		"circle-stroke-width": PropTypes.number,
+		"circle-radius": PropTypes.number,
+		"circle-blur": PropTypes.number,
+		"circle-color": PropTypes.string,
+		"circle-stroke-color": PropTypes.string
 	}),
+	height: PropTypes.string,
 	lat: PropTypes.number,
-	lng: PropTypes.number
+	lng: PropTypes.number,
+	width: PropTypes.string
 }
 
 MapBox.defaultProps = {
-	defaultCenter: {}
+	circlePaint: {
+		"circle-stroke-width": 4,
+		"circle-radius": 10,
+		"circle-blur": 0.15,
+		"circle-color": "#3770C6",
+		"circle-stroke-color": "white"
+	}
 }
 
 export default MapBox

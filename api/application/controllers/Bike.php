@@ -8,6 +8,7 @@ class Bike extends CI_Controller {
 		$this->base_url = $this->config->base_url();
 
 		$this->load->model('BikeModel', 'bike');
+		$this->load->model('StoreModel', 'store');
 	}
 
 	public function index() {
@@ -67,6 +68,44 @@ class Bike extends CI_Controller {
 
 		echo json_encode([
 			'error' => false
+		]);
+	}
+
+	public function get() {
+		$id = $this->input->get('id');
+
+		$bike = $this->bike->get($id);
+
+		if (!$bike) {
+			echo json_encode([
+				'bike' => false,
+				'error' => true
+			]);
+		}
+
+		$page = 0;
+		$limit = 25;
+		$store_count = $this->store->getBikes(
+			null,
+			$id,
+			true,
+			$page,
+			$limit
+		);
+
+		$results = $this->store->getBikes(
+			null,
+			$id,
+			false,
+			$page,
+			$limit
+		);
+
+		echo json_encode([
+			'bike' => $bike,
+			'error' => false,
+			'results' => $results,
+			'store_count' => (int)$store_count
 		]);
 	}
 

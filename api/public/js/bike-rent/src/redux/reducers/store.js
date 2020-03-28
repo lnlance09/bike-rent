@@ -13,13 +13,16 @@ const store = (state = initial(), action) => {
 				store: {
 					address: payload.store.address,
 					city: payload.store.city,
+					closingTime: payload.store.closing_time,
 					description: payload.store.description,
 					error,
 					id: parseInt(payload.store.id, 10),
 					image: payload.store.image,
-					lat: payload.store.lat,
-					lon: payload.store.long,
+					lat: parseFloat(payload.store.lat),
+					lon: parseFloat(payload.store.lon),
 					name: payload.store.name,
+					phoneNumber: payload.store.phone_number,
+					openingTime: payload.store.opening_time,
 					state: payload.store.state,
 					zipCode: payload.store.zip_code
 				}
