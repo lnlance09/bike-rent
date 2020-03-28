@@ -19,6 +19,22 @@ class Settings extends CI_Controller {
 			'refund'
 		];
 
+		$this->pages = [
+			'aboutPage',
+			'applyPage',
+			'bikesPage',
+			'checkoutPage',
+			'citiesPage',
+			'contactPage',
+			'faqPage',
+			'homePage',
+			'partnersPage',
+			'searchPage',
+			'signinPage',
+			'storesPage',
+			'termsPage'
+		];
+
 		$this->themes = [
 			'cerulean',
 			'cosmo',
@@ -129,6 +145,16 @@ class Settings extends CI_Controller {
 	public function updateCss() {
 		$css = $this->input->post('css');
 
+		/*
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to make changes'
+			]);
+			exit;
+		}
+		*/
+
 		$file = APPPATH.'third_party/style.css';
 		file_put_contents($file, $css);
 		$this->media->addToS3('css/style.css', $file, true, true);
@@ -142,6 +168,16 @@ class Settings extends CI_Controller {
 	public function updateEmail() {
 		$email = $this->input->post('email');
 		$type = $this->input->post('type');
+
+		/*
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to make changes'
+			]);
+			exit;
+		}
+		*/
 
 		$file = APPPATH.'third_party/'.$type.'.html';
 		file_put_contents($file, $email);
@@ -215,14 +251,6 @@ class Settings extends CI_Controller {
 		echo $header;
 	}
 
-	public function updateHomePage() {
-		$settings = $this->settings;
-		$settings = new $settings();
-		$decode = $settings->decodeSettings();
-
-		print_r($decode);
-	}
-
 	public function updateLanguages() {
 		$languages = $this->input->post('languages');
 
@@ -248,6 +276,40 @@ class Settings extends CI_Controller {
 		$newLanguages = $settings->updateLanguages($languages);
 
 		echo $newLanguages;
+	}
+
+	public function updatePage() {
+		$data = $this->input->post('data');
+		$page = $this->input->post('page');
+
+		/*
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to make changes'
+			]);
+			exit;
+		}
+		*/
+
+		if (!in_array($page, $this->pages)) {
+			echo json_encode([
+				'error' => 'That page does not exist'
+			]);
+			exit;
+		}
+
+		$settings = $this->settings;
+		$settings = new $settings();
+		$filtered = $settings->filterPageData($page, $data);
+
+		// FormatArray($data);
+		// FormatArray($filtered);
+		// die;
+
+		$newPage = $settings->updatePage($page, $data);
+
+		echo $newPage;
 	}
 
 	public function updateSeo() {
@@ -299,14 +361,6 @@ class Settings extends CI_Controller {
 			'error' => false,
 			'sitemap' => $sitemap
 		]);
-	}
-
-	public function updateStoresPage() {
-		$settings = $this->settings;
-		$settings = new $settings();
-		$decode = $settings->decodeSettings();
-
-		print_r($decode);
 	}
 
 	public function updateTheme() {

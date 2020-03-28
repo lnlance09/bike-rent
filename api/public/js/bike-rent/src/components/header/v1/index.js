@@ -1,5 +1,4 @@
 import "./style.css"
-import "semantic/dist/semantic.min.css"
 import { logout } from "components/authentication/v1/actions"
 import { Provider, connect } from "react-redux"
 import { ReactSVG } from "react-svg"
@@ -28,8 +27,8 @@ const getWidth = () => {
 	return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
 
-const HeroContent = ({ content, headerOne, headerTwo }) => (
-	<Container className="heroContainer">
+const HeroContent = ({ backgroundImage, content, headerOne, headerTwo }) => (
+	<Container className="heroContainer" style={{ backgroundImage: `url('${backgroundImage}'` }}>
 		<Header as="h1" className="heroHeaderOne" content={headerOne} />
 		<Header as="h2" className="heroHeaderTwo" content={headerTwo} />
 		{content && (
@@ -77,6 +76,7 @@ class AppHeader extends Component {
 			activeItem,
 			authenticated,
 			backgroundColor,
+			backgroundImage,
 			content,
 			headerOne,
 			headerTwo,
@@ -217,6 +217,7 @@ class AppHeader extends Component {
 						</Menu>
 						{showMainContent && (
 							<HeroContent
+								backgroundImage={backgroundImage}
 								content={content}
 								headerOne={headerOne}
 								headerTwo={headerTwo}
@@ -266,6 +267,7 @@ class AppHeader extends Component {
 						</Container>
 						{showMainContent && (
 							<HeroContent
+								backgroundImage={backgroundImage}
 								content={content}
 								headerOne={headerOne}
 								headerTwo={headerTwo}
@@ -320,6 +322,7 @@ AppHeader.propTypes = {
 	activeItem: PropTypes.string,
 	authenticated: PropTypes.bool,
 	backgroundColor: PropTypes.string,
+	backgroundImage: PropTypes.string,
 	content: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
 	headerOne: PropTypes.string,
 	headerTwo: PropTypes.string,

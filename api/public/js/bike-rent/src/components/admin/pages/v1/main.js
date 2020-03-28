@@ -1,10 +1,14 @@
 import "./style.css"
+import "ace-builds/src-noconflict/mode-html"
+import "ace-builds/src-noconflict/theme-monokai"
 import { editPage } from "redux/actions/app"
+import { formatPayload } from "utils/payloadFunctions"
 import { capitalizeWord } from "utils/textFunctions"
 import { connect } from "react-redux"
-import { Button, Divider, Form, Header, Input, Radio, TextArea } from "semantic-ui-react"
+import { Button, Divider, Form, Header, Input, Radio } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import EditButton from "./button"
+import AceEditor from "react-ace"
 import PropTypes from "prop-types"
 
 class MainPage extends Component {
@@ -42,7 +46,6 @@ class MainPage extends Component {
 			ctaColor,
 			ctaInverted,
 			ctaText,
-			ctaButton,
 			description,
 			firstSection,
 			header: hero.headerTwo,
@@ -55,7 +58,7 @@ class MainPage extends Component {
 			title,
 			toastMsg,
 			useCards,
-			useHeroImage
+			useHeroImage: useHeroImage === "1" ? 1 : 0
 		}
 	}
 
@@ -93,7 +96,6 @@ class MainPage extends Component {
 			backgroundImg,
 			cardsPages,
 			ctaBasic,
-			ctaButton,
 			ctaColor,
 			ctaInverted,
 			ctaText,
@@ -113,6 +115,8 @@ class MainPage extends Component {
 		console.log("main")
 		console.log(this.state)
 		console.log(this.props)
+
+		const payload = formatPayload(type, this.state)
 
 		return (
 			<div className="adminPage">
@@ -248,10 +252,13 @@ class MainPage extends Component {
 					</Form.Field>
 					<Form.Field>
 						<label>Description</label>
-						<TextArea
-							onChange={this.onChangeDescription}
-							placeholder="Description"
-							rows={12}
+						<AceEditor
+							fontSize={16}
+							highlightActiveLine
+							mode="html"
+							name="cssEditor"
+							onChange={code => this.setState({ description: code })}
+							theme="monokai"
 							value={description}
 						/>
 					</Form.Field>
@@ -265,59 +272,8 @@ class MainPage extends Component {
 						onClick={() => {
 							this.props.editPage({
 								bearer,
-								page,
-								pageData: {
-									backgroundImg,
-									ctaButton: {
-										basic: ctaBasic,
-										color: ctaColor,
-										inverted: ctaInverted,
-										title: ctaText
-									},
-									description,
-									firstSection: {
-										button: {
-											basic: PropTypes.bool,
-											color: PropTypes.string,
-											inverted: PropTypes.bool,
-											link: PropTypes.string,
-											text: PropTypes.string
-										},
-										img: PropTypes.string,
-										items: ""
-									},
-									hero: {
-										headerOne: PropTypes.string,
-										headerTwo: PropTypes.string,
-										img: PropTypes.string
-									},
-									partners: "",
-									placeholderText,
-									secondSection: "",
-									signInButton: {
-										basic: PropTypes.bool,
-										color: PropTypes.string,
-										inverted: PropTypes.bool,
-										text: PropTypes.string
-									},
-									thirdSection: {
-										divider: {
-											text: PropTypes.string
-										},
-										firstItem: {
-											subtitle: PropTypes.string,
-											title: PropTypes.string
-										},
-										secondItem: {
-											subtitle: PropTypes.string,
-											title: PropTypes.string
-										}
-									},
-									title,
-									toastMsg,
-									useCards,
-									useHeroImage
-								}
+								data: payload,
+								page
 							})
 						}}
 					/>

@@ -62,7 +62,6 @@
 .mainWrapper .heroContainer {
   background: rgba(255, 255, 255, 0);
   background-size: cover;
-  background-image: url("../../../images/skyline.jpg");
   height: 600px;
   margin-left: 0 !important;
   margin-right: 0 !important;
@@ -94,5 +93,4 @@
         margin-top: 0 !important; }
 
 .ui.vertical.ui.push.left.sidebar.menu {
-  background: #2185D0 !important;
   z-index: 1001 !important; }

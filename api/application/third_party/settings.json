@@ -1,35 +1,36 @@
 {
     "aboutPage": {
-        "desciption": "",
+        "description": "<h1>\n    This is the description\n<\/h1>",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
-            "img": ""
+            "headerOne": "About subheader",
+            "headerTwo": "About header",
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/images\/houston.jpg"
         },
+        "title": "This is the title",
+        "useHeroImage": "0",
         "seo": {
             "description": "Description for about page",
             "image": "https:\/\/s3.console.aws.amazon.com\/s3\/object\/bike-rent\/images\/117-west-58th-street.jpg",
             "keywords": "about, bikes, rent",
-            "title": "About Page"
-        },
-        "title": "",
-        "useHeroImage": 0
+            "title": "About Page 2"
+        }
     },
     "applyPage": {
+        "backgroundImg": "",
         "ctaButton": {
             "basic": "",
             "color": "green",
             "inverted": false,
             "title": "Apply"
         },
+        "description": "",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
             "img": ""
         },
-        "backgroundImg": "",
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -52,7 +53,7 @@
             "img": ""
         },
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -61,10 +62,10 @@
         },
         "title": "",
         "useCards": true,
-        "useHeroImage": 0,
-        "useList": false
+        "useHeroImage": 0
     },
     "checkoutPage": {
+        "description": "",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
@@ -86,13 +87,14 @@
             "inverted": false,
             "text": "Get some wheels now"
         },
+        "description": "",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
             "img": ""
         },
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -105,6 +107,7 @@
         "useList": false
     },
     "contactPage": {
+        "description": "",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
@@ -112,7 +115,7 @@
         },
         "placeholderText": "",
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -124,14 +127,14 @@
         "useHeroImage": 0
     },
     "faqPage": {
-        "desciption": "",
+        "description": "",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
             "img": ""
         },
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -256,7 +259,7 @@
             }
         },
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -287,7 +290,7 @@
         "Abkhazian"
     ],
     "partnersPage": {
-        "desciption": "",
+        "description": "",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
@@ -304,7 +307,7 @@
             }
         ],
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -314,18 +317,6 @@
         "title": "",
         "useHeroImage": 0
     },
-    "searchPage": {
-        "desciption": "",
-        "seo": {
-            "desciption": "",
-            "img": "",
-            "keywords": [
-                ""
-            ],
-            "title": ""
-        },
-        "title": ""
-    },
     "signinPage": {
         "hero": {
             "headerOne": "",
@@ -333,7 +324,7 @@
             "img": ""
         },
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -350,13 +341,14 @@
     },
     "stores": [],
     "storesPage": {
+        "description": "",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
             "img": ""
         },
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""
@@ -368,14 +360,14 @@
         "useHeroImage": 0
     },
     "termsPage": {
-        "desciption": "",
+        "description": "",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
             "img": ""
         },
         "seo": {
-            "desciption": "",
+            "description": "",
             "img": "",
             "keywords": [
                 ""

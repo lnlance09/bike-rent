@@ -24,8 +24,8 @@ class AdminCss extends Component {
 		return (
 			<div className="adminCss">
 				<AceEditor
-					highlightActiveLine
 					fontSize={16}
+					highlightActiveLine
 					mode="css"
 					name="cssEditor"
 					onChange={code => this.setState({ code })}

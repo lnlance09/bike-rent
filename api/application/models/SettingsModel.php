@@ -11,6 +11,46 @@ class SettingsModel extends CI_Model {
 		return @json_decode($this->config, true);
 	}
 
+	public function filterPageData($page, $data) {
+		$allowed = ['description', 'hero', 'title', 'useHeroImage'];
+
+		switch ($page) {
+			case 'applyPage':
+				$allowed[] = 'backgroundImg';
+				$allowed[] = 'ctaButton';
+				break;
+
+			case 'bikesPage':
+			case 'citiesPage':
+			case 'storesPage':
+				$allowed[] = 'ctaButton';
+				$allowed[] = 'useCards';
+				break;
+
+			case 'contactPage':
+				$allowed[] = 'placeholderText';
+				$allowed[] = 'toastMsg';
+				break;
+
+			case 'homePage':
+				$allowed[] = 'firstSection';
+				$allowed[] = 'secondSection';
+				$allowed[] = 'thirdSection';
+				break;
+
+			case 'partnersPage':
+				$allowed[] = 'partners';
+				break;
+
+			case 'signinPage':
+				$allowed[] = 'signInButton';
+				break;
+		}
+
+		$filtered = filterArray($data, $allowed);
+		return $filtered;
+	}
+
 	public function updateFooter(
 		$listOneItems,
 		$listOneTitle,
@@ -150,6 +190,18 @@ class SettingsModel extends CI_Model {
 	public function updateLanguages($languages) {
 		$decode = $this->decodeSettings();
 		$decode['languages'] = $languages;
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
+		file_put_contents($this->configFile, $json);
+
+		return $json;
+	}
+
+	public function updatePage($page, $data) {
+		$decode = $this->decodeSettings();
+		$seo = $decode[$page]['seo'];
+		$decode[$page] = $data;
+		$decode[$page]['seo'] = $seo;
+
 		$json = json_encode($decode, JSON_PRETTY_PRINT);
 		file_put_contents($this->configFile, $json);
 

@@ -46,6 +46,11 @@ body {
 
 			.mainContent {
 				padding: 6px 20px !important;
+
+				#cssEditor {
+					height: 300px !important;
+					width: 100% !important;
+				}
 			}
 		}
 	}
@@ -80,8 +85,17 @@ body {
 			padding-top: 5em;
 		}
 	}
+
+	.mainContainer {
+		min-height: 50vh;
+		padding: 30px 0;
+	}
 }
 
+
+.aboutPage {
+
+}
 
 .signInPage {
 	min-height: 100vh;

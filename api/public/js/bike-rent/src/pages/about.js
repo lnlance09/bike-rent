@@ -1,5 +1,5 @@
 import { connect, Provider } from "react-redux"
-// import { Container } from "semantic-ui-react"
+import { Container, Header } from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import React, { Component } from "react"
@@ -26,6 +26,7 @@ class About extends Component {
 	render() {
 		const { auth } = this.state
 		const { settings } = this.props
+		const { aboutPage } = settings
 
 		return (
 			<Provider store={store}>
@@ -34,15 +35,25 @@ class About extends Component {
 						activeItem="about"
 						authenticated={auth}
 						backgroundColor={settings.header.backgroundColor}
-						// content={BookingForm}
+						backgroundImage={aboutPage.hero.img}
+						headerOne={aboutPage.hero.headerOne}
+						headerTwo={aboutPage.hero.headerTwo}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
-						showMainContent
+						showMainContent={aboutPage.useHeroImage === "1"}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}
 						{...this.props}
 					/>
+
+					<Container className="mainContainer">
+						<Header as="h1">{aboutPage.title}</Header>
+
+						<div
+							dangerouslySetInnerHTML={{ __html: aboutPage.description }}
+						/>
+					</Container>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
