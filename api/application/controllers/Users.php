@@ -135,7 +135,7 @@ class Users extends CI_Controller {
 	public function getInfo() {
 		$username = $this->input->get('username');
 
-		$select = "bio, date_created, email_verified, u.id AS id, CONCAT('".S3_PATH."', u.img) AS img, u.name, username, s.name AS school_name, s.id AS school_id";
+		$select = "date_created, email_verified, u.id AS id, u.img AS img, u.name, username";
 		$info = $this->users->getUserInfo($username, $select);
 
 		if (!$info) {
@@ -281,7 +281,8 @@ class Users extends CI_Controller {
 			exit;
 		}
 
-		$msg = "Hi ".$params['name'].',<br><br>Your verification code is '.$params['verification_code'];
+		$msg = file_get_contents("https://bike-rent.s3-us-west-2.amazonaws.com/emails/confirm-your-email.html");
+		// $msg = "Hi ".$params['name'].',<br><br>Your verification code is '.$params['verification_code'];
 
 		$mail = new PHPMailer();
 		$mail->IsSMTP();

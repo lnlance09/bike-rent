@@ -16,18 +16,17 @@
         }
     },
     "applyPage": {
-        "backgroundImg": "",
-        "ctaButton": {
-            "basic": "",
-            "color": "green",
-            "inverted": false,
-            "title": "Apply"
-        },
-        "description": "",
+        "description": "Join our team",
         "hero": {
             "headerOne": "",
             "headerTwo": "",
             "img": ""
+        },
+        "title": "Apply ",
+        "useHeroImage": "0",
+        "backgroundImg": "",
+        "ctaButton": {
+            "text": ""
         },
         "seo": {
             "description": "",
@@ -36,9 +35,7 @@
                 ""
             ],
             "title": ""
-        },
-        "title": "",
-        "useHeroImage": 0
+        }
     },
     "bikesPage": {
         "ctaButton": {
@@ -188,7 +185,7 @@
         "title": "Header1"
     },
     "header": {
-        "backgroundColor": "yellow",
+        "backgroundColor": "black",
         "items": [
             {
                 "link": "cities",
@@ -377,7 +374,7 @@
         "title": "",
         "useHeroImage": 0
     },
-    "theme": "cosmo",
+    "theme": "yeti",
     "themes": [
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cerulean.png",

@@ -51,6 +51,14 @@ class SettingsModel extends CI_Model {
 		return $filtered;
 	}
 
+	public function insertApplication($email, $msg, $name) {
+		$this->db->insert('applications', [
+			'email' => $email,
+			'msg' => $msg,
+			'name' => $name
+		]);
+	}
+
 	public function updateFooter(
 		$listOneItems,
 		$listOneTitle,

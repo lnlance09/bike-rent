@@ -176,7 +176,7 @@ class AppHeader extends Component {
 							color={backgroundColor}
 							className="globalHeaderMenu"
 							fixed={fixed ? "top" : null}
-							inverted={!fixed}
+							inverted
 							secondary={false}
 							size="large"
 						>

@@ -313,18 +313,22 @@ class Authentication extends Component {
 							<Fragment>
 								<Divider />
 
-								<Label attached="bottom" className="registerText">
+								<Segment basic className="registerText" style={{ padding: 0 }}>
 									{regText}{" "}
 									<span className="registerLink" onClick={this.onClick}>
 										{regButton}
 									</span>
-								</Label>
+								</Segment>
 							</Fragment>
 						)}
 					</Segment>
 
-					<Divider horizontal>Or</Divider>
-					<Segment>{GoogleLogin(this.props)}</Segment>
+					{!this.props.verify && (
+						<Fragment>
+							<Divider horizontal>Or</Divider>
+							<Segment>{GoogleLogin(this.props)}</Segment>
+						</Fragment>
+					)}
 				</div>
 			</Provider>
 		)

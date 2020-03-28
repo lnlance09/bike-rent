@@ -392,6 +392,30 @@ export const setTheme = ({ bearer, theme }) => dispatch => {
 	)
 }
 
+export const submitApplication = ({ email, msg, name }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/home/submitApplication`,
+		{
+			form: {
+				email,
+				msg,
+				name
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.SUBMIT_APPLICATION
+			})
+
+			if (!body.error) {
+				toast.success("Application submitted")
+			}
+		}
+	)
+}
+
 export const submitFooterForm = ({
 	bearer,
 	inverted,

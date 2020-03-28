@@ -1,5 +1,6 @@
+import { submitApplication } from "redux/actions/app"
 import { connect, Provider } from "react-redux"
-// import { Container } from "semantic-ui-react"
+import { Button, Container, Divider, Form, Header, Input, Message, Segment, TextArea } from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import React, { Component } from "react"
@@ -17,32 +18,98 @@ class Apply extends Component {
 
 		this.state = {
 			auth,
-			bearer
+			bearer,
+			email: "",
+			msg: "",
+			name: ""
 		}
 	}
 
 	componentDidMount() {}
 
+	onChangeEmail = (e, { value }) => this.setState({ email: value })
+
+	onChangeMsg = (e, { value }) => this.setState({ msg: value })
+
+	onChangeName = (e, { value }) => this.setState({ name: value })
+
 	render() {
-		const { auth } = this.state
-		const { settings } = this.props
+		const { auth, email, msg, name } = this.state
+		const { error, errorMsg, settings } = this.props
+		const { applyPage } = settings
 
 		return (
 			<Provider store={store}>
 				<div className="mainWrapper applyPage">
 					<PageHeader
-						activeItem="cities"
+						activeItem="apply"
 						authenticated={auth}
 						backgroundColor={settings.header.backgroundColor}
-						// content={BookingForm}
+						backgroundImage={applyPage.hero.img}
+						headerOne={applyPage.hero.headerOne}
+						headerTwo={applyPage.hero.headerTwo}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
-						showMainContent
+						showMainContent={applyPage.useHeroImage === "1"}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}
 						{...this.props}
 					/>
+
+					<Container className="mainContainer">
+						<Header as="h1">
+							{applyPage.title}
+						</Header>
+
+						<p>
+							{applyPage.description}
+						</p>
+
+						<Divider hidden />
+
+						<Segment>
+							<Form error={error}>
+								<Form.Field>
+									<Input
+										onChange={this.onChangeName}
+										placeholder="Name"
+										value={name}
+									/>
+								</Form.Field>
+								<Form.Field>
+									<Input
+										onChange={this.onChangeEmail}
+										placeholder="Email"
+										value={email}
+									/>
+								</Form.Field>
+								<Form.Field>
+									<TextArea
+										onChange={this.onChangeMsg}
+										placeholder="Tell us why you're applying"
+										rows={10}
+										value={msg}
+									/>
+								</Form.Field>
+								<Form.Field>
+									<Button
+										color="blue"
+										content="Apply"
+										fluid
+										onClick={() => this.props.submitApplication({ email, msg, name })}
+										type="submit"
+									/>
+								</Form.Field>
+								{error && (
+									<Message
+										content={errorMsg}
+										error
+									/>
+								)}
+							</Form>
+						</Segment>
+					</Container>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
@@ -52,16 +119,24 @@ class Apply extends Component {
 }
 
 Apply.propTypes = {
-	settings: PropTypes.object
+	error: PropTypes.bool,
+	errorMsg: PropTypes.string,
+	settings: PropTypes.object,
+	submitApplication: PropTypes.func
 }
 
-Apply.defaultProps = {}
+Apply.defaultProps = {
+	error: false,
+	submitApplication
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.app,
+		...state.app.apply,
 		...ownProps
 	}
 }
 
-export default connect(mapStateToProps, {})(Apply)
+export default connect(mapStateToProps, {
+	submitApplication
+})(Apply)

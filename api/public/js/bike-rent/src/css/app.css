@@ -60,6 +60,9 @@ body {
   min-height: 50vh;
   padding: 30px 0; }
 
+.applyPage {
+  height: 100vh; }
+
 .signInPage {
   min-height: 100vh; }
   .signInPage .signInContainer .loginForm {

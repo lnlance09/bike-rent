@@ -140,6 +140,15 @@ const settings = (state = initial(), action) => {
 				theme: payload.theme
 			}
 
+		case constants.SUBMIT_APPLICATION:
+			return {
+				...state,
+				apply: {
+					error: payload.error !== false,
+					errorMsg: payload.error
+				}
+			}
+
 		case constants.TOGGLE_ADD_CITY_MODAL:
 			return {
 				...state,

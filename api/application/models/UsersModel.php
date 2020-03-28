@@ -60,7 +60,6 @@ class UsersModel extends CI_Model {
 			$this->db->where('u.username', $id);
 		}
 
-		$this->db->join('schools s', 'u.school_id = s.id', 'left');
 		$query = $this->db->get('users u')->result_array();
 
 		if (empty($query)) {
@@ -78,7 +77,7 @@ class UsersModel extends CI_Model {
 	public function login($email, $password) {
 		$column = filter_var($email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-		$select = "u.id, u.name, username, CONCAT('".S3_PATH."', u.img) AS img, bio, email, email_verified AS emailVerified, verification_code AS verificationCode, date_created AS dateCreated, school_id AS schoolId, s.name AS schoolName";
+		$select = "u.id, u.name, u.username, u.img, email, email_verified AS emailVerified, verification_code AS verificationCode, date_created AS dateCreated";
 		$this->db->select($select);
 
 		$where = $column.' = "'.$email.'" ';
@@ -87,7 +86,6 @@ class UsersModel extends CI_Model {
 			$where .= 'AND (password = "'.sha1($password).'" OR password_reset = "'.sha1($password).'")';
 		}
 
-		$this->db->join('schools s', 'u.school_id = s.id');
 		$this->db->where($where);
 		return $this->db->get('users u')->result_array();
 	}
@@ -110,7 +108,6 @@ class UsersModel extends CI_Model {
 			return [
 				'error' => false,
 				'user' => [
-					'bio' => null,
 					'email' => $data['email'],
 					'emailVerified' => false,
 					'id' => $this->db->insert_id(),
@@ -142,28 +139,21 @@ class UsersModel extends CI_Model {
 	public function search($q, $where, $page = 0, $just_count = false, $limit = 20) {
 		$params = [];
 
-		$select = "u.id, u.name, username, bio AS about, u.school_id AS schoolId,
+		$select = "u.id, u.name, u.username,
 				CASE
 					WHEN u.img IS NOT NULL THEN CONCAT('".S3_PATH."', u.img)
-				END AS img,
-				s.name AS schoolName, review_count AS reviewCount";
+				END AS img";
 
 		if ($just_count) {
 			$select = "COUNT(*) AS count";
 		}
 
 		$sql = "SELECT ".$select."
-				FROM users u 
-				INNER JOIN schools s ON u.school_id = s.id
-				LEFT JOIN (
-					SELECT COUNT(*) as review_count, user_id
-					FROM reviews
-					GROUP BY user_id
-				) r ON u.id = r.user_id ";
+				FROM users u ";
 		
 		if ($q) {
 			$params = ['%'.$q.'%', '%'.$q.'%', '%'.$q.'%'];
-			$sql .= " WHERE (u.name LIKE ? OR u.username LIKE ? OR u.bio LIKE ?)";
+			$sql .= " WHERE (u.name LIKE ? OR u.username LIKE ?)";
 		}
 
 		if (!empty($where)) {
@@ -213,7 +203,7 @@ class UsersModel extends CI_Model {
 	}
 
 	public function userLookupByEmail($email) {
-		$this->db->select("bio, date_created, id, CONCAT('".S3_PATH."', img) AS img, name");
+		$this->db->select("bio, date_created, id, img, name");
 		$this->db->where('email', $email);
 		$this->db->or_where('username', $email);
 		$query = $this->db->get('users')->result_array();
@@ -222,7 +212,6 @@ class UsersModel extends CI_Model {
 		}
 
 		return [
-			'bio' => $query[0]['bio'],
 			'date_created' => $query[0]['date_created'],
 			'id' => $query[0]['id'],
 			'img' => $query[0]['img'],

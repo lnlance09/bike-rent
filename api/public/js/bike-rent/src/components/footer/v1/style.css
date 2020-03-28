@@ -5,3 +5,5 @@
 /*---   Social colors  ---*/
 .footerSegment {
   padding: 5em 0em !important; }
+  .footerSegment .list .item {
+    cursor: pointer; }

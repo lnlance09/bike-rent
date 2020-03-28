@@ -15,6 +15,7 @@ export const GET_SETTINGS = "app:GET_SETTINGS"
 export const SEND_EMAIL = "app:SEND_EMAIL"
 export const SET_LANGUAGES = "app:SET_LANGUAGES"
 export const SET_THEME = "app:SET_THEME"
+export const SUBMIT_APPLICATION = "app:SUBMIT_APPLICATION"
 export const TOGGLE_ADD_CITY_MODAL = "app:TOGGLE_ADD_CITY_MODAL"
 export const TOGGLE_EDIT_BLOG_MODAL = "app:TOGGLE_EDIT_BLOG_MODAL"
 
