@@ -92,6 +92,59 @@ export const addCity = ({ bearer, description, id, image }) => dispatch => {
 	)
 }
 
+export const addStore = ({
+	address,
+	bearer,
+	city,
+	closingTime,
+	description,
+	image,
+	lat,
+	lon,
+	name,
+	openingTime,
+	phone,
+	state,
+	visible
+}) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/store/create`,
+		{
+			form: {
+				address,
+				bearer,
+				city,
+				closingTime,
+				description,
+				image,
+				lat,
+				lon,
+				name,
+				openingTime,
+				phone,
+				state,
+				visible
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.ADD_STORE
+			})
+
+			if (!body.error) {
+				toast.success("The store has been added")
+				dispatch(getStores())
+				dispatch(toggleAddStoreModal())
+			}
+		}
+	)
+}
+
 export const editBike = ({ bearer, description, id, image, name, order, visible }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/bike/edit`,
@@ -285,6 +338,61 @@ export const editSitemap = ({ bearer, sitemap }) => dispatch => {
 	)
 }
 
+export const editStore = ({
+	address,
+	bearer,
+	city,
+	closingTime,
+	description,
+	id,
+	image,
+	lat,
+	lon,
+	name,
+	openingTime,
+	phone,
+	state,
+	visible
+}) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/store/edit`,
+		{
+			form: {
+				address,
+				bearer,
+				city,
+				closingTime,
+				description,
+				id,
+				image,
+				lat,
+				lon,
+				name,
+				openingTime,
+				phone,
+				state,
+				visible
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.EDIT_STORE
+			})
+
+			if (!body.error) {
+				toast.success("The store has been edited")
+				dispatch(getStores())
+				dispatch(toggleAddStoreModal())
+			}
+		}
+	)
+}
+
 export const getBikes = () => dispatch => {
 	request.get(
 		`${window.location.origin}/api/bike/search`,
@@ -386,6 +494,21 @@ export const getSitemap = ({ url }) => dispatch => {
 			dispatch({
 				payload: body,
 				type: constants.GET_SITEMAP
+			})
+		}
+	)
+}
+
+export const getStores = () => dispatch => {
+	request.get(
+		`${window.location.origin}/api/store/search`,
+		{
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.GET_STORES
 			})
 		}
 	)
@@ -575,6 +698,12 @@ export const toggleAddCityModal = () => dispatch => {
 export const toggleAddBikeModal = () => dispatch => {
 	dispatch({
 		type: constants.TOGGLE_ADD_BIKE_MODAL
+	})
+}
+
+export const toggleAddStoreModal = () => dispatch => {
+	dispatch({
+		type: constants.TOGGLE_ADD_STORE_MODAL
 	})
 }
 

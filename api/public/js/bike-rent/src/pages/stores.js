@@ -178,17 +178,7 @@ class Stores extends Component {
 							<Grid.Column className="rightSide" width={5}>
 								{name ? (
 									<div>
-										<MapBox
-											apiKey="AIzaSyD0Hd-I0mmRVa3WxTy-lpNJ-xAyDqWWTxM"
-											defaultCenter={{
-												lat: lat,
-												lng: lon
-											}}
-											height="280px"
-											lat={lat}
-											lng={lon}
-											width="100%"
-										/>
+										<MapBox height="280px" lat={lat} lng={lon} width="100%" />
 										<Divider hidden />
 										<div>{StoreList(props)}</div>
 										<Divider hidden />

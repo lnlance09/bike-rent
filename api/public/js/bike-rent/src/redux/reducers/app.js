@@ -9,8 +9,14 @@ const initial = () => ({
 		error: false,
 		modalOpen: false
 	},
-	modalOpen: false
-	// settings: {}
+	city: {
+		error: false,
+		modalOpen: false
+	},
+	store: {
+		error: false,
+		modalOpen: false
+	}
 })
 
 const settings = (state = initial(), action) => {
@@ -31,6 +37,7 @@ const settings = (state = initial(), action) => {
 			return {
 				...state,
 				blog: {
+					...state.blog,
 					error: payload.error !== false,
 					errorMsg: payload.error
 				}
@@ -39,8 +46,21 @@ const settings = (state = initial(), action) => {
 		case constants.ADD_CITY:
 			return {
 				...state,
-				error: payload.error !== false,
-				errorMsg: payload.error
+				city: {
+					...state.city,
+					error: payload.error !== false,
+					errorMsg: payload.error
+				}
+			}
+
+		case constants.ADD_STORE:
+			return {
+				...state,
+				store: {
+					...state.store,
+					error: payload.error !== false,
+					errorMsg: payload.error
+				}
 			}
 
 		case constants.EDIT_CSS:
@@ -61,14 +81,12 @@ const settings = (state = initial(), action) => {
 
 			return {
 				...state,
-				bike: {
-					bikes: {
-						count: payload.count,
-						hasMore: payload.pagination.hasMore,
-						loadingMore: false,
-						page: payload.pagination.nextPage,
-						results: bikes
-					}
+				bikes: {
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: bikes
 				}
 			}
 
@@ -154,6 +172,22 @@ const settings = (state = initial(), action) => {
 				sitemap: payload
 			}
 
+		case constants.GET_STORES:
+			const stores =
+				payload.page > 0 ? [...state.store.results, ...payload.results] : payload.results
+
+			return {
+				...state,
+				stores: {
+					...state.store,
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: stores
+				}
+			}
+
 		case constants.SEND_EMAIL:
 			return {
 				...state,
@@ -192,7 +226,19 @@ const settings = (state = initial(), action) => {
 		case constants.TOGGLE_ADD_CITY_MODAL:
 			return {
 				...state,
-				modalOpen: !state.modalOpen
+				city: {
+					...state.city,
+					modalOpen: !state.city.modalOpen
+				}
+			}
+
+		case constants.TOGGLE_ADD_STORE_MODAL:
+			return {
+				...state,
+				store: {
+					...state.store,
+					modalOpen: !state.store.modalOpen
+				}
 			}
 
 		case constants.TOGGLE_EDIT_BLOG_MODAL:

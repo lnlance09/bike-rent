@@ -1,5 +1,11 @@
 import * as constants from "../constants"
+import { toast } from "react-toastify"
 import request from "request"
+
+toast.configure({
+	autoClose: 4000,
+	draggable: false
+})
 
 export const addImageToLibrary = ({ bearer, file }) => dispatch => {
 	const fr = new FileReader()
@@ -25,15 +31,10 @@ export const addImageToLibrary = ({ bearer, file }) => dispatch => {
 			},
 			function(err, response, body) {
 				if (!body.error) {
+					toast.success("Image has been added")
 					dispatch(getImages())
+					dispatch(toggleAddImageModal())
 				}
-
-				/*
-				dispatch({
-					payload: body,
-					type: constants.ADD_IMAGE
-				})
-				*/
 			}
 		)
 	}
@@ -53,4 +54,10 @@ export const getImages = () => dispatch => {
 			})
 		}
 	)
+}
+
+export const toggleAddImageModal = () => dispatch => {
+	dispatch({
+		type: constants.TOGGLE_ADD_IMAGE_MODAL
+	})
 }

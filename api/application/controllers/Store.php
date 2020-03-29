@@ -16,13 +16,21 @@ class Store extends CI_Controller {
 
 	public function create() {
 		$address = $this->input->post('address');
+		$city = $this->input->post('city');
+		$closingTime = $this->input->post('closingTime');
 		$description = $this->input->post('description');
 		$image = $this->input->post('image');
-		$location_id = $this->input->post('location_id');
+		$lat = $this->input->post('lat');
+		$lon = $this->input->post('lon');
+		$name = $this->input->post('name');
+		$openingTime = $this->input->post('openingTime');
+		$phone = $this->input->post('phone');
+		$state = $this->input->post('state');
+		$visible = (int)$this->input->post('visible');
 
-		if (empty($address)) {
+		if (empty($name)) {
 			echo json_encode([
-				'error' => 'You must provide an address'
+				'error' => 'You must provide a name'
 			]);
 			exit;
 		}
@@ -34,25 +42,27 @@ class Store extends CI_Controller {
 			exit;
 		}
 
-		if (empty($image)) {
-			echo json_encode([
-				'error' => 'You must provide an image'
-			]);
-			exit;
+		if (empty($lat)) {
+			$lat = '40.73590000';
 		}
 
-		if ($location_id < 1) {
-			echo json_encode([
-				'error' => 'You must select a city'
-			]);
-			exit;
+		if (empty($lon)) {
+			$lon = '-73.99110000';
 		}
 
 		$this->store->create([
 			'address' => $address,
+			'city' => $city,
+			'closing_time' => $closingTime,
 			'description' => $description,
 			'image' => $image,
-			'location_id' => $id
+			'lat' => $lat,
+			'lon' => $lon,
+			'name' => $name,
+			'opening_time' => $openingTime,
+			'phone_number' => $phone,
+			'state' => $state,
+			'visible' => $visible
 		]);
 
 		echo json_encode([
@@ -61,16 +71,55 @@ class Store extends CI_Controller {
 	}
 
 	public function edit() {
-		$id = $this->input->post('id');
+		$address = $this->input->post('address');
+		$city = $this->input->post('city');
+		$closingTime = $this->input->post('closingTime');
 		$description = $this->input->post('description');
+		$id = $this->input->post('id');
 		$image = $this->input->post('image');
-		$order = $this->input->post('order');
+		$lat = $this->input->post('lat');
+		$lon = $this->input->post('lon');
+		$name = $this->input->post('name');
+		$openingTime = $this->input->post('openingTime');
+		$phone = $this->input->post('phone');
+		$state = $this->input->post('state');
+		$visible = (int)$this->input->post('visible');
+
+		if (empty($name)) {
+			echo json_encode([
+				'error' => 'You must provide a name'
+			]);
+			exit;
+		}
+
+		if (empty($description)) {
+			echo json_encode([
+				'error' => 'You must provide a description'
+			]);
+			exit;
+		}
+
+		if (empty($lat)) {
+			$lat = '40.73590000';
+		}
+
+		if (empty($lon)) {
+			$lon = '-73.99110000';
+		}
 
 		$this->store->update($id, [
 			'address' => $address,
+			'city' => $city,
+			'closing_time' => $closingTime,
 			'description' => $description,
 			'image' => $image,
-			'order' => $order
+			'lat' => $lat,
+			'lon' => $lon,
+			'name' => $name,
+			'opening_time' => $openingTime,
+			'phone_number' => $phone,
+			'state' => $state,
+			'visible' => $visible
 		]);
 
 		echo json_encode([

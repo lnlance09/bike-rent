@@ -81,6 +81,7 @@ class Bike extends CI_Controller {
 				'bike' => false,
 				'error' => true
 			]);
+			exit;
 		}
 
 		$page = 0;

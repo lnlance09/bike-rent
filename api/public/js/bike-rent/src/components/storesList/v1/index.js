@@ -21,15 +21,11 @@ class StoresList extends Component {
 		if (this.props.storesByBike) {
 			this.props.getStoresByBike({
 				bikeId: this.props.bikeId,
-				page: 0
+				page: 0,
+				storeId: this.props.storeId
 			})
 		} else {
 			this.props.getStores({ page: 0 })
-		}
-	}
-
-	componentDidUpdate(prevProps) {
-		if (prevProps !== this.props) {
 		}
 	}
 
@@ -126,6 +122,7 @@ StoresList.propTypes = {
 	page: PropTypes.number,
 	results: PropTypes.array,
 	showPics: PropTypes.bool,
+	storeId: PropTypes.string,
 	storesByBike: PropTypes.bool,
 	toggleLoading: PropTypes.func,
 	useCards: PropTypes.bool

@@ -8,16 +8,7 @@ import {
 } from "./actions"
 import { Provider, connect } from "react-redux"
 import { Redirect } from "react-router-dom"
-import {
-	Button,
-	Divider,
-	Form,
-	Header,
-	Icon,
-	Input,
-	Message,
-	Segment
-} from "semantic-ui-react"
+import { Button, Divider, Form, Header, Icon, Input, Message, Segment } from "semantic-ui-react"
 import PropTypes from "prop-types"
 import React, { Component, Fragment } from "react"
 import store from "store"

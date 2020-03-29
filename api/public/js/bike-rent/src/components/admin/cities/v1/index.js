@@ -255,7 +255,7 @@ AdminCities.defaultProps = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	...state.app,
+	...state.app.city,
 	...ownProps
 })
 

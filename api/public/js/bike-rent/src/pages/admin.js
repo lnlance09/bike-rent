@@ -1,5 +1,13 @@
 import { connect, Provider } from "react-redux"
-import { getBikes, getBlogs, getCities, getCss, getEmail, getSitemap } from "redux/actions/app"
+import {
+	getBikes,
+	getBlogs,
+	getCities,
+	getCss,
+	getEmail,
+	getSitemap,
+	getStores
+} from "redux/actions/app"
 import { Accordion, Container, Grid, Menu, Responsive } from "semantic-ui-react"
 import React, { Component } from "react"
 import camelCase from "camelcase"
@@ -62,6 +70,7 @@ class Admin extends Component {
 		this.props.getBikes()
 		this.props.getBlogs()
 		this.props.getCities()
+		this.props.getStores()
 		this.props.getSitemap({ url: this.props.sitemapUrl })
 		this.props.getCss({ url: this.props.cssUrl })
 		this.props.getEmail({ type: "application-confirmation" })
@@ -90,7 +99,17 @@ class Admin extends Component {
 
 	render() {
 		const { activeItem, adminPages, bearer, pageData, url } = this.state
-		const { bikes, blogs, cities, css, emails, settings, sitemap, sitemapUrl } = this.props
+		const {
+			bikes,
+			blogs,
+			cities,
+			css,
+			emails,
+			settings,
+			sitemap,
+			sitemapUrl,
+			stores
+		} = this.props
 
 		const AdminMenu = props => (
 			<Accordion as={Menu} className="adminMenu" fluid inverted vertical>
@@ -424,7 +443,7 @@ class Admin extends Component {
 			if (activeItem === "bikes") {
 				return (
 					<div>
-						<AdminBikes bearer={bearer} cities={bikes} />
+						<AdminBikes bearer={bearer} bikes={bikes} />
 					</div>
 				)
 			}
@@ -514,7 +533,7 @@ class Admin extends Component {
 			if (activeItem === "view-stores") {
 				return (
 					<div>
-						<AdminStores />
+						<AdminStores bearer={bearer} stores={stores} />
 					</div>
 				)
 			}
@@ -606,9 +625,33 @@ Admin.propTypes = {
 	getCss: PropTypes.func,
 	getEmail: PropTypes.func,
 	getSitemap: PropTypes.func,
+	getStores: PropTypes.func,
 	settings: PropTypes.object,
 	sitemap: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-	sitemapUrl: PropTypes.string
+	sitemapUrl: PropTypes.string,
+	stores: PropTypes.shape({
+		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		hasMore: PropTypes.bool,
+		loadingMore: PropTypes.bool,
+		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		results: PropTypes.arrayOf(
+			PropTypes.shape({
+				address: PropTypes.string,
+				city: PropTypes.string,
+				closingTime: PropTypes.string,
+				description: PropTypes.string,
+				image: PropTypes.string,
+				lat: PropTypes.string,
+				lon: PropTypes.string,
+				name: PropTypes.string,
+				phone: PropTypes.string,
+				openingTime: PropTypes.string,
+				order: PropTypes.string,
+				state: PropTypes.string,
+				visible: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+			})
+		)
+	})
 }
 
 Admin.defaultProps = {
@@ -647,8 +690,16 @@ Admin.defaultProps = {
 	getCss,
 	getEmail,
 	getSitemap,
+	getStores,
 	sitemap: false,
-	sitemapUrl: "https://bike-rent.s3-us-west-2.amazonaws.com/sitemaps/sitemap.xml"
+	sitemapUrl: "https://bike-rent.s3-us-west-2.amazonaws.com/sitemaps/sitemap.xml",
+	stores: {
+		count: 0,
+		hasMore: false,
+		loadingMore: false,
+		page: 0,
+		results: [{}, {}, {}, {}]
+	}
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -664,5 +715,6 @@ export default connect(mapStateToProps, {
 	getCities,
 	getCss,
 	getEmail,
-	getSitemap
+	getSitemap,
+	getStores
 })(Admin)

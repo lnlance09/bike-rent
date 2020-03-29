@@ -13,6 +13,7 @@ import {
 	TextArea
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
+import ImagePic from "images/images/image-square.png"
 import PropTypes from "prop-types"
 
 class AdminBikes extends Component {
@@ -55,7 +56,7 @@ class AdminBikes extends Component {
 		})
 	}
 
-	toggleVisibilty = (e, { value }) => this.setState({ visibleVal: value === "on" ? 1 : 0 })
+	toggleVisibilty = (e, { value }) => this.setState({ visibleVal: value === "on" ? "1" : "0" })
 
 	render() {
 		const {
@@ -140,7 +141,7 @@ class AdminBikes extends Component {
 
 				<Divider />
 
-				{bikes.count > 0 ? (
+				{bikes.count > 0 && (
 					<Item.Group divided relaxed>
 						{bikes.results.map((item, i) => {
 							const { description, image, name, visible } = item
@@ -148,7 +149,12 @@ class AdminBikes extends Component {
 
 							return (
 								<Item key={`adminBike${i}`}>
-									<Item.Image rounded size="large" src={image} />
+									<Item.Image
+										onError={i => (i.target.src = ImagePic)}
+										rounded
+										size="large"
+										src={image}
+									/>
 									<Item.Content>
 										<Item.Header as="h1">{name}</Item.Header>
 										<Item.Description>
@@ -217,8 +223,8 @@ class AdminBikes extends Component {
 													<Radio
 														checked={
 															isActive
-																? visibleVal === 1
-																: visible === 1
+																? visibleVal === "1"
+																: visible === "1"
 														}
 														label="Yes"
 														name="visible"
@@ -239,8 +245,8 @@ class AdminBikes extends Component {
 													<Radio
 														checked={
 															isActive
-																? visibleVal === 0
-																: visible === 0
+																? visibleVal === "0"
+																: visible === "0"
 														}
 														label="No"
 														name="visible"
@@ -285,8 +291,6 @@ class AdminBikes extends Component {
 							)
 						})}
 					</Item.Group>
-				) : (
-					<div></div>
 				)}
 
 				{AddBikeModal}
@@ -298,7 +302,20 @@ class AdminBikes extends Component {
 AdminBikes.propTypes = {
 	addBike: PropTypes.func,
 	bearer: PropTypes.string,
-	bikes: PropTypes.object,
+	bikes: PropTypes.shape({
+		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		hasMore: PropTypes.bool,
+		loadingMore: PropTypes.bool,
+		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		results: PropTypes.arrayOf(
+			PropTypes.shape({
+				date_created: PropTypes.string,
+				date_updated: PropTypes.string,
+				entry: PropTypes.string,
+				title: PropTypes.string
+			})
+		)
+	}),
 	editBike: PropTypes.func,
 	error: PropTypes.bool,
 	errorMsg: PropTypes.string,
@@ -309,7 +326,11 @@ AdminBikes.propTypes = {
 AdminBikes.defaultProps = {
 	addBike,
 	bikes: {
-		results: [{}, {}]
+		count: "0",
+		hasMore: false,
+		loadingMore: false,
+		page: 0,
+		results: [{}, {}, {}, {}]
 	},
 	editBike,
 	error: false,

@@ -10,7 +10,7 @@ const Map = ReactMapboxGl({
 
 class MapBox extends Component {
 	render() {
-		const { circlePaint, height, lat, lng, width } = this.props
+		const { circlePaint, height, lat, lng, markerId, markers, width, zoom } = this.props
 
 		return (
 			<Map
@@ -20,11 +20,27 @@ class MapBox extends Component {
 					width
 				}}
 				style="mapbox://styles/mapbox/streets-v9"
-				zoom={[12]}
+				zoom={[zoom]}
 			>
-				<Layer type="circle" paint={circlePaint}>
-					<Feature coordinates={[lng, lat]} />
-				</Layer>
+				{markers.length > 0 &&
+					markers.map((marker, i) => {
+						if (
+							markerId === "0" ||
+							(parseInt(markerId, 10) > 1 && markerId === marker.id)
+						) {
+							const { id, lat, lon } = marker
+							return (
+								<Layer key={`marker${i}`} paint={circlePaint} type="circle">
+									<Feature
+										coordinates={[lon, lat]}
+										onClick={() => this.props.onClickMarker(id, lat, lon)}
+									/>
+								</Layer>
+							)
+						}
+
+						return null
+					})}
 			</Map>
 		)
 	}
@@ -41,7 +57,11 @@ MapBox.propTypes = {
 	height: PropTypes.string,
 	lat: PropTypes.number,
 	lng: PropTypes.number,
-	width: PropTypes.string
+	markerId: PropTypes.string,
+	markers: PropTypes.array,
+	onClickMarker: PropTypes.func,
+	width: PropTypes.string,
+	zoom: PropTypes.number
 }
 
 MapBox.defaultProps = {
@@ -51,7 +71,10 @@ MapBox.defaultProps = {
 		"circle-blur": 0.15,
 		"circle-color": "#3770C6",
 		"circle-stroke-color": "white"
-	}
+	},
+	markerId: "0",
+	markers: [],
+	zoom: 10
 }
 
 export default MapBox

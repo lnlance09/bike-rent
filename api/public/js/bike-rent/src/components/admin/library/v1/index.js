@@ -1,5 +1,5 @@
 import "./style.css"
-import { addImageToLibrary, getImages } from "redux/actions/library"
+import { addImageToLibrary, getImages, toggleAddImageModal } from "redux/actions/library"
 import { connect } from "react-redux"
 import {
 	Button,
@@ -23,11 +23,10 @@ class AdminLibrary extends Component {
 
 		this.state = {
 			active: true,
-			addModalOpen: false,
 			currentImg: false,
 			files: [],
 			inverted: true,
-			modalOpen: false
+			loading: false
 		}
 
 		this.onDrop = this.onDrop.bind(this)
@@ -44,17 +43,17 @@ class AdminLibrary extends Component {
 				bearer: this.props.bearer,
 				file: files[0]
 			})
-			this.toggleModal()
+			this.toggleLoading()
 		}
 	}
 
 	toggleDimmer = () => this.setState({ active: this.state.active })
 
-	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen })
+	toggleLoading = () => this.setState({ loading: !this.state.loading })
 
 	render() {
-		const { baseUrl, images, s3Url } = this.props
-		const { active, addModalOpen, currentImg, inverted, modalOpen } = this.state
+		const { baseUrl, images, modalOpen, s3Url } = this.props
+		const { active, currentImg, inverted, loading } = this.state
 
 		const content = (
 			<Dropzone onDrop={this.onDrop}>
@@ -73,14 +72,19 @@ class AdminLibrary extends Component {
 		)
 
 		const AddImgModal = (
-			<Modal centered={false} closeIcon onClose={this.toggleModal} open={modalOpen}>
-				{addModalOpen && <Modal.Header>Add a photo</Modal.Header>}
+			<Modal
+				centered={false}
+				closeIcon
+				onClose={() => this.props.toggleAddImageModal()}
+				open={modalOpen}
+			>
+				{!currentImg && <Modal.Header>Add a photo</Modal.Header>}
+
 				<Modal.Content image>
-					{addModalOpen ? (
+					{!currentImg ? (
 						<Fragment>
 							<Dimmer.Dimmable
 								as={Image}
-								// className={`profilePic ${!user.img ? "default" : ""}`}
 								dimmed={active}
 								dimmer={{ active, content, inverted }}
 								onError={i => (i.target.src = ImagePic)}
@@ -127,10 +131,10 @@ class AdminLibrary extends Component {
 					)}
 				</Modal.Content>
 				<Modal.Actions>
-					<Button negative onClick={this.toggleModal}>
+					<Button negative onClick={() => this.props.toggleAddImageModal()}>
 						Close
 					</Button>
-					{addModalOpen && <Button positive content="Add" />}
+					{!currentImg && <Button positive content="Add" loading={loading} />}
 				</Modal.Actions>
 			</Modal>
 		)
@@ -146,10 +150,10 @@ class AdminLibrary extends Component {
 					onClick={() => {
 						this.setState(
 							{
-								addModalOpen: true,
-								currentImg: false
+								currentImg: false,
+								loading: false
 							},
-							() => this.toggleModal()
+							() => this.props.toggleAddImageModal()
 						)
 					}}
 				/>
@@ -167,10 +171,9 @@ class AdminLibrary extends Component {
 										onClick={() => {
 											this.setState(
 												{
-													addModalOpen: false,
 													currentImg: item.Key
 												},
-												() => this.toggleModal()
+												() => this.props.toggleAddImageModal()
 											)
 										}}
 										onError={i => (i.target.src = ImagePic)}
@@ -198,7 +201,9 @@ AdminLibrary.propTypes = {
 	bearer: PropTypes.string,
 	getImages: PropTypes.func,
 	images: PropTypes.array,
-	s3Url: PropTypes.string
+	modalOpen: PropTypes.bool,
+	s3Url: PropTypes.string,
+	toggleAddImageModal: PropTypes.func
 }
 
 AdminLibrary.defaultProps = {
@@ -206,7 +211,9 @@ AdminLibrary.defaultProps = {
 	baseUrl: "https://bike-rent.s3-us-west-2.amazonaws.com/",
 	getImages,
 	images: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-	s3Url: "https://s3.console.aws.amazon.com/s3/object/bike-rent/"
+	modalOpen: false,
+	s3Url: "https://s3.console.aws.amazon.com/s3/object/bike-rent/",
+	toggleAddImageModal
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -216,5 +223,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 export default connect(mapStateToProps, {
 	addImageToLibrary,
-	getImages
+	getImages,
+	toggleAddImageModal
 })(AdminLibrary)

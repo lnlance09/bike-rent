@@ -1,9 +1,11 @@
 import { connect, Provider } from "react-redux"
 import { getBike } from "redux/actions/bike"
+import { formatPlural } from "utils/textFunctions"
 import { Button, Container, Divider, Header, Image } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import BikesList from "components/bikesList/v1/"
 import ImagePic from "images/images/image-square.png"
+import Logo from "components/header/v1/images/logo.svg"
 import MapBox from "components/mapBox/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
@@ -26,7 +28,11 @@ class Bikes extends Component {
 		this.state = {
 			auth,
 			bearer,
-			id
+			id,
+			lat: "",
+			lon: "",
+			storeId: "0",
+			zoom: 10
 		}
 	}
 
@@ -38,8 +44,8 @@ class Bikes extends Component {
 	}
 
 	render() {
-		const { auth, id } = this.state
-		const { bike, settings } = this.props
+		const { auth, id, lat, lon, storeId, zoom } = this.state
+		const { bike, error, settings } = this.props
 		const { bikesPage } = settings
 		const { ctaButton } = bikesPage
 
@@ -53,8 +59,8 @@ class Bikes extends Component {
 			/>
 		)
 
-		const SingleBike = props => {
-			const { description, image, name } = props.bike
+		const SingleBike = ({ props }) => {
+			const { description, image, name, storeCount, stores } = props.bike
 
 			return (
 				<Container textAlign="center">
@@ -73,19 +79,39 @@ class Bikes extends Component {
 
 					<Divider hidden />
 
-					<MapBox
-						apiKey="AIzaSyD0Hd-I0mmRVa3WxTy-lpNJ-xAyDqWWTxM"
-						defaultCenter={{
-							lat: 59.95,
-							lng: 30.33
-						}}
-						height="300px"
-						lat={59.955413}
-						lng={30.337844}
-						width="100%"
-					/>
+					{stores.length > 0 && (
+						<MapBox
+							apiKey="AIzaSyD0Hd-I0mmRVa3WxTy-lpNJ-xAyDqWWTxM"
+							height="300px"
+							lat={storeId !== "0" ? lat : stores[0].lat}
+							lng={storeId !== "0" ? lon : stores[0].lon}
+							markerId={storeId}
+							markers={stores}
+							onClickMarker={(id, lat, lon) => {
+								this.setState({ storeId: id, lat, lon, zoom: 12 })
+							}}
+							width="100%"
+							zoom={zoom}
+						/>
+					)}
 
-					<Header size="huge">Available in {bike.storeCount} stores</Header>
+					<Header size="huge">
+						{bike.storeCount !== undefined &&
+							`Available in ${storeCount} ${formatPlural(storeCount, "store")}`}
+						{storeId !== "0" && (
+							<Header.Subheader>
+								<a
+									href={`${window.location.origin}`}
+									onClick={e => {
+										e.preventDefault()
+										this.setState({ storeId: "0", lat: "", lon: "", zoom: 10 })
+									}}
+								>
+									Clear filter
+								</a>
+							</Header.Subheader>
+						)}
+					</Header>
 
 					<Divider hidden />
 
@@ -95,6 +121,7 @@ class Bikes extends Component {
 							history={this.props.history}
 							key="store"
 							storesByBike
+							storeId={storeId}
 							useCards={true}
 						/>
 					</Container>
@@ -123,7 +150,16 @@ class Bikes extends Component {
 
 					<Container className="mainContainer">
 						{id ? (
-							SingleBike(this.props)
+							<Fragment>
+								{!error ? (
+									<SingleBike props={this.props} />
+								) : (
+									<Container textAlign="center">
+										<Image centered size="small" src={Logo} />
+										<Header as="h1">This bike does not exist</Header>
+									</Container>
+								)}
+							</Fragment>
 						) : (
 							<Fragment>
 								<Header size="huge">{bikesPage.title}</Header>
@@ -152,15 +188,25 @@ Bikes.propTypes = {
 	bike: PropTypes.shape({
 		description: PropTypes.string,
 		image: PropTypes.string,
-		name: PropTypes.string
+		name: PropTypes.string,
+		storeCount: PropTypes.number,
+		stores: PropTypes.arrayOf(
+			PropTypes.shape({
+				lat: PropTypes.number,
+				lon: PropTypes.number
+			})
+		)
 	}),
+	error: PropTypes.bool,
 	getBike: PropTypes.func,
-	settings: PropTypes.object,
-	storeCount: PropTypes.number
+	settings: PropTypes.object
 }
 
 Bikes.defaultProps = {
-	bike: {},
+	bike: {
+		stores: []
+	},
+	error: false,
 	getBike
 }
 

@@ -21,7 +21,7 @@ export const getStores = ({ page, q, sort }) => dispatch => {
 	)
 }
 
-export const getStoresByBike = ({ bikeId, limit = 25, page = 0 }) => dispatch => {
+export const getStoresByBike = ({ bikeId, limit = 25, page = 0, storeId }) => dispatch => {
 	request.get(
 		`${window.location.origin}/api/store/getBikes`,
 		{
@@ -29,7 +29,8 @@ export const getStoresByBike = ({ bikeId, limit = 25, page = 0 }) => dispatch =>
 			qs: {
 				bikeId,
 				limit,
-				page
+				page,
+				storeId
 			}
 		},
 		function(err, response, body) {

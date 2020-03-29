@@ -41,7 +41,7 @@ class StoreModel extends CI_Model {
 		$page = false,
 		$limit = 25
 	) {
-		if ($store_id) {
+		if ($store_id && !$bike_id) {
 			$select = "sb.quantity, b.id, b.description, b.image, b.name";
 		}
 
@@ -55,12 +55,16 @@ class StoreModel extends CI_Model {
 
 		$this->db->select($select);
 
-		if ($store_id) {
+		if ($store_id && !$bike_id) {
 			$this->db->where('sb.store_id', $store_id);
 			$this->db->join('bikes b', 'sb.bike_id = b.id');
 		}
 
 		if ($bike_id) {
+			if ($store_id) {
+				$this->db->where('sb.store_id', $store_id);
+			}
+
 			$this->db->where('sb.bike_id', $bike_id);
 			$this->db->join('stores s', 'sb.store_id = s.id');
 		}
@@ -157,7 +161,7 @@ class StoreModel extends CI_Model {
 		$page = false,
 		$limit = 25
 	) {
-		$select = "s.address, s.city, s.description, s.id, s.image, s.lat, s.lon, s.name, s.order, s.state, s.zip_code";
+		$select = "s.address, s.city, s.closing_time AS closingTime, s.description, s.id, s.image, s.lat, s.lon, s.name, s.opening_time AS openingTime, s.order, s.phone_number AS phone, s.state, s.zip_code";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';
