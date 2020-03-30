@@ -10,7 +10,7 @@ class CityModel extends CI_Model {
 	}
 
 	public function checkIfExists($id) {
-		$this->db->select("COUNT(*) AS count");
+		$this->db->select('COUNT(*) AS count');
 		$this->db->where('location_id', $id);
 		$result = $this->db->get($this->table)->result();
 		if ($result[0]->count == 0) {
@@ -24,11 +24,15 @@ class CityModel extends CI_Model {
 	}
 
 	public function get($id) {
-		$this->db->select('city, county, lat, lon, state, zip_code');
-		$this->db->join('locations l', 'fl.id = l.location_id');
+		$this->db->select('city, county, lat, lon, state, zip_code, fl.description, fl.image, fl.slug');
+		$this->db->join('locations l', 'fl.location_id = l.id');
 		$this->db->where('fl.id', $id);
 		$result = $this->db->get('featured_locations fl')->result_array();
-		return $result;
+		if (empty($result)) {
+			return false;
+		}
+
+		return $result[0];
 	}
 
 	public function getLocations($q) {
@@ -48,7 +52,7 @@ class CityModel extends CI_Model {
 		$page = false,
 		$limit = 25
 	) {
-		$select = "fl.id, fl.description, fl.image, l.city AS title, l.county, l.lat, l.lon, l.state, l.zip_code, CONCAT('/cities/', fl.id) AS url";
+		$select = "fl.id, fl.description, fl.image, fl.slug, l.city AS title, l.county, l.lat, l.lon, l.state, l.zip_code";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';

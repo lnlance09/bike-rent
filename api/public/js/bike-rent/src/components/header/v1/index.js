@@ -15,10 +15,10 @@ import {
 	Sidebar,
 	Visibility
 } from "semantic-ui-react"
+import React, { Component } from "react"
 import ImagePic from "images/avatar/default-profile.jpg"
 import Logo from "./images/logo.svg"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
 import store from "store"
 import Url from "url-parse"
 

@@ -1,5 +1,5 @@
 import "./style.css"
-import { toggleLoading } from "./actions"
+import { getCities, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
 import { Card, Button, Header, Item, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
@@ -18,7 +18,7 @@ class CitiesList extends Component {
 	}
 
 	componentDidMount() {
-		this.props.retrieveItems()
+		this.props.getCities({ page: 0, visible: 1 })
 	}
 
 	componentDidUpdate(prevProps) {
@@ -53,7 +53,7 @@ class CitiesList extends Component {
 							redirect
 							tags={[result.tags]}
 							title={result.title}
-							url={result.url}
+							url={`/cities/${result.slug}-${result.id}`}
 							useCard={useCards}
 						/>
 					)
@@ -100,13 +100,13 @@ class CitiesList extends Component {
 CitiesList.propTypes = {
 	count: PropTypes.string,
 	emptyMsgContent: PropTypes.string,
+	getCities: PropTypes.func,
 	hasMore: PropTypes.bool,
 	itemsPerRow: PropTypes.number,
 	key: PropTypes.string,
 	loadingMore: PropTypes.bool,
 	page: PropTypes.number,
 	results: PropTypes.array,
-	retrieveItems: PropTypes.func,
 	showPics: PropTypes.bool,
 	toggleLoading: PropTypes.func,
 	useCards: PropTypes.bool
@@ -115,6 +115,7 @@ CitiesList.propTypes = {
 CitiesList.defaultProps = {
 	count: 10,
 	emptyMsgContent: "",
+	getCities,
 	itemsPerRow: 3,
 	loadingMore: false,
 	page: 0,
@@ -125,10 +126,11 @@ CitiesList.defaultProps = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	...state.city,
+	...state.cities,
 	...ownProps
 })
 
 export default connect(mapStateToProps, {
+	getCities,
 	toggleLoading
 })(CitiesList)

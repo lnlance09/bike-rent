@@ -96,7 +96,7 @@ class Bikes extends Component {
 					)}
 
 					<Header size="huge">
-						{bike.storeCount !== undefined &&
+						{storeCount !== undefined &&
 							`Available in ${storeCount} ${formatPlural(storeCount, "store")}`}
 						{storeId !== "0" && (
 							<Header.Subheader>

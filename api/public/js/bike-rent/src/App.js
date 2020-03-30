@@ -167,7 +167,7 @@ class App extends Component {
 									)}
 								/>
 								<Route
-									path="/cities/:name"
+									path="/cities/:slug"
 									render={props => (
 										<Cities
 											key={window.location.pathname}

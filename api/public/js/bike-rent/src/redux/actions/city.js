@@ -1,16 +1,19 @@
 import * as constants from "../constants"
 import request from "request"
 
-export const getCities = ({ lat, lon }) => dispatch => {
+export const getCity = ({ id }) => dispatch => {
 	request.get(
-		`${window.location.origin}/api/city/search`,
+		`${window.location.origin}/api/city/get`,
 		{
-			json: true
+			json: true,
+			qs: {
+				id
+			}
 		},
 		function(err, response, body) {
 			dispatch({
 				payload: body,
-				type: constants.GET_CITIES
+				type: constants.GET_CITY
 			})
 		}
 	)
