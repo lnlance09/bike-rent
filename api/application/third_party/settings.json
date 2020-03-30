@@ -30,9 +30,8 @@
         },
         "seo": {
             "description": "",
-            "img": "",
             "keywords": "",
-            "title": ""
+            "title": "Apply page"
         }
     },
     "bikesPage": {
@@ -53,9 +52,8 @@
         "useCards": "1",
         "seo": {
             "description": "",
-            "img": "",
             "keywords": "",
-            "title": ""
+            "title": "Bikes page"
         }
     },
     "checkoutPage": {
@@ -89,9 +87,8 @@
         },
         "seo": {
             "description": "",
-            "img": "",
             "keywords": "",
-            "title": ""
+            "title": "Cities page"
         },
         "title": "",
         "useCards": true,
@@ -136,7 +133,7 @@
         "firstList": {
             "items": [
                 {
-                    "link": "",
+                    "link": "test",
                     "text": "Item 1"
                 },
                 {
@@ -331,9 +328,8 @@
         },
         "seo": {
             "description": "",
-            "img": "",
             "keywords": "",
-            "title": ""
+            "title": "Stores page"
         },
         "useCards": true,
         "useList": false,

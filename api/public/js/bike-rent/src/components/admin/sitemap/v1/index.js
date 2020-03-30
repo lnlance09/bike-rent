@@ -32,7 +32,7 @@ class AdminSitemap extends Component {
 					<List.Item>
 						<b>Live Sitemap</b>:{" "}
 						<a href={this.props.sitemapUrl} rel="noopener noreferrer" target="_blank">
-							{this.props.sitemapUrl}
+							{window.location.origin}/api/seo/sitemap.xml
 						</a>
 					</List.Item>
 					<List.Item>

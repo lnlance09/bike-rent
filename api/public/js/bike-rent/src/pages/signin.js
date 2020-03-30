@@ -1,5 +1,6 @@
 import { connect, Provider } from "react-redux"
 import { Container, Grid } from "semantic-ui-react"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import React, { Component } from "react"
 import queryString from "query-string"
 import Authentication from "components/authentication/v1/"
@@ -31,9 +32,17 @@ class Signin extends Component {
 	render() {
 		const { auth, type } = this.state
 		const { settings } = this.props
+		const { signinPage } = settings
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="signin"
+					props={this.props}
+					seo={signinPage.seo}
+					state={this.state}
+				/>
+
 				<PageHeader
 					activeItem="signin"
 					authenticated={auth}

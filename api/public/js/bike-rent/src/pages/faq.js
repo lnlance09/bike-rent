@@ -1,4 +1,5 @@
 import { connect, Provider } from "react-redux"
+import { DisplayMetaTags } from "utils/metaFunctions"
 // import { Container } from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
@@ -26,9 +27,16 @@ class Faq extends Component {
 	render() {
 		const { auth } = this.state
 		const { settings } = this.props
+		const { faqPage } = settings
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="faq"
+					props={this.props}
+					seo={faqPage.seo}
+					state={this.state}
+				/>
 				<div className="mainWrapper faqPage">
 					<PageHeader
 						activeItem="faq"

@@ -1,5 +1,6 @@
 import "react-datepicker/dist/react-datepicker.css"
 import { connect, Provider } from "react-redux"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import {
 	Button,
 	Container,
@@ -150,6 +151,13 @@ class Home extends Component {
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="home"
+					props={this.props}
+					seo={homePage.seo}
+					state={this.state}
+				/>
+
 				<div className="mainWrapper homePage">
 					<PageHeader
 						activeItem="home"

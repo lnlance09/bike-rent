@@ -1,4 +1,5 @@
 import { connect, Provider } from "react-redux"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import { Container, Divider, Grid, Header } from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
@@ -27,6 +28,7 @@ class Checkout extends Component {
 	render() {
 		const { auth } = this.state
 		const { settings } = this.props
+		const { checkoutPage } = settings
 
 		/*
 		const CheckoutForm = (
@@ -36,6 +38,13 @@ class Checkout extends Component {
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="checkout"
+					props={this.props}
+					seo={checkoutPage.seo}
+					state={this.state}
+				/>
+
 				<div className="mainWrapper checkoutPage">
 					<PageHeader
 						activeItem="checkout"

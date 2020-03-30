@@ -1,5 +1,6 @@
 import { submitApplication } from "redux/actions/app"
 import { connect, Provider } from "react-redux"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import {
 	Button,
 	Container,
@@ -50,6 +51,13 @@ class Apply extends Component {
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="apply"
+					props={this.props}
+					seo={applyPage.seo}
+					state={this.state}
+				/>
+
 				<div className="mainWrapper applyPage">
 					<PageHeader
 						activeItem="apply"

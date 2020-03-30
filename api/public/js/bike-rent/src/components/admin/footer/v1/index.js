@@ -38,7 +38,12 @@ class AdminFooter extends Component {
 		this.setState({ listTwoItems: [...this.state.listTwoItems, { link: "", text: "" }] })
 	}
 
-	handleFirstChange(e, index) {
+	handleFirstChangeLink(e, index) {
+		this.state.listOneItems[index].link = e.target.value
+		this.setState({ listOneItems: this.state.listOneItems })
+	}
+
+	handleFirstChangeText(e, index) {
 		this.state.listOneItems[index].text = e.target.value
 		this.setState({ listOneItems: this.state.listOneItems })
 	}
@@ -48,7 +53,12 @@ class AdminFooter extends Component {
 		this.setState({ listOneItems: this.state.listOneItems })
 	}
 
-	handleSecondChange(e, index) {
+	handleSecondChangeLink(e, index) {
+		this.state.listTwoItems[index].link = e.target.value
+		this.setState({ listTwoItems: this.state.listTwoItems })
+	}
+
+	handleSecondChangeText(e, index) {
 		this.state.listTwoItems[index].text = e.target.value
 		this.setState({ listTwoItems: this.state.listTwoItems })
 	}
@@ -107,9 +117,10 @@ class AdminFooter extends Component {
 					<Divider hidden />
 
 					<Form.Field>
-						<Header size="small">List One</Header>
+						<Header size="big">List One</Header>
 					</Form.Field>
 					<Form.Field>
+						<label>Title</label>
 						<Input
 							onChange={this.onChangeListOneTitle}
 							placeholder="Title"
@@ -128,18 +139,16 @@ class AdminFooter extends Component {
 							</Form.Field>
 							<Form.Field width={8}>
 								<Input
-									onChange={e => this.handleFirstChange(e, i)}
+									onChange={e => this.handleFirstChangeText(e, i)}
 									placeholder="Text"
 									value={item.text}
 								/>
 							</Form.Field>
 							<Form.Field width={7}>
-								<Select
-									options={[
-										{ key: "about", value: "about", text: "About" },
-										{ key: "contact", value: "contact", text: "Contact" }
-									]}
-									placeholder="Links to"
+								<Input
+									onChange={e => this.handleFirstChangeLink(e, i)}
+									placeholder="Link"
+									value={item.link}
 								/>
 							</Form.Field>
 						</Form.Group>
@@ -154,9 +163,10 @@ class AdminFooter extends Component {
 					<Divider hidden />
 
 					<Form.Field>
-						<Header size="small">List Two</Header>
+						<Header size="big">List Two</Header>
 					</Form.Field>
 					<Form.Field>
+						<label>Title</label>
 						<Input
 							onChange={this.onChangeListTwoTitle}
 							placeholder="Title"
@@ -175,18 +185,16 @@ class AdminFooter extends Component {
 							</Form.Field>
 							<Form.Field width={8}>
 								<Input
-									onChange={e => this.handleSecondChange(e, i)}
+									onChange={e => this.handleSecondChangeText(e, i)}
 									placeholder="Text"
 									value={item.text}
 								/>
 							</Form.Field>
 							<Form.Field width={7}>
-								<Select
-									options={[
-										{ key: "about", value: "about", text: "About" },
-										{ key: "contact", value: "contact", text: "Contact" }
-									]}
-									placeholder="Links to"
+								<Input
+									onChange={e => this.handleSecondChangeLink(e, i)}
+									placeholder="Link"
+									value={item.link}
 								/>
 							</Form.Field>
 						</Form.Group>
@@ -202,12 +210,14 @@ class AdminFooter extends Component {
 					<Divider hidden />
 
 					<Form.Field>
-						<Header size="small">Right side</Header>
+						<Header size="big">Right side</Header>
 					</Form.Field>
 					<Form.Field>
+						<label>Header</label>
 						<Input onChange={this.onChangeHeader} placeholder="Header" value={title} />
 					</Form.Field>
 					<Form.Field>
+						<label>Subheader</label>
 						<Input
 							onChange={this.onChangeSubHeader}
 							placeholder="Sub header"

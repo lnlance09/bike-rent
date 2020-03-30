@@ -1,6 +1,7 @@
 import { connect, Provider } from "react-redux"
 import { getStore } from "redux/actions/store"
 import { fetchLocations } from "utils/selectOptions"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import {
 	Button,
 	Container,
@@ -65,6 +66,7 @@ class Stores extends Component {
 	render() {
 		const { activeItem, auth, cityOptions, id } = this.state
 		const { settings } = this.props
+		const { storesPage } = settings
 
 		const StoreList = props => {
 			const { closingTime, openingTime, phoneNumber } = props.store
@@ -208,6 +210,13 @@ class Stores extends Component {
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="stores"
+					props={this.props}
+					seo={storesPage.seo}
+					state={this.state}
+				/>
+
 				<div className="mainWrapper storesPage">
 					<PageHeader
 						activeItem="stores"

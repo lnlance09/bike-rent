@@ -9,9 +9,8 @@ class Seo extends CI_Controller {
 	}
 
 	public function index() {
-
-		$this->load->view('sitemap', [
-			
-		]);
+		$sitemap = file_get_contents('https://bike-rent.s3-us-west-2.amazonaws.com/sitemaps/sitemap.xml');
+		header('Content-type: application/xml');
+		echo $sitemap;
 	}
 }

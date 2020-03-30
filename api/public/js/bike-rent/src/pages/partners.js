@@ -1,4 +1,5 @@
 import { connect, Provider } from "react-redux"
+import { DisplayMetaTags } from "utils/metaFunctions"
 // import { Container } from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
@@ -26,9 +27,17 @@ class Partners extends Component {
 	render() {
 		const { auth } = this.state
 		const { settings } = this.props
+		const { partnersPage } = settings
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="partners"
+					props={this.props}
+					seo={partnersPage.seo}
+					state={this.state}
+				/>
+
 				<div className="mainWrapper partnersPage">
 					<PageHeader
 						activeItem="partners"

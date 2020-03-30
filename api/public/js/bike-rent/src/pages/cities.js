@@ -1,6 +1,7 @@
 import { connect, Provider } from "react-redux"
 import { getCity } from "redux/actions/city"
 import { formatPlural } from "utils/textFunctions"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import { Container, Divider, Grid, Header, Image, Segment } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import CitiesList from "components/citiesList/v1/"
@@ -105,6 +106,13 @@ class Cities extends Component {
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="cities"
+					props={this.props}
+					seo={citiesPage.seo}
+					state={this.state}
+				/>
+
 				<div className={`mainWrapper citiesPage ${slug}`}>
 					<PageHeader
 						activeItem="cities"

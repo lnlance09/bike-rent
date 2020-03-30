@@ -1,5 +1,6 @@
 import { connect, Provider } from "react-redux"
 // import { Container } from "semantic-ui-react"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import React, { Component } from "react"
@@ -26,9 +27,17 @@ class Search extends Component {
 	render() {
 		const { auth } = this.state
 		const { settings } = this.props
+		const { searchPage } = settings
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="search"
+					props={this.props}
+					seo={searchPage.seo}
+					state={this.state}
+				/>
+
 				<div className="mainWrapper searchPage">
 					<PageHeader
 						activeItem="search"

@@ -1,6 +1,7 @@
 import { connect, Provider } from "react-redux"
 import { getBike } from "redux/actions/bike"
 import { formatPlural } from "utils/textFunctions"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import { Button, Container, Divider, Header, Image } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import BikesList from "components/bikesList/v1/"
@@ -131,6 +132,13 @@ class Bikes extends Component {
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="bikes"
+					props={this.props}
+					seo={bikesPage.seo}
+					state={this.state}
+				/>
+
 				<div className="mainWrapper bikesPage">
 					<PageHeader
 						activeItem="bikes"

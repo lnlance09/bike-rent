@@ -2,32 +2,72 @@ import React from "react"
 import MetaTags from "react-meta-tags"
 import { capitalizeWord } from "./textFunctions"
 
-export const DisplayMetaTags = ({ page, props, state }) => {
-	const description = ""
-	const img = ""
-	let metaTags = {}
+export const DisplayMetaTags = ({ page, props, seo, state }) => {
+	let metaTags = {
+		title: "BikeRent.com"
+	}
 
 	switch (page) {
 		case "about":
+		case "apply":
+		case "checkout":
+		case "contact":
+		case "faq":
+		case "home":
+		case "partners":
+		case "signin":
+		case "terms":
 			metaTags = {
-				description: description,
-				img,
-				title: capitalizeWord(state.activeItem)
+				title: seo.title
 			}
 			break
+
+		case "bikes":
+			if (!props.error && state.id) {
+				metaTags = {
+					title: props.bike.name
+				}
+			} else {
+				metaTags = {
+					title: seo.title
+				}
+			}
+			break
+
+		case "cities":
+			if (!props.error && state.id) {
+				metaTags = {
+					title: props.city.city
+				}
+			} else {
+				metaTags = {
+					title: seo.title
+				}
+			}
+			break
+
+		case "stores":
+			if (!props.error && state.id) {
+				metaTags = {
+					title: props.store.name
+				}
+			} else {
+				metaTags = {
+					title: seo.title
+				}
+			}
+			break
+
 		default:
 			metaTags = {
-				description,
-				img,
-				title: ""
+				title: "BikeRent.com"
 			}
 			break
 	}
 
 	return (
 		<MetaTags>
-			<title>{metaTags.title} - Blather</title>
-			<meta name="description" content={metaTags.description} />
+			<title>{metaTags.title}</title>
 		</MetaTags>
 	)
 }

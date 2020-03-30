@@ -1,5 +1,6 @@
 import { connect, Provider } from "react-redux"
 import { Container, Header } from "semantic-ui-react"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import React, { Component } from "react"
@@ -30,6 +31,13 @@ class About extends Component {
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags
+					page="about"
+					props={this.props}
+					seo={aboutPage.seo}
+					state={this.state}
+				/>
+
 				<div className="mainWrapper aboutPage">
 					<PageHeader
 						activeItem="about"
