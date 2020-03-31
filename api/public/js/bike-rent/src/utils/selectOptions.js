@@ -14,6 +14,21 @@ export const colorOptions = [
 	{ key: "black", text: "Black", value: "black" }
 ]
 
+export const monthOptions = [
+	{ key: "jan", text: "January", value: "01" },
+	{ key: "feb", text: "February", value: "02" },
+	{ key: "mar", text: "March", value: "03" },
+	{ key: "apr", text: "April", value: "04" },
+	{ key: "may", text: "May", value: "05" },
+	{ key: "jun", text: "June", value: "06" },
+	{ key: "jul", text: "July", value: "07" },
+	{ key: "aug", text: "August", value: "08" },
+	{ key: "sep", text: "September", value: "09" },
+	{ key: "oct", text: "October", value: "10" },
+	{ key: "nov", text: "November", value: "11" },
+	{ key: "dec", text: "December", value: "12" }
+]
+
 export const pageOptions = [
 	{ key: "about", text: "about", value: "about" },
 	{ key: "apply", text: "apply", value: "apply" },

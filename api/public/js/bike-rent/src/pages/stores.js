@@ -1,4 +1,5 @@
 import { connect, Provider } from "react-redux"
+import { addToCart } from "components/authentication/v1/actions"
 import { getStore } from "redux/actions/store"
 import { fetchLocations } from "utils/selectOptions"
 import { DisplayMetaTags } from "utils/metaFunctions"
@@ -43,7 +44,8 @@ class Stores extends Component {
 			bearer,
 			cityId: "",
 			cityOptions: [],
-			id
+			id,
+			updated: false
 		}
 	}
 
@@ -59,6 +61,12 @@ class Stores extends Component {
 		}
 	}
 
+	addToCart = item => {
+		this.setState({ updated: !this.state.updated }, () => {
+			this.props.addToCart({ item })
+		})
+	}
+
 	handleItemClick = (e, { name }) => {
 		this.setState({ activeItem: name }, () => {})
 	}
@@ -67,6 +75,7 @@ class Stores extends Component {
 		const { activeItem, auth, cityOptions, id } = this.state
 		const { settings } = this.props
 		const { storesPage } = settings
+		const _store = this.props.store
 
 		const StoreList = props => {
 			const { closingTime, openingTime, phoneNumber } = props.store
@@ -125,10 +134,19 @@ class Stores extends Component {
 			if (activeItem === "bicycles") {
 				return (
 					<BikesList
+						addToCart
+						cartFunction={this.addToCart}
 						bikesByStore
 						emptyMsgContent="There are no bikes available"
 						history={props.history}
 						itemsPerRow={2}
+						store={{
+							address: _store.address,
+							city: _store.city,
+							id: _store.id,
+							name: _store.name,
+							state: _store.state
+						}}
 						storeId={id}
 						useCards={false}
 					/>
@@ -272,6 +290,7 @@ class Stores extends Component {
 }
 
 Stores.propTypes = {
+	addToCart: PropTypes.func,
 	getStore: PropTypes.func,
 	settings: PropTypes.object,
 	store: PropTypes.shape({
@@ -313,6 +332,7 @@ Stores.propTypes = {
 }
 
 Stores.defaultProps = {
+	addToCart,
 	getStore,
 	store: {
 		error: false
@@ -327,5 +347,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(mapStateToProps, {
+	addToCart,
 	getStore
 })(Stores)

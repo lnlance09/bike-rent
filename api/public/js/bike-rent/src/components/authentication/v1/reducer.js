@@ -22,14 +22,22 @@ const initial = () => ({
 	verify
 })
 
-const test = (state = initial(), action) => {
+const user = (state = initial(), action) => {
+	const { payload } = action
+
 	switch (action.type) {
+		case constants.ADD_TO_CART:
+			return {
+				...state,
+				data: payload
+			}
+
 		case constants.CHANGE_PASSWORD:
 			return {
 				...state,
-				passwordChangeSuccessful: action.payload.error ? false : true,
-				passwordError: action.payload.error ? true : false,
-				passwordErrorMsg: action.payload.error
+				passwordChangeSuccessful: payload.error ? false : true,
+				passwordError: payload.error ? true : false,
+				passwordErrorMsg: payload.error
 			}
 
 		case constants.CHANGE_PROFILE_PIC:
@@ -37,21 +45,21 @@ const test = (state = initial(), action) => {
 				...state,
 				data: {
 					...state.data,
-					img: action.payload.img
+					img: payload.img
 				}
 			}
 
 		case constants.LINK_FACEBOOK_ACCOUNT:
 			return {
 				...state,
-				bearer: action.payload.bearer,
+				bearer: payload.bearer,
 				data: {
 					...state.data,
-					linkedFb: action.payload.linked_fb,
-					fbAccessToken: action.payload.fb_access_token,
-					fbDate: action.payload.fb_date,
-					fbId: action.payload.fb_id,
-					fbUrl: action.payload.fb_url
+					linkedFb: payload.linked_fb,
+					fbAccessToken: payload.fb_access_token,
+					fbDate: payload.fb_date,
+					fbId: payload.fb_id,
+					fbUrl: payload.fb_url
 				}
 			}
 
@@ -79,29 +87,29 @@ const test = (state = initial(), action) => {
 			let user = {}
 			let verify = false
 
-			if (action.payload.error) {
+			if (payload.error) {
 				loginError = true
-				loginErrorMsg = action.payload.error
+				loginErrorMsg = payload.error
 			} else {
-				if (!action.payload.user.emailVerified) {
+				if (!payload.user.emailVerified) {
 					verify = true
 				}
 
 				authenticated = true
 				user = {
-					email: action.payload.user.email,
-					emailVerified: action.payload.user.emailVerified,
-					name: action.payload.user.name,
-					id: action.payload.user.id,
-					img: action.payload.user.img,
-					username: action.payload.user.username
+					email: payload.user.email,
+					emailVerified: payload.user.emailVerified,
+					name: payload.user.name,
+					id: payload.user.id,
+					img: payload.user.img,
+					username: payload.user.username
 				}
 			}
 
 			return {
 				...state,
 				authenticated,
-				bearer: action.payload.bearer,
+				bearer: payload.bearer,
 				data: user,
 				loadingLogin: false,
 				loadingRegistration: false,
@@ -119,10 +127,10 @@ const test = (state = initial(), action) => {
 		case constants.UPDATE_ABOUT:
 			return {
 				...state,
-				bearer: action.payload.bearer,
+				bearer: payload.bearer,
 				data: {
 					...state.data,
-					bio: action.payload.bio
+					bio: payload.bio
 				}
 			}
 
@@ -131,10 +139,10 @@ const test = (state = initial(), action) => {
 				...state,
 				data: {
 					...state.data,
-					emailVerified: !action.payload.error
+					emailVerified: !payload.error
 				},
-				loginError: action.payload.error,
-				loginErrorMsg: action.payload.error
+				loginError: payload.error,
+				loginErrorMsg: payload.error
 			}
 
 		default:
@@ -142,4 +150,4 @@ const test = (state = initial(), action) => {
 	}
 }
 
-export default test
+export default user

@@ -9,6 +9,8 @@ import {
 	Header,
 	Icon,
 	Image,
+	Label,
+	List,
 	Menu,
 	Responsive,
 	Segment,
@@ -16,6 +18,7 @@ import {
 	Visibility
 } from "semantic-ui-react"
 import React, { Component } from "react"
+import _ from "lodash"
 import ImagePic from "images/avatar/default-profile.jpg"
 import Logo from "./images/logo.svg"
 import PropTypes from "prop-types"
@@ -78,6 +81,7 @@ class AppHeader extends Component {
 			backgroundColor,
 			backgroundImage,
 			content,
+			data,
 			headerOne,
 			headerTwo,
 			items,
@@ -88,6 +92,49 @@ class AppHeader extends Component {
 			signUpButton
 		} = this.props
 		const { fixed, sidebarOpened } = this.state
+
+		const CartDropdown = (
+			<Menu.Menu position="right">
+				<Dropdown
+					pointing="top"
+					trigger={
+						<span>
+							{data.cart.items !== undefined && (
+								<Label circular color="olive">
+									{data.cart.items.length}
+								</Label>
+							)}{" "}
+							Your cart
+						</span>
+					}
+				>
+					<Dropdown.Menu as={Segment} style={{ padding: "16px" }}>
+						<List relaxed="very" size="large">
+							<List.Item>
+								<b>Total</b>
+							</List.Item>
+							<List.Item>
+								$
+								{_.sumBy(data.cart.items, item => {
+									if (item.bike !== undefined) {
+										return parseInt(item.bike.hourlyRate, 10)
+									}
+								})}
+							</List.Item>
+						</List>
+
+						<Dropdown.Divider />
+
+						<Button
+							color="blue"
+							content="View details"
+							fluid
+							onClick={() => this.props.history.push("/checkout")}
+						/>
+					</Dropdown.Menu>
+				</Dropdown>
+			</Menu.Menu>
+		)
 
 		const LanguageSelection = (
 			<Dropdown
@@ -213,8 +260,9 @@ class AppHeader extends Component {
 							</Container>
 						</Menu>
 						<Menu className="languageMenu">
-							<Container className="languageContainer" textAlign="left">
+							<Container className="languageContainer">
 								{LanguageSelection}
+								{CartDropdown}
 							</Container>
 						</Menu>
 						{showMainContent && (

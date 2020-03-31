@@ -10,9 +10,7 @@ const cities = (state = initial(), action) => {
 	switch (action.type) {
 		case constants.GET_CITIES:
 			const results =
-				payload.page > 0
-					? [...state.results, ...payload.results]
-					: payload.results
+				payload.page > 0 ? [...state.results, ...payload.results] : payload.results
 			return {
 				...state,
 				count: payload.count,

@@ -8,6 +8,12 @@ export const DisplayMetaTags = ({ page, props, seo, state }) => {
 	}
 
 	switch (page) {
+		case "admin":
+			metaTags = {
+				title: "Admin Panel"
+			}
+			break
+
 		case "about":
 		case "apply":
 		case "checkout":

@@ -1,6 +1,6 @@
 import "./style.css"
 import { formatNumber, formatPlural } from "utils/textFunctions"
-import { Card, Image, Item, Label, List } from "semantic-ui-react"
+import { Button, Card, Image, Item, Label, List } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import ImagePic from "images/images/image-square.png"
 import LazyLoad from "components/lazyLoad/v1/"
@@ -9,6 +9,7 @@ import TextTruncate from "react-text-truncate"
 
 class ResultItem extends Component {
 	redirectToUrl = e => {
+		e.stopPropagation()
 		if (this.props.redirect && !e.metaKey) {
 			this.props.history.push(this.props.url)
 		} else {
@@ -70,6 +71,20 @@ class ResultItem extends Component {
 						)}
 					</Item.Description>
 					{props.extra && <Item.Extra>{ItemExtra(props)}</Item.Extra>}
+					{props.addToCart && (
+						<Item.Extra>
+							<Button
+								color="blue"
+								compact
+								content="Add to cart"
+								icon="add"
+								onClick={e => {
+									e.stopPropagation()
+									this.props.cartFunction({ item: props.cartData })
+								}}
+							/>
+						</Item.Extra>
+					)}
 					{props.tags && (
 						<Item.Extra>
 							<Label.Group>{RenderTags(props.tags)}</Label.Group>
@@ -89,12 +104,7 @@ class ResultItem extends Component {
 		const FullCard = (
 			<Card onClick={this.redirectToUrl}>
 				{img && (
-					<Image
-						onError={i => (i.target.src = ImagePic)}
-						src={img === null ? ImagePic : img}
-						wrapped
-						ui={false}
-					/>
+					<Image onError={i => (i.target.src = ImagePic)} src={img} wrapped ui={false} />
 				)}
 				<Card.Content>
 					<Card.Header>{title}</Card.Header>
@@ -127,6 +137,13 @@ class ResultItem extends Component {
 }
 
 ResultItem.propTypes = {
+	addToCart: PropTypes.bool,
+	cartData: PropTypes.shape({
+		bikeId: PropTypes.string,
+		hourlyRate: PropTypes.string,
+		storeId: PropTypes.string
+	}),
+	cartFunction: PropTypes.func,
 	description: PropTypes.string,
 	extra: PropTypes.oneOfType([PropTypes.array, PropTypes.bool, PropTypes.object]),
 	img: PropTypes.string,
@@ -143,6 +160,7 @@ ResultItem.propTypes = {
 }
 
 ResultItem.defaultProps = {
+	addToCart: false,
 	menu: false,
 	redirect: true,
 	truncate: true,

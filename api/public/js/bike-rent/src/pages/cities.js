@@ -2,7 +2,7 @@ import { connect, Provider } from "react-redux"
 import { getCity } from "redux/actions/city"
 import { formatPlural } from "utils/textFunctions"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Container, Divider, Grid, Header, Image, Segment } from "semantic-ui-react"
+import { Container, Divider, Grid, Header, Image } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import CitiesList from "components/citiesList/v1/"
 import ImagePic from "images/images/image-square.png"
@@ -63,7 +63,9 @@ class Cities extends Component {
 			return (
 				<Grid>
 					<Grid.Column width={11}>
-						<Header as="p" size="big">{description}</Header>
+						<Header as="p" size="big">
+							{description}
+						</Header>
 
 						<Divider hidden />
 
@@ -76,7 +78,12 @@ class Cities extends Component {
 										href={`${window.location.origin}`}
 										onClick={e => {
 											e.preventDefault()
-											this.setState({ storeId: "0", lat: "", lon: "", zoom: 10 })
+											this.setState({
+												storeId: "0",
+												lat: "",
+												lon: "",
+												zoom: 10
+											})
 										}}
 									>
 										Clear filter
@@ -97,9 +104,7 @@ class Cities extends Component {
 							/>
 						</Container>
 					</Grid.Column>
-					<Grid.Column width={5}>
-
-					</Grid.Column>
+					<Grid.Column width={5}></Grid.Column>
 				</Grid>
 			)
 		}
@@ -185,7 +190,7 @@ Cities.defaultProps = {
 		stores: []
 	},
 	error: false,
-	getCity,
+	getCity
 }
 
 const mapStateToProps = (state, ownProps) => {

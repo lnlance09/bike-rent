@@ -13,7 +13,7 @@ import {
 	Select,
 	TextArea
 } from "semantic-ui-react"
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import _ from "lodash"
 import faker from "faker"
 import ImagePic from "images/images/image-square.png"
@@ -304,7 +304,6 @@ class AdminStores extends Component {
 			lon,
 			name,
 			openingTime,
-			order,
 			phone,
 			state,
 			visible

@@ -1,7 +1,7 @@
 import "./style.css"
 import { submitFooterForm } from "redux/actions/app"
 import { connect } from "react-redux"
-import { Button, Divider, Form, Header, Input, Radio, Select } from "semantic-ui-react"
+import { Button, Divider, Form, Header, Input, Radio } from "semantic-ui-react"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import store from "store"

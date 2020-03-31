@@ -9,6 +9,7 @@ import {
 	getStores
 } from "redux/actions/app"
 import { Accordion, Container, Grid, Menu, Responsive } from "semantic-ui-react"
+import { DisplayMetaTags } from "utils/metaFunctions"
 import React, { Component } from "react"
 import camelCase from "camelcase"
 import AdminBikes from "components/admin/bikes/v1/"
@@ -541,6 +542,8 @@ class Admin extends Component {
 
 		return (
 			<Provider store={store}>
+				<DisplayMetaTags page="admin" props={this.props} state={this.state} />
+
 				<div className="adminPage">
 					<div className="adminContainer">
 						<Responsive maxWidth={1024}>

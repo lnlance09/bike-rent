@@ -1,7 +1,7 @@
 import "./style.css"
 import { submitHeaderForm } from "redux/actions/app"
 import { connect } from "react-redux"
-import { colorOptions, pageOptions } from "utils/selectOptions"
+import { colorOptions } from "utils/selectOptions"
 import { Button, Divider, Form, Header, Input, Radio, Select } from "semantic-ui-react"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
@@ -28,10 +28,7 @@ class AdminHeader extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({
-			colorOptions,
-			pageOptions
-		})
+		this.setState({ colorOptions })
 	}
 
 	changeSignInText = (e, { value }) => this.setState({ signInText: value })
@@ -72,7 +69,6 @@ class AdminHeader extends Component {
 			backgroundColor,
 			colorOptions,
 			listItems,
-			pageOptions,
 			signInBasic,
 			signInColor,
 			signInInverted,
@@ -101,8 +97,6 @@ class AdminHeader extends Component {
 					<Form.Field>
 						<Header>List Items</Header>
 					</Form.Field>
-
-					<Divider hidden />
 
 					{listItems.map((item, i) => (
 						<Form.Group key={`headerListItem${i}`}>

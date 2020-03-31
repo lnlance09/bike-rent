@@ -43,26 +43,45 @@ class BikesList extends Component {
 	}
 
 	render() {
-		const { emptyMsgContent, extra, itemsPerRow, results, useCards } = this.props
+		const {
+			addToCart,
+			cartFunction,
+			emptyMsgContent,
+			extra,
+			itemsPerRow,
+			results,
+			useCards
+		} = this.props
+		const _store = this.props.store
 
 		const RenderItems = ({ props }) => {
-			console.log("render items")
-			console.log(props)
 			return props.results.map((result, i) => {
-				if (result.id) {
+				const { description, hourlyRate, id, image, meta, name } = result
+				if (id) {
 					return (
 						<ResultItem
-							description={result.description}
+							addToCart={addToCart}
+							cartData={{
+								bike: {
+									description,
+									hourlyRate,
+									id,
+									name
+								},
+								store: _store
+							}}
+							cartFunction={cartFunction}
+							description={description}
 							extra={extra}
 							history={props.history}
 							id={`${props.key}${i}`}
-							img={props.showPics ? result.image : null}
+							img={props.showPics ? image : null}
 							key={`${props.key}${i}`}
-							meta={result.meta}
+							meta={meta}
 							redirect
 							// tags={[result.tags]}
-							title={result.name}
-							url={`/bikes/${result.id}`}
+							title={name}
+							url={`/bikes/${id}`}
 							useCard={useCards}
 						/>
 					)
@@ -107,10 +126,12 @@ class BikesList extends Component {
 }
 
 BikesList.propTypes = {
+	addToCart: PropTypes.bool,
 	bikesByStore: PropTypes.bool,
+	cartFunction: PropTypes.func,
 	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
-	extra: PropTypes.node,
+	extra: PropTypes.func,
 	getBikes: PropTypes.func,
 	getBikesByStore: PropTypes.func,
 	hasMore: PropTypes.bool,
@@ -121,13 +142,20 @@ BikesList.propTypes = {
 	page: PropTypes.number,
 	results: PropTypes.array,
 	showPics: PropTypes.bool,
-	storeId: PropTypes.string,
+	store: PropTypes.shape({
+		address: PropTypes.string,
+		city: PropTypes.string,
+		id: PropTypes.string,
+		name: PropTypes.string,
+		state: PropTypes.string
+	}),
 	toggleLoading: PropTypes.func,
 	useCards: PropTypes.bool,
 	useInternally: PropTypes.bool
 }
 
 BikesList.defaultProps = {
+	addToCart: false,
 	bikesByStore: false,
 	count: 10,
 	emptyMsgContent: "",
@@ -138,6 +166,7 @@ BikesList.defaultProps = {
 	page: 0,
 	results: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
 	showPics: true,
+	store: {},
 	toggleLoading,
 	useCards: true,
 	useInternally: true

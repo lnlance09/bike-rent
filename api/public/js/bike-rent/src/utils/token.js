@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 
 export const parseJwt = () => {
 	let localData = false
-	jwt.verify(localStorage.getItem("jwtToken"), "secret", function(err, decoded) {
+	jwt.verify(localStorage.getItem("jwtToken"), "secret", (err, decoded) => {
 		if (decoded) {
 			localData = {}
 			localData = decoded.data

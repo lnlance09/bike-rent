@@ -42,7 +42,7 @@ class StoreModel extends CI_Model {
 		$limit = 25
 	) {
 		if ($store_id && !$bike_id) {
-			$select = "sb.quantity, b.id, b.description, b.image, b.name";
+			$select = "s.id AS storeId, sb.hourly_rate AS hourlyRate, sb.quantity, b.id, b.description, b.image, b.name";
 		}
 
 		if ($bike_id) {
@@ -56,17 +56,19 @@ class StoreModel extends CI_Model {
 		$this->db->select($select);
 
 		if ($store_id && !$bike_id) {
-			$this->db->where('sb.store_id', $store_id);
 			$this->db->join('bikes b', 'sb.bike_id = b.id');
+			$this->db->join('stores s', 'sb.store_id = s.id');
+			$this->db->where('sb.store_id', $store_id);
 		}
 
 		if ($bike_id) {
+			$this->db->join('stores s', 'sb.store_id = s.id');
+
 			if ($store_id) {
 				$this->db->where('sb.store_id', $store_id);
 			}
 
 			$this->db->where('sb.bike_id', $bike_id);
-			$this->db->join('stores s', 'sb.store_id = s.id');
 		}
 
 		if (!$just_count) {

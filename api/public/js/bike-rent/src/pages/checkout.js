@@ -1,9 +1,12 @@
+import "react-credit-cards/es/styles-compiled.css"
 import { connect, Provider } from "react-redux"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Container, Divider, Grid, Header } from "semantic-ui-react"
+import { Button, Container, Divider, Form, Grid, Header, Input, Segment } from "semantic-ui-react"
+import React, { Component } from "react"
+import Cards from "react-credit-cards"
+import Cleave from "cleave.js/react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
-import React, { Component } from "react"
 import StepProcess from "components/step/v1/"
 import PropTypes from "prop-types"
 import store from "store"
@@ -19,22 +22,76 @@ class Checkout extends Component {
 
 		this.state = {
 			auth,
-			bearer
+			bearer,
+			cardName: "",
+			cardNumber: "",
+			cvc: "",
+			expiry: "",
+			focus: ""
 		}
 	}
 
 	componentDidMount() {}
 
+	handleInputFocus = e => this.setState({ focus: e.target.name })
+
+	onChangeCardName = (e, { value }) => this.setState({ cardName: value })
+
+	onChangeCardNumber = e => this.setState({ cardNumber: e.target.rawValue })
+
+	onChangeCvc = (e, { value }) => this.setState({ cvc: value })
+
+	onChangeExpiry = e => this.setState({ expiry: e.target.rawValue })
+
 	render() {
-		const { auth } = this.state
+		const { auth, cardName, cardNumber, cvc, expiry, focus } = this.state
 		const { settings } = this.props
 		const { checkoutPage } = settings
 
-		/*
 		const CheckoutForm = (
-
+			<Form as={Segment}>
+				<Form.Field>
+					<Cleave
+						name="number"
+						placeholder="Enter your credit card number"
+						options={{ creditCard: true }}
+						onChange={this.onChangeCardNumber}
+						onFocus={this.handleInputFocus}
+					/>
+				</Form.Field>
+				<Form.Field>
+					<Input
+						name="name"
+						onChange={this.onChangeCardName}
+						onFocus={this.handleInputFocus}
+						placeholder="Name on card"
+						value={cardName}
+					/>
+				</Form.Field>
+				<Form.Group widths="equal">
+					<Form.Field>
+						<Cleave
+							name="expiry"
+							options={{ date: true, datePattern: ["m", "y"] }}
+							placeholder="Valid thru"
+							onChange={this.onChangeExpiry}
+							onFocus={this.handleInputFocus}
+						/>
+					</Form.Field>
+					<Form.Field>
+						<Input
+							name="cvc"
+							maxLength={4}
+							onChange={this.onChangeCvc}
+							onFocus={this.handleInputFocus}
+							placeholder="CVC"
+							value={cvc}
+						/>
+					</Form.Field>
+				</Form.Group>
+				<Button color="blue" content="Checkout" fluid onClick={() => console.log("done")} />
+			</Form>
 		)
-		*/
 
 		return (
 			<Provider store={store}>
@@ -59,15 +116,25 @@ class Checkout extends Component {
 						{...this.props}
 					/>
 					<Container className="mainContainer">
-						<StepProcess />
+						<StepProcess activeItem="checkout" index={2} />
 
 						<Divider hidden />
 
+						<Header size="huge">Checkout</Header>
+						<Divider />
+
 						<Grid className="checkoutGrid">
 							<Grid.Column className="leftSide" width={11}>
-								<Header size="huge">Checkout</Header>
-
-								<Divider />
+								<Segment>
+									<Cards
+										cvc={cvc}
+										expiry={expiry}
+										focused={focus}
+										name={cardName}
+										number={cardNumber}
+									/>
+									{CheckoutForm}
+								</Segment>
 							</Grid.Column>
 							<Grid.Column className="rightSide" width={5}></Grid.Column>
 						</Grid>

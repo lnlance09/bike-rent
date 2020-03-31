@@ -1,7 +1,39 @@
 import * as constants from "./constants"
+import { toast } from "react-toastify"
 import { parseJwt, setToken } from "utils/token"
 import jwt from "jsonwebtoken"
 import request from "request"
+
+toast.configure({
+	autoClose: 4000,
+	draggable: false
+})
+
+export const addToCart = ({ item }) => dispatch => {
+	let localData = parseJwt()
+	if (!localData) {
+		localData = {
+			cart: {
+				items: [item]
+			}
+		}
+	} else {
+		const { cart } = localData
+		const items = [...cart.items, item]
+		localData.cart = {
+			...cart,
+			items
+		}
+	}
+
+	setToken(localData)
+	toast.success("Added to cart")
+
+	dispatch({
+		payload: localData,
+		type: constants.ADD_TO_CART
+	})
+}
 
 export const changePassword = ({ bearer, confirmPassword, newPassword, password }) => dispatch => {
 	request.post(
