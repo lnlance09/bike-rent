@@ -1,5 +1,12 @@
 import jwt from "jsonwebtoken"
 
+export const defaultData = ({
+	cart: {
+		items: []
+	},
+	user: {}
+})
+
 export const parseJwt = () => {
 	let localData = false
 	jwt.verify(localStorage.getItem("jwtToken"), "secret", (err, decoded) => {
@@ -11,8 +18,8 @@ export const parseJwt = () => {
 	return localData
 }
 
-export const setToken = localData => {
-	const token = jwt.sign({ data: localData }, "secret", {
+export const setToken = data => {
+	const token = jwt.sign({ data }, "secret", {
 		expiresIn: 60 * 60 * 5
 	})
 	localStorage.setItem("jwtToken", token)

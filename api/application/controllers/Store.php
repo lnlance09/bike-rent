@@ -146,8 +146,8 @@ class Store extends CI_Controller {
 	}
 
 	public function getBikes() {
-		$bike_id = $this->input->get('bikeId');
-		$store_id = $this->input->get('storeId');
+		$bike_id = (int)$this->input->get('bikeId');
+		$store_id = (int)$this->input->get('storeId');
 		$page = $this->input->get('page');
 		$limit = $this->input->get('limit');
 

@@ -1,18 +1,22 @@
 import * as constants from "./constants"
+import { defaultData } from "utils/token"
 import jwt from "jsonwebtoken"
 
 let authenticated = false
-let localData = {}
+let localData = defaultData
 let verify = false
 const token = localStorage.getItem("jwtToken")
 
 jwt.verify(token, "secret", (err, decoded) => {
 	if (decoded) {
-		authenticated = true
 		localData = decoded.data
-		verify = !localData.emailVerified ? true : false
+		authenticated = localData.user.email
+		verify = !localData.user.emailVerified && authenticated
 	}
 })
+
+console.log("reducer")
+console.log(localData)
 
 const initial = () => ({
 	authenticated,
@@ -45,7 +49,10 @@ const user = (state = initial(), action) => {
 				...state,
 				data: {
 					...state.data,
-					img: payload.img
+					user: {
+						...state.data.user,
+						img: payload.img
+					}
 				}
 			}
 
@@ -55,11 +62,14 @@ const user = (state = initial(), action) => {
 				bearer: payload.bearer,
 				data: {
 					...state.data,
-					linkedFb: payload.linked_fb,
-					fbAccessToken: payload.fb_access_token,
-					fbDate: payload.fb_date,
-					fbId: payload.fb_id,
-					fbUrl: payload.fb_url
+					user: {
+						...state.data.user,
+						fbAccessToken: payload.fb_access_token,
+						fbDate: payload.fb_date,
+						fbId: payload.fb_id,
+						fbUrl: payload.fb_url,
+						linkedFb: payload.linked_fb
+					}
 				}
 			}
 
@@ -67,7 +77,7 @@ const user = (state = initial(), action) => {
 			return {
 				...state,
 				authenticated: false,
-				data: {},
+				data: defaultData,
 				verify: false
 			}
 
@@ -106,11 +116,24 @@ const user = (state = initial(), action) => {
 				}
 			}
 
+			let cart = {
+				items: []
+			}
+			const token = localStorage.getItem("jwtToken")
+			jwt.verify(token, "secret", (err, decoded) => {
+				if (decoded) {
+					cart = decoded.data.cart
+				}
+			})
+
 			return {
 				...state,
 				authenticated,
 				bearer: payload.bearer,
-				data: user,
+				data: {
+					cart,
+					user
+				},
 				loadingLogin: false,
 				loadingRegistration: false,
 				loginError,
@@ -130,7 +153,10 @@ const user = (state = initial(), action) => {
 				bearer: payload.bearer,
 				data: {
 					...state.data,
-					bio: payload.bio
+					user: {
+						...state.data.user,
+						bio: payload.bio
+					}
 				}
 			}
 
@@ -139,7 +165,10 @@ const user = (state = initial(), action) => {
 				...state,
 				data: {
 					...state.data,
-					emailVerified: !payload.error
+					user: {
+						...state.data.user,
+						emailVerified: !payload.error
+					}
 				},
 				loginError: payload.error,
 				loginErrorMsg: payload.error

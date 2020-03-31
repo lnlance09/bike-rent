@@ -52,8 +52,6 @@ class AppHeader extends Component {
 			sidebarOpened: false,
 			startDate: new Date()
 		}
-
-		this.onLogout = this.onLogout.bind(this)
 	}
 
 	handleChange = date => this.setState({ startDate: date })
@@ -64,17 +62,15 @@ class AppHeader extends Component {
 
 	hideFixedMenu = () => this.setState({ fixed: false })
 
-	onLogout() {
+	onLogout = () => {
 		this.props.logout()
-		const parsed = new Url(window.location)
-		if (parsed.pathname !== "/") {
-			window.location.reload()
-		}
+		window.location.reload()
 	}
 
 	showFixedMenu = () => this.setState({ fixed: true })
 
 	render() {
+		const { fixed, sidebarOpened } = this.state
 		const {
 			activeItem,
 			authenticated,
@@ -91,7 +87,7 @@ class AppHeader extends Component {
 			signInButton,
 			signUpButton
 		} = this.props
-		const { fixed, sidebarOpened } = this.state
+		const { cart, user } = data
 
 		const CartDropdown = (
 			<Menu.Menu position="right">
@@ -176,9 +172,27 @@ class AppHeader extends Component {
 							<Dropdown.Menu>
 								<Dropdown.Item
 									onClick={() =>
-										props.history.push(`/users/${props.data.username}`)
+										props.history.push(`/profile`)
 									}
-									text={props.data.name}
+									text={user.name}
+								/>
+								<Dropdown.Item
+									onClick={() =>
+										props.history.push(`/profile/purchases`)
+									}
+									text="My Purchases"
+								/>
+								<Dropdown.Item
+									onClick={() =>
+										props.history.push(`/profile/reviews`)
+									}
+									text="My Reviews"
+								/>
+								<Dropdown.Item
+									onClick={() =>
+										props.history.push(`/profile/payments`)
+									}
+									text="My Account"
 								/>
 								<Dropdown.Item onClick={this.onLogout} text="Sign out" />
 							</Dropdown.Menu>

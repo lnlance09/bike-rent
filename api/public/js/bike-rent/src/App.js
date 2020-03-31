@@ -17,6 +17,7 @@ import Contact from "pages/contact"
 import Faq from "pages/faq"
 import Home from "pages/home"
 import Partners from "pages/partners"
+import Profile from "pages/profile"
 import Search from "pages/search"
 import Signin from "pages/signin"
 import Stores from "pages/stores"
@@ -213,6 +214,31 @@ class App extends Component {
 									/>
 								)}
 							/>
+
+							<Switch>
+								<Route
+									exact
+									path="/profile"
+									render={props => (
+										<Profile
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path="/profile/:tab"
+									render={props => (
+										<Profile
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
+									)}
+								/>
+							</Switch>
 
 							<Route
 								exact

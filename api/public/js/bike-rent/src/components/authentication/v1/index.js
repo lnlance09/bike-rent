@@ -171,9 +171,6 @@ class Authentication extends Component {
 			verificationCode
 		} = this.state
 
-		console.log("auth state")
-		console.log(this.state)
-
 		const ErrorMsg = props => {
 			if (props.loginError && props.loginErrorMsg) {
 				return <Message content={props.loginErrorMsg} error />
@@ -187,7 +184,7 @@ class Authentication extends Component {
 				className="googleBtn"
 				color="red"
 				fluid
-				onClick={() => this.redirectToUrl(props.data.googleUrl)}
+				onClick={() => this.redirectToUrl(props.data.user.googleUrl)}
 			>
 				<Icon name="google" /> {login ? "Sign in" : "Sign up"} with Google
 			</Button>
@@ -289,7 +286,7 @@ class Authentication extends Component {
 			return null
 		}
 
-		return this.props.data.emailVerified ? (
+		return this.props.data.user.emailVerified ? (
 			<Redirect to="/" />
 		) : (
 			<Provider store={store}>
@@ -329,12 +326,15 @@ Authentication.propTypes = {
 	authenticated: PropTypes.bool,
 	bearer: PropTypes.string,
 	data: PropTypes.shape({
-		email: PropTypes.string,
-		emailVerified: PropTypes.bool,
-		name: PropTypes.string,
-		id: PropTypes.string,
-		img: PropTypes.string,
-		username: PropTypes.string
+		cart: PropTypes.array,
+		user: PropTypes.shape({
+			email: PropTypes.string,
+			emailVerified: PropTypes.bool,
+			name: PropTypes.string,
+			id: PropTypes.string,
+			img: PropTypes.string,
+			username: PropTypes.string
+		})
 	}),
 	loadingLogin: PropTypes.bool,
 	loadingRegistration: PropTypes.bool,
@@ -351,6 +351,9 @@ Authentication.propTypes = {
 }
 
 Authentication.defaultProps = {
+	data: {
+		user: {}
+	},
 	submitGoogleForm,
 	submitLoginForm,
 	submitRegistrationForm,

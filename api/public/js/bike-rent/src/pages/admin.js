@@ -41,6 +41,10 @@ class Admin extends Component {
 		const auth = user.authenticated
 		const bearer = user.bearer
 
+		if (!auth) {
+			this.props.history.push("/signin")
+		}
+
 		this.state = {
 			activeItem: tab === undefined ? "change-themes" : tab,
 			adminPages: [

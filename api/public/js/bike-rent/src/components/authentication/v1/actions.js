@@ -1,6 +1,6 @@
 import * as constants from "./constants"
 import { toast } from "react-toastify"
-import { parseJwt, setToken } from "utils/token"
+import { defaultData, parseJwt, setToken } from "utils/token"
 import jwt from "jsonwebtoken"
 import request from "request"
 
@@ -12,18 +12,14 @@ toast.configure({
 export const addToCart = ({ item }) => dispatch => {
 	let localData = parseJwt()
 	if (!localData) {
-		localData = {
-			cart: {
-				items: [item]
-			}
-		}
-	} else {
-		const { cart } = localData
-		const items = [...cart.items, item]
-		localData.cart = {
-			...cart,
-			items
-		}
+		localData = defaultData
+	}
+
+	const { cart } = localData
+	const items = [...cart.items, item]
+	localData.cart = {
+		...cart,
+		items
 	}
 
 	setToken(localData)
@@ -154,7 +150,13 @@ export const submitLoginForm = ({ email, password }) => dispatch => {
 		},
 		function(err, response, body) {
 			if (!body.error) {
-				const token = setToken(body.user)
+				let localData = parseJwt()
+				if (!localData) {
+					localData = defaultData
+				}
+				localData.user = body.user
+
+				const token = setToken(localData)
 				body.bearer = token
 			}
 
@@ -180,10 +182,13 @@ export const submitRegistrationForm = ({ email, name, password, username }) => d
 		},
 		function(err, response, body) {
 			if (!body.error) {
-				const token = jwt.sign({ data: body.user }, "secret", {
-					expiresIn: 60 * 60 * 5
-				})
-				localStorage.setItem("jwtToken", token)
+				let localData = parseJwt()
+				if (!localData) {
+					localData = defaultData
+				}
+				localData.user = body.user
+
+				const token = setToken(localData)
 				body.bearer = token
 			}
 
@@ -246,7 +251,12 @@ export const verifyEmail = ({ code, bearer }) => dispatch => {
 		},
 		function(err, response, body) {
 			if (!body.error) {
-				setToken(body.user)
+				let localData = parseJwt()
+				if (!localData) {
+					localData = defaultData
+				}
+				localData.user = body.user
+				setToken(localData)
 			}
 
 			dispatch({

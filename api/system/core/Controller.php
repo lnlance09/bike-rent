@@ -87,7 +87,7 @@ class CI_Controller {
 
 			if (is_object($data)) {
 				if ($data->exp > time()) {
-					$this->user = $data->data;
+					$this->user = $data->data->user;
 				} else {
 					$date = new \DateTime('now', new \DateTimeZone('America/New_York'));
 					$date->setTimestamp($exp);
