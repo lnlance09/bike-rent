@@ -108,6 +108,13 @@ body {
 	}
 }
 
+.checkoutPage {
+	.grid {
+		.rightSide {
+			padding-left: 0 !important;
+		}
+	}
+}
 
 .signInPage {
 	min-height: 100vh;

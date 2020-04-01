@@ -36,6 +36,13 @@ class UsersModel extends CI_Model {
 		return $name.rand(1000, 9999);
 	}
 
+	public function getPaymentMethods($id) {
+		$this->db->select('created_at, exp_month, exp_year, first_name, last_name, number, preferred, user_id');
+		$this->db->where('user_id', $id);
+		$results = $this->db->get('payment_methods')->result_array();
+		return $results;
+	}
+
 	public function getUserByCurrentPassword($id, $password) {
 		$sql = "SELECT COUNT(*) AS count 
 				FROM users 
@@ -77,7 +84,7 @@ class UsersModel extends CI_Model {
 	public function login($email, $password) {
 		$column = filter_var($email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-		$select = "u.id, u.name, u.username, u.img, email, email_verified AS emailVerified, verification_code AS verificationCode, date_created AS dateCreated";
+		$select = "u.id, u.name, u.username, u.img, email, email_verified AS emailVerified, verification_code AS verificationCode, date_created AS dateCreated, u.privilege";
 		$this->db->select($select);
 
 		$where = $column.' = "'.$email.'" ';

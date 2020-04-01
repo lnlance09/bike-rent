@@ -31,11 +31,6 @@ const bike = (state = initial(), action) => {
 				...state
 			}
 
-		case constants.SELECT_BIKE:
-			return {
-				...state
-			}
-
 		default:
 			return state
 	}

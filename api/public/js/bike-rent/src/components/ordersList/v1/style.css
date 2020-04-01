@@ -1,0 +1,18 @@
+/*---  Colors  ---*/
+/*---  Light Colors  ---*/
+/*---   Neutrals  ---*/
+/*---   Misc  ---*/
+/*---   Social colors  ---*/
+.bikesList {
+  width: 100%; }
+  .bikesList .emptyContainer {
+    text-align: center; }
+  @media only screen and (max-width: 1025px) {
+    .bikesList .cards {
+      margin-top: 10px; } }
+  .bikesList .cards .card .content {
+    word-break: break-word; }
+    .bikesList .cards .card .content .description {
+      max-height: 240px;
+      overflow: hidden;
+      white-space: pre-line; }

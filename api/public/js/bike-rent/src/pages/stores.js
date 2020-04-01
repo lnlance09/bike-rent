@@ -214,6 +214,7 @@ class Stores extends Component {
 											content="Proceed to checkout"
 											fluid
 											icon="cart"
+											onClick={() => this.props.history.push("/checkout")}
 										/>
 									</div>
 								) : (

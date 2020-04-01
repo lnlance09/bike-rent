@@ -110,9 +110,5 @@ class OrderModel extends CI_Model {
 	public function update($id, $data, $tags) {
 		$this->db->where('id', $id);
 		$this->db->update($this->table, $data);
-
-		if ($tags) {
-			
-		}
 	}
 }

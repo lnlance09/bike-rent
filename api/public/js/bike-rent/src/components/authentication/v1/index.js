@@ -333,6 +333,7 @@ Authentication.propTypes = {
 			name: PropTypes.string,
 			id: PropTypes.string,
 			img: PropTypes.string,
+			privilege: PropTypes.string,
 			username: PropTypes.string
 		})
 	}),

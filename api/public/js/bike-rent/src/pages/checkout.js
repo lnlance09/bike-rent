@@ -1,12 +1,11 @@
-import "react-credit-cards/es/styles-compiled.css"
 import { connect, Provider } from "react-redux"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Button, Container, Divider, Form, Grid, Header, Input, Segment } from "semantic-ui-react"
+import { getPaymentMethods } from "redux/actions/order"
+import { Button, Container, Divider, Grid, Header, List } from "semantic-ui-react"
 import React, { Component } from "react"
-import Cards from "react-credit-cards"
-import Cleave from "cleave.js/react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
+import PaymentMethod from "components/paymentMethod/v1/"
 import StepProcess from "components/step/v1/"
 import PropTypes from "prop-types"
 import store from "store"
@@ -19,79 +18,81 @@ class Checkout extends Component {
 		const user = currentState.user
 		const auth = user.authenticated
 		const bearer = user.bearer
+		const cart = user.data.cart
 
 		this.state = {
 			auth,
 			bearer,
-			cardName: "",
-			cardNumber: "",
-			cvc: "",
-			expiry: "",
-			focus: ""
+			cart
 		}
 	}
 
-	componentDidMount() {}
-
-	handleInputFocus = e => this.setState({ focus: e.target.name })
-
-	onChangeCardName = (e, { value }) => this.setState({ cardName: value })
-
-	onChangeCardNumber = e => this.setState({ cardNumber: e.target.rawValue })
-
-	onChangeCvc = (e, { value }) => this.setState({ cvc: value })
-
-	onChangeExpiry = e => this.setState({ expiry: e.target.rawValue })
+	componentDidMount() {
+		const { auth, bearer } = this.state
+		if (auth) {
+			this.props.getPaymentMethods({ bearer })
+		}
+	}
 
 	render() {
-		const { auth, cardName, cardNumber, cvc, expiry, focus } = this.state
-		const { settings } = this.props
+		const { auth, bearer, cart } = this.state
+		const { methods, settings } = this.props
 		const { checkoutPage } = settings
 
-		const CheckoutForm = (
-			<Form as={Segment}>
-				<Form.Field>
-					<Cleave
-						name="number"
-						placeholder="Enter your credit card number"
-						options={{ creditCard: true }}
-						onChange={this.onChangeCardNumber}
-						onFocus={this.handleInputFocus}
-					/>
-				</Form.Field>
-				<Form.Field>
-					<Input
-						name="name"
-						onChange={this.onChangeCardName}
-						onFocus={this.handleInputFocus}
-						placeholder="Name on card"
-						value={cardName}
-					/>
-				</Form.Field>
-				<Form.Group widths="equal">
-					<Form.Field>
-						<Cleave
-							name="expiry"
-							options={{ date: true, datePattern: ["m", "y"] }}
-							placeholder="Valid thru"
-							onChange={this.onChangeExpiry}
-							onFocus={this.handleInputFocus}
-						/>
-					</Form.Field>
-					<Form.Field>
-						<Input
-							name="cvc"
-							maxLength={4}
-							onChange={this.onChangeCvc}
-							onFocus={this.handleInputFocus}
-							placeholder="CVC"
-							value={cvc}
-						/>
-					</Form.Field>
-				</Form.Group>
-				<Button color="blue" content="Checkout" fluid onClick={() => console.log("done")} />
-			</Form>
+		console.log("cart")
+		console.log(cart)
+
+		const RenderCart = (
+			<List relaxed="very" size="big" verticalAlign="middle">
+				{cart.items.map((item, i) => (
+					<List.Item key={`cartItem${i}`}>
+						<List.Content floated="right">
+							<Button.Group floated="right">
+								<Button
+									basic
+									color="green"
+									icon="plus"
+								/>
+								<Button
+									basic
+									color="blue"
+									icon="minus"
+								/>
+								<Button
+									basic
+									color="red"
+									icon="trash"
+								/>
+							</Button.Group>
+						</List.Content>
+						<List.Content>
+							<List.Header>{item.bike.name}</List.Header>
+							<List.Description>{item.bike.description}</List.Description>
+							1 hour
+						</List.Content>
+					</List.Item>
+				))}
+			</List>
 		)
+
+		const RenderMethods = () => {
+			if (auth) {
+				return methods.map((method, i) => (
+					<PaymentMethod
+						card={{
+							cvc: method.cvc,
+							expiry: {
+								month: method.exp_month,
+								year: method.exp_year
+							},
+							name: method.name,
+							number: method.number
+						}}
+						displayForm={false}
+					/>
+				))
+			}
+		}
 
 		return (
 			<Provider store={store}>
@@ -117,7 +118,6 @@ class Checkout extends Component {
 					/>
 					<Container className="mainContainer">
 						<StepProcess activeItem="checkout" index={2} />
-
 						<Divider hidden />
 
 						<Header size="huge">Checkout</Header>
@@ -125,18 +125,16 @@ class Checkout extends Component {
 
 						<Grid className="checkoutGrid">
 							<Grid.Column className="leftSide" width={11}>
-								<Segment>
-									<Cards
-										cvc={cvc}
-										expiry={expiry}
-										focused={focus}
-										name={cardName}
-										number={cardNumber}
+								{!auth && (
+									<PaymentMethod
+										
 									/>
-									{CheckoutForm}
-								</Segment>
+								)}
+								{RenderMethods()}
 							</Grid.Column>
-							<Grid.Column className="rightSide" width={5}></Grid.Column>
+							<Grid.Column className="rightSide" width={5}>
+								{RenderCart}
+							</Grid.Column>
 						</Grid>
 					</Container>
 
@@ -148,16 +146,32 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
+	getPaymentMethods: PropTypes.func,
+	methods: PropTypes.arrayOf(PropTypes.shape({
+		created_at: PropTypes.string,
+		exp_month: PropTypes.string,
+		exp_year: PropTypes.string,
+		first_name: PropTypes.string,
+		last_name: PropTypes.string,
+		number: PropTypes.string,
+		preferred: PropTypes.string,
+		user_id: PropTypes.string
+	})),
 	settings: PropTypes.object
 }
 
-Checkout.defaultProps = {}
+Checkout.defaultProps = {
+	getPaymentMethods,
+	methods: []
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.app,
+		...state.order,
 		...ownProps
 	}
 }
 
-export default connect(mapStateToProps, {})(Checkout)
+export default connect(mapStateToProps, {
+	getPaymentMethods
+})(Checkout)

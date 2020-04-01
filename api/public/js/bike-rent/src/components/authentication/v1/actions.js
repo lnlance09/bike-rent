@@ -16,7 +16,7 @@ export const addToCart = ({ item }) => dispatch => {
 	}
 
 	const { cart } = localData
-	const items = [...cart.items, item]
+	const items = [...cart.items, item.item]
 	localData.cart = {
 		...cart,
 		items

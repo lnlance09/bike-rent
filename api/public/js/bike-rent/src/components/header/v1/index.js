@@ -47,6 +47,7 @@ const HeroContent = ({ backgroundImage, content, headerOne, headerTwo }) => (
 class AppHeader extends Component {
 	constructor(props) {
 		super(props)
+
 		this.state = {
 			fixed: false,
 			sidebarOpened: false,
@@ -96,7 +97,7 @@ class AppHeader extends Component {
 					trigger={
 						<span>
 							{data.cart.items !== undefined && (
-								<Label circular color="olive">
+								<Label circular color="olive" style={{ marginRight: "8px" }}>
 									{data.cart.items.length}
 								</Label>
 							)}{" "}
@@ -170,12 +171,14 @@ class AppHeader extends Component {
 							trigger={trigger}
 						>
 							<Dropdown.Menu>
-								<Dropdown.Item
-									onClick={() =>
-										props.history.push(`/profile`)
-									}
-									text={user.name}
-								/>
+								{user.privilege === "1" && (
+									<Dropdown.Item
+										onClick={() =>
+											props.history.push(`/admin`)
+										}
+										text="Admin Panel"
+									/>
+								)}
 								<Dropdown.Item
 									onClick={() =>
 										props.history.push(`/profile/purchases`)
@@ -194,6 +197,7 @@ class AppHeader extends Component {
 									}
 									text="My Account"
 								/>
+								<Dropdown.Divider />
 								<Dropdown.Item onClick={this.onLogout} text="Sign out" />
 							</Dropdown.Menu>
 						</Dropdown>

@@ -29,12 +29,14 @@ export const TOGGLE_ADD_STORE_MODAL = "app:TOGGLE_ADD_STORE_MODAL"
 export const TOGGLE_EDIT_BLOG_MODAL = "app:TOGGLE_EDIT_BLOG_MODAL"
 
 export const GET_BIKE = "bike:GET_BIKE"
-export const SELECT_BIKE = "bike:SELECT_BIKE"
 
 export const GET_CITY = "city:GET_CITY"
 
 export const ADD_IMAGE = "library:ADD_IMAGE"
 export const GET_IMAGES = "library:GET_IMAGES"
 export const TOGGLE_ADD_IMAGE_MODAL = "library:TOGGLE_ADD_IMAGE_MODAL"
+
+export const CREATE_ORDER = "order:CREATE_ORDER"
+export const GET_PAYMENT_METHODS = "order:GET_PAYMENT_METHODS"
 
 export const GET_STORE = "store:GET_STORE"

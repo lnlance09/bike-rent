@@ -15,9 +15,6 @@ jwt.verify(token, "secret", (err, decoded) => {
 	}
 })
 
-console.log("reducer")
-console.log(localData)
-
 const initial = () => ({
 	authenticated,
 	bearer: token,
@@ -112,6 +109,7 @@ const user = (state = initial(), action) => {
 					name: payload.user.name,
 					id: payload.user.id,
 					img: payload.user.img,
+					privilege: payload.user.privilege,
 					username: payload.user.username
 				}
 			}
