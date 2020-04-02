@@ -1,18 +1,8 @@
 import "react-datepicker/dist/react-datepicker.css"
 import { connect, Provider } from "react-redux"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import {
-	Button,
-	Container,
-	Divider,
-	Grid,
-	Header,
-	Image,
-	Input,
-	Segment,
-	Select
-} from "semantic-ui-react"
-import React, { Component, Fragment } from "react"
+import { Button, Grid, Input, Select } from "semantic-ui-react"
+import React, { Component } from "react"
 import DatePicker from "react-datepicker"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
@@ -78,77 +68,6 @@ class Home extends Component {
 			</Grid>
 		)
 
-		const HomePageContent = (
-			<div>
-				<Segment className="homePageSegment paddedSegment" vertical>
-					<Grid container stackable verticalAlign="middle">
-						<Grid.Row>
-							<Grid.Column width={8}>
-								{homePage.firstSection.items.map(item => (
-									<Fragment>
-										<Header as="h3">{item.title}</Header>
-										<p>{item.subtitle}</p>
-									</Fragment>
-								))}
-							</Grid.Column>
-							<Grid.Column floated="right" width={6}>
-								<Image
-									bordered
-									rounded
-									size="large"
-									src={homePage.firstSection.img}
-								/>
-							</Grid.Column>
-						</Grid.Row>
-						<Grid.Row>
-							<Grid.Column textAlign="center">
-								<Button
-									basic={homePage.firstSection.button.basic}
-									color={homePage.firstSection.button.color}
-									inverted={homePage.firstSection.button.inverted}
-									onClick={() => {
-										this.props.history.push(homePage.firstSection.button.link)
-									}}
-									size="huge"
-								>
-									{homePage.firstSection.button.text}
-								</Button>
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
-				</Segment>
-
-				<Segment className="homePageSegment notPaddedSegment" vertical>
-					<Grid celled="internally" columns="equal" stackable>
-						<Grid.Row textAlign="center">
-							<Grid.Column>
-								<Header as="h3">{homePage.secondSection.leftItem.title}</Header>
-								<p>{homePage.secondSection.leftItem.subtitle}</p>
-							</Grid.Column>
-							<Grid.Column>
-								<Header as="h3">{homePage.secondSection.rightItem.title}</Header>
-								<p>{homePage.secondSection.rightItem.subtitle}</p>
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
-				</Segment>
-
-				<Segment className="homePageSegment paddedSegment" vertical>
-					<Container text>
-						<Header as="h3">{homePage.thirdSection.firstItem.title}</Header>
-						<p>{homePage.thirdSection.firstItem.subtitle}</p>
-
-						<Divider as="h4" className="header" horizontal>
-							{homePage.thirdSection.divider.text}
-						</Divider>
-
-						<Header as="h3">{homePage.thirdSection.secondItem.title}</Header>
-						<p>{homePage.thirdSection.secondItem.subtitle}</p>
-					</Container>
-				</Segment>
-			</div>
-		)
-
 		return (
 			<Provider store={store}>
 				<DisplayMetaTags
@@ -163,17 +82,19 @@ class Home extends Component {
 						activeItem="home"
 						authenticated={auth}
 						backgroundColor={settings.header.backgroundColor}
-						content={BookingForm}
+						backgroundImage={homePage.hero.img}
+						headerOne={homePage.hero.headerOne}
+						headerTwo={homePage.hero.headerTwo}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
-						showMainContent
+						showMainContent={homePage.useHeroImage === "1"}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}
 						{...this.props}
 					/>
 
-					{HomePageContent}
+					<div dangerouslySetInnerHTML={{ __html: homePage.content }} />
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>

@@ -19,7 +19,6 @@ class Library extends CI_Controller {
 	public function addImage() {
 		$user = $this->user;
 
-		/*
 		if (!$user) {
 			$this->output->set_status_header(401);
 			echo json_encode([
@@ -27,7 +26,6 @@ class Library extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$this->load->library('upload', [
 			'allowed_types' => 'jpg|jpeg|png|gif',

@@ -15,7 +15,7 @@ const order = (state = initial(), action) => {
 			}
 
 			return {
-				...state,
+				...state
 			}
 
 		case constants.GET_PAYMENT_METHODS:

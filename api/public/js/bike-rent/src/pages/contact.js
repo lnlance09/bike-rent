@@ -1,6 +1,7 @@
 import { connect, Provider } from "react-redux"
+import { sendContactMsg } from "redux/actions/app"
 import { DisplayMetaTags } from "utils/metaFunctions"
-// import { Container } from "semantic-ui-react"
+import { Button, Container, Form, Header, TextArea } from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import React, { Component } from "react"
@@ -18,14 +19,17 @@ class Contact extends Component {
 
 		this.state = {
 			auth,
-			bearer
+			bearer,
+			msg: ""
 		}
 	}
 
 	componentDidMount() {}
 
+	onChangeMsg = (e, { value }) => this.setState({ msg: value })
+
 	render() {
-		const { auth } = this.state
+		const { auth, msg } = this.state
 		const { settings } = this.props
 		const { contactPage } = settings
 
@@ -43,15 +47,53 @@ class Contact extends Component {
 						activeItem="contact"
 						authenticated={auth}
 						backgroundColor={settings.header.backgroundColor}
-						// content={BookingForm}
+						backgroundImage={contactPage.hero.img}
+						headerOne={contactPage.hero.headerOne}
+						headerTwo={contactPage.hero.headerTwo}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
-						showMainContent
+						showMainContent={contactPage.useHeroImage === "1"}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}
 						{...this.props}
 					/>
+
+					<Container className="mainContainer">
+						<Header size="huge">
+							{contactPage.title}
+							<Header.Subheader>{contactPage.description}</Header.Subheader>
+						</Header>
+
+						<Form>
+							<Form.Field>
+								<TextArea
+									onChange={this.onChangeMsg}
+									placeholder={contactPage.placeholderText}
+									rows={8}
+									value={msg}
+								/>
+							</Form.Field>
+							<Button
+								color="blue"
+								content="Send"
+								disabled={msg.length < 15}
+								onClick={() => {
+									if (msg.length > 15) {
+										this.props.sendContactMsg({
+											callback: () => {
+												this.setState({ msg: "" })
+											},
+											msg,
+											toastMsg: contactPage.toastMsg
+										})
+									}
+								}}
+							/>
+						</Form>
+
+						<div dangerouslySetInnerHTML={{ __html: contactPage.content }} />
+					</Container>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
@@ -61,10 +103,13 @@ class Contact extends Component {
 }
 
 Contact.propTypes = {
+	sendContactMsg: PropTypes.func,
 	settings: PropTypes.object
 }
 
-Contact.defaultProps = {}
+Contact.defaultProps = {
+	sendContactMsg
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -73,4 +118,6 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-export default connect(mapStateToProps, {})(Contact)
+export default connect(mapStateToProps, {
+	sendContactMsg
+})(Contact)

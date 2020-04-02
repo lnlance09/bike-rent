@@ -13,11 +13,11 @@ import {
 	Image,
 	List,
 	Menu,
+	Placeholder,
 	Responsive
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import BikesList from "components/bikesList/v1/"
-import LazyLoad from "components/lazyLoad/v1/"
 import MapBox from "components/mapBox/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
@@ -160,7 +160,7 @@ class Stores extends Component {
 		}
 
 		const SingleStore = props => {
-			const { description, image, lat, lon, name } = props.store
+			const { description, id, image, lat, lon, name } = props.store
 			return (
 				<Fragment>
 					<Responsive maxWidth={1024}>
@@ -180,7 +180,13 @@ class Stores extends Component {
 									{name}
 								</Header>
 
-								<Image fluid rounded src={image} />
+								{id ? (
+									<Image fluid rounded src={image} />
+								) : (
+									<Placeholder fluid>
+										<Placeholder.Image square />
+									</Placeholder>
+								)}
 
 								<Divider hidden />
 
@@ -218,7 +224,9 @@ class Stores extends Component {
 										/>
 									</div>
 								) : (
-									<LazyLoad header={false} />
+									<Placeholder fluid>
+										<Placeholder.Image square />
+									</Placeholder>
 								)}
 							</Grid.Column>
 						</Grid>

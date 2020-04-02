@@ -1,5 +1,5 @@
 import "./style.css"
-import { Form, Header, Input, Radio, Segment, Select } from "semantic-ui-react"
+import { Form, Header, Input, Radio, Select } from "semantic-ui-react"
 import { colorOptions } from "utils/selectOptions"
 import React, { Fragment } from "react"
 import PropTypes from "prop-types"
@@ -19,10 +19,10 @@ const EditButton = ({
 }) => {
 	return (
 		<Fragment>
-			<Header as="h2" attached="top">
-				{title}
+			<Header size="small">
+				<b>{title}</b>
 			</Header>
-			<Segment attached basic>
+			<div style={{ paddingLeft: "20px" }}>
 				<Form.Group>
 					<Form.Field>
 						<label>
@@ -111,7 +111,7 @@ const EditButton = ({
 					<label>Text</label>
 					<Input onChange={changeText} placeholder="Text" value={text} />
 				</Form.Field>
-			</Segment>
+			</div>
 		</Fragment>
 	)
 }

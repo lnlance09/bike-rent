@@ -12,6 +12,7 @@ import {
 	Label,
 	List,
 	Menu,
+	Placeholder,
 	Responsive,
 	Segment,
 	Sidebar,
@@ -23,26 +24,33 @@ import ImagePic from "images/avatar/default-profile.jpg"
 import Logo from "./images/logo.svg"
 import PropTypes from "prop-types"
 import store from "store"
-import Url from "url-parse"
 
 const getWidth = () => {
 	const isSSR = typeof window === "undefined"
 	return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
 
-const HeroContent = ({ backgroundImage, content, headerOne, headerTwo }) => (
-	<Container className="heroContainer" style={{ backgroundImage: `url('${backgroundImage}'` }}>
-		<Header as="h1" className="heroHeaderOne" content={headerOne} />
-		<Header as="h2" className="heroHeaderTwo" content={headerTwo} />
-		{content && (
-			<Container>
-				<Segment className="heroSegment" raised size="big">
-					{content}
-				</Segment>
-			</Container>
-		)}
-	</Container>
-)
+const HeroContent = ({ backgroundImage, content, headerOne, headerTwo, visible }) =>
+	visible ? (
+		<Container
+			className="heroContainer"
+			style={{ backgroundImage: `url('${backgroundImage}'` }}
+		>
+			<Header as="h1" className="heroHeaderOne" content={headerOne} />
+			<Header as="h2" className="heroHeaderTwo" content={headerTwo} />
+			{content && (
+				<Container>
+					<Segment className="heroSegment" raised size="big">
+						{content}
+					</Segment>
+				</Container>
+			)}
+		</Container>
+	) : (
+		<Placeholder fluid style={{ height: "420px" }}>
+			<Placeholder.Image />
+		</Placeholder>
+	)
 
 class AppHeader extends Component {
 	constructor(props) {
@@ -81,6 +89,7 @@ class AppHeader extends Component {
 			data,
 			headerOne,
 			headerTwo,
+			imgVisible,
 			items,
 			language,
 			languages,
@@ -96,9 +105,9 @@ class AppHeader extends Component {
 					pointing="top"
 					trigger={
 						<span>
-							{data.cart.items !== undefined && (
+							{cart.items !== undefined && (
 								<Label circular color="olive" style={{ marginRight: "8px" }}>
-									{data.cart.items.length}
+									{cart.items.length}
 								</Label>
 							)}{" "}
 							Your cart
@@ -112,7 +121,7 @@ class AppHeader extends Component {
 							</List.Item>
 							<List.Item>
 								$
-								{_.sumBy(data.cart.items, item => {
+								{_.sumBy(cart.items, item => {
 									if (item.bike !== undefined) {
 										return parseInt(item.bike.hourlyRate, 10)
 									}
@@ -173,28 +182,20 @@ class AppHeader extends Component {
 							<Dropdown.Menu>
 								{user.privilege === "1" && (
 									<Dropdown.Item
-										onClick={() =>
-											props.history.push(`/admin`)
-										}
+										onClick={() => props.history.push(`/admin`)}
 										text="Admin Panel"
 									/>
 								)}
 								<Dropdown.Item
-									onClick={() =>
-										props.history.push(`/profile/purchases`)
-									}
+									onClick={() => props.history.push(`/profile/purchases`)}
 									text="My Purchases"
 								/>
 								<Dropdown.Item
-									onClick={() =>
-										props.history.push(`/profile/reviews`)
-									}
+									onClick={() => props.history.push(`/profile/reviews`)}
 									text="My Reviews"
 								/>
 								<Dropdown.Item
-									onClick={() =>
-										props.history.push(`/profile/payments`)
-									}
+									onClick={() => props.history.push(`/profile/payments`)}
 									text="My Account"
 								/>
 								<Dropdown.Divider />
@@ -289,6 +290,7 @@ class AppHeader extends Component {
 								content={content}
 								headerOne={headerOne}
 								headerTwo={headerTwo}
+								visible={imgVisible}
 							/>
 						)}
 					</Segment>
@@ -339,6 +341,7 @@ class AppHeader extends Component {
 								content={content}
 								headerOne={headerOne}
 								headerTwo={headerTwo}
+								visible={imgVisible}
 							/>
 						)}
 					</Segment>
@@ -394,6 +397,7 @@ AppHeader.propTypes = {
 	content: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
 	headerOne: PropTypes.string,
 	headerTwo: PropTypes.string,
+	imgVisible: PropTypes.bool,
 	inverted: PropTypes.bool,
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -422,6 +426,7 @@ AppHeader.propTypes = {
 AppHeader.defaultProps = {
 	activeItem: "home",
 	authenticated: false,
+	imgVisible: true,
 	inverted: false,
 	items: [],
 	languages: [],

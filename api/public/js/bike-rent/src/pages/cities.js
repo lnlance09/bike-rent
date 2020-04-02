@@ -2,10 +2,9 @@ import { connect, Provider } from "react-redux"
 import { getCity } from "redux/actions/city"
 import { formatPlural } from "utils/textFunctions"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Container, Divider, Grid, Header, Image } from "semantic-ui-react"
+import { Button, Container, Divider, Grid, Header, Image } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import CitiesList from "components/citiesList/v1/"
-import ImagePic from "images/images/image-square.png"
 import Logo from "components/header/v1/images/logo.svg"
 import MapBox from "components/mapBox/v1/"
 import PageFooter from "components/footer/v1/"
@@ -24,6 +23,8 @@ class Cities extends Component {
 		let id = false
 		if (slug) {
 			id = this.getId(slug)
+		} else {
+			slug = ""
 		}
 
 		const currentState = store.getState()
@@ -35,6 +36,7 @@ class Cities extends Component {
 			auth,
 			bearer,
 			id,
+			imgVisible: false,
 			slug
 		}
 	}
@@ -42,7 +44,10 @@ class Cities extends Component {
 	async componentDidMount() {
 		const { id } = this.state
 		if (id) {
-			this.props.getCity({ id })
+			this.props.getCity({
+				callback: () => this.setState({ imgVisible: true }),
+				id
+			})
 		}
 	}
 
@@ -52,10 +57,20 @@ class Cities extends Component {
 	}
 
 	render() {
-		const { auth, id, lat, lon, name, slug, storeId, zoom } = this.state
+		const { auth, id, imgVisible, lat, lon, name, slug, storeId, zoom } = this.state
 		const { city, error, settings } = this.props
 		const { citiesPage } = settings
 		const { ctaButton } = citiesPage
+
+		const CtaButton = (
+			<Button
+				basic={ctaButton.basic === "1"}
+				color={ctaButton.color}
+				content={ctaButton.text}
+				inverted={ctaButton.inverted === "1"}
+				fluid
+			/>
+		)
 
 		const SingleCity = ({ props }) => {
 			const { city, description, image, state, storeCount, stores } = props.city
@@ -63,33 +78,11 @@ class Cities extends Component {
 			return (
 				<Grid>
 					<Grid.Column width={11}>
+						<Header as="h1" size="massive">
+							About this city
+						</Header>
 						<Header as="p" size="big">
 							{description}
-						</Header>
-
-						<Divider hidden />
-
-						<Header size="huge">
-							{storeCount !== undefined &&
-								`Available in ${storeCount} ${formatPlural(storeCount, "store")}`}
-							{storeId !== "0" && (
-								<Header.Subheader>
-									<a
-										href={`${window.location.origin}`}
-										onClick={e => {
-											e.preventDefault()
-											this.setState({
-												storeId: "0",
-												lat: "",
-												lon: "",
-												zoom: 10
-											})
-										}}
-									>
-										Clear filter
-									</a>
-								</Header.Subheader>
-							)}
 						</Header>
 
 						<Divider hidden />
@@ -98,13 +91,23 @@ class Cities extends Component {
 							<StoresList
 								cityId={id}
 								history={this.props.history}
+								itemsPerRow={2}
 								key="store"
 								storesByBike
 								useCards={true}
 							/>
 						</Container>
 					</Grid.Column>
-					<Grid.Column width={5}></Grid.Column>
+					<Grid.Column width={5}>
+						<Header size="huge">
+							{storeCount !== undefined &&
+								`${storeCount} ${formatPlural(storeCount, "store")} in ${
+									city.name
+								}`}
+						</Header>
+
+						<Divider hidden />
+					</Grid.Column>
 				</Grid>
 			)
 		}
@@ -125,6 +128,7 @@ class Cities extends Component {
 						backgroundColor={settings.header.backgroundColor}
 						backgroundImage={city.image}
 						headerOne={city.city}
+						imgVisible={imgVisible}
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
@@ -147,16 +151,20 @@ class Cities extends Component {
 								)}
 							</Fragment>
 						) : (
-							<div>
-								<Header size="huge">Pick a city</Header>
+							<Fragment>
+								<Header size="huge">
+									{citiesPage.title}
+									<Header.Subheader>{citiesPage.description}</Header.Subheader>
+								</Header>
 
 								<CitiesList
+									emptyMsgContent="There are no featured cities"
+									extra={ctaButton.visible === "1" ? CtaButton : null}
+									history={this.props.history}
 									key="city"
-									retrieveItems={() => this.props.getCities({})}
-									useCards={true}
-									{...this.props}
+									useCards={citiesPage.useCards === "1"}
 								/>
-							</div>
+							</Fragment>
 						)}
 					</Container>
 

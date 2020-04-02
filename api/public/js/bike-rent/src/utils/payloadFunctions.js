@@ -1,6 +1,6 @@
 export const formatPayload = (page, state) => {
 	const {
-		backgroundImg,
+		content,
 		ctaBasic,
 		ctaColor,
 		ctaInverted,
@@ -9,11 +9,8 @@ export const formatPayload = (page, state) => {
 		description,
 		header,
 		image,
-		partners,
 		placeholderText,
-		secondSection,
 		subheader,
-		thirdSection,
 		title,
 		toastMsg,
 		useCards,
@@ -21,6 +18,7 @@ export const formatPayload = (page, state) => {
 	} = state
 
 	let payloadData = {
+		content,
 		description,
 		hero: {
 			headerOne: header,
@@ -29,10 +27,6 @@ export const formatPayload = (page, state) => {
 		},
 		title,
 		useHeroImage
-	}
-
-	if (page === "apply-page") {
-		payloadData.backgroundImg = backgroundImg
 	}
 
 	if (
@@ -58,16 +52,6 @@ export const formatPayload = (page, state) => {
 	if (page === "contact-page") {
 		payloadData.placeholderText = placeholderText
 		payloadData.toastMsg = toastMsg
-	}
-
-	if (page === "home-page") {
-		payloadData.firstSection = {}
-		payloadData.secondSection = {}
-		payloadData.thirdSection = {}
-	}
-
-	if (page === "partners-page") {
-		payloadData.partners = {}
 	}
 
 	return payloadData

@@ -36,13 +36,7 @@ class OrdersList extends Component {
 	}
 
 	render() {
-		const {
-			emptyMsgContent,
-			extra,
-			itemsPerRow,
-			results,
-			useCards
-		} = this.props
+		const { emptyMsgContent, extra, itemsPerRow, results, useCards } = this.props
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {

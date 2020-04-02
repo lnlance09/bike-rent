@@ -1,5 +1,5 @@
 import { connect, Provider } from "react-redux"
-import { Container, Header } from "semantic-ui-react"
+import { Container } from "semantic-ui-react"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
@@ -56,9 +56,7 @@ class About extends Component {
 					/>
 
 					<Container className="mainContainer">
-						<Header as="h1">{aboutPage.title}</Header>
-
-						<div dangerouslySetInnerHTML={{ __html: aboutPage.description }} />
+						<div dangerouslySetInnerHTML={{ __html: aboutPage.content }} />
 					</Container>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />

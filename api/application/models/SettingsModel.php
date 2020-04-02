@@ -12,11 +12,10 @@ class SettingsModel extends CI_Model {
 	}
 
 	public function filterPageData($page, $data) {
-		$allowed = ['description', 'hero', 'title', 'useHeroImage'];
+		$allowed = ['content', 'description', 'hero', 'title', 'useHeroImage'];
 
 		switch ($page) {
 			case 'applyPage':
-				$allowed[] = 'backgroundImg';
 				$allowed[] = 'ctaButton';
 				break;
 
@@ -30,16 +29,6 @@ class SettingsModel extends CI_Model {
 			case 'contactPage':
 				$allowed[] = 'placeholderText';
 				$allowed[] = 'toastMsg';
-				break;
-
-			case 'homePage':
-				$allowed[] = 'firstSection';
-				$allowed[] = 'secondSection';
-				$allowed[] = 'thirdSection';
-				break;
-
-			case 'partnersPage':
-				$allowed[] = 'partners';
 				break;
 
 			case 'signinPage':
@@ -111,82 +100,6 @@ class SettingsModel extends CI_Model {
 				'inverted' => (int)$signUp['signUpInverted'],
 				'text' => $signUp['signUpText']
 			],
-		];
-
-		$json = json_encode($decode, JSON_PRETTY_PRINT);
-		file_put_contents($this->configFile, $json);
-
-		return $json;
-	}
-
-	public function updateHomePage(
-		
-	) {
-		$decode = $this->decodeSettings();
-		$decode['homePage'] = [
-			'hero' => [
-				'button' => [
-					'basic' => '',
-					'color' => 'green',
-					'inverted' => false,
-					'text' => ''
-				],
-				'img' => '',
-				'subtitle' => '',
-				'title' => ''
-			],
-			'firstSection' => [
-				'button' => [
-					'basic' => '',
-					'color' => 'green',
-					'inverted' => false,
-					'link' => '',
-					'text' => ''
-				],
-				'img' => '',
-				'items' => [
-					[
-						'subtitle' => '',
-						'title' => ''
-					],
-					[
-						'subtitle' => '',
-						'title' => ''
-					]
-				]
-			],
-			'secondSection' => [
-				'leftItem' => [
-					'subtitle' => '',
-					'title' => ''
-				],
-				'rightItem' => [
-					'subtitle' => '',
-					'title' => ''
-				]
-			],
-			'seo' => [
-				'desciption' => '',
-				'img' => '',
-				'keywords' => [
-					''
-				],
-				'title' => ''
-			],
-			'thirdSection' => [
-				'divider' => [
-					'color' => '',
-					'text' => ''
-				],
-				'firstItem' => [
-					'subtitle' => '',
-					'title' => ''
-				],
-				'secondItem' => [
-					'subtitle' => '',
-					'title' => ''
-				]
-			]
 		];
 
 		$json = json_encode($decode, JSON_PRETTY_PRINT);

@@ -52,23 +52,15 @@ class Checkout extends Component {
 									basic
 									color="green"
 									icon="plus"
+									// onClick={() => }
 								/>
-								<Button
-									basic
-									color="blue"
-									icon="minus"
-								/>
-								<Button
-									basic
-									color="red"
-									icon="trash"
-								/>
+								<Button basic color="blue" icon="minus" />
+								<Button basic color="red" icon="trash" />
 							</Button.Group>
 						</List.Content>
 						<List.Content>
 							<List.Header>{item.bike.name}</List.Header>
-							<List.Description>{item.bike.description}</List.Description>
-							1 hour
+							<List.Description>{item.bike.description}</List.Description>1 hour
 						</List.Content>
 					</List.Item>
 				))}
@@ -125,11 +117,7 @@ class Checkout extends Component {
 
 						<Grid className="checkoutGrid">
 							<Grid.Column className="leftSide" width={11}>
-								{!auth && (
-									<PaymentMethod
-										
-									/>
-								)}
+								{!auth && <PaymentMethod />}
 								{RenderMethods()}
 							</Grid.Column>
 							<Grid.Column className="rightSide" width={5}>
@@ -147,16 +135,18 @@ class Checkout extends Component {
 
 Checkout.propTypes = {
 	getPaymentMethods: PropTypes.func,
-	methods: PropTypes.arrayOf(PropTypes.shape({
-		created_at: PropTypes.string,
-		exp_month: PropTypes.string,
-		exp_year: PropTypes.string,
-		first_name: PropTypes.string,
-		last_name: PropTypes.string,
-		number: PropTypes.string,
-		preferred: PropTypes.string,
-		user_id: PropTypes.string
-	})),
+	methods: PropTypes.arrayOf(
+		PropTypes.shape({
+			created_at: PropTypes.string,
+			exp_month: PropTypes.string,
+			exp_year: PropTypes.string,
+			first_name: PropTypes.string,
+			last_name: PropTypes.string,
+			number: PropTypes.string,
+			preferred: PropTypes.string,
+			user_id: PropTypes.string
+		})
+	),
 	settings: PropTypes.object
 }
 

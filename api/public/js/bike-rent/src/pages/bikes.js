@@ -46,7 +46,7 @@ class Bikes extends Component {
 
 	render() {
 		const { auth, id, lat, lon, storeId, zoom } = this.state
-		const { bike, error, settings } = this.props
+		const { error, settings } = this.props
 		const { bikesPage } = settings
 		const { ctaButton } = bikesPage
 
@@ -170,7 +170,10 @@ class Bikes extends Component {
 							</Fragment>
 						) : (
 							<Fragment>
-								<Header size="huge">{bikesPage.title}</Header>
+								<Header size="huge">
+									{bikesPage.title}
+									<Header.Subheader>{bikesPage.description}</Header.Subheader>
+								</Header>
 
 								{bikesPage.useCards === "0" && <Divider />}
 

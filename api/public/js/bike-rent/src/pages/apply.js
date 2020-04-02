@@ -4,7 +4,6 @@ import { DisplayMetaTags } from "utils/metaFunctions"
 import {
 	Button,
 	Container,
-	Divider,
 	Form,
 	Header,
 	Input,
@@ -76,11 +75,10 @@ class Apply extends Component {
 					/>
 
 					<Container className="mainContainer">
-						<Header as="h1">{applyPage.title}</Header>
-
-						<p>{applyPage.description}</p>
-
-						<Divider hidden />
+						<Header as="h1">
+							{applyPage.title}
+							<Header.Subheader>{applyPage.description}</Header.Subheader>
+						</Header>
 
 						<Segment>
 							<Form error={error}>
@@ -120,6 +118,8 @@ class Apply extends Component {
 								{error && <Message content={errorMsg} error />}
 							</Form>
 						</Segment>
+
+						<div dangerouslySetInnerHTML={{ __html: applyPage.content }} />
 					</Container>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />

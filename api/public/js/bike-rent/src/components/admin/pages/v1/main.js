@@ -16,7 +16,7 @@ class MainPage extends Component {
 		super(props)
 
 		const {
-			backgroundImg,
+			content,
 			ctaButton,
 			description,
 			firstSection,
@@ -46,8 +46,16 @@ class MainPage extends Component {
 		}
 
 		this.state = {
-			backgroundImg,
 			cardsPages: ["bikes-page", "cities-page", "stores-page"],
+			content,
+			contentPages: [
+				"about-page",
+				"apply-page",
+				"faq-page",
+				"home-page",
+				"partners-page",
+				"terms-page"
+			],
 			ctaBasic: ctaBasic === "1" ? 1 : 0,
 			ctaColor,
 			ctaInverted: ctaInverted === "1" ? 1 : 0,
@@ -55,12 +63,12 @@ class MainPage extends Component {
 			ctaVisible: ctaVisible === "1" ? 1 : 0,
 			description,
 			firstSection,
-			header: hero.headerTwo,
+			header: hero.headerOne,
 			image: hero.img,
 			partners,
 			placeholderText,
 			secondSection,
-			subheader: hero.headerOne,
+			subheader: hero.headerTwo,
 			thirdSection,
 			title,
 			toastMsg,
@@ -69,7 +77,7 @@ class MainPage extends Component {
 		}
 	}
 
-	onChangeBackgroundImg = (e, { value }) => this.setState({ backgroundImg: value })
+	onChangeContent = (e, { value }) => this.setState({ content: value })
 
 	onChangeCtaColor = (e, { value }) => this.setState({ ctaColor: value })
 
@@ -102,8 +110,8 @@ class MainPage extends Component {
 	render() {
 		const { bearer, page, type } = this.props
 		const {
-			backgroundImg,
 			cardsPages,
+			content,
 			ctaBasic,
 			ctaColor,
 			ctaInverted,
@@ -112,11 +120,8 @@ class MainPage extends Component {
 			description,
 			header,
 			image,
-			partners,
 			placeholderText,
-			secondSection,
 			subheader,
-			thirdSection,
 			title,
 			toastMsg,
 			useCards,
@@ -124,6 +129,75 @@ class MainPage extends Component {
 		} = this.state
 
 		const payload = formatPayload(type, this.state)
+
+		const isContentPage =
+			!cardsPages.includes(type) && type !== "signin-page" && type !== "checkout-page"
+
+		const BasicInfo = (
+			<Fragment>
+				<Form.Field>
+					<label>Title</label>
+					<Input onChange={this.onChangeTitle} placeholder="Title" value={title} />
+				</Form.Field>
+				<Form.Field>
+					<label>Description</label>
+					<Input
+						onChange={this.onChangeDescription}
+						placeholder="Description"
+						value={description}
+					/>
+				</Form.Field>
+			</Fragment>
+		)
+
+		const CardPageInfo = () => {
+			let editButton = (
+				<Fragment>
+					<EditButton
+						basic={ctaBasic}
+						changeColor={this.onChangeCtaColor}
+						changeText={this.onChangeCtaText}
+						color={ctaColor}
+						inverted={ctaInverted}
+						text={ctaText}
+						title="Call-to-action button"
+						toggleBasic={this.toggleCtaBasic}
+						toggleInverted={this.toggleCtaInverted}
+						toggleVisibility={this.toggleCtaVisibility}
+						visible={ctaVisible}
+					/>
+					<Divider hidden />
+				</Fragment>
+			)
+
+			return (
+				<Fragment>
+					{BasicInfo}
+					<Form.Field>
+						<label>Items Display</label>
+					</Form.Field>
+					<Form.Field>
+						<Radio
+							checked={useCards === 1}
+							label="Use cards"
+							name="useCards"
+							onChange={this.toggleCards}
+							value="on"
+						/>
+					</Form.Field>
+					<Form.Field>
+						<Radio
+							checked={useCards === 0}
+							label="Use list"
+							name="useCards"
+							onChange={this.toggleCards}
+							value="off"
+						/>
+					</Form.Field>
+					{editButton}
+				</Fragment>
+			)
+		}
 
 		return (
 			<div className="adminPage">
@@ -177,21 +251,11 @@ class MainPage extends Component {
 
 					<Divider hidden />
 
-					{type === "apply-page" && (
-						<Fragment>
-							<Form.Field>
-								<label>Background Image</label>
-								<Input
-									onChange={this.onChangeBackgroundImg}
-									placeholder="Background Image"
-									value={backgroundImg}
-								/>
-							</Form.Field>
-						</Fragment>
-					)}
+					{cardsPages.includes(type) && CardPageInfo()}
 
 					{type === "contact-page" && (
 						<Fragment>
+							{BasicInfo}
 							<Form.Field>
 								<label>Placeholder Text</label>
 								<Input
@@ -211,68 +275,22 @@ class MainPage extends Component {
 						</Fragment>
 					)}
 
-					{cardsPages.includes(type) && (
+					{isContentPage && (
 						<Fragment>
+							{type === "apply-page" && BasicInfo}
 							<Form.Field>
-								<label>Items Display</label>
-							</Form.Field>
-							<Form.Field>
-								<Radio
-									checked={useCards === 1}
-									label="Use cards"
-									name="useCards"
-									onChange={this.toggleCards}
-									value="on"
-								/>
-							</Form.Field>
-							<Form.Field>
-								<Radio
-									checked={useCards === 0}
-									label="Use list"
-									name="useCards"
-									onChange={this.toggleCards}
-									value="off"
+								<label>Content</label>
+								<AceEditor
+									fontSize={16}
+									highlightActiveLine
+									mode="html"
+									name="cssEditor"
+									onChange={code => this.setState({ content: code })}
+									theme="monokai"
+									value={content}
 								/>
 							</Form.Field>
 						</Fragment>
-					)}
-
-					{type === "bikes-page" && (
-						<Fragment>
-							<EditButton
-								basic={ctaBasic}
-								changeColor={this.onChangeCtaColor}
-								changeText={this.onChangeCtaText}
-								color={ctaColor}
-								inverted={ctaInverted}
-								text={ctaText}
-								title="Call-to-action button"
-								toggleBasic={this.toggleCtaBasic}
-								toggleInverted={this.toggleCtaInverted}
-								toggleVisibility={this.toggleCtaVisibility}
-								visible={ctaVisible}
-							/>
-							<Divider hidden />
-						</Fragment>
-					)}
-
-					<Form.Field>
-						<label>Title</label>
-						<Input onChange={this.onChangeTitle} placeholder="Title" value={title} />
-					</Form.Field>
-					{!cardsPages.includes(type) && (
-						<Form.Field>
-							<label>Description</label>
-							<AceEditor
-								fontSize={16}
-								highlightActiveLine
-								mode="html"
-								name="cssEditor"
-								onChange={code => this.setState({ description: code })}
-								theme="monokai"
-								value={description}
-							/>
-						</Form.Field>
 					)}
 
 					<Divider />
@@ -300,7 +318,7 @@ MainPage.propTypes = {
 	editPage: PropTypes.func,
 	page: PropTypes.string,
 	pageData: PropTypes.shape({
-		backgroundImg: PropTypes.string,
+		content: PropTypes.string,
 		ctaButton: PropTypes.shape({
 			basic: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 			color: PropTypes.string,
@@ -309,58 +327,17 @@ MainPage.propTypes = {
 			visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 		}),
 		description: PropTypes.string,
-		firstSection: PropTypes.shape({
-			button: PropTypes.shape({
-				basic: PropTypes.bool,
-				color: PropTypes.string,
-				inverted: PropTypes.bool,
-				link: PropTypes.string,
-				text: PropTypes.string
-			}),
-			img: PropTypes.string,
-			items: PropTypes.arrayOf(
-				PropTypes.shape({
-					subtitle: PropTypes.string,
-					title: PropTypes.string
-				})
-			)
-		}),
 		hero: PropTypes.shape({
 			headerOne: PropTypes.string,
 			headerTwo: PropTypes.string,
 			img: PropTypes.string
 		}),
-		partners: PropTypes.arrayOf(
-			PropTypes.shape({
-				img: PropTypes.string,
-				title: PropTypes.string
-			})
-		),
 		placeholderText: PropTypes.string,
-		secondSection: PropTypes.arrayOf(
-			PropTypes.shape({
-				subtitle: PropTypes.string,
-				title: PropTypes.string
-			})
-		),
 		signInButton: PropTypes.shape({
 			basic: PropTypes.bool,
 			color: PropTypes.string,
 			inverted: PropTypes.bool,
 			text: PropTypes.string
-		}),
-		thirdSection: PropTypes.shape({
-			divider: PropTypes.shape({
-				text: PropTypes.string
-			}),
-			firstItem: PropTypes.shape({
-				subtitle: PropTypes.string,
-				title: PropTypes.string
-			}),
-			secondItem: PropTypes.shape({
-				subtitle: PropTypes.string,
-				title: PropTypes.string
-			})
 		}),
 		title: PropTypes.string,
 		toastMsg: PropTypes.string,

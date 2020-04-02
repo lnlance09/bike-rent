@@ -1,6 +1,5 @@
 import React from "react"
 import MetaTags from "react-meta-tags"
-import { capitalizeWord } from "./textFunctions"
 
 export const DisplayMetaTags = ({ page, props, seo, state }) => {
 	let metaTags = {

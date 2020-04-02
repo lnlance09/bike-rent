@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken"
 
-export const defaultData = ({
+export const defaultData = {
 	cart: {
 		items: []
 	},
 	user: {}
-})
+}
 
 export const parseJwt = () => {
 	let localData = false

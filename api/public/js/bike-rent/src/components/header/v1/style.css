@@ -8,7 +8,7 @@
   src: url("../../../css/fonts/dealerplate california.ttf"); }
 
 .pageHeader .languageMenu {
-  background: #F9FAFB;
+  background: #F9FAFB !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   margin: 0 !important; }

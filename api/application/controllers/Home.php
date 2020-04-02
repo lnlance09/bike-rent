@@ -7,14 +7,39 @@ class Home extends CI_Controller {
 		
 		$this->baseUrl = $this->config->base_url();
 
-		$this->load->library('My_PHPMailer');
-
 		$this->load->model('MediaModel', 'media');
 		$this->load->model('SettingsModel', 'settings');
 	}
 
 	public function index() {
 		
+	}
+
+	public function sendContactMsg() {
+		$msg = $this->input->post('msg');
+
+		if (empty($msg)) {
+			echo json_encode([
+				'error' => 'You must leave a message'
+			]);
+			exit;
+		}
+
+		$message = "Someone from BikeRent.com has contacted you <br><br> Here's what they said: <br><br> ".$msg;
+		$subject = 'Someone from BikeRent.com has contacted you';
+		$from = EMAIL_RECEIVERS;
+		$email = $this->media->sendEmail($subject, $message, $from);
+
+		if (!$email) {
+			echo json_encode([
+				'error' => 'Something went wrong.'
+			]);
+			exit;
+		}
+
+		echo json_encode([
+			'error' => false
+		]);
 	}
 
 	public function submitApplication() {
@@ -45,31 +70,21 @@ class Home extends CI_Controller {
 
 		$this->settings->insertApplication($email, $msg, $name);
 
-		$msg = file_get_contents('https://bike-rent.s3-us-west-2.amazonaws.com/emails/application-confirmation.html');
+		$subject = 'Your application has been received';
+		$template = file_get_contents(APPLY_EMAIL_URL);
+		$msg = str_replace('{name}', $name, $template);
+		$from = EMAIL_RECEIVERS;
+		$email = $this->media->sendEmail($subject, $msg, $from);
 
-		$mail = new PHPMailer();
-		$mail->IsSMTP();
-		$mail->SMTPAuth = true;
-		$mail->SMTPSecure = 'ssl';
-		$mail->Host = 'smtpout.secureserver.net';
-		$mail->Port = 465;
-		$mail->Username = 'admin@tpusa.pro';
-		$mail->Password = 'Jl8RdSLz7DF8:PJ';
-		$mail->SetFrom('admin@bikerent.com', 'BikeRent.com');
-		$mail->Subject = 'Your application has been received';
-		$mail->Body = $msg;
-		$mail->AltBody = $msg;
-		$mail->AddAddress('lnlance09@gmail.com', 'Lance Newman');
-
-		if ($mail->Send()) {
+		if (!$email) {
 			echo json_encode([
-				'error' => false
+				'error' => 'Something went wrong.'
 			]);
 			exit;
 		}
 
 		echo json_encode([
-			'error' => 'Something went wrong.'
+			'error' => false
 		]);
 	}
 }

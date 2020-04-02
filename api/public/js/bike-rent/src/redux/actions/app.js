@@ -514,6 +514,25 @@ export const getStores = () => dispatch => {
 	)
 }
 
+export const sendContactMsg = ({ callback, msg, toastMsg }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/home/sendContactMsg`,
+		{
+			form: {
+				msg
+			},
+			json: true
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				toast.success(toastMsg)
+			}
+
+			callback()
+		}
+	)
+}
+
 export const sendEmail = ({ bearer, email, type }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/settings/sendTestEmail`,

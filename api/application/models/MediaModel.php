@@ -4,6 +4,7 @@ class MediaModel extends CI_Model {
 		parent:: __construct();
 
 		$this->load->library('aws');
+		$this->load->library('My_PHPMailer');
 	}
 
 	public function addToS3($key, $file, $remove = true, $update = false) {
@@ -39,5 +40,30 @@ class MediaModel extends CI_Model {
 		if ($delete) {
 			$this->aws->del($src);
 		}
+	}
+
+	public function sendEmail($subject, $msg, $from) {
+		$mail = new PHPMailer();
+		$mail->IsSMTP();
+		$mail->SMTPAuth = true;
+		$mail->SMTPSecure = 'ssl';
+		$mail->Host = 'smtpout.secureserver.net';
+		$mail->Port = 465;
+		$mail->Username = 'admin@tpusa.pro';
+		$mail->Password = 'Jl8RdSLz7DF8:PJ';
+		$mail->SetFrom('admin@bikerent.com', 'BikeRent.com');
+		$mail->Subject = $subject;
+		$mail->Body = $msg;
+		$mail->AltBody = $msg;
+
+		for ($i=0;$i<count($from);$i++) {
+			$mail->AddAddress($from[$i]['email'], $from[$i]['name']);
+		}
+
+		if ($mail->Send()) {
+			return true;
+		}
+
+		return false;
 	}
 }

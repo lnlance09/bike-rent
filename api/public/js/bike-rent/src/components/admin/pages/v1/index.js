@@ -108,7 +108,7 @@ AdminPages.propTypes = {
 	bearer: PropTypes.string,
 	page: PropTypes.string,
 	pageData: PropTypes.shape({
-		backgroundImg: PropTypes.string,
+		content: PropTypes.string,
 		ctaButton: PropTypes.shape({
 			basic: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 			color: PropTypes.string,
@@ -117,64 +117,17 @@ AdminPages.propTypes = {
 			visible: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 		}),
 		description: PropTypes.string,
-		firstSection: PropTypes.shape({
-			button: PropTypes.shape({
-				basic: PropTypes.bool,
-				color: PropTypes.string,
-				inverted: PropTypes.bool,
-				link: PropTypes.string,
-				text: PropTypes.string
-			}),
-			img: PropTypes.string,
-			items: PropTypes.arrayOf(
-				PropTypes.shape({
-					subtitle: PropTypes.string,
-					title: PropTypes.string
-				})
-			)
-		}),
 		hero: PropTypes.shape({
 			headerOne: PropTypes.string,
 			headerTwo: PropTypes.string,
 			img: PropTypes.string
 		}),
-		partners: PropTypes.arrayOf(
-			PropTypes.shape({
-				img: PropTypes.string,
-				title: PropTypes.string
-			})
-		),
 		placeholderText: PropTypes.string,
-		secondSection: PropTypes.arrayOf(
-			PropTypes.shape({
-				subtitle: PropTypes.string,
-				title: PropTypes.string
-			})
-		),
-		seo: PropTypes.shape({
-			desciption: PropTypes.string,
-			img: PropTypes.string,
-			keywords: PropTypes.string,
-			title: PropTypes.string
-		}),
 		signInButton: PropTypes.shape({
 			basic: PropTypes.bool,
 			color: PropTypes.string,
 			inverted: PropTypes.bool,
 			text: PropTypes.string
-		}),
-		thirdSection: PropTypes.shape({
-			divider: PropTypes.shape({
-				text: PropTypes.string
-			}),
-			firstItem: PropTypes.shape({
-				subtitle: PropTypes.string,
-				title: PropTypes.string
-			}),
-			secondItem: PropTypes.shape({
-				subtitle: PropTypes.string,
-				title: PropTypes.string
-			})
 		}),
 		title: PropTypes.string,
 		toastMsg: PropTypes.string,

@@ -7,8 +7,6 @@ class Settings extends CI_Controller {
 
 		$this->base_url = $this->config->base_url();
 
-		$this->load->library('My_PHPMailer');
-
 		$this->load->model('MediaModel', 'media');
 		$this->load->model('SettingsModel', 'settings');
 
@@ -84,10 +82,14 @@ class Settings extends CI_Controller {
 			exit;
 		}
 
+		$template = file_get_contents('https://bike-rent.s3-us-west-2.amazonaws.com/emails/'.$type.'.html');
+
 		$title = 'Your application has been received';
+		$msg = str_replace('{name}', '<b>USER</b>', $template);
 
 		if ($email === 'confirm-your-email') {
 			$title = 'Please confirm your email';
+			$msg = str_replace('{verificationCode}', '<b>VERIFICATION_CODE</b>', $template);
 		}
 
 		if ($email === 'order-confirmation') {
@@ -98,21 +100,8 @@ class Settings extends CI_Controller {
 			$title = 'Your order has been refunded';
 		}
 
-		$msg = file_get_contents('https://bike-rent.s3-us-west-2.amazonaws.com/emails/'.$type.'.html');
-
-		$mail = new PHPMailer();
-		$mail->IsSMTP();
-		$mail->SMTPAuth = true;
-		$mail->SMTPSecure = 'ssl';
-		$mail->Host = 'smtpout.secureserver.net';
-		$mail->Port = 465;
-		$mail->Username = 'admin@tpusa.pro';
-		$mail->Password = 'Jl8RdSLz7DF8:PJ';
-		$mail->SetFrom('admin@bikerent.com', 'BikeRent.com');
-		$mail->Subject = $title;
-		$mail->Body = $msg;
-		$mail->AltBody = $msg;
-		$mail->AddAddress('lnlance09@gmail.com', 'Lance Newman');
+		$from = EMAIL_RECEIVERS;
+		$email = $this->media->sendEmail($title, $msg, $from);
 
 		if ($mail->Send()) {
 			echo json_encode([
@@ -126,26 +115,9 @@ class Settings extends CI_Controller {
 		]);
 	}
 
-	public function updateBikePage() {
-		$settings = $this->settings;
-		$settings = new $settings();
-		$decode = $settings->decodeSettings();
-
-		print_r($decode);
-	}
-
-	public function updateCityPage() {
-		$settings = $this->settings;
-		$settings = new $settings();
-		$decode = $settings->decodeSettings();
-
-		print_r($decode);
-	}
-
 	public function updateCss() {
 		$css = $this->input->post('css');
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -153,7 +125,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$file = APPPATH.'third_party/style.css';
 		file_put_contents($file, $css);
@@ -169,7 +140,6 @@ class Settings extends CI_Controller {
 		$email = $this->input->post('email');
 		$type = $this->input->post('type');
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -177,7 +147,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$file = APPPATH.'third_party/'.$type.'.html';
 		file_put_contents($file, $email);
@@ -198,7 +167,6 @@ class Settings extends CI_Controller {
 		$subTitle = $this->input->post('subTitle');
 		$title = $this->input->post('title');
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -206,7 +174,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -229,7 +196,6 @@ class Settings extends CI_Controller {
 		$signInButton = $this->input->post('signInButton');
 		$signUpButton = $this->input->post('signUpButton');
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -237,7 +203,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -261,7 +226,6 @@ class Settings extends CI_Controller {
 			exit;
 		}
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -269,7 +233,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -282,7 +245,6 @@ class Settings extends CI_Controller {
 		$data = $this->input->post('data');
 		$page = $this->input->post('page');
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -290,7 +252,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		if (!in_array($page, $this->pages)) {
 			echo json_encode([
@@ -302,7 +263,6 @@ class Settings extends CI_Controller {
 		$settings = $this->settings;
 		$settings = new $settings();
 		$filtered = $settings->filterPageData($page, $data);
-
 		// FormatArray($data);
 		// FormatArray($filtered);
 		// die;
@@ -316,7 +276,6 @@ class Settings extends CI_Controller {
 		$page = $this->input->post('page');
 		$seo = $this->input->post('seo');
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -324,7 +283,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -343,7 +301,6 @@ class Settings extends CI_Controller {
 			exit;
 		}
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -351,7 +308,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$file = APPPATH.'third_party/sitemap.xml';
 		file_put_contents($file, $sitemap);
@@ -373,7 +329,6 @@ class Settings extends CI_Controller {
 			exit;
 		}
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -381,7 +336,6 @@ class Settings extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		$settings = $this->settings;
 		$settings = new $settings();

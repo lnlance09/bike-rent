@@ -1,13 +1,12 @@
 {
     "aboutPage": {
-        "description": "<h1>\n    This is the description\n<\/h1>",
+        "content": "<div>\n    <div class=\"ui vertical segment homePageSegment paddedSegment\">\n        <div class=\"ui container stackable middle aligned grid\">\n            <div class=\"row\">\n                <div class=\"eight wide column\">\n                    <h3 class=\"ui header\">We Help Companies and Companions<\/h3>\n                    <p>We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs... through pure data analytics.<\/p>\n                    <h3 class=\"ui header\">We Make Bananas That Can Dance<\/h3>\n                    <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.<\/p>\n                <\/div>\n                <div class=\"right floated six wide column\"><img src=\"\" class=\"ui large bordered rounded image\"><\/div>\n            <\/div>\n            <div class=\"row\">\n                <div class=\"center aligned column\"><button class=\"ui green huge button\">Check Them Out<\/button><\/div>\n            <\/div>\n        <\/div>\n    <\/div>\n    <div class=\"ui vertical segment homePageSegment notPaddedSegment\">\n        <div class=\"ui stackable internally celled equal width grid\">\n            <div class=\"center aligned row\">\n                <div class=\"column\">\n                    <h3 class=\"ui header\">What a Company<\/h3>\n                    <p>That is what they all say about us<\/p>\n                <\/div>\n                <div class=\"column\">\n                    <h3 class=\"ui header\">I shouldn't have gone with their competitor.<\/h3>\n                    <p>Chief Fun Officer Acme Toys<\/p>\n                <\/div>\n            <\/div>\n        <\/div>\n    <\/div>\n    <div class=\"ui vertical segment homePageSegment paddedSegment\">\n        <div class=\"ui text container\">\n            <h3 class=\"ui header\">Breaking The Grid, Grabs Your Attention<\/h3>\n            <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.<\/p>\n            <h4 class=\"ui horizontal divider header\">Case Studies<\/h4>\n            <h3 class=\"ui header\">Did We Tell You About Our Bananas?<\/h3>\n            <p>Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but it's really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.<\/p>\n        <\/div>\n    <\/div>\n<\/div>",
         "hero": {
             "headerOne": "About subheader",
             "headerTwo": "About header",
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/images\/houston.jpg"
         },
-        "title": "This is the title",
-        "useHeroImage": "0",
+        "useHeroImage": "1",
         "seo": {
             "description": "Description for about page",
             "image": "https:\/\/s3.console.aws.amazon.com\/s3\/object\/bike-rent\/images\/117-west-58th-street.jpg",
@@ -16,17 +15,20 @@
         }
     },
     "applyPage": {
-        "description": "Join our team",
+        "content": "",
+        "description": "Join our network",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Apply",
+            "headerTwo": "Join us",
             "img": ""
         },
-        "title": "Apply ",
+        "title": "Apply",
         "useHeroImage": "0",
-        "backgroundImg": "",
         "ctaButton": {
-            "text": ""
+            "basic": "0",
+            "inverted": "0",
+            "text": "",
+            "visible": "0"
         },
         "seo": {
             "description": "",
@@ -35,19 +37,20 @@
         }
     },
     "bikesPage": {
+        "description": "Quality bicycles",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Header",
+            "headerTwo": "Subheader",
             "img": ""
         },
-        "title": "View our bikesss1",
+        "title": "View our bikes",
         "useHeroImage": "0",
         "ctaButton": {
-            "basic": "1",
-            "color": "green",
-            "inverted": "1",
-            "text": "Test",
-            "visible": "0"
+            "basic": "0",
+            "color": "olive",
+            "inverted": "0",
+            "text": "See details",
+            "visible": "1"
         },
         "useCards": "1",
         "seo": {
@@ -59,118 +62,132 @@
     "checkoutPage": {
         "description": "",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Checkout header",
+            "headerTwo": "checkout subheader",
             "img": ""
         },
+        "title": "",
+        "useHeroImage": "1",
         "seo": {
             "description": "tes1",
             "image": "test",
             "keywords": "keywords",
             "title": "Lance"
-        },
-        "title": "",
-        "useHeroImage": 0
+        }
     },
     "citiesPage": {
-        "ctaButton": {
-            "basic": "",
-            "color": "green",
-            "inverted": false,
-            "text": "Get some wheels now"
-        },
-        "description": "",
+        "description": "World class cities",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Cities header",
+            "headerTwo": "cities subheader",
             "img": ""
         },
+        "title": "View our cities",
+        "useHeroImage": "1",
+        "ctaButton": {
+            "basic": "1",
+            "color": "orange",
+            "inverted": "0",
+            "text": "Explore options",
+            "visible": "1"
+        },
+        "useCards": "1",
         "seo": {
             "description": "",
             "keywords": "",
             "title": "Cities page"
-        },
-        "title": "",
-        "useCards": true,
-        "useHeroImage": 0,
-        "useList": false
+        }
     },
     "contactPage": {
-        "description": "",
+        "content": "",
+        "description": "Let us know what's on your mind",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Contact title",
+            "headerTwo": "cont subtitle",
             "img": ""
         },
-        "placeholderText": "",
+        "title": "Contact Us",
+        "useHeroImage": "0",
+        "placeholderText": "Leave us a message",
+        "toastMsg": "Your message has been sent!",
         "seo": {
             "description": "",
             "img": "",
             "keywords": "",
             "title": ""
-        },
-        "title": "",
-        "toastMsg": "",
-        "useHeroImage": 0
+        }
     },
     "faqPage": {
+        "content": "faq",
         "description": "",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Faq header",
+            "headerTwo": "fq subheader",
             "img": ""
         },
+        "title": "",
+        "useHeroImage": "1",
         "seo": {
             "description": "",
             "img": "",
             "keywords": "",
             "title": ""
-        },
-        "title": "",
-        "useHeroImage": 0
+        }
     },
     "footer": {
         "firstList": {
             "items": [
                 {
-                    "link": "test",
-                    "text": "Item 1"
+                    "link": "\/about",
+                    "text": "About"
                 },
                 {
-                    "link": "",
-                    "text": "Item 2"
+                    "link": "\/faq",
+                    "text": "FAQ"
                 },
                 {
-                    "link": "",
-                    "text": "Item 3"
+                    "link": "\/terms",
+                    "text": "Terms"
                 },
                 {
-                    "link": "",
-                    "text": ""
+                    "link": "\/partners",
+                    "text": "Partners"
+                },
+                {
+                    "link": "\/contact",
+                    "text": "Contact"
                 }
             ],
-            "title": "List One"
+            "title": "BikeRent.com"
         },
         "inverted": 1,
         "secondList": {
             "items": [
                 {
-                    "link": "",
-                    "text": "Item 21"
+                    "link": "\/cities\/san-francisco-5",
+                    "text": "San Francisco"
                 },
                 {
-                    "link": "",
-                    "text": "Item 22"
+                    "link": "\/cities\/boston-8",
+                    "text": "Boston"
                 },
                 {
-                    "link": "",
-                    "text": "Item 23"
+                    "link": "\/cities\/houston-7",
+                    "text": "Houston"
+                },
+                {
+                    "link": "\/cities\/portland-6",
+                    "text": "Portland"
+                },
+                {
+                    "link": "\/cities\/chicago-9",
+                    "text": "Chicago"
                 }
             ],
-            "title": "List Two"
+            "title": "Hottest Cities"
         },
-        "subtitle": "sub header1",
-        "title": "Header1"
+        "subtitle": "\u00a9 2014 - 2020, BikeRent.com",
+        "title": "We're hiring"
     },
     "header": {
         "backgroundColor": "black",
@@ -202,65 +219,18 @@
         }
     },
     "homePage": {
+        "content": "<div>\n    <div class=\"ui vertical segment homePageSegment paddedSegment\">\n        <div class=\"ui container stackable middle aligned grid\">\n            <div class=\"row\">\n                <div class=\"eight wide column\">\n                    <h3 class=\"ui header\">We Help Companies and Companions<\/h3>\n                    <p>We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs... through pure data analytics.<\/p>\n                    <h3 class=\"ui header\">We Make Bananas That Can Dance<\/h3>\n                    <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.<\/p>\n                <\/div>\n                <div class=\"right floated six wide column\"><img src=\"\" class=\"ui large bordered rounded image\"><\/div>\n            <\/div>\n            <div class=\"row\">\n                <div class=\"center aligned column\"><button class=\"ui green huge button\">Check Them Out<\/button><\/div>\n            <\/div>\n        <\/div>\n    <\/div>\n    <div class=\"ui vertical segment homePageSegment notPaddedSegment\">\n        <div class=\"ui stackable internally celled equal width grid\">\n            <div class=\"center aligned row\">\n                <div class=\"column\">\n                    <h3 class=\"ui header\">What a Company<\/h3>\n                    <p>That is what they all say about us<\/p>\n                <\/div>\n                <div class=\"column\">\n                    <h3 class=\"ui header\">I shouldn't have gone with their competitor.<\/h3>\n                    <p>Chief Fun Officer Acme Toys<\/p>\n                <\/div>\n            <\/div>\n        <\/div>\n    <\/div>\n    <div class=\"ui vertical segment homePageSegment paddedSegment\">\n        <div class=\"ui text container\">\n            <h3 class=\"ui header\">Breaking The Grid, Grabs Your Attention<\/h3>\n            <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.<\/p>\n            <h4 class=\"ui horizontal divider header\">Case Studies<\/h4>\n            <h3 class=\"ui header\">Did We Tell You About Our Bananas?<\/h3>\n            <p>Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but it's really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.<\/p>\n        <\/div>\n    <\/div>\n<\/div>",
         "hero": {
-            "button": {
-                "basic": "",
-                "color": "green",
-                "inverted": false,
-                "text": ""
-            },
-            "img": "",
-            "subtitle": "",
-            "title": ""
+            "headerOne": "Home page",
+            "headerTwo": "home subheader",
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/images\/1585779033_nyc-skyline.jpg"
         },
-        "firstSection": {
-            "button": {
-                "basic": "",
-                "color": "green",
-                "inverted": false,
-                "link": "",
-                "text": "Check Them Out"
-            },
-            "img": "",
-            "items": [
-                {
-                    "subtitle": "We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs... through pure data analytics.",
-                    "title": "We Help Companies and Companions"
-                },
-                {
-                    "subtitle": "Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.",
-                    "title": "We Make Bananas That Can Dance"
-                }
-            ]
-        },
-        "secondSection": {
-            "leftItem": {
-                "subtitle": "That is what they all say about us",
-                "title": "What a Company"
-            },
-            "rightItem": {
-                "subtitle": "Chief Fun Officer Acme Toys",
-                "title": "I shouldn't have gone with their competitor."
-            }
-        },
+        "useHeroImage": "1",
         "seo": {
             "description": "",
             "img": "",
             "keywords": "",
             "title": ""
-        },
-        "thirdSection": {
-            "divider": {
-                "text": "Case Studies"
-            },
-            "firstItem": {
-                "subtitle": "Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.",
-                "title": "Breaking The Grid, Grabs Your Attention"
-            },
-            "secondItem": {
-                "subtitle": "Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but it's really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.",
-                "title": "Did We Tell You About Our Bananas?"
-            }
         }
     },
     "language": "English",
@@ -273,50 +243,42 @@
         "Abkhazian"
     ],
     "partnersPage": {
+        "content": "partners 1",
         "description": "",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Partners header",
+            "headerTwo": "Partners subheader",
             "img": ""
         },
-        "partners": [
-            {
-                "img": "",
-                "title": ""
-            },
-            {
-                "img": "",
-                "title": ""
-            }
-        ],
+        "title": "",
+        "useHeroImage": "1",
         "seo": {
             "description": "",
             "img": "",
             "keywords": "",
             "title": ""
-        },
-        "title": "",
-        "useHeroImage": 0
+        }
     },
     "signinPage": {
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Sign in",
+            "headerTwo": "sub",
             "img": ""
+        },
+        "useHeroImage": "1",
+        "ctaButton": {
+            "basic": "0",
+            "color": "",
+            "inverted": "0",
+            "text": "",
+            "visible": "0"
         },
         "seo": {
             "description": "",
             "img": "",
             "keywords": "",
             "title": ""
-        },
-        "signInButton": {
-            "basic": "",
-            "color": "green",
-            "inverted": false,
-            "text": "Sign In"
-        },
-        "useHeroImage": 0
+        }
     },
     "stores": [],
     "storesPage": {
@@ -326,30 +288,37 @@
             "headerTwo": "",
             "img": ""
         },
+        "useHeroImage": "0",
+        "ctaButton": {
+            "basic": "1",
+            "color": "green",
+            "inverted": "1",
+            "text": "www",
+            "visible": "1"
+        },
+        "useCards": "0",
         "seo": {
             "description": "",
             "keywords": "",
             "title": "Stores page"
-        },
-        "useCards": true,
-        "useList": false,
-        "useHeroImage": 0
+        }
     },
     "termsPage": {
+        "content": "Terms",
         "description": "",
         "hero": {
-            "headerOne": "",
-            "headerTwo": "",
+            "headerOne": "Terms page",
+            "headerTwo": "subheader",
             "img": ""
         },
+        "title": "",
+        "useHeroImage": "1",
         "seo": {
             "description": "",
             "img": "",
             "keywords": "",
             "title": ""
-        },
-        "title": "",
-        "useHeroImage": 0
+        }
     },
     "theme": "lumen",
     "themes": [

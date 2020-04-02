@@ -1,7 +1,7 @@
 import * as constants from "../constants"
 import request from "request"
 
-export const getCity = ({ id }) => dispatch => {
+export const getCity = ({ callback, id }) => dispatch => {
 	request.get(
 		`${window.location.origin}/api/city/get`,
 		{
@@ -15,6 +15,8 @@ export const getCity = ({ id }) => dispatch => {
 				payload: body,
 				type: constants.GET_CITY
 			})
+
+			callback()
 		}
 	)
 }

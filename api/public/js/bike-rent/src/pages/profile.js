@@ -26,9 +26,7 @@ class Profile extends Component {
 	componentDidMount() {}
 
 	handleItemClick = (e, { name }) => {
-		this.setState({ activeItem: name }, () => {
-			
-		})
+		this.setState({ activeItem: name }, () => {})
 	}
 
 	render() {
@@ -38,11 +36,7 @@ class Profile extends Component {
 
 		return (
 			<Provider store={store}>
-				<DisplayMetaTags
-					page="profile"
-					props={this.props}
-					state={this.state}
-				/>
+				<DisplayMetaTags page="profile" props={this.props} state={this.state} />
 
 				<div className="mainWrapper profilePage">
 					<PageHeader
@@ -62,18 +56,18 @@ class Profile extends Component {
 					<Container className="mainContainer">
 						<Menu pointing secondary>
 							<Menu.Item
-								active={activeItem === 'purchases'}
-								name='purchases'
+								active={activeItem === "purchases"}
+								name="purchases"
 								onClick={this.handleItemClick}
 							/>
 							<Menu.Item
-								active={activeItem === 'reviews'}
-								name='reviews'
+								active={activeItem === "reviews"}
+								name="reviews"
 								onClick={this.handleItemClick}
 							/>
 							<Menu.Item
-								active={activeItem === 'payment methods'}
-								name='payment methods'
+								active={activeItem === "payment methods"}
+								name="payment methods"
 								onClick={this.handleItemClick}
 							/>
 						</Menu>

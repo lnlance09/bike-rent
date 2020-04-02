@@ -1,6 +1,5 @@
 import "./style.css"
 import "react-credit-cards/es/styles-compiled.css"
-import { connect } from "react-redux"
 import { Button, Form, Input, Segment } from "semantic-ui-react"
 import React, { Component } from "react"
 import Cleave from "cleave.js/react"
@@ -90,7 +89,12 @@ class PaymentMethod extends Component {
 								/>
 							</Form.Field>
 						</Form.Group>
-						<Button color="blue" content="Checkout" fluid onClick={() => console.log("done")} />
+						<Button
+							color="blue"
+							content="Checkout"
+							fluid
+							onClick={() => console.log("done")}
+						/>
 					</Form>
 				)}
 			</Segment>

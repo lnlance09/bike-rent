@@ -88,3 +88,12 @@ $words = ['abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'a
 defined('WORDS') OR define('WORDS', $words);
 
 defined('S3_PATH') OR define('S3_PATH', 'https://s3.amazonaws.com/bike-rent/');
+
+defined('EMAIL_RECEIVERS') OR define('EMAIL_RECEIVERS', [
+    [
+        'email' => 'lnlance09@gmail.com',
+        'name' => 'Lance Newman'
+    ]
+]);
+
+defined('APPLY_EMAIL_TEMPLATE') OR define('APPLY_EMAIL_TEMPLATE', 'https://bike-rent.s3-us-west-2.amazonaws.com/emails/application-confirmation.html');

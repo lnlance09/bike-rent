@@ -1,7 +1,7 @@
 import "./style.css"
 import { getCities, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
-import { Card, Button, Header, Item, Segment, Visibility } from "semantic-ui-react"
+import { Card, Header, Item, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
 import LazyLoad from "components/lazyLoad/v1/"
 import PropTypes from "prop-types"
@@ -36,7 +36,7 @@ class CitiesList extends Component {
 	}
 
 	render() {
-		const { emptyMsgContent, itemsPerRow, results, useCards } = this.props
+		const { emptyMsgContent, extra, itemsPerRow, results, useCards } = this.props
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {
@@ -44,7 +44,7 @@ class CitiesList extends Component {
 					return (
 						<ResultItem
 							description={result.description}
-							extra={<Button color="green" content="Get some wheels now" fluid />}
+							extra={extra}
 							history={props.history}
 							id={`${props.key}${i}`}
 							img={props.showPics ? result.image : null}
