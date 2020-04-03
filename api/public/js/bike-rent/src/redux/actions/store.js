@@ -30,6 +30,27 @@ export const createReview = ({ bearer, callback, comment, rating, storeId }) => 
 	)
 }
 
+export const deleteReview = ({ bearer, callback, id }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/review/delete`,
+		{
+			form: {
+				id
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				toast.success("Your review has been deleted")
+				callback()
+			}
+		}
+	)
+}
+
 export const editReview = ({ bearer, callback, comment, id, rating }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/review/edit`,

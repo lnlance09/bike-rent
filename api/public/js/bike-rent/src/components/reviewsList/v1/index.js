@@ -1,9 +1,9 @@
 import "./style.css"
 import { adjustTimezone } from "utils/dateFunctions"
 import { getReviews, toggleLoading } from "./actions"
-import { editReview } from "redux/actions/store"
+import { deleteReview, editReview } from "redux/actions/store"
 import { connect, Provider } from "react-redux"
-import { Comment, Header, Modal, Rating, Segment, Visibility } from "semantic-ui-react"
+import { Button, Comment, Header, Modal, Rating, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
 import CreateReview from "./createReview"
 import ImagePic from "images/images/image-square.png"
@@ -57,6 +57,50 @@ class ReviewsList extends Component {
 	render() {
 		const { currentItem, deleteModalOpen, editModalOpen } = this.state
 		const { bearer, emptyMsgContent, myId, results, storeId, userId } = this.props
+
+		const DeleteModal = (
+			<Modal
+				centered={false}
+				closeIcon
+				onClose={() => this.toggleDeleteModal()}
+				open={deleteModalOpen}
+			>
+				<Modal.Header>Delete your review</Modal.Header>
+				<Modal.Content>
+					<Modal.Description>
+						<p>Are you sure you want to delete this review?</p>
+					</Modal.Description>
+				</Modal.Content>
+				<Modal.Actions>
+					<Button
+						negative
+						onClick={() => this.toggleDeleteModal()}
+					>
+						Cancel
+					</Button>
+					<Button
+						onClick={() => {
+							this.props.deleteReview({
+								bearer,
+								callback: () => {
+									this.toggleDeleteModal()
+									this.props.getReviews({
+										page: 0,
+										storeId,
+										userId,
+										visible: 1
+									})
+								},
+								id: currentItem.id
+							})
+						}}
+						positive
+					>
+						Delete
+					</Button>
+				</Modal.Actions>
+			</Modal>
+		)
 
 		const EditModal = (
 			<Modal
@@ -130,7 +174,15 @@ class ReviewsList extends Component {
 										>
 											Edit
 										</Comment.Action>
-										<Comment.Action>Delete</Comment.Action>
+										<Comment.Action
+											as="a"
+											onClick={() => {
+												this.setCurrentItem(result)
+												this.toggleDeleteModal()
+											}}
+										>
+											Delete
+										</Comment.Action>
 									</Comment.Actions>
 								)}
 							</Comment.Content>
@@ -164,6 +216,7 @@ class ReviewsList extends Component {
 					)}
 				</div>
 
+				{DeleteModal}
 				{EditModal}
 			</Provider>
 		)
@@ -173,6 +226,7 @@ class ReviewsList extends Component {
 ReviewsList.propTypes = {
 	bearer: PropTypes.string,
 	count: PropTypes.string,
+	deleteReview: PropTypes.func,
 	editReview: PropTypes.func,
 	emptyMsgContent: PropTypes.string,
 	getReviews: PropTypes.func,
@@ -188,6 +242,7 @@ ReviewsList.propTypes = {
 
 ReviewsList.defaultProps = {
 	count: 10,
+	deleteReview,
 	editReview,
 	emptyMsgContent: "There are no reviews",
 	getReviews,
@@ -203,6 +258,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export default connect(mapStateToProps, {
+	deleteReview,
 	editReview,
 	getReviews,
 	toggleLoading

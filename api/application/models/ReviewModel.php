@@ -23,6 +23,11 @@ class ReviewModel extends CI_Model {
 		$this->db->insert($this->table, $data);
 	}
 
+	public function delete($id) {
+		$this->db->where('id', $id);
+		$this->db->delete($this->table);
+	}
+
 	public function get($id) {
 		$this->db->select('sr.comment, sr.date_created, sr.id, sr.rating, sr.store_id, sr.user_id');
 		$this->db->where('sr.id', $id);
@@ -66,6 +71,8 @@ class ReviewModel extends CI_Model {
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
 		}
+
+		$this->db->order_by('sr.date_created', 'DESC');
 
 		$results = $this->db->get('store_reviews sr')->result_array();
 

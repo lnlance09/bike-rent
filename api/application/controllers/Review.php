@@ -62,6 +62,40 @@ class Review extends CI_Controller {
 		]);
 	}
 
+	public function delete() {
+		$id = $this->input->post('id');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to delete reviews'
+			]);
+			exit;
+		}
+
+		$review = $this->review->get($id);
+
+		if (!$review) {
+			echo json_encode([
+				'error' => 'This review does not exist'
+			]);
+			exit;
+		}
+
+		if ($review['user_id'] != $user->id) {
+			echo json_encode([
+				'error' => 'You do not have permission to delete this review'
+			]);
+			exit;
+		}
+
+		$this->review->delete($id);
+
+		echo json_encode([
+			'error' => false
+		]);
+	}
+
 	public function edit() {
 		$id = $this->input->post('id');
 		$comment = $this->input->post('comment');

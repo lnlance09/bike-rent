@@ -457,51 +457,13 @@ App.propTypes = {
 				subtitle: PropTypes.string,
 				title: PropTypes.string
 			}),
-			firstSection: PropTypes.shape({
-				button: PropTypes.shape({
-					basic: PropTypes.string,
-					color: PropTypes.string,
-					inverted: PropTypes.bool,
-					link: PropTypes.string,
-					text: PropTypes.string
-				}),
-				img: PropTypes.string,
-				items: PropTypes.arrayOf(PropTypes.shape({
-					subtitle: PropTypes.string,
-					title: PropTypes.string
-				}))
-			}),
-			secondSection: PropTypes.shape({
-				leftItem: PropTypes.shape({
-					subtitle: PropTypes.string,
-					title: PropTypes.string
-				}),
-				rightItem: PropTypes.shape({
-					subtitle: PropTypes.string,
-					title: PropTypes.string
-				})
-			}),
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
 				keywords: PropTypes.string,
 				title: PropTypes.string
-			}),
-			thirdSection: PropTypes.shape({
-				divider: PropTypes.shape({
-					text: PropTypes.string
-				}),
-				firstItem: PropTypes.shape({
-					subtitle: PropTypes.string,
-					title: PropTypes.string
-				}),
-				secondItem: PropTypes.shape({
-					subtitle: PropTypes.string,
-					title: PropTypes.string
-				})
 			})
 		}),
-		language: PropTypes.string,
 		languages: PropTypes.array,
 		partnersPage: PropTypes.shape({
 			desciption: PropTypes.string,
@@ -510,10 +472,6 @@ App.propTypes = {
 				headerTwo: PropTypes.string,
 				img: PropTypes.string
 			}),
-			partners: PropTypes.arrayOf(PropTypes.shape({
-				img: PropTypes.string,
-				title: PropTypes.string
-			})),
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
 				img: PropTypes.string,
@@ -521,27 +479,6 @@ App.propTypes = {
 				title: PropTypes.string
 			}),
 			title: PropTypes.string
-		}),
-		searchPage: PropTypes.shape({
-			desciption: PropTypes.string,
-			seo: PropTypes.shape({
-				desciption: PropTypes.string,
-				img: PropTypes.string,
-				keywords: PropTypes.string,
-				title: PropTypes.string
-			}),
-			signInButton: PropTypes.shape({
-				basic: PropTypes.string,
-				color: PropTypes.string,
-				inverted: PropTypes.bool,
-				text: PropTypes.string
-			}),
-			signUpButton: PropTypes.shape({
-				basic: PropTypes.string,
-				color: PropTypes.string,
-				inverted: PropTypes.bool,
-				text: PropTypes.string
-			})
 		}),
 		signinPage: PropTypes.shape({
 			seo: PropTypes.shape({
