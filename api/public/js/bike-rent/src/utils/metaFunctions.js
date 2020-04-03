@@ -13,6 +13,12 @@ export const DisplayMetaTags = ({ page, props, seo, state }) => {
 			}
 			break
 
+		case "profile":
+			metaTags = {
+				title: "Profile"
+			}
+			break
+
 		case "about":
 		case "apply":
 		case "checkout":

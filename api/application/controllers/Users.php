@@ -13,6 +13,81 @@ class Users extends CI_Controller {
 		$this->load->model('UsersModel', 'users');
 	}
 
+	public function addPaymentMethod() {
+		$cvc = $this->input->post('cvc');
+		$expiry = $this->input->post('expiry');
+		$name = $this->input->post('name');
+		$number = $this->input->post('number');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must login to add a payment method'
+			]);
+			exit;
+		}
+
+		$cardType = checkCreditCard($number);
+		if (!$cardType) {
+			echo json_encode([
+				'error' => 'Please enter a valid card number'
+			]);
+			exit;
+		}
+
+		if (empty($name)) {
+			echo json_encode([
+				'error' => 'Please enter a valid name'
+			]);
+			exit;
+		}
+
+		if (strlen($cvc) > 4 || strlen($cvc) < 3 || !is_numeric($cvc)) {
+			echo json_encode([
+				'error' => 'Please enter a valid CVC value'
+			]);
+			exit;
+		}
+
+		if (strlen($expiry) !== 4) {
+			echo json_encode([
+				'error' => 'Please enter a valid expiration date'
+			]);
+			exit;
+		}
+
+		$month = substr($expiry, 0, 2);
+		$year = substr($expiry, 2);
+
+		if ($month > 12 || $month < 1) {
+			echo json_encode([
+				'error' => 'Please enter a valid expiration month'
+			]);
+			exit;
+		}
+
+		if ($year < date('y')) {
+			echo json_encode([
+				'error' => 'This card has expired'
+			]);
+			exit;
+		}
+
+		$this->users->addPaymentMethod([
+			'cvc' => $cvc,
+			'exp_month' => $month,
+			'exp_year' => $year,
+			'name' => $name,
+			'number' => $number,
+			'type' => $cardType,
+			'user_id' => $user->id
+		]);
+
+		echo json_encode([
+			'error' => false
+		]);
+	}
+
 	public function changePassword() {
 		$currentPassword = $this->input->post('current_password');
 		$newPassword = $this->input->post('new_password');
@@ -152,6 +227,24 @@ class Users extends CI_Controller {
 		echo json_encode([
 			'error' => false,
 			'user' => $info
+		]);
+	}
+
+	public function getPaymentMethods() {
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must login to view your payment methods'
+			]);
+			exit;
+		}
+
+		$methods = $this->users->getPaymentMethods($user->id);
+
+		echo json_encode([
+			'count' => empty($methods) ? 0 : count($methods),
+			'error' => false,
+			'results' => $methods
 		]);
 	}
 
@@ -306,15 +399,9 @@ class Users extends CI_Controller {
 
 	public function search() {
 		$q = $this->input->get('q');
-		$school_id = $this->input->get('schoolId');
 		$page = $this->input->get('page');
 
 		$where = [];
-
-		if (!empty($school_id)) {
-			$where = ['u.school_id' => $school_id];
-		}
-
 		$limit = 20;
 		$start = $page*$limit;
 
@@ -333,9 +420,42 @@ class Users extends CI_Controller {
 		]);
 	}
 
+	public function setDefaultPaymentMethod() {
+		$id = $this->input->post('id');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must login to edit payment methods'
+			]);
+			exit;
+		}
+
+		$method = $this->users->getPaymentMethod($id);
+
+		if (!$method) {
+			echo json_encode([
+				'error' => 'This payment method does not exist'
+			]);
+			exit;
+		}
+
+		if ($method['user_id'] != $user->id) {
+			echo json_encode([
+				'error' => 'You do not have permission to edit this payment method'
+			]);
+			exit;
+		}
+
+		$this->users->setDefaultPaymentMethod($id, $user->id);
+
+		echo json_encode([
+			'error' => false
+		]);
+	}
+
 	public function update() {
 		$bio = $this->input->post('bio');
-		$school_id = $this->input->post('schoolId');
 
 		$user = $this->user;
 		if (!$user) {
@@ -349,10 +469,6 @@ class Users extends CI_Controller {
 
 		if (!empty($bio)) {
 			$data['bio'] = $bio;
-		}
-
-		if (!empty($school_id)) {
-			$data['school_id'] = $school_id;
 		}
 
 		$this->users->updateUser($user->id, $data);

@@ -58,7 +58,7 @@ class ImageUpload extends Component {
 					onMouseEnter={this.toggleDimmer}
 					onMouseLeave={this.toggleDimmer}
 					rounded
-					size={fluid ? "" : imgSize}
+					size={fluid ? null : imgSize}
 					src={ImagePic}
 				/>
 			</div>

@@ -8,6 +8,10 @@ class UsersModel extends CI_Model {
 		$this->db->query("SET time_zone='+0:00'");
 	}
 
+	public function addPaymentMethod($data) {
+		$this->db->insert('payment_methods', $data);
+	}
+
 	public function createUser($data) {
 		$this->db->select('COUNT(*) AS count');
 		$this->db->where('username', $data['username']);
@@ -36,8 +40,19 @@ class UsersModel extends CI_Model {
 		return $name.rand(1000, 9999);
 	}
 
+	public function getPaymentMethod($id) {
+		$this->db->select('created_at, cvc, exp_month, exp_year, id, name, number, preferred, type, user_id');
+		$this->db->where('id', $id);
+		$result = $this->db->get('payment_methods')->result_array();
+		if (empty($result)) {
+			return false;
+		}
+
+		return $result[0];
+	}
+
 	public function getPaymentMethods($id) {
-		$this->db->select('created_at, exp_month, exp_year, first_name, last_name, number, preferred, user_id');
+		$this->db->select('created_at, cvc, exp_month, exp_year, id, name, number, preferred, type, user_id');
 		$this->db->where('user_id', $id);
 		$results = $this->db->get('payment_methods')->result_array();
 		return $results;
@@ -189,6 +204,18 @@ class UsersModel extends CI_Model {
 		return $results;
 	}
 
+	public function setDefaultPaymentMethod($id, $user_id) {
+		$this->db->where('user_id', $user_id);
+		$this->db->update('payment_methods', [
+			'preferred' => 0
+		]);
+
+		$this->db->where('id', $id);
+		$this->db->update('payment_methods', [
+			'preferred' => 1
+		]);
+	}
+
 	public function setNewPassword($email, $data) {
 		$this->db->where('email', $email);
 		$this->db->update('users', $data);
@@ -210,7 +237,7 @@ class UsersModel extends CI_Model {
 	}
 
 	public function userLookupByEmail($email) {
-		$this->db->select("bio, date_created, id, img, name");
+		$this->db->select("date_created, id, img, name");
 		$this->db->where('email', $email);
 		$this->db->or_where('username', $email);
 		$query = $this->db->get('users')->result_array();

@@ -1,0 +1,161 @@
+import "./style.css"
+import { adjustTimezone } from "utils/dateFunctions"
+import { getPayments, makeDefault } from "./actions"
+import { connect, Provider } from "react-redux"
+import { Container, Grid, Header, List, Radio, Segment, Visibility } from "semantic-ui-react"
+import React, { Component } from "react"
+import Card from "./index"
+import LazyLoad from "components/lazyLoad/v1/"
+import Moment from "react-moment"
+import PropTypes from "prop-types"
+import store from "store"
+
+class PaymentsList extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			loadingMore: false
+		}
+	}
+
+	componentDidMount() {
+		this.props.getPayments({
+			bearer: this.props.bearer,
+			page: 0,
+			visible: 1
+		})
+	}
+
+	componentDidUpdate(prevProps) {
+		if (prevProps !== this.props) {
+			// this.props.retrieveItems()
+		}
+	}
+
+	loadMore = () => {
+		if (this.props.hasMore && !this.props.loadingMore) {
+			// const newPage = parseInt(this.props.page + 1, 10)
+			this.props.toggleLoading()
+		}
+	}
+
+	render() {
+		const { bearer, emptyMsgContent, results } = this.props
+
+		const RenderItems = ({ props }) => {
+			return props.results.map((result, i) => {
+				const { created_at, id, number, preferred, type } = result
+				if (id) {
+					let icon = "credit card"
+					if (type === "Mastercard") {
+						icon = "cc mastercard"
+					}
+
+					if (type === "Visa") {
+						icon = "cc visa"
+					}
+
+					if (type === "American Express") {
+						icon = "cc amex"
+					}
+
+					if (type === "JCB") {
+						icon = "cc jcb"
+					}
+
+					return (
+						<List.Item>
+							<List.Icon
+								color="blue"
+								name={icon}
+								size="large"
+								verticalAlign="middle"
+							/>
+							<List.Content>
+								<List.Header>**** **** **** {number.slice(number.length - 4)}</List.Header>
+								<List.Description>
+									Added {" "}
+									<Moment
+										date={adjustTimezone(created_at)}
+										fromNow
+										interval={60000}
+									/>
+									<span style={{ marginLeft: "20px" }}>
+										<Radio
+											checked={preferred === "1"}
+											label="Make default"
+											name="defaultCreditCard"
+											onChange={() => {
+												this.props.makeDefault({
+													bearer,
+													id
+												})
+											}}
+										/>
+									</span>
+								</List.Description>
+							</List.Content>
+						</List.Item>
+					)
+				}
+
+				return <LazyLoad key={`paymentMethod${i}`} segment />
+			})
+		}
+
+		return (
+			<Provider store={store}>
+				<div className="paymentsList">
+					{results.length > 0 ? (
+						<div>
+							<Visibility
+								className="listWrapper"
+								continuous
+								onBottomVisible={this.loadMore}
+							>
+								<List divided selection size="big">
+									<RenderItems props={this.props} />
+								</List>
+							</Visibility>
+						</div>
+					) : (
+						<div className="emptyContainer">
+							<Segment placeholder>
+								<Header icon>{emptyMsgContent}</Header>
+							</Segment>
+						</div>
+					)}
+				</div>
+			</Provider>
+		)
+	}
+}
+
+PaymentsList.propTypes = {
+	bearer: PropTypes.string,
+	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	emptyMsgContent: PropTypes.string,
+	getPayments: PropTypes.func,
+	history: PropTypes.object,
+	makeDefault: PropTypes.func,
+	results: PropTypes.array
+}
+
+PaymentsList.defaultProps = {
+	count: 10,
+	emptyMsgContent: "You haven't added any payment methods",
+	getPayments,
+	makeDefault,
+	results: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+}
+
+const mapStateToProps = (state, ownProps) => ({
+	...state.payments,
+	...ownProps
+})
+
+export default connect(mapStateToProps, {
+	getPayments,
+	makeDefault
+})(PaymentsList)

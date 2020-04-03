@@ -195,7 +195,7 @@ class AppHeader extends Component {
 									text="My Reviews"
 								/>
 								<Dropdown.Item
-									onClick={() => props.history.push(`/profile/payments`)}
+									onClick={() => props.history.push(`/profile/payment-methods`)}
 									text="My Account"
 								/>
 								<Dropdown.Divider />

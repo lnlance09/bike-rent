@@ -1,10 +1,13 @@
 import "./style.css"
 import "react-credit-cards/es/styles-compiled.css"
-import { Button, Form, Input, Segment } from "semantic-ui-react"
+import { addPayment } from "./actions"
+import { connect, Provider } from "react-redux"
+import { Button, Form, Input, Message, Segment } from "semantic-ui-react"
 import React, { Component } from "react"
 import Cleave from "cleave.js/react"
 import Cards from "react-credit-cards"
 import PropTypes from "prop-types"
+import store from "store"
 
 class PaymentMethod extends Component {
 	constructor(props) {
@@ -33,76 +36,99 @@ class PaymentMethod extends Component {
 
 	render() {
 		const { cardName, cardNumber, cvc, expiry, focus } = this.state
-		const { displayCard, displayForm } = this.props
+		const { bearer, buttonText, displayButton, displayCard, displayForm, error, errorMsg } = this.props
 
 		return (
-			<Segment>
-				{displayCard && (
-					<Cards
-						cvc={cvc}
-						expiry={expiry}
-						focused={focus}
-						name={cardName}
-						number={cardNumber}
-					/>
-				)}
-				{displayForm && (
-					<Form as={Segment}>
-						<Form.Field>
-							<Cleave
-								name="number"
-								placeholder="Enter your credit card number"
-								options={{ creditCard: true }}
-								onChange={this.onChangeCardNumber}
-								onFocus={this.handleInputFocus}
-								value={cardNumber}
-							/>
-						</Form.Field>
-						<Form.Field>
-							<Input
-								name="name"
-								onChange={this.onChangeCardName}
-								onFocus={this.handleInputFocus}
-								placeholder="Name on card"
-								value={cardName}
-							/>
-						</Form.Field>
-						<Form.Group widths="equal">
+			<Provider store={store}>
+				<div className="paymentMethod">
+					{displayCard && (
+						<Cards
+							cvc={cvc}
+							expiry={expiry}
+							focused={focus}
+							name={cardName}
+							number={cardNumber}
+						/>
+					)}
+					{displayForm && (
+						<Form as={Segment}>
 							<Form.Field>
 								<Cleave
-									name="expiry"
-									options={{ date: true, datePattern: ["m", "y"] }}
-									placeholder="Valid thru"
-									onChange={this.onChangeExpiry}
+									name="number"
+									placeholder="Enter your credit card number"
+									options={{ creditCard: true }}
+									onChange={this.onChangeCardNumber}
 									onFocus={this.handleInputFocus}
-									value={expiry}
+									value={cardNumber}
 								/>
 							</Form.Field>
 							<Form.Field>
 								<Input
-									name="cvc"
-									maxLength={4}
-									onChange={this.onChangeCvc}
+									name="name"
+									onChange={this.onChangeCardName}
 									onFocus={this.handleInputFocus}
-									placeholder="CVC"
-									value={cvc}
+									placeholder="Name on card"
+									value={cardName}
 								/>
 							</Form.Field>
-						</Form.Group>
-						<Button
-							color="blue"
-							content="Checkout"
-							fluid
-							onClick={() => console.log("done")}
+							<Form.Group widths="equal">
+								<Form.Field>
+									<Cleave
+										name="expiry"
+										options={{ date: true, datePattern: ["m", "y"] }}
+										placeholder="Valid thru"
+										onChange={this.onChangeExpiry}
+										onFocus={this.handleInputFocus}
+										value={expiry}
+									/>
+								</Form.Field>
+								<Form.Field>
+									<Input
+										name="cvc"
+										maxLength={4}
+										onChange={this.onChangeCvc}
+										onFocus={this.handleInputFocus}
+										placeholder="CVC"
+										value={cvc}
+									/>
+								</Form.Field>
+							</Form.Group>
+							{displayButton && (
+								<Button
+									color="blue"
+									content={buttonText}
+									fluid
+									onClick={() => {
+										this.props.addPayment({
+											bearer,
+											callback: this.props.callback,
+											cvc,
+											expiry,
+											name: cardName,
+											number: cardNumber
+										})
+									}}
+								/>
+							)}
+						</Form>
+					)}
+					{error && (
+						<Message
+							content={errorMsg}
+							error
 						/>
-					</Form>
-				)}
-			</Segment>
+					)}
+				</div>
+			</Provider>
 		)
 	}
 }
 
 PaymentMethod.propTypes = {
+	addPayment: PropTypes.func,
+	bearer: PropTypes.string,
+	buttonText: PropTypes.string,
+	callback: PropTypes.func,
 	card: PropTypes.shape({
 		cvc: PropTypes.string,
 		expiry: PropTypes.shape({
@@ -112,11 +138,16 @@ PaymentMethod.propTypes = {
 		name: PropTypes.string,
 		number: PropTypes.string
 	}),
+	displayButton: PropTypes.bool,
 	displayCard: PropTypes.bool,
-	displayForm: PropTypes.bool
+	displayForm: PropTypes.bool,
+	error: PropTypes.bool,
+	errorMsg: PropTypes.string
 }
 
 PaymentMethod.defaultProps = {
+	addPayment,
+	buttonText: "Checkout",
 	card: {
 		cvc: "",
 		expiry: {
@@ -126,8 +157,19 @@ PaymentMethod.defaultProps = {
 		name: "",
 		number: ""
 	},
+	displayButton: true,
 	displayCard: true,
-	displayForm: true
+	displayForm: true,
+	error: false
 }
 
-export default PaymentMethod
+const mapStateToProps = (state, ownProps) => {
+	return {
+		...state.payments,
+		...ownProps
+	}
+}
+
+export default connect(mapStateToProps, {
+	addPayment
+})(PaymentMethod)

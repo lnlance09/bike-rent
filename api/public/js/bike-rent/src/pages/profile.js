@@ -2,12 +2,14 @@ import { connect, Provider } from "react-redux"
 import { changeProfilePic } from "components/authentication/v1/actions"
 import { adjustTimezone } from "utils/dateFunctions"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Container, Divider, Grid, Header, Icon, Menu } from "semantic-ui-react"
+import { Button, Container, Divider, Grid, Header, Icon, Menu, Modal } from "semantic-ui-react"
 import React, { Component } from "react"
 import ImageUpload from "components/imageUpload/v1/"
 import Moment from "react-moment"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
+import PaymentsList from "components/paymentMethod/v1/list/"
+import PaymentsMethod from "components/paymentMethod/v1/"
 import ReviewsList from "components/reviewsList/v1/"
 import PropTypes from "prop-types"
 import store from "store"
@@ -16,8 +18,12 @@ class Profile extends Component {
 	constructor(props) {
 		super(props)
 
+		const tabs = ["purchases", "reviews", "payment-methods"]
 		const params = this.props.match.params
 		let { tab } = params
+		if (!tabs.includes(tab)) {
+			tab = "purchases"
+		}
 
 		const currentState = store.getState()
 		const user = currentState.user
@@ -29,6 +35,7 @@ class Profile extends Component {
 			activeItem: tab,
 			auth,
 			bearer,
+			paymentModalOpen: false,
 			user,
 			userId
 		}
@@ -44,10 +51,31 @@ class Profile extends Component {
 		this.setState({ activeItem: name }, () => {})
 	}
 
+	togglePaymentModal = () => this.setState({ paymentModalOpen: !this.state.paymentModalOpen })
+
 	render() {
-		const { activeItem, auth, bearer, user, userId } = this.state
+		const { activeItem, auth, bearer, paymentModalOpen, user, userId } = this.state
 		const { settings } = this.props
-		const { profilePage } = settings
+
+		const AddPaymentModal = (
+			<Modal
+				centered={false}
+				closeIcon
+				onClose={() => this.togglePaymentModal()}
+				open={paymentModalOpen}
+			>
+				<Modal.Header>Add a new payment method</Modal.Header>
+				<Modal.Content>
+					<Modal.Description>
+						<PaymentsMethod
+							bearer={bearer}
+							buttonText="Submit"
+							callback={() => this.togglePaymentModal()}
+						/>
+					</Modal.Description>
+				</Modal.Content>
+			</Modal>
+		)
 
 		return (
 			<Provider store={store}>
@@ -101,7 +129,7 @@ class Profile extends Component {
 
 						<Divider hidden />
 
-						<Menu pointing secondary size="big">
+						<Menu pointing secondary size="large">
 							<Menu.Item
 								active={activeItem === "purchases"}
 								name="purchases"
@@ -113,16 +141,32 @@ class Profile extends Component {
 								onClick={this.handleItemClick}
 							/>
 							<Menu.Item
-								active={activeItem === "payment methods"}
-								name="payment methods"
+								active={activeItem === "payment-methods"}
+								name="payment-methods"
 								onClick={this.handleItemClick}
-							/>
+							>
+								Payment Methods
+							</Menu.Item>
+							<Menu.Item position="right" style={{ paddingRight: 0 }}>
+								<Button
+									color="blue"
+									content="Add a payment method"
+									icon="credit card"
+									onClick={() => this.togglePaymentModal()}
+								/>
+							</Menu.Item>
 						</Menu>
 
 						{activeItem === "reviews" && (
 							<ReviewsList bearer={bearer} myId={userId} userId={userId} />
 						)}
+
+						{activeItem === "payment-methods" && (
+							<PaymentsList bearer={bearer} />
+						)}
 					</Container>
+
+					{AddPaymentModal}
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
