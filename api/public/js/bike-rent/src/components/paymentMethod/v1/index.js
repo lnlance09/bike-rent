@@ -36,7 +36,15 @@ class PaymentMethod extends Component {
 
 	render() {
 		const { cardName, cardNumber, cvc, expiry, focus } = this.state
-		const { bearer, buttonText, displayButton, displayCard, displayForm, error, errorMsg } = this.props
+		const {
+			bearer,
+			buttonText,
+			displayButton,
+			displayCard,
+			displayForm,
+			error,
+			errorMsg
+		} = this.props
 
 		return (
 			<Provider store={store}>
@@ -112,12 +120,7 @@ class PaymentMethod extends Component {
 							)}
 						</Form>
 					)}
-					{error && (
-						<Message
-							content={errorMsg}
-							error
-						/>
-					)}
+					{error && <Message content={errorMsg} error />}
 				</div>
 			</Provider>
 		)

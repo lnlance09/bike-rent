@@ -73,9 +73,11 @@ class PaymentsList extends Component {
 								verticalAlign="middle"
 							/>
 							<List.Content>
-								<List.Header>**** **** **** {number.slice(number.length - 4)}</List.Header>
+								<List.Header>
+									**** **** **** {number.slice(number.length - 4)}
+								</List.Header>
 								<List.Description>
-									Added {" "}
+									Added{" "}
 									<Moment
 										date={adjustTimezone(created_at)}
 										fromNow

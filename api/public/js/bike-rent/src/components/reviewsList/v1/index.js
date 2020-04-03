@@ -72,10 +72,7 @@ class ReviewsList extends Component {
 					</Modal.Description>
 				</Modal.Content>
 				<Modal.Actions>
-					<Button
-						negative
-						onClick={() => this.toggleDeleteModal()}
-					>
+					<Button negative onClick={() => this.toggleDeleteModal()}>
 						Cancel
 					</Button>
 					<Button

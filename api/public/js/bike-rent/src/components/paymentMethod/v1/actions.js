@@ -7,14 +7,7 @@ toast.configure({
 	draggable: false
 })
 
-export const addPayment = ({
-	bearer,
-	callback,
-	cvc,
-	expiry,
-	name,
-	number
-}) => dispatch => {
+export const addPayment = ({ bearer, callback, cvc, expiry, name, number }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/users/addPaymentMethod`,
 		{

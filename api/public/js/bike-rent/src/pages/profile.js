@@ -161,9 +161,7 @@ class Profile extends Component {
 							<ReviewsList bearer={bearer} myId={userId} userId={userId} />
 						)}
 
-						{activeItem === "payment-methods" && (
-							<PaymentsList bearer={bearer} />
-						)}
+						{activeItem === "payment-methods" && <PaymentsList bearer={bearer} />}
 					</Container>
 
 					{AddPaymentModal}
