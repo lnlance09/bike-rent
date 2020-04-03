@@ -1,6 +1,6 @@
 import { connect, Provider } from "react-redux"
 import { addToCart } from "components/authentication/v1/actions"
-import { getStore } from "redux/actions/store"
+import { createReview, getStore } from "redux/actions/store"
 import { fetchLocations } from "utils/selectOptions"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import {
@@ -13,14 +13,17 @@ import {
 	Image,
 	List,
 	Menu,
+	Modal,
 	Placeholder,
 	Responsive
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import BikesList from "components/bikesList/v1/"
+import CreateReview from "components/reviewsList/v1/createReview"
 import MapBox from "components/mapBox/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
+import ReviewsList from "components/reviewsList/v1/"
 import StepProcess from "components/step/v1/"
 import StoresList from "components/storesList/v1/"
 import PropTypes from "prop-types"
@@ -37,6 +40,7 @@ class Stores extends Component {
 		const user = currentState.user
 		const auth = user.authenticated
 		const bearer = user.bearer
+		const userId = auth ? user.data.user.id : null
 
 		this.state = {
 			activeItem: "bicycles",
@@ -45,7 +49,10 @@ class Stores extends Component {
 			cityId: "",
 			cityOptions: [],
 			id,
-			updated: false
+			modalOpen: false,
+			updated: false,
+			user,
+			userId
 		}
 	}
 
@@ -71,22 +78,69 @@ class Stores extends Component {
 		this.setState({ activeItem: name }, () => {})
 	}
 
+	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen })
+
 	render() {
-		const { activeItem, auth, cityOptions, id } = this.state
+		const { activeItem, auth, bearer, cityOptions, id, modalOpen, userId } = this.state
 		const { settings } = this.props
 		const { storesPage } = settings
 		const _store = this.props.store
 
+		const ReviewModal = (
+			<Modal centered={false} closeIcon onClose={() => this.toggleModal()} open={modalOpen}>
+				<Modal.Header>Leave a review</Modal.Header>
+				<Modal.Content>
+					{auth ? (
+						<Modal.Description>
+							<CreateReview
+								callback={(comment, rating) => {
+									this.props.createReview({
+										bearer,
+										callback: () => this.toggleModal(),
+										comment,
+										rating,
+										storeId: _store.id
+									})
+								}}
+								store={{
+									image: _store.image,
+									name: _store.name
+								}}
+							/>
+						</Modal.Description>
+					) : (
+						<Modal.Description>
+							<Container textAlign="center">
+								<Header size="huge">Sign in to leave reviews</Header>
+								<Button
+									color="blue"
+									content="Sign In"
+									onClick={() => this.props.history.push("/signin")}
+									size="big"
+								/>
+								<Button
+									color="green"
+									content="Sign Up"
+									onClick={() => this.props.history.push("/signin?type=join")}
+									size="big"
+								/>
+							</Container>
+						</Modal.Description>
+					)}
+				</Modal.Content>
+			</Modal>
+		)
+
 		const StoreList = props => {
-			const { closingTime, openingTime, phoneNumber } = props.store
+			const { address, city, closingTime, openingTime, phoneNumber, state } = props.store
 			return (
 				<List divided relaxed="very" size="large">
 					<List.Item>
 						<List.Icon color="red" name="marker" />
 						<List.Content>
-							<List.Header>{props.address}</List.Header>
+							<List.Header>{address}</List.Header>
 							<List.Description>
-								{props.city}, {props.state}
+								{city}, {state}
 							</List.Description>
 						</List.Content>
 					</List.Item>
@@ -112,7 +166,7 @@ class Stores extends Component {
 
 		const StoreMenu = props => {
 			return (
-				<Menu pointing secondary>
+				<Menu pointing secondary size="big">
 					<Menu.Item
 						active={activeItem === "bicycles"}
 						name="bicycles"
@@ -154,6 +208,7 @@ class Stores extends Component {
 			}
 
 			if (activeItem === "reviews") {
+				return <ReviewsList bearer={bearer} myId={userId} storeId={props.store.id} />
 			}
 
 			return null
@@ -206,13 +261,16 @@ class Stores extends Component {
 									<div>
 										<MapBox height="280px" lat={lat} lng={lon} width="100%" />
 										<Divider hidden />
+
 										<div>{StoreList(props)}</div>
 										<Divider hidden />
+
 										<Button
 											color="blue"
 											content="Leave a review"
 											fluid
 											icon="star"
+											onClick={this.toggleModal}
 										/>
 										<Divider />
 										<Button
@@ -293,6 +351,8 @@ class Stores extends Component {
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
+
+				{ReviewModal}
 			</Provider>
 		)
 	}
@@ -300,6 +360,7 @@ class Stores extends Component {
 
 Stores.propTypes = {
 	addToCart: PropTypes.func,
+	createReview: PropTypes.func,
 	getStore: PropTypes.func,
 	settings: PropTypes.object,
 	store: PropTypes.shape({
@@ -342,6 +403,7 @@ Stores.propTypes = {
 
 Stores.defaultProps = {
 	addToCart,
+	createReview,
 	getStore,
 	store: {
 		error: false
@@ -357,5 +419,6 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(mapStateToProps, {
 	addToCart,
+	createReview,
 	getStore
 })(Stores)

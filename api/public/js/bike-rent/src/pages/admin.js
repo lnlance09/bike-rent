@@ -484,7 +484,7 @@ class Admin extends Component {
 			if (activeItem === "footer") {
 				return (
 					<div>
-						<AdminFooter footerData={settings.footer} />
+						<AdminFooter bearer={bearer} footerData={settings.footer} />
 					</div>
 				)
 			}
@@ -500,7 +500,7 @@ class Admin extends Component {
 			if (activeItem === "images") {
 				return (
 					<div>
-						<AdminLibrary />
+						<AdminLibrary bearer={bearer} />
 					</div>
 				)
 			}

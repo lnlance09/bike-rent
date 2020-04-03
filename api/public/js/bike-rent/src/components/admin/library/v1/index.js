@@ -1,20 +1,10 @@
 import "./style.css"
 import { addImageToLibrary, getImages, toggleAddImageModal } from "redux/actions/library"
 import { connect } from "react-redux"
-import {
-	Button,
-	Dimmer,
-	Divider,
-	Grid,
-	Header,
-	Icon,
-	Image,
-	Modal,
-	Placeholder
-} from "semantic-ui-react"
+import { Button, Divider, Grid, Image, Modal, Placeholder } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
-import Dropzone from "react-dropzone"
 import ImagePic from "images/images/image-square.png"
+import ImageUpload from "components/imageUpload/v1/"
 import PropTypes from "prop-types"
 
 class AdminLibrary extends Component {
@@ -22,54 +12,20 @@ class AdminLibrary extends Component {
 		super(props)
 
 		this.state = {
-			active: true,
 			currentImg: false,
-			files: [],
-			inverted: true,
 			loading: false
 		}
-
-		this.onDrop = this.onDrop.bind(this)
 	}
 
 	componentDidMount() {
 		this.props.getImages()
 	}
 
-	onDrop(files) {
-		this.setState({ files })
-		if (files.length > 0) {
-			this.props.addImageToLibrary({
-				bearer: this.props.bearer,
-				file: files[0]
-			})
-			this.toggleLoading()
-		}
-	}
-
-	toggleDimmer = () => this.setState({ active: this.state.active })
-
 	toggleLoading = () => this.setState({ loading: !this.state.loading })
 
 	render() {
-		const { baseUrl, images, modalOpen, s3Url } = this.props
-		const { active, currentImg, inverted, loading } = this.state
-
-		const content = (
-			<Dropzone onDrop={this.onDrop}>
-				{({ getRootProps, getInputProps }) => (
-					<section>
-						<div {...getRootProps()}>
-							<input {...getInputProps()} />
-							<Header as="h2">Select a picture</Header>
-							<Button className="changePicBtn" color="blue" icon>
-								<Icon name="image" />
-							</Button>
-						</div>
-					</section>
-				)}
-			</Dropzone>
-		)
+		const { baseUrl, bearer, images, modalOpen, s3Url } = this.props
+		const { currentImg, loading } = this.state
 
 		const AddImgModal = (
 			<Modal
@@ -82,19 +38,17 @@ class AdminLibrary extends Component {
 
 				<Modal.Content image>
 					{!currentImg ? (
-						<Fragment>
-							<Dimmer.Dimmable
-								as={Image}
-								dimmed={active}
-								dimmer={{ active, content, inverted }}
-								onError={i => (i.target.src = ImagePic)}
-								onMouseEnter={this.toggleDimmer}
-								onMouseLeave={this.toggleDimmer}
-								rounded
-								size="medium"
-								src={ImagePic}
-							/>
-						</Fragment>
+						<ImageUpload
+							bearer={bearer}
+							callback={(bearer, file) => {
+								this.props.addImageToLibrary({
+									bearer,
+									file
+								})
+								this.toggleLoading()
+							}}
+							fluid={false}
+						/>
 					) : (
 						<Fragment>
 							<Image

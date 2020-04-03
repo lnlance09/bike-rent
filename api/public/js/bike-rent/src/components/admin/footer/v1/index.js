@@ -12,12 +12,7 @@ class AdminFooter extends Component {
 
 		const { footerData } = this.props
 
-		const currentState = store.getState()
-		const user = currentState.user
-		const bearer = user.bearer
-
 		this.state = {
-			bearer,
 			inverted: footerData.inverted,
 			listOneItems: footerData.firstList.items,
 			listOneTitle: footerData.firstList.title,
@@ -80,7 +75,6 @@ class AdminFooter extends Component {
 
 	render() {
 		const {
-			bearer,
 			inverted,
 			listOneItems,
 			listOneTitle,
@@ -89,6 +83,7 @@ class AdminFooter extends Component {
 			subTitle,
 			title
 		} = this.state
+		const { bearer } = this.props
 
 		return (
 			<div className="adminFooter">
@@ -251,6 +246,7 @@ class AdminFooter extends Component {
 }
 
 AdminFooter.propTypes = {
+	bearer: PropTypes.string,
 	footerData: PropTypes.object,
 	submitFooterForm: PropTypes.func
 }

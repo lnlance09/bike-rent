@@ -1,9 +1,14 @@
 import { connect, Provider } from "react-redux"
+import { changeProfilePic } from "components/authentication/v1/actions"
+import { adjustTimezone } from "utils/dateFunctions"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Container, Menu } from "semantic-ui-react"
+import { Container, Divider, Grid, Header, Icon, Menu } from "semantic-ui-react"
+import React, { Component } from "react"
+import ImageUpload from "components/imageUpload/v1/"
+import Moment from "react-moment"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
-import React, { Component } from "react"
+import ReviewsList from "components/reviewsList/v1/"
 import PropTypes from "prop-types"
 import store from "store"
 
@@ -11,26 +16,36 @@ class Profile extends Component {
 	constructor(props) {
 		super(props)
 
+		const params = this.props.match.params
+		let { tab } = params
+
 		const currentState = store.getState()
 		const user = currentState.user
 		const auth = user.authenticated
 		const bearer = user.bearer
+		const userId = auth ? user.data.user.id : null
 
 		this.state = {
-			activeItem: "purchases",
+			activeItem: tab,
 			auth,
-			bearer
+			bearer,
+			user,
+			userId
 		}
 	}
 
-	componentDidMount() {}
+	componentDidMount() {
+		if (!this.state.auth) {
+			this.props.history.push("/")
+		}
+	}
 
 	handleItemClick = (e, { name }) => {
 		this.setState({ activeItem: name }, () => {})
 	}
 
 	render() {
-		const { activeItem, auth } = this.state
+		const { activeItem, auth, bearer, user, userId } = this.state
 		const { settings } = this.props
 		const { profilePage } = settings
 
@@ -54,7 +69,39 @@ class Profile extends Component {
 					/>
 
 					<Container className="mainContainer">
-						<Menu pointing secondary>
+						<Grid>
+							<Grid.Column width={4}>
+								<ImageUpload
+									bearer={bearer}
+									callback={(bearer, file) => {
+										this.props.changeProfilePic({
+											bearer,
+											file
+										})
+									}}
+									fluid
+									imgSize="small"
+									msg="Change your pic"
+								/>
+							</Grid.Column>
+							<Grid.Column width={12}>
+								<Header as="h1">
+									{user.data.user.name}
+									<Header.Subheader>
+										<Icon name="clock outline" /> Joined{" "}
+										<Moment
+											date={adjustTimezone(user.data.user.dateCreated)}
+											fromNow
+											interval={60000}
+										/>
+									</Header.Subheader>
+								</Header>
+							</Grid.Column>
+						</Grid>
+
+						<Divider hidden />
+
+						<Menu pointing secondary size="big">
 							<Menu.Item
 								active={activeItem === "purchases"}
 								name="purchases"
@@ -71,6 +118,10 @@ class Profile extends Component {
 								onClick={this.handleItemClick}
 							/>
 						</Menu>
+
+						{activeItem === "reviews" && (
+							<ReviewsList bearer={bearer} myId={userId} userId={userId} />
+						)}
 					</Container>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
@@ -81,10 +132,13 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
+	changeProfilePic: PropTypes.func,
 	settings: PropTypes.object
 }
 
-Profile.defaultProps = {}
+Profile.defaultProps = {
+	changeProfilePic
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -93,4 +147,6 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-export default connect(mapStateToProps, {})(Profile)
+export default connect(mapStateToProps, {
+	changeProfilePic
+})(Profile)

@@ -131,7 +131,7 @@ class StoreModel extends CI_Model {
 		$page = false,
 		$limit = 25
 	) {
-		$select = "date_created, review, stars";
+		$select = "date_created, comment, rating";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';

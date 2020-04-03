@@ -1,0 +1,20 @@
+/*---  Colors  ---*/
+/*---  Light Colors  ---*/
+/*---   Neutrals  ---*/
+/*---   Misc  ---*/
+/*---   Social colors  ---*/
+.reviewsList {
+  width: 100%; }
+  .reviewsList .emptyContainer {
+    text-align: center; }
+  @media only screen and (max-width: 1025px) {
+    .reviewsList .cards {
+      margin-top: 10px; } }
+  .reviewsList .cards .card .content {
+    word-break: break-word; }
+    .reviewsList .cards .card .content .description {
+      max-height: 240px;
+      overflow: hidden;
+      white-space: pre-line; }
+  .reviewsList .cards .card .image img {
+    height: 225px !important; }

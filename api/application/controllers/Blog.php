@@ -14,7 +14,6 @@ class Blog extends CI_Controller {
 		$title = $this->input->post('title');
 		$entry = $this->input->post('entry');
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -22,7 +21,6 @@ class Blog extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		if (empty($title)) {
 			echo json_encode([
