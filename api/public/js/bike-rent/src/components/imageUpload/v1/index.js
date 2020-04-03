@@ -10,7 +10,7 @@ class ImageUpload extends Component {
 		super(props)
 
 		this.state = {
-			active: true,
+			active: false,
 			files: [],
 			inverted: true
 		}
@@ -25,11 +25,11 @@ class ImageUpload extends Component {
 		})
 	}
 
-	toggleDimmer = () => this.setState({ active: this.state.active })
+	toggleDimmer = () => this.setState({ active: !this.state.active })
 
 	render() {
 		const { active, inverted } = this.state
-		const { fluid, headerSize, imgSize, msg } = this.props
+		const { fluid, headerSize, img, imgSize, msg } = this.props
 
 		const content = (
 			<Dropzone onDrop={this.onDrop}>
@@ -59,7 +59,7 @@ class ImageUpload extends Component {
 					onMouseLeave={this.toggleDimmer}
 					rounded
 					size={fluid ? null : imgSize}
-					src={ImagePic}
+					src={img ? img : ImagePic}
 				/>
 			</div>
 		)
@@ -71,6 +71,7 @@ ImageUpload.propTypes = {
 	callback: PropTypes.func,
 	fluid: PropTypes.bool,
 	headerSize: PropTypes.string,
+	img: PropTypes.string,
 	imgSize: PropTypes.string,
 	msg: PropTypes.string
 }

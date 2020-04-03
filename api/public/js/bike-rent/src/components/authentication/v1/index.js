@@ -328,6 +328,7 @@ Authentication.propTypes = {
 	data: PropTypes.shape({
 		cart: PropTypes.array,
 		user: PropTypes.shape({
+			dateCreated: PropTypes.string,
 			email: PropTypes.string,
 			emailVerified: PropTypes.bool,
 			name: PropTypes.string,

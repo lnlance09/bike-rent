@@ -10,6 +10,7 @@ class Users extends CI_Controller {
 
 		$this->load->library('My_PHPMailer');
 
+		$this->load->model('MediaModel', 'media');
 		$this->load->model('UsersModel', 'users');
 	}
 

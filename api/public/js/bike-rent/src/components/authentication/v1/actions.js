@@ -79,7 +79,7 @@ export const changeProfilePic = ({ bearer, file }) => dispatch => {
 			function(err, response, body) {
 				let localData = parseJwt()
 				if (!body.error) {
-					localData.img = body.img
+					localData.user.img = body.img
 				}
 				const token = setToken(localData)
 				body.bearer = token

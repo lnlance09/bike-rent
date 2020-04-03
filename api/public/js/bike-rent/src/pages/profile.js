@@ -54,8 +54,9 @@ class Profile extends Component {
 	togglePaymentModal = () => this.setState({ paymentModalOpen: !this.state.paymentModalOpen })
 
 	render() {
-		const { activeItem, auth, bearer, paymentModalOpen, user, userId } = this.state
-		const { settings } = this.props
+		const { activeItem, auth, bearer, paymentModalOpen, userId } = this.state
+		const { data, settings } = this.props
+		const { user } = data
 
 		const AddPaymentModal = (
 			<Modal
@@ -108,17 +109,17 @@ class Profile extends Component {
 										})
 									}}
 									fluid
-									imgSize="small"
+									img={user.img}
 									msg="Change your pic"
 								/>
 							</Grid.Column>
 							<Grid.Column width={12}>
 								<Header as="h1">
-									{user.data.user.name}
+									{user.name}
 									<Header.Subheader>
 										<Icon name="clock outline" /> Joined{" "}
 										<Moment
-											date={adjustTimezone(user.data.user.dateCreated)}
+											date={adjustTimezone(user.dateCreated)}
 											fromNow
 											interval={60000}
 										/>
@@ -175,16 +176,30 @@ class Profile extends Component {
 
 Profile.propTypes = {
 	changeProfilePic: PropTypes.func,
+	data: PropTypes.shape({
+		cart: PropTypes.array,
+		user: PropTypes.shape({
+			dateCreated: PropTypes.string,
+			email: PropTypes.string,
+			emailVerified: PropTypes.bool,
+			name: PropTypes.string,
+			id: PropTypes.string,
+			img: PropTypes.string,
+			privilege: PropTypes.string,
+			username: PropTypes.string
+		})
+	}),
 	settings: PropTypes.object
 }
 
 Profile.defaultProps = {
-	changeProfilePic
+	changeProfilePic,
+	user: {}
 }
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		...state.app,
+		...state.user,
 		...ownProps
 	}
 }
