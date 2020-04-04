@@ -3,7 +3,16 @@ import { adjustTimezone } from "utils/dateFunctions"
 import { getReviews, toggleLoading } from "./actions"
 import { deleteReview, editReview } from "redux/actions/store"
 import { connect, Provider } from "react-redux"
-import { Button, Comment, Header, Icon, Modal, Rating, Segment, Visibility } from "semantic-ui-react"
+import {
+	Button,
+	Comment,
+	Header,
+	Icon,
+	Modal,
+	Rating,
+	Segment,
+	Visibility
+} from "semantic-ui-react"
 import React, { Component } from "react"
 import CreateReview from "./createReview"
 import ImagePic from "images/images/image-square.png"
@@ -138,7 +147,16 @@ class ReviewsList extends Component {
 		const RenderItems = ({ props }) => {
 			return results.map((result, i) => {
 				if (result.id) {
-					const { comment, date_created, rating, store_id, store_name, user_id, user_img, user_name } = result
+					const {
+						comment,
+						date_created,
+						rating,
+						store_id,
+						store_name,
+						user_id,
+						user_img,
+						user_name
+					} = result
 					return (
 						<Comment>
 							<Comment.Avatar

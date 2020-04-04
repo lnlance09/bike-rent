@@ -161,7 +161,12 @@ class Profile extends Component {
 						</Menu>
 
 						{activeItem === "reviews" && (
-							<ReviewsList bearer={bearer} history={this.props.history} myId={userId} userId={userId} />
+							<ReviewsList
+								bearer={bearer}
+								history={this.props.history}
+								myId={userId}
+								userId={userId}
+							/>
 						)}
 
 						{activeItem === "payment-methods" && <PaymentsList bearer={bearer} />}

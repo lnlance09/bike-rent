@@ -139,6 +139,12 @@ class Store extends CI_Controller {
 			]);
 		}
 
+		$reviewCount = $this->store->getReviews($id, true);
+		$avgRating = $this->store->getReviews($id, false, 0, 0, true);
+
+		$store['reviewCount'] = $reviewCount;
+		$store['avgRating'] = $avgRating;
+
 		echo json_encode([
 			'error' => false,
 			'store' => $store

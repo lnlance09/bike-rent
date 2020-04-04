@@ -2,6 +2,7 @@ import { connect, Provider } from "react-redux"
 import { addToCart } from "components/authentication/v1/actions"
 import { createReview, getStore } from "redux/actions/store"
 import { DisplayMetaTags } from "utils/metaFunctions"
+import { formatPlural } from "utils/textFunctions"
 import {
 	Button,
 	Container,
@@ -14,6 +15,7 @@ import {
 	Menu,
 	Modal,
 	Placeholder,
+	Rating,
 	Responsive
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
@@ -201,14 +203,21 @@ class Stores extends Component {
 			}
 
 			if (activeItem === "reviews") {
-				return <ReviewsList bearer={bearer} history={this.props.history} myId={userId} storeId={props.store.id} />
+				return (
+					<ReviewsList
+						bearer={bearer}
+						history={this.props.history}
+						myId={userId}
+						storeId={props.store.id}
+					/>
+				)
 			}
 
 			return null
 		}
 
 		const SingleStore = props => {
-			const { description, id, image, lat, lon, name } = props.store
+			const { avgRating, description, id, image, lat, lon, name, reviewCount } = props.store
 			return (
 				<Fragment>
 					<Responsive maxWidth={1024}>
@@ -226,6 +235,17 @@ class Stores extends Component {
 							<Grid.Column className="leftSide" width={11}>
 								<Header dividing size="huge">
 									{name}
+									{id && (
+										<Header.Subheader>
+											<Rating
+												defaultRating={avgRating}
+												disabled
+												icon="star"
+												maxRating={5}
+											/>{" "}
+											{reviewCount} {formatPlural(reviewCount, "review")}
+										</Header.Subheader>
+									)}
 								</Header>
 
 								{id ? (
@@ -344,6 +364,7 @@ Stores.propTypes = {
 	settings: PropTypes.object,
 	store: PropTypes.shape({
 		address: PropTypes.string,
+		avgRating: PropTypes.string,
 		bikes: PropTypes.arrayOf(
 			PropTypes.shape({
 				description: PropTypes.string,
@@ -368,6 +389,7 @@ Stores.propTypes = {
 		name: PropTypes.string,
 		openingTime: PropTypes.string,
 		phoneNumber: PropTypes.string,
+		reviewCount: PropTypes.string,
 		reviews: PropTypes.arrayOf(
 			PropTypes.shape({
 				date_created: PropTypes.string,

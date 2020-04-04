@@ -12,6 +12,7 @@ const store = (state = initial(), action) => {
 				...state,
 				store: {
 					address: payload.store.address,
+					avgRating: payload.store.avgRating,
 					city: payload.store.city,
 					closingTime: payload.store.closing_time,
 					description: payload.store.description,
@@ -23,6 +24,7 @@ const store = (state = initial(), action) => {
 					name: payload.store.name,
 					phoneNumber: payload.store.phone_number,
 					openingTime: payload.store.opening_time,
+					reviewCount: payload.store.reviewCount,
 					state: payload.store.state,
 					zipCode: payload.store.zip_code
 				}

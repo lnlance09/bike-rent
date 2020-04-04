@@ -128,8 +128,9 @@ class StoreModel extends CI_Model {
 	public function getReviews(
 		$id,
 		$just_count,
-		$page = false,
-		$limit = 25
+		$page = 0,
+		$limit = 25,
+		$get_avg = false
 	) {
 		$select = "date_created, comment, rating";
 
@@ -137,8 +138,12 @@ class StoreModel extends CI_Model {
 			$select = 'COUNT(*) AS count';
 		}
 
+		if ($get_avg) {
+			$select = 'AVG(rating) AS average_rating';
+		}
+
 		$this->db->select($select);
-		$this->db->where('sr store_id', $id);
+		$this->db->where('sr.store_id', $id);
 
 		if (!$just_count) {
 			$limit = 25;
@@ -150,6 +155,10 @@ class StoreModel extends CI_Model {
 
 		if ($just_count) {
 			return $results[0]['count'];
+		}
+
+		if ($get_avg) {
+			return $results[0]['average_rating'];
 		}
 
 		return $results;
