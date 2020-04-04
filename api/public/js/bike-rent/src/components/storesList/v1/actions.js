@@ -1,12 +1,13 @@
 import * as constants from "./constants"
 import request from "request"
 
-export const getStores = ({ page, q, sort }) => dispatch => {
+export const getStores = ({ cityId, page, q, sort }) => dispatch => {
 	request.get(
 		`${window.location.origin}/api/store/search`,
 		{
 			json: true,
 			qs: {
+				cityId,
 				page,
 				q,
 				sort
@@ -21,13 +22,14 @@ export const getStores = ({ page, q, sort }) => dispatch => {
 	)
 }
 
-export const getStoresByBike = ({ bikeId, limit = 25, page = 0, storeId }) => dispatch => {
+export const getStoresByBike = ({ bikeId, cityId, limit = 25, page = 0, storeId }) => dispatch => {
 	request.get(
 		`${window.location.origin}/api/store/getBikes`,
 		{
 			json: true,
 			qs: {
 				bikeId,
+				cityId,
 				limit,
 				page,
 				storeId

@@ -48,7 +48,9 @@ class ReviewModel extends CI_Model {
 	) {
 		$select = "sr.comment, sr.date_created, sr.id, sr.rating, sr.store_id, sr.user_id";
 		$select .= ", s.name AS store_name";
-		$select .= ", u.name AS user_name, u.img AS user_img";
+		$select .= ", u.name AS user_name, CASE
+					WHEN u.img IS NOT NULL THEN CONCAT('".S3_PATH."', u.img)
+				END AS user_img";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';

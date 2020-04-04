@@ -159,6 +159,7 @@ class StoreModel extends CI_Model {
 		$radius,
 		$lat,
 		$lon,
+		$cityId,
 		$just_count,
 		$page = false,
 		$limit = 25
@@ -173,6 +174,10 @@ class StoreModel extends CI_Model {
 
 		if (!empty($radius)) {
 			$this->db->like('city', $q);
+		}
+
+		if (!empty($cityId)) {
+			$this->db->where('location_id', $cityId);
 		}
 
 		if (!$just_count) {

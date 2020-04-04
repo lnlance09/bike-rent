@@ -1,8 +1,19 @@
 import "./style.css"
+import { fetchCities } from "utils/selectOptions"
 import { getStores, getStoresByBike, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
-import { Card, Button, Header, Item, List, Segment, Visibility } from "semantic-ui-react"
-import React, { Component } from "react"
+import {
+	Card,
+	Button,
+	Divider,
+	Dropdown,
+	Header,
+	Item,
+	List,
+	Segment,
+	Visibility
+} from "semantic-ui-react"
+import React, { Component, Fragment } from "react"
 import LazyLoad from "components/lazyLoad/v1/"
 import PropTypes from "prop-types"
 import ResultItem from "components/item/v1/"
@@ -13,14 +24,20 @@ class StoresList extends Component {
 		super(props)
 
 		this.state = {
-			loadingMore: false
+			cityId: "",
+			loadingMore: false,
+			options: []
 		}
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
+		const options = await fetchCities("")
+		this.setState({ options })
+
 		if (this.props.storesByBike) {
 			this.props.getStoresByBike({
 				bikeId: this.props.bikeId,
+				cityId: this.props.cityId,
 				page: 0,
 				storeId: this.props.storeId
 			})
@@ -37,10 +54,18 @@ class StoresList extends Component {
 		}
 	}
 
+	onChangeCity = (e, { value }) => {
+		this.setState({ cityId: value }, () => {
+			this.props.getStores({
+				cityId: value,
+				page: 0
+			})
+		})
+	}
+
 	render() {
-		console.log("stores list")
-		console.log(this.props)
-		const { emptyMsgContent, itemsPerRow, results, useCards } = this.props
+		const { options } = this.state
+		const { emptyMsgContent, itemsPerRow, results, showCityFilter, useCards } = this.props
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {
@@ -77,6 +102,22 @@ class StoresList extends Component {
 		return (
 			<Provider store={store}>
 				<div className="storesList">
+					{showCityFilter && (
+						<Fragment>
+							<div className="ui form big">
+								<Dropdown
+									fluid
+									onChange={this.onChangeCity}
+									options={options}
+									placeholder="Select a city"
+									search
+									selection
+								/>
+							</div>
+							<Divider />
+						</Fragment>
+					)}
+
 					{results.length > 0 ? (
 						<div>
 							<Visibility
@@ -110,6 +151,7 @@ class StoresList extends Component {
 
 StoresList.propTypes = {
 	bikeId: PropTypes.string,
+	cityId: PropTypes.string,
 	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
 	getStores: PropTypes.func,
@@ -121,6 +163,7 @@ StoresList.propTypes = {
 	loadingMore: PropTypes.bool,
 	page: PropTypes.number,
 	results: PropTypes.array,
+	showCityFilter: PropTypes.bool,
 	showPics: PropTypes.bool,
 	storeId: PropTypes.string,
 	storesByBike: PropTypes.bool,
@@ -130,13 +173,14 @@ StoresList.propTypes = {
 
 StoresList.defaultProps = {
 	count: 10,
-	emptyMsgContent: "",
+	emptyMsgContent: "There are no stores in this city",
 	getStores,
 	getStoresByBike,
 	itemsPerRow: 3,
 	loadingMore: false,
 	page: 0,
 	results: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+	showCityFilter: false,
 	showPics: true,
 	storesByBike: false,
 	toggleLoading,

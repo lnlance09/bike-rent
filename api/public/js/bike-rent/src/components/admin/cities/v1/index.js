@@ -13,6 +13,7 @@ import {
 	TextArea
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
+import ImagePic from "images/images/image-square.png"
 import PropTypes from "prop-types"
 
 class AdminCities extends Component {
@@ -169,7 +170,12 @@ class AdminCities extends Component {
 
 							return (
 								<Item key={`adminCity${i}`}>
-									<Item.Image rounded size="large" src={image} />
+									<Item.Image
+										onError={i => (i.target.src = ImagePic)}
+										rounded
+										size="large"
+										src={image}
+									/>
 									<Item.Content>
 										<Item.Header as="h1">{title}</Item.Header>
 										<Item.Description>

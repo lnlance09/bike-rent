@@ -48,7 +48,9 @@ class Profile extends Component {
 	}
 
 	handleItemClick = (e, { name }) => {
-		this.setState({ activeItem: name }, () => {})
+		this.setState({ activeItem: name }, () => {
+			this.props.history.push(`/profile/${name}`)
+		})
 	}
 
 	togglePaymentModal = () => this.setState({ paymentModalOpen: !this.state.paymentModalOpen })

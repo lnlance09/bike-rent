@@ -1,7 +1,6 @@
 import { connect, Provider } from "react-redux"
 import { addToCart } from "components/authentication/v1/actions"
 import { createReview, getStore } from "redux/actions/store"
-import { fetchLocations } from "utils/selectOptions"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import {
 	Button,
@@ -47,7 +46,6 @@ class Stores extends Component {
 			auth,
 			bearer,
 			cityId: "",
-			cityOptions: [],
 			id,
 			modalOpen: false,
 			updated: false,
@@ -60,11 +58,6 @@ class Stores extends Component {
 		const { id } = this.state
 		if (id) {
 			this.props.getStore({ id })
-		}
-
-		if (id === undefined) {
-			const cityOptions = await fetchLocations("")
-			this.setState({ cityOptions })
 		}
 	}
 
@@ -81,7 +74,7 @@ class Stores extends Component {
 	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen })
 
 	render() {
-		const { activeItem, auth, bearer, cityOptions, id, modalOpen, userId } = this.state
+		const { activeItem, auth, bearer, id, modalOpen, userId } = this.state
 		const { settings } = this.props
 		const { storesPage } = settings
 		const _store = this.props.store
@@ -325,24 +318,10 @@ class Stores extends Component {
 
 								<Header size="huge">Pick a store</Header>
 
-								<div className="ui form big">
-									<Dropdown
-										fluid
-										onChange={(e, { value }) =>
-											this.setState({ newCityId: value })
-										}
-										options={cityOptions}
-										placeholder="Select a city"
-										search
-										selection
-									/>
-								</div>
-
-								<Divider />
-
 								<StoresList
 									history={this.props.history}
 									key="store"
+									showCityFilter
 									useCards={true}
 								/>
 							</div>

@@ -14,6 +14,16 @@ export const colorOptions = [
 	{ key: "black", text: "Black", value: "black" }
 ]
 
+export const fetchCities = async q => {
+	const response = await fetch(`${window.location.origin}/api/city/getCities`, {
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+	const data = await response.json()
+	return data.cities
+}
+
 export const fetchLocations = async q => {
 	const response = await fetch(`${window.location.origin}/api/city/getLocations?q=${q}`, {
 		headers: {

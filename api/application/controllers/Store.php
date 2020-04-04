@@ -253,6 +253,7 @@ class Store extends CI_Controller {
 	}
 
 	public function search() {
+		$cityId = $this->input->get('cityId');
 		$lat = $this->input->get('lat');
 		$lon = $this->input->get('lon');
 		$radius = $this->input->get('radius');
@@ -267,6 +268,7 @@ class Store extends CI_Controller {
 			$radius,
 			$lat,
 			$lon,
+			$cityId,
 			true,
 			$page,
 			$limit
@@ -276,6 +278,7 @@ class Store extends CI_Controller {
 			$radius,
 			$lat,
 			$lon,
+			$cityId,
 			false,
 			$page,
 			$limit

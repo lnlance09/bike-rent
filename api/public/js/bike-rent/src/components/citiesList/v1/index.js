@@ -114,7 +114,7 @@ CitiesList.propTypes = {
 
 CitiesList.defaultProps = {
 	count: 10,
-	emptyMsgContent: "",
+	emptyMsgContent: "There are no results",
 	getCities,
 	itemsPerRow: 3,
 	loadingMore: false,

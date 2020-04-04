@@ -117,6 +117,15 @@ class City extends CI_Controller {
 		]);
 	}
 
+	public function getCities() {
+		$cities = $this->city->getFeaturedCities();
+
+		echo json_encode([
+			'cities' => $cities,
+			'error' => false
+		]);
+	}
+
 	public function getLocations() {
 		$q = $this->input->get('q');
 		$locations = $this->city->getLocations($q);
