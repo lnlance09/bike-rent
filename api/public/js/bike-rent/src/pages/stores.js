@@ -201,7 +201,7 @@ class Stores extends Component {
 			}
 
 			if (activeItem === "reviews") {
-				return <ReviewsList bearer={bearer} myId={userId} storeId={props.store.id} />
+				return <ReviewsList bearer={bearer} history={this.props.history} myId={userId} storeId={props.store.id} />
 			}
 
 			return null

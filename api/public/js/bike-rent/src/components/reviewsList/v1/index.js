@@ -3,7 +3,7 @@ import { adjustTimezone } from "utils/dateFunctions"
 import { getReviews, toggleLoading } from "./actions"
 import { deleteReview, editReview } from "redux/actions/store"
 import { connect, Provider } from "react-redux"
-import { Button, Comment, Header, Modal, Rating, Segment, Visibility } from "semantic-ui-react"
+import { Button, Comment, Header, Icon, Modal, Rating, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
 import CreateReview from "./createReview"
 import ImagePic from "images/images/image-square.png"
@@ -56,7 +56,7 @@ class ReviewsList extends Component {
 
 	render() {
 		const { currentItem, deleteModalOpen, editModalOpen } = this.state
-		const { bearer, emptyMsgContent, myId, results, storeId, userId } = this.props
+		const { bearer, emptyMsgContent, myId, results, showStore, storeId, userId } = this.props
 
 		const DeleteModal = (
 			<Modal
@@ -138,7 +138,7 @@ class ReviewsList extends Component {
 		const RenderItems = ({ props }) => {
 			return results.map((result, i) => {
 				if (result.id) {
-					const { comment, date_created, rating, user_id, user_img, user_name } = result
+					const { comment, date_created, rating, store_id, store_name, user_id, user_img, user_name } = result
 					return (
 						<Comment>
 							<Comment.Avatar
@@ -146,19 +146,21 @@ class ReviewsList extends Component {
 								src={user_img === null ? ImagePic : user_img}
 							/>
 							<Comment.Content>
-								<Comment.Author>{user_name}</Comment.Author>
-								<Comment.Metadata>
-									<Moment
-										date={adjustTimezone(date_created)}
-										fromNow
-										interval={60000}
-									/>
-									<Rating
-										defaultRating={parseInt(rating, 10)}
-										icon="star"
-										maxRating={5}
-									/>
-								</Comment.Metadata>
+								<Comment.Author>
+									{user_name}
+									<Comment.Metadata>
+										<Moment
+											date={adjustTimezone(date_created)}
+											fromNow
+											interval={60000}
+										/>
+										<Rating
+											defaultRating={parseInt(rating, 10)}
+											icon="star"
+											maxRating={5}
+										/>
+									</Comment.Metadata>
+								</Comment.Author>
 								<Comment.Text>{comment}</Comment.Text>
 								{user_id === myId && (
 									<Comment.Actions>
@@ -180,6 +182,17 @@ class ReviewsList extends Component {
 										>
 											Delete
 										</Comment.Action>
+										{showStore && (
+											<Comment.Action
+												as="a"
+												onClick={() => {
+													this.props.history.push(`/stores/${store_id}`)
+												}}
+											>
+												<Icon color="green" name="arrow right" />{" "}
+												{store_name}
+											</Comment.Action>
+										)}
 									</Comment.Actions>
 								)}
 							</Comment.Content>
@@ -232,6 +245,7 @@ ReviewsList.propTypes = {
 	myId: PropTypes.string,
 	page: PropTypes.number,
 	results: PropTypes.array,
+	showStore: PropTypes.bool,
 	storeId: PropTypes.string,
 	toggleLoading: PropTypes.func,
 	userId: PropTypes.string
@@ -246,6 +260,7 @@ ReviewsList.defaultProps = {
 	loadingMore: false,
 	page: 0,
 	results: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+	showStore: false,
 	toggleLoading
 }
 
