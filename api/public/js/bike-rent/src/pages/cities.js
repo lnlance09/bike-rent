@@ -142,9 +142,7 @@ class Cities extends Component {
 									{description}
 								</Header>
 								<Divider hidden />
-								<Header size="large">
-									Stores
-								</Header>
+								<Header size="large">Stores</Header>
 								<RenderStoresList props={props} />
 							</Fragment>
 						)}
@@ -152,9 +150,7 @@ class Cities extends Component {
 					<Grid.Column width={5}>
 						<Header size="large">
 							{storeCount !== undefined &&
-								`${storeCount} ${formatPlural(storeCount, "store")} in ${
-									city
-								}`}
+								`${storeCount} ${formatPlural(storeCount, "store")} in ${city}`}
 						</Header>
 
 						<Divider hidden />
@@ -179,7 +175,11 @@ class Cities extends Component {
 							color="blue"
 							content={tab === "blog" ? "View Stores" : "View Blog"}
 							fluid
-							onClick={() => this.props.history.push(`/cities/${slug}${tab === "blog" ? "" : "/blog"}`)}
+							onClick={() =>
+								this.props.history.push(
+									`/cities/${slug}${tab === "blog" ? "" : "/blog"}`
+								)
+							}
 						/>
 					</Grid.Column>
 				</Grid>
