@@ -8,11 +8,13 @@ class Blog extends CI_Controller {
 		$this->base_url = $this->config->base_url();
 
 		$this->load->model('BlogModel', 'blog');
+		$this->load->model('CityModel', 'city');
 	}
 
 	public function create() {
-		$title = $this->input->post('title');
+		$cityId = $this->input->post('cityId');
 		$entry = $this->input->post('entry');
+		$title = $this->input->post('title');
 
 		$user = $this->user;
 		if (!$user) {
@@ -36,7 +38,16 @@ class Blog extends CI_Controller {
 			exit;
 		}
 
+		$city = $this->city->checkIfExists($cityId);
+		if (!$city) {
+			echo json_encode([
+				'error' => 'That city does not exist'
+			]);
+			exit;
+		}
+
 		$this->blog->create([
+			'city_id' => $cityId,
 			'entry' => $entry,
 			'title' => $title
 		]);
@@ -95,11 +106,11 @@ class Blog extends CI_Controller {
 	}
 
 	public function update() {
+		$cityId = $this->input->post('cityId');
+		$entry = $this->input->post('entry');
 		$id = $this->input->post('id');
 		$title = $this->input->post('title');
-		$entry = $this->input->post('entry');
 
-		/*
 		$user = $this->user;
 		if (!$user) {
 			echo json_encode([
@@ -107,7 +118,6 @@ class Blog extends CI_Controller {
 			]);
 			exit;
 		}
-		*/
 
 		if (empty($title)) {
 			echo json_encode([
@@ -123,7 +133,16 @@ class Blog extends CI_Controller {
 			exit;
 		}
 
+		$city = $this->city->checkIfExists($cityId);
+		if (!$city) {
+			echo json_encode([
+				'error' => 'That city does not exist'
+			]);
+			exit;
+		}
+
 		$this->blog->update($id, [
+			'city_id' => $cityId,
 			'date_updated' => date('Y-m-d H:i:s'),
 			'entry' => $entry,
 			'title' => $title

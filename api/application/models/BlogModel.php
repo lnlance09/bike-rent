@@ -28,7 +28,7 @@ class BlogModel extends CI_Model {
 		$page = false,
 		$limit = 25
 	) {
-		$select = "date_created, date_updated, entry, id, title";
+		$select = "city_id, date_created, date_updated, entry, id, title";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';

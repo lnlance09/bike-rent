@@ -146,7 +146,7 @@ class Cities extends Component {
 								) : (
 									<Container textAlign="center">
 										<Image centered size="small" src={Logo} />
-										<Header as="h1">This bike does not exist</Header>
+										<Header as="h1">This city does not exist</Header>
 									</Container>
 								)}
 							</Fragment>

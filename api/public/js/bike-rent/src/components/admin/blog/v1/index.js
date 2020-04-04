@@ -1,6 +1,7 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import "./style.css"
 import { adjustTimezone } from "utils/dateFunctions"
+import { fetchCities } from "utils/selectOptions"
 import { addBlog, editBlog, toggleEditBlogModal } from "redux/actions/app"
 import { connect } from "react-redux"
 import { Editor } from "react-draft-wysiwyg"
@@ -9,6 +10,7 @@ import { stateToHTML } from "draft-js-export-html"
 import {
 	Button,
 	Divider,
+	Dropdown,
 	Form,
 	Icon,
 	Input,
@@ -27,14 +29,23 @@ class AdminBlog extends Component {
 
 		this.state = {
 			blogTitle: "",
+			cityId: "",
 			currentBlogId: 0,
 			currentBlogTitle: "",
 			currentEditorState: EditorState.createEmpty(),
-			editorState: EditorState.createEmpty()
+			editorState: EditorState.createEmpty(),
+			options: []
 		}
 	}
 
+	async componentDidMount() {
+		const options = await fetchCities("")
+		this.setState({ options })
+	}
+
 	onChangeBlogTitle = (e, { value }) => this.setState({ blogTitle: value })
+
+	onChangeCity = (e, { value }) => this.setState({ cityId: value })
 
 	onChangeCurrentBlogTitle = (e, { value }) => this.setState({ currentBlogTitle: value })
 
@@ -45,10 +56,12 @@ class AdminBlog extends Component {
 	render() {
 		const {
 			blogTitle,
+			cityId,
 			currentBlogId,
 			currentBlogTitle,
 			currentEditorState,
-			editorState
+			editorState,
+			options
 		} = this.state
 		const { bearer, blogs, createNewBlog, error, errorMsg, modalOpen } = this.props
 
@@ -84,6 +97,18 @@ class AdminBlog extends Component {
 
 				<Divider />
 
+				<Dropdown
+					fluid
+					onChange={this.onChangeCity}
+					options={options}
+					placeholder="Select a city"
+					search
+					selection
+					value={cityId}
+				/>
+
+				<Divider />
+
 				<Button
 					color="green"
 					content="Publish"
@@ -92,6 +117,7 @@ class AdminBlog extends Component {
 						const rawHtml = stateToHTML(editorState.getCurrentContent())
 						this.props.addBlog({
 							bearer,
+							cityId,
 							entry: rawHtml,
 							title: blogTitle
 						})
@@ -133,6 +159,16 @@ class AdminBlog extends Component {
 							toolbarClassName="editorToolbar"
 							wrapperClassName="editorWrapper"
 						/>
+						<Divider />
+						<Dropdown
+							fluid
+							onChange={this.onChangeCity}
+							options={options}
+							placeholder="Select a city"
+							search
+							selection
+							value={cityId}
+						/>
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>
@@ -145,6 +181,7 @@ class AdminBlog extends Component {
 							const rawHtml = stateToHTML(currentEditorState.getCurrentContent())
 							this.props.editBlog({
 								bearer,
+								cityId,
 								entry: rawHtml,
 								id: currentBlogId,
 								title: currentBlogTitle
@@ -169,6 +206,7 @@ class AdminBlog extends Component {
 							)
 							this.setState(
 								{
+									cityId: blog.city_id,
 									currentBlogId: blog.id,
 									currentBlogTitle: blog.title,
 									currentEditorState: html

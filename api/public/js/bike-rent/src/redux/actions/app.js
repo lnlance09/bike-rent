@@ -36,11 +36,12 @@ export const addBike = ({ bearer, description, image, name }) => dispatch => {
 	)
 }
 
-export const addBlog = ({ bearer, entry, title }) => dispatch => {
+export const addBlog = ({ bearer, cityId, entry, title }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/blog/create`,
 		{
 			form: {
+				cityId,
 				entry,
 				title
 			},
@@ -177,13 +178,14 @@ export const editBike = ({ bearer, description, id, image, name, order, visible 
 	)
 }
 
-export const editBlog = ({ bearer, entry, id, title }) => dispatch => {
+export const editBlog = ({ bearer, cityId, entry, id, title }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/blog/update`,
 		{
 			form: {
-				id,
+				cityId,
 				entry,
+				id,
 				title
 			},
 			headers: {

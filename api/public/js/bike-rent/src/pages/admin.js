@@ -416,7 +416,7 @@ class Admin extends Component {
 			if (activeItem === "add-a-new-post") {
 				return (
 					<div>
-						<AdminBlog createNewBlog />
+						<AdminBlog bearer={bearer} createNewBlog />
 					</div>
 				)
 			}
