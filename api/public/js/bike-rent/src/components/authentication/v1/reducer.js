@@ -10,7 +10,7 @@ const token = localStorage.getItem("jwtToken")
 jwt.verify(token, "secret", (err, decoded) => {
 	if (decoded) {
 		localData = decoded.data
-		authenticated = localData.user.email
+		authenticated = localData.user.email !== undefined
 		verify = !localData.user.emailVerified && authenticated
 	}
 })

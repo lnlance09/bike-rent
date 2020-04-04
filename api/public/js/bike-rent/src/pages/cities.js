@@ -1,12 +1,15 @@
 import { connect, Provider } from "react-redux"
 import { getCity } from "redux/actions/city"
+import { adjustTimezone } from "utils/dateFunctions"
 import { formatPlural } from "utils/textFunctions"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Button, Container, Divider, Grid, Header, Image } from "semantic-ui-react"
+import { Button, Container, Divider, Grid, Header, Icon, Image } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
+import BlogsList from "components/blogsList/v1/"
 import CitiesList from "components/citiesList/v1/"
 import Logo from "components/header/v1/images/logo.svg"
 import MapBox from "components/mapBox/v1/"
+import Moment from "react-moment"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PropTypes from "prop-types"
@@ -18,14 +21,8 @@ class Cities extends Component {
 		super(props)
 
 		const params = this.props.match.params
-		let { slug } = params
-
-		let id = false
-		if (slug) {
-			id = this.getId(slug)
-		} else {
-			slug = ""
-		}
+		let { slug, tab } = params
+		let id = slug ? this.getId(slug) : false
 
 		const currentState = store.getState()
 		const user = currentState.user
@@ -35,10 +32,12 @@ class Cities extends Component {
 		this.state = {
 			auth,
 			bearer,
+			currentBlog: null,
 			id,
 			imgVisible: false,
-			slug,
+			slug: slug ? slug : "",
 			storeId: "0",
+			tab,
 			zoom: 8
 		}
 	}
@@ -58,8 +57,10 @@ class Cities extends Component {
 		return split[split.length - 1]
 	}
 
+	onClickBlog = blog => this.setState({ currentBlog: blog })
+
 	render() {
-		const { auth, id, imgVisible, slug, storeId, zoom } = this.state
+		const { auth, currentBlog, id, imgVisible, slug, storeId, tab, zoom } = this.state
 		const { city, error, settings } = this.props
 		const { citiesPage } = settings
 		const { ctaButton } = citiesPage
@@ -97,22 +98,59 @@ class Cities extends Component {
 			return (
 				<Grid>
 					<Grid.Column width={11}>
-						<Header as="h1" size="huge">
-							About this city
-						</Header>
-						<Header as="p" size="big">
-							{description}
-						</Header>
-
-						<Divider hidden />
-
-						<Header size="large">
-							Stores
-						</Header>
-						<RenderStoresList props={props} />
+						{tab === "blog" ? (
+							<Fragment>
+								<Header as="h1" size="huge">
+									{currentBlog ? currentBlog.title : "Blog Entries"}
+									{currentBlog && (
+										<Header.Subheader>
+											<Moment
+												date={adjustTimezone(currentBlog.date_created)}
+												fromNow
+												interval={60000}
+											/>
+										</Header.Subheader>
+									)}
+								</Header>
+								{currentBlog && (
+									<span
+										className="goBack"
+										onClick={() => this.setState({ currentBlog: null })}
+									>
+										<Icon name="arrow left" />
+										See all
+									</span>
+								)}
+								<Divider hidden />
+								{currentBlog ? (
+									<Container
+										dangerouslySetInnerHTML={{ __html: currentBlog.entry }}
+									/>
+								) : (
+									<BlogsList
+										cityId={id}
+										onClickItem={blog => this.onClickBlog(blog)}
+									/>
+								)}
+							</Fragment>
+						) : (
+							<Fragment>
+								<Header as="h1" size="huge">
+									About this city
+								</Header>
+								<Header as="p" size="medium">
+									{description}
+								</Header>
+								<Divider hidden />
+								<Header size="large">
+									Stores
+								</Header>
+								<RenderStoresList props={props} />
+							</Fragment>
+						)}
 					</Grid.Column>
 					<Grid.Column width={5}>
-						<Header size="big">
+						<Header size="large">
 							{storeCount !== undefined &&
 								`${storeCount} ${formatPlural(storeCount, "store")} in ${
 									city
@@ -139,9 +177,9 @@ class Cities extends Component {
 
 						<Button
 							color="blue"
-							content={`${city} Blog`}
+							content={tab === "blog" ? "View Stores" : "View Blog"}
 							fluid
-							onClick={() => this.props.history.push(`/cities/${slug}/blog`)}
+							onClick={() => this.props.history.push(`/cities/${slug}${tab === "blog" ? "" : "/blog"}`)}
 						/>
 					</Grid.Column>
 				</Grid>

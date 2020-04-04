@@ -60,6 +60,10 @@ body {
   min-height: 50vh;
   padding: 30px 0; }
 
+.mainWrapper .goBack {
+  color: #2185D0;
+  cursor: pointer; }
+
 .applyPage {
   height: 100vh; }
 

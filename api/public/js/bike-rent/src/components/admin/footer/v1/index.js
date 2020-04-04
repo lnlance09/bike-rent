@@ -1,3 +1,4 @@
+/* eslint-disable react/no-direct-mutation-state */
 import "./style.css"
 import { submitFooterForm } from "redux/actions/app"
 import { connect } from "react-redux"

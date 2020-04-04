@@ -19,7 +19,7 @@ class MapBox extends Component {
 					height,
 					width
 				}}
-				style="mapbox://styles/mapbox/streets-v9"
+				style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line
 				zoom={[zoom]}
 			>
 				{markers.length > 0 &&
@@ -55,8 +55,8 @@ MapBox.propTypes = {
 		"circle-stroke-color": PropTypes.string
 	}),
 	height: PropTypes.string,
-	lat: PropTypes.number,
-	lng: PropTypes.number,
+	lat: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	lng: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	markerId: PropTypes.string,
 	markers: PropTypes.array,
 	onClickMarker: PropTypes.func,

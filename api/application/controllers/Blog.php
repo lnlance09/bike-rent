@@ -66,20 +66,23 @@ class Blog extends CI_Controller {
 	}
 
 	public function search() {
-		$page = $this->input->get('page');
+		$cityId = $this->input->get('cityId');
 		$limit = $this->input->get('limit');
+		$page = $this->input->get('page');
 
 		if ($limit === null) {
 			$limit = 25;
 		}
 
 		$count = $this->blog->search(
+			$cityId,
 			true,
 			$page,
 			$limit
 		);
 
 		$results = $this->blog->search(
+			$cityId,
 			false,
 			$page,
 			$limit

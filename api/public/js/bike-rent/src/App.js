@@ -168,7 +168,18 @@ class App extends Component {
 									)}
 								/>
 								<Route
+									exact
 									path="/cities/:slug"
+									render={props => (
+										<Cities
+											key={window.location.pathname}
+											settings={settings}
+											{...props}
+										/>
+									)}
+								/>
+								<Route
+									path="/cities/:slug/:tab"
 									render={props => (
 										<Cities
 											key={window.location.pathname}

@@ -56,7 +56,6 @@ body {
 	}
 }
 
-
 .mainWrapper {
 	.paddedSegment {
 		padding: 8em 0em !important;
@@ -89,6 +88,11 @@ body {
 	.mainContainer {
 		min-height: 50vh;
 		padding: 30px 0;
+	}
+
+	.goBack {
+		color: $blue;
+		cursor: pointer;
 	}
 }
 

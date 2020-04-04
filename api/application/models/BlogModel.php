@@ -24,6 +24,7 @@ class BlogModel extends CI_Model {
 	}
 
 	public function search(
+		$city_id,
 		$just_count,
 		$page = false,
 		$limit = 25
@@ -35,6 +36,10 @@ class BlogModel extends CI_Model {
 		}
 
 		$this->db->select($select);
+
+		if (!empty($city_id)) {
+			$this->db->where('city_id', $city_id);
+		}
 
 		if (!$just_count) {
 			$limit = 25;
