@@ -20,6 +20,14 @@ class Bike extends CI_Controller {
 		$image = $this->input->post('image');
 		$name = $this->input->post('name');
 
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in'
+			]);
+			exit;
+		}
+
 		if (empty($name)) {
 			echo json_encode([
 				'error' => 'You must provide a name'
@@ -58,6 +66,14 @@ class Bike extends CI_Controller {
 		$image = $this->input->post('image');
 		$name = $this->input->post('name');
 		$visible = $this->input->post('visible');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in'
+			]);
+			exit;
+		}
 
 		$this->bike->update($id, [
 			'description' => $description,

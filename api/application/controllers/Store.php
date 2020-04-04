@@ -265,6 +265,7 @@ class Store extends CI_Controller {
 		$radius = $this->input->get('radius');
 		$page = $this->input->get('page');
 		$limit = $this->input->get('limit');
+		$storeId = $this->input->get('storeId');
 
 		if ($limit === null) {
 			$limit = 25;
@@ -275,6 +276,7 @@ class Store extends CI_Controller {
 			$lat,
 			$lon,
 			$cityId,
+			$storeId,
 			true,
 			$page,
 			$limit
@@ -285,6 +287,7 @@ class Store extends CI_Controller {
 			$lat,
 			$lon,
 			$cityId,
+			$storeId,
 			false,
 			$page,
 			$limit

@@ -37,7 +37,9 @@ class Cities extends Component {
 			bearer,
 			id,
 			imgVisible: false,
-			slug
+			slug,
+			storeId: "0",
+			zoom: 8
 		}
 	}
 
@@ -57,7 +59,7 @@ class Cities extends Component {
 	}
 
 	render() {
-		const { auth, id, imgVisible, lat, lon, name, slug, storeId, zoom } = this.state
+		const { auth, id, imgVisible, slug, storeId, zoom } = this.state
 		const { city, error, settings } = this.props
 		const { citiesPage } = settings
 		const { ctaButton } = citiesPage
@@ -72,13 +74,30 @@ class Cities extends Component {
 			/>
 		)
 
-		const SingleCity = ({ props }) => {
-			const { city, description, image, state, storeCount, stores } = props.city
+		const RenderStoresList = ({ props }) => {
+			return (
+				<Container textAlign="left">
+					<StoresList
+						cityId={id}
+						history={props.history}
+						itemsPerRow={2}
+						key="store"
+						storeId={storeId}
+						storesByBike={false}
+						useCards={true}
+					/>
+				</Container>
+			)
+		}
+
+		const SingleCity = props => {
+			const { city, description, lat, lon, storeCount, stores } = props.city
+			const showMap = lat && lon
 
 			return (
 				<Grid>
 					<Grid.Column width={11}>
-						<Header as="h1" size="massive">
+						<Header as="h1" size="huge">
 							About this city
 						</Header>
 						<Header as="p" size="big">
@@ -87,26 +106,43 @@ class Cities extends Component {
 
 						<Divider hidden />
 
-						<Container textAlign="left">
-							<StoresList
-								cityId={id}
-								history={this.props.history}
-								itemsPerRow={2}
-								key="store"
-								storesByBike
-								useCards={true}
-							/>
-						</Container>
+						<Header size="large">
+							Stores
+						</Header>
+						<RenderStoresList props={props} />
 					</Grid.Column>
 					<Grid.Column width={5}>
-						<Header size="huge">
+						<Header size="big">
 							{storeCount !== undefined &&
 								`${storeCount} ${formatPlural(storeCount, "store")} in ${
-									city.name
+									city
 								}`}
 						</Header>
 
 						<Divider hidden />
+
+						{showMap && (
+							<MapBox
+								height="300px"
+								lat={lat}
+								lng={lon}
+								markers={stores}
+								onClickMarker={(id, lat, lon) => {
+									this.setState({ storeId: id, lat, lon, zoom: 12 })
+								}}
+								width="100%"
+								zoom={zoom}
+							/>
+						)}
+
+						<Divider />
+
+						<Button
+							color="blue"
+							content={`${city} Blog`}
+							fluid
+							onClick={() => this.props.history.push(`/cities/${slug}/blog`)}
+						/>
 					</Grid.Column>
 				</Grid>
 			)
@@ -142,7 +178,7 @@ class Cities extends Component {
 						{id ? (
 							<Fragment>
 								{!error ? (
-									<SingleCity props={this.props} />
+									SingleCity(this.props)
 								) : (
 									<Container textAlign="center">
 										<Image centered size="small" src={Logo} />
@@ -177,9 +213,15 @@ class Cities extends Component {
 
 Cities.propTypes = {
 	city: PropTypes.shape({
+		city: PropTypes.string,
+		county: PropTypes.string,
 		description: PropTypes.string,
 		image: PropTypes.string,
+		lat: PropTypes.string,
+		lon: PropTypes.string,
 		name: PropTypes.string,
+		slug: PropTypes.string,
+		state: PropTypes.string,
 		storeCount: PropTypes.number,
 		stores: PropTypes.arrayOf(
 			PropTypes.shape({

@@ -27,6 +27,7 @@ class CityModel extends CI_Model {
 		$this->db->select('city, county, lat, lon, state, zip_code, fl.description, fl.image, fl.slug');
 		$this->db->join('locations l', 'fl.location_id = l.id');
 		$this->db->where('fl.id', $id);
+		$this->db->or_where('fl.location_id', $id);
 		$result = $this->db->get('featured_locations fl')->result_array();
 		if (empty($result)) {
 			return false;
@@ -40,6 +41,17 @@ class CityModel extends CI_Model {
 		$this->db->join('locations l', 'fl.location_id = l.id');
 		$results = $this->db->get('featured_locations fl')->result_array();
 		return $results;
+	}
+
+	public function getLocation($id) {
+		$this->db->select('city, state');
+		$this->db->where('id', $id);
+		$result = $this->db->get('locations')->result_array();
+		if (empty($result)) {
+			return false;
+		}
+
+		return $result[0];
 	}
 
 	public function getLocations($q) {
@@ -59,7 +71,7 @@ class CityModel extends CI_Model {
 		$page = false,
 		$limit = 25
 	) {
-		$select = "fl.id, fl.description, fl.image, fl.slug, l.city AS title, l.county, l.lat, l.lon, l.state, l.zip_code";
+		$select = "fl.id, fl.description, fl.image, fl.location_id, fl.slug, l.city AS title, l.county, l.lat, l.lon, l.state, l.zip_code";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';

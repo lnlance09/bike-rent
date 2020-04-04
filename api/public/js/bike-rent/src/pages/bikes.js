@@ -60,7 +60,22 @@ class Bikes extends Component {
 			/>
 		)
 
-		const SingleBike = ({ props }) => {
+		const RenderStoresList = ({ props }) => {
+			return (
+				<Container textAlign="left">
+					<StoresList
+						bikeId={id}
+						history={props.history}
+						key="store"
+						storesByBike
+						storeId={storeId}
+						useCards={true}
+					/>
+				</Container>
+			)
+		}
+
+		const SingleBike = props => {
 			const { description, image, name, storeCount, stores } = props.bike
 
 			return (
@@ -82,7 +97,6 @@ class Bikes extends Component {
 
 					{stores.length > 0 && (
 						<MapBox
-							apiKey="AIzaSyD0Hd-I0mmRVa3WxTy-lpNJ-xAyDqWWTxM"
 							height="300px"
 							lat={storeId !== "0" ? lat : stores[0].lat}
 							lng={storeId !== "0" ? lon : stores[0].lon}
@@ -116,16 +130,7 @@ class Bikes extends Component {
 
 					<Divider hidden />
 
-					<Container textAlign="left">
-						<StoresList
-							bikeId={id}
-							history={this.props.history}
-							key="store"
-							storesByBike
-							storeId={storeId}
-							useCards={true}
-						/>
-					</Container>
+					<RenderStoresList props={props} />
 				</Container>
 			)
 		}
@@ -160,7 +165,7 @@ class Bikes extends Component {
 						{id ? (
 							<Fragment>
 								{!error ? (
-									<SingleBike props={this.props} />
+									SingleBike(this.props)
 								) : (
 									<Container textAlign="center">
 										<Image centered size="small" src={Logo} />

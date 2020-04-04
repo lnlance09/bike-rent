@@ -21,9 +21,10 @@ class City extends CI_Controller {
 		$description = $this->input->post('description');
 		$image = $this->input->post('image');
 
-		if ($id < 1) {
+		$city = $this->city->getLocation($id);
+		if (!$city) {
 			echo json_encode([
-				'error' => 'You must select a city'
+				'error' => 'This city does not exist'
 			]);
 			exit;
 		}
@@ -42,6 +43,14 @@ class City extends CI_Controller {
 			exit;
 		}
 
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in'
+			]);
+			exit;
+		}
+
 		$exists = $this->city->checkIfExists($id);
 		if ($exists) {
 			echo json_encode([
@@ -53,7 +62,8 @@ class City extends CI_Controller {
 		$this->city->create([
 			'description' => $description,
 			'image' => $image,
-			'location_id' => $id
+			'location_id' => $id,
+			'slug' => slugify($city['city'])
 		]);
 
 		echo json_encode([
@@ -66,6 +76,14 @@ class City extends CI_Controller {
 		$description = $this->input->post('description');
 		$image = $this->input->post('image');
 		$order = $this->input->post('order');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in'
+			]);
+			exit;
+		}
 
 		$this->city->update($id, [
 			'description' => $description,
@@ -93,20 +111,22 @@ class City extends CI_Controller {
 
 		$page = 0;
 		$limit = 25;
-		$store_count = $this->store->getBikes(
+		$store_count = $this->store->search(
+			null,
+			null,
 			null,
 			$id,
-			true,
-			$page,
-			$limit
+			null,
+			true
 		);
 
-		$results = $this->store->getBikes(
+		$results = $this->store->search(
+			null,
+			null,
 			null,
 			$id,
-			false,
-			$page,
-			$limit
+			null,
+			false
 		);
 
 		echo json_encode([

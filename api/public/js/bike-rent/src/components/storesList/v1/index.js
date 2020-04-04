@@ -42,7 +42,11 @@ class StoresList extends Component {
 				storeId: this.props.storeId
 			})
 		} else {
-			this.props.getStores({ page: 0 })
+			this.props.getStores({
+				cityId: this.props.cityId,
+				page: 0,
+				storeId: this.props.storeId
+			})
 		}
 	}
 

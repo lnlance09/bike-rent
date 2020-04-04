@@ -169,8 +169,9 @@ class StoreModel extends CI_Model {
 		$lat,
 		$lon,
 		$cityId,
+		$storeId,
 		$just_count,
-		$page = false,
+		$page = 0,
 		$limit = 25
 	) {
 		$select = "s.address, s.city, s.closing_time AS closingTime, s.description, s.id, s.image, s.lat, s.lon, s.name, s.opening_time AS openingTime, s.order, s.phone_number AS phone, s.state, s.zip_code";
@@ -181,12 +182,12 @@ class StoreModel extends CI_Model {
 
 		$this->db->select($select);
 
-		if (!empty($radius)) {
-			$this->db->like('city', $q);
-		}
-
 		if (!empty($cityId)) {
 			$this->db->where('location_id', $cityId);
+		}
+
+		if (!empty($storeId)) {
+			$this->db->where('s.id', $storeId);
 		}
 
 		if (!$just_count) {

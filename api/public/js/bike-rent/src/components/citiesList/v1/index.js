@@ -53,7 +53,7 @@ class CitiesList extends Component {
 							redirect
 							tags={[result.tags]}
 							title={result.title}
-							url={`/cities/${result.slug}-${result.id}`}
+							url={`/cities/${result.slug}-${result.location_id}`}
 							useCard={useCards}
 						/>
 					)
