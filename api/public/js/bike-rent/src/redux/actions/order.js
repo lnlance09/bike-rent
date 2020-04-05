@@ -38,21 +38,3 @@ export const createOrder = ({
 		}
 	)
 }
-
-export const getPaymentMethods = ({ bearer }) => dispatch => {
-	request.get(
-		`${window.location.origin}/api/order/getPaymentMethods`,
-		{
-			headers: {
-				Authorization: bearer
-			},
-			json: true
-		},
-		function(err, response, body) {
-			dispatch({
-				payload: body,
-				type: constants.GET_PAYMENT_METHODS
-			})
-		}
-	)
-}

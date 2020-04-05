@@ -1,6 +1,7 @@
 export const ADD_TO_CART = "user:ADD_TO_CART"
 export const CHANGE_PASSWORD = "user:CHANGE_PASSWORD"
 export const CHANGE_PROFILE_PIC = "user:CHANGE_PROFILE_PIC"
+export const EDIT_ITEM_HOUR = "user:EDIT_ITEM_HOUR"
 export const LINK_FACEBOOK_ACCOUNT = "user:LINK_FACEBOOK_ACCOUNT"
 export const LOGOUT = "user:LOGOUT"
 export const REMOVE_FROM_CART = "user:REMOVE_FROM_CART"

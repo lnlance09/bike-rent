@@ -30,8 +30,6 @@ class CitiesList extends Component {
 	loadMore = () => {
 		if (this.props.hasMore && !this.props.loadingMore) {
 			// const newPage = parseInt(this.props.page + 1, 10)
-			this.props.toggleLoading()
-			this.props.retrieveItems()
 		}
 	}
 
@@ -98,7 +96,7 @@ class CitiesList extends Component {
 }
 
 CitiesList.propTypes = {
-	count: PropTypes.string,
+	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
 	getCities: PropTypes.func,
 	hasMore: PropTypes.bool,

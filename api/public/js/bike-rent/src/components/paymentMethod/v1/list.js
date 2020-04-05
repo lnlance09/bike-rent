@@ -115,7 +115,7 @@ class PaymentsList extends Component {
 								continuous
 								onBottomVisible={this.loadMore}
 							>
-								<List divided selection size="big">
+								<List divided relaxed="very" selection size="big">
 									<RenderItems props={this.props} />
 								</List>
 							</Visibility>

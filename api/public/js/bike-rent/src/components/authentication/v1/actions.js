@@ -16,6 +16,10 @@ export const addToCart = ({ item }) => dispatch => {
 	}
 
 	const { cart } = localData
+	const itemCount = cart.items.length
+	item.item.index = parseInt(itemCount + 1, 10)
+	item.item.hours = 1
+
 	const items = [...cart.items, item.item]
 	localData.cart = {
 		...cart,
@@ -24,7 +28,6 @@ export const addToCart = ({ item }) => dispatch => {
 
 	setToken(localData)
 	toast.success("Added to cart")
-
 	dispatch({
 		payload: localData,
 		type: constants.ADD_TO_CART
@@ -94,10 +97,57 @@ export const changeProfilePic = ({ bearer, file }) => dispatch => {
 	fr.readAsArrayBuffer(file)
 }
 
+export const editItemHour = ({ add, index, item }) => dispatch => {
+	let localData = parseJwt()
+	if (!localData) {
+		localData = defaultData
+	}
+
+	for (let i = 0; i < localData.cart.items.length; i++) {
+		const item = localData.cart.items[i]
+		if (item.index === index) {
+			if (add) {
+				localData.cart.items[i].hours++
+			}
+
+			if (!add) {
+				localData.cart.items[i].hours--
+			}
+			break
+		}
+	}
+
+	setToken(localData)
+	dispatch({
+		payload: localData,
+		type: constants.EDIT_ITEM_HOUR
+	})
+}
+
 export const logout = () => dispatch => {
 	localStorage.removeItem("jwtToken")
 	dispatch({
 		type: constants.LOGOUT
+	})
+}
+
+export const removeFromCart = ({ item }) => dispatch => {
+	let localData = parseJwt()
+	if (!localData) {
+		localData = defaultData
+	}
+
+	const { cart } = localData
+	const items = [...cart.items, item.item]
+	localData.cart = {
+		...cart,
+		items
+	}
+
+	setToken(localData)
+	dispatch({
+		payload: localData,
+		type: constants.REMOVE_FROM_CART
 	})
 }
 

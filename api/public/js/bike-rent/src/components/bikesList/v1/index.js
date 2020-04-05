@@ -37,8 +37,6 @@ class BikesList extends Component {
 	loadMore = () => {
 		if (this.props.hasMore && !this.props.loadingMore) {
 			// const newPage = parseInt(this.props.page + 1, 10)
-			this.props.toggleLoading()
-			this.props.retrieveItems()
 		}
 	}
 
@@ -145,7 +143,7 @@ BikesList.propTypes = {
 	store: PropTypes.shape({
 		address: PropTypes.string,
 		city: PropTypes.string,
-		id: PropTypes.string,
+		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		name: PropTypes.string,
 		state: PropTypes.string
 	}),

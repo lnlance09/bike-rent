@@ -15,6 +15,8 @@
   .pageHeader .languageMenu .languageContainer {
     border-bottom: solid 1px #F3F4F5;
     padding: 10px 0; }
+    .pageHeader .languageMenu .languageContainer .ui.segment.menu.transition.visible {
+      width: 340px; }
 
 .pageHeader .mobileSegment, .pageHeader .desktopSegment {
   min-height: 700px;

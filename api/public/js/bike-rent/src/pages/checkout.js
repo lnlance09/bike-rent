@@ -1,10 +1,13 @@
 import { connect, Provider } from "react-redux"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { getPaymentMethods } from "redux/actions/order"
-import { Button, Container, Divider, Grid, Header, List } from "semantic-ui-react"
-import React, { Component } from "react"
+import { editItemHour, removeFromCart } from "components/authentication/v1/actions"
+import { Button, Container, Divider, Grid, Header } from "semantic-ui-react"
+import { Link } from "react-router-dom"
+import React, { Component, Fragment } from "react"
+import Cart from "components/cart/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
+import PaymentsList from "components/paymentMethod/v1/list/"
 import PaymentMethod from "components/paymentMethod/v1/"
 import StepProcess from "components/step/v1/"
 import PropTypes from "prop-types"
@@ -18,73 +21,40 @@ class Checkout extends Component {
 		const user = currentState.user
 		const auth = user.authenticated
 		const bearer = user.bearer
-		const cart = user.data.cart
 
 		this.state = {
 			auth,
-			bearer,
-			cart
+			bearer
 		}
 	}
 
 	componentDidMount() {
-		const { auth, bearer } = this.state
-		if (auth) {
-			this.props.getPaymentMethods({ bearer })
-		}
+		
 	}
 
 	render() {
-		const { auth, bearer, cart } = this.state
-		const { methods, settings } = this.props
+		const { auth, bearer } = this.state
+		const { data, settings } = this.props
 		const { checkoutPage } = settings
+		const { cart } = data
+		const storeInfo = cart.items[0].store
+		console.log("props")
+		console.log(this.props)
+		console.log(storeInfo)
 
-		console.log("cart")
-		console.log(cart)
-
-		const RenderCart = (
-			<List relaxed="very" size="big" verticalAlign="middle">
-				{cart.items.map((item, i) => (
-					<List.Item key={`cartItem${i}`}>
-						<List.Content floated="right">
-							<Button.Group floated="right">
-								<Button
-									basic
-									color="green"
-									icon="plus"
-									// onClick={() => }
-								/>
-								<Button basic color="blue" icon="minus" />
-								<Button basic color="red" icon="trash" />
-							</Button.Group>
-						</List.Content>
-						<List.Content>
-							<List.Header>{item.bike.name}</List.Header>
-							<List.Description>{item.bike.description}</List.Description>1 hour
-						</List.Content>
-					</List.Item>
-				))}
-			</List>
+		const StoreInfo = store => (
+			<div>
+				<Header>
+					<Link to={`/stores/${store.id}`}>{store.name}</Link>
+				</Header>
+				<Header style={{ marginTop: 0 }}>
+					{store.address}
+					<Header.Subheader>
+						{store.city}, {store.state}
+					</Header.Subheader>
+				</Header>
+			</div>
 		)
-
-		const RenderMethods = () => {
-			if (auth) {
-				return methods.map((method, i) => (
-					<PaymentMethod
-						card={{
-							cvc: method.cvc,
-							expiry: {
-								month: method.exp_month,
-								year: method.exp_year
-							},
-							name: method.name,
-							number: method.number
-						}}
-						displayForm={false}
-					/>
-				))
-			}
-		}
 
 		return (
 			<Provider store={store}>
@@ -112,16 +82,44 @@ class Checkout extends Component {
 						<StepProcess activeItem="checkout" index={2} />
 						<Divider hidden />
 
-						<Header size="huge">Checkout</Header>
-						<Divider />
+						<Header dividing size="huge">Checkout</Header>
 
 						<Grid className="checkoutGrid">
-							<Grid.Column className="leftSide" width={11}>
-								{!auth && <PaymentMethod />}
-								{RenderMethods()}
+							<Grid.Column className="leftSide" width={10}>
+								{auth ? (
+									<Fragment>
+										{StoreInfo(storeInfo)}
+										<Header>Choose a payment method</Header>
+										<PaymentsList bearer={bearer} />
+									</Fragment>
+								) : (
+									<Fragment>
+										<PaymentMethod
+											showForm
+										/>
+									</Fragment>
+								)}
 							</Grid.Column>
-							<Grid.Column className="rightSide" width={5}>
-								{RenderCart}
+							<Grid.Column className="rightSide" width={6}>
+								<Cart
+									addItemHour={(index, item) => {
+										this.props.editItemHour({ add: true, index, item })
+									}}
+									items={cart.items}
+									removeFromCart={index => {
+										this.props.removeFromCart({ index })
+									}}
+									removeItemHour={(index, item) => {
+										this.props.editItemHour({ add: false, index, item })
+									}}
+								/>
+								<Divider />
+								<Button
+									color="blue"
+									content="Complete Purchase"
+									fluid
+									size="big"
+								/>
 							</Grid.Column>
 						</Grid>
 					</Container>
@@ -134,34 +132,25 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
-	getPaymentMethods: PropTypes.func,
-	methods: PropTypes.arrayOf(
-		PropTypes.shape({
-			created_at: PropTypes.string,
-			exp_month: PropTypes.string,
-			exp_year: PropTypes.string,
-			first_name: PropTypes.string,
-			last_name: PropTypes.string,
-			number: PropTypes.string,
-			preferred: PropTypes.string,
-			user_id: PropTypes.string
-		})
-	),
+	editItemHour: PropTypes.func,
+	removeFromCart: PropTypes.func,
 	settings: PropTypes.object
 }
 
 Checkout.defaultProps = {
-	getPaymentMethods,
-	methods: []
+	editItemHour,
+	removeFromCart
 }
 
 const mapStateToProps = (state, ownProps) => {
 	return {
 		...state.order,
+		...state.user,
 		...ownProps
 	}
 }
 
 export default connect(mapStateToProps, {
-	getPaymentMethods
+	editItemHour,
+	removeFromCart
 })(Checkout)

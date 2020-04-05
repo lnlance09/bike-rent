@@ -18,12 +18,6 @@ const order = (state = initial(), action) => {
 				...state
 			}
 
-		case constants.GET_PAYMENT_METHODS:
-			return {
-				...state,
-				methods: payload.methods
-			}
-
 		default:
 			return state
 	}

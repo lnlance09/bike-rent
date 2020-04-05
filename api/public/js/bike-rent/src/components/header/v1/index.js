@@ -9,8 +9,6 @@ import {
 	Header,
 	Icon,
 	Image,
-	Label,
-	List,
 	Menu,
 	Placeholder,
 	Responsive,
@@ -19,10 +17,10 @@ import {
 	Visibility
 } from "semantic-ui-react"
 import React, { Component } from "react"
-import _ from "lodash"
 import ImagePic from "images/avatar/default-profile.jpg"
 import Logo from "./images/logo.svg"
 import PropTypes from "prop-types"
+import SubHeader from "./subheader"
 import store from "store"
 
 const getWidth = () => {
@@ -65,18 +63,14 @@ class AppHeader extends Component {
 
 	handleChange = date => this.setState({ startDate: date })
 
-	handleSidebarHide = () => this.setState({ sidebarOpened: false })
-
-	handleToggle = () => this.setState({ sidebarOpened: true })
-
-	hideFixedMenu = () => this.setState({ fixed: false })
-
 	onLogout = () => {
 		this.props.logout()
 		window.location.reload()
 	}
 
-	showFixedMenu = () => this.setState({ fixed: true })
+	toggleFixedMenu = () => this.setState({ fixed: !this.state.fixed })
+
+	toggleSidebar = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
 
 	render() {
 		const { fixed, sidebarOpened } = this.state
@@ -98,65 +92,6 @@ class AppHeader extends Component {
 			signUpButton
 		} = this.props
 		const { cart, user } = data
-
-		const CartDropdown = (
-			<Menu.Menu position="right">
-				<Dropdown
-					pointing="top"
-					trigger={
-						<span>
-							{cart.items !== undefined && (
-								<Label circular color="olive" style={{ marginRight: "8px" }}>
-									{cart.items.length}
-								</Label>
-							)}{" "}
-							Your cart
-						</span>
-					}
-				>
-					<Dropdown.Menu as={Segment} style={{ padding: "16px" }}>
-						<List relaxed="very" size="large">
-							<List.Item>
-								<b>Total</b>
-							</List.Item>
-							<List.Item>
-								$
-								{_.sumBy(cart.items, item => {
-									if (item.bike !== undefined) {
-										return parseInt(item.bike.hourlyRate, 10)
-									}
-								})}
-							</List.Item>
-						</List>
-
-						<Dropdown.Divider />
-
-						<Button
-							color="blue"
-							content="View details"
-							fluid
-							onClick={() => this.props.history.push("/checkout")}
-						/>
-					</Dropdown.Menu>
-				</Dropdown>
-			</Menu.Menu>
-		)
-
-		const LanguageSelection = (
-			<Dropdown
-				className="languageMenu"
-				defaultValue="English"
-				inline
-				pointing="top"
-				text={language}
-			>
-				<Dropdown.Menu>
-					{languages.map(item => (
-						<Dropdown.Item key={item} text={item} value={item} />
-					))}
-				</Dropdown.Menu>
-			</Dropdown>
-		)
 
 		const LoginButton = props => {
 			if (props.authenticated) {
@@ -230,8 +165,8 @@ class AppHeader extends Component {
 		const DesktopHeader = (
 			<Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
 				<Visibility
-					onBottomPassed={this.showFixedMenu}
-					onBottomPassedReverse={this.hideFixedMenu}
+					onBottomPassed={this.toggleFixedMenu}
+					onBottomPassedReverse={this.toggleFixedMenu}
 					once={false}
 				>
 					<Segment
@@ -278,12 +213,7 @@ class AppHeader extends Component {
 								{LoginButton(this.props)}
 							</Container>
 						</Menu>
-						<Menu className="languageMenu">
-							<Container className="languageContainer">
-								{LanguageSelection}
-								{CartDropdown}
-							</Container>
-						</Menu>
+						<SubHeader history={this.props.history} items={cart.items} language={language} languages={languages} />
 						{showMainContent && (
 							<HeroContent
 								backgroundImage={backgroundImage}
@@ -330,7 +260,7 @@ class AppHeader extends Component {
 									/>
 									<span className="logoText">Bike Rent</span>
 								</Menu.Item>
-								<Menu.Item position="right" onClick={this.handleToggle}>
+								<Menu.Item position="right" onClick={this.toggleSidebar}>
 									<Icon name="sidebar" size="large" />
 								</Menu.Item>
 							</Menu>
@@ -359,7 +289,7 @@ class AppHeader extends Component {
 					animation="push"
 					as={Menu}
 					color={backgroundColor}
-					onHide={this.handleSidebarHide}
+					onHide={this.toggleSidebar}
 					size="large"
 					vertical
 					visible={sidebarOpened}

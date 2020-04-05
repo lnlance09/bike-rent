@@ -28,6 +28,7 @@ const user = (state = initial(), action) => {
 
 	switch (action.type) {
 		case constants.ADD_TO_CART:
+		case constants.EDIT_ITEM_HOUR:
 			return {
 				...state,
 				data: payload

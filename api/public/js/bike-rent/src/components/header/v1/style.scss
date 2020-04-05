@@ -15,6 +15,10 @@
 		.languageContainer {
 			border-bottom: solid 1px $darkWhite;
 			padding: 10px 0;
+
+			.ui.segment.menu.transition.visible {
+				width: 340px;
+			}
 		}
 	}
 

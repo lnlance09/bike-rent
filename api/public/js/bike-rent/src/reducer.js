@@ -6,6 +6,7 @@ import blogs from "components/blogsList/v1/reducer"
 import cities from "components/citiesList/v1/reducer"
 import city from "redux/reducers/city"
 import library from "redux/reducers/library"
+import order from "redux/reducers/order"
 import orders from "components/ordersList/v1/reducer"
 import payments from "components/paymentMethod/v1/reducer"
 import reviews from "components/reviewsList/v1/reducer"
@@ -21,6 +22,7 @@ export default combineReducers({
 	cities,
 	city,
 	library,
+	order,
 	orders,
 	payments,
 	reviews,
