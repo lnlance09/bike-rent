@@ -16,17 +16,14 @@ class Users extends CI_Controller {
 
 	public function addPaymentMethod() {
 		$cvc = $this->input->post('cvc');
+		$email = $this->input->post('email');
+		$emailRequired = $this->input->post('emailRequired');
 		$expiry = $this->input->post('expiry');
 		$name = $this->input->post('name');
 		$number = $this->input->post('number');
 
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must login to add a payment method'
-			]);
-			exit;
-		}
+		$user_id = $user ? $user->id : null;
 
 		$cardType = checkCreditCard($number);
 		if (!$cardType) {
@@ -74,18 +71,51 @@ class Users extends CI_Controller {
 			exit;
 		}
 
-		$this->users->addPaymentMethod([
+		if ($emailRequired && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			echo json_encode([
+				'error' => 'Please enter a valid email'
+			]);
+			exit;
+		}
+
+		if (!$user) {
+			$_user = $this->users->userLookupByEmail($email);
+
+			if (!$_user) {
+				$register = $this->users->register([
+					'email' => $email,
+					'name' => $name,
+					'password' => 'bikerentnyc',
+					'username' => $this->users->generateUsername($name),
+					'verification_code' => generateAlphaNumString(10)
+				]);
+
+				if ($register['error']) {
+					echo json_encode([
+						'error' => $register['msg']
+					]);
+					exit;
+				}
+
+				$user_id = $register['user']['id'];
+			} else {
+				$user_id = $_user['id'];
+			}
+		}
+
+		$paymentId = $this->users->addPaymentMethod([
 			'cvc' => $cvc,
 			'exp_month' => $month,
 			'exp_year' => $year,
 			'name' => $name,
 			'number' => $number,
 			'type' => $cardType,
-			'user_id' => $user->id
+			'user_id' => $user_id
 		]);
 
 		echo json_encode([
-			'error' => false
+			'error' => false,
+			'paymentId' => $paymentId
 		]);
 	}
 
@@ -360,14 +390,6 @@ class Users extends CI_Controller {
 		}
 
 		$register = $this->users->register($params);
-
-		if (!$register) {
-			echo json_encode([
-				'error' => 'Something went wrong. Please try again.'
-			]);
-			exit;
-		}
-
 		if ($register['error']) {
 			echo json_encode([
 				'error' => $register['msg']

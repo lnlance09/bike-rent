@@ -7,9 +7,15 @@ import PropTypes from "prop-types"
 class Cart extends Component {
 	render() {
 		const { editable, items, showCheckoutBtn, showPrices, size, taxRate } = this.props
-		const subtotal = items.map(item => item.hours * item.bike.hourlyRate).reduce((a, b) => a + b)
-		const tax = (subtotal*taxRate).toFixed(2)
-		const total = parseFloat(subtotal)+parseFloat(tax)
+		let subtotal = 0
+		let tax = 0
+		let total = 0
+
+		if (items.length > 0) {
+			subtotal = items.map(item => item.hours * item.bike.hourlyRate).reduce((a, b) => a + b)
+			tax = (subtotal * taxRate).toFixed(2)
+			total = parseFloat(subtotal) + parseFloat(tax)
+		}
 
 		return (
 			<div className="cart">
@@ -23,13 +29,11 @@ class Cart extends Component {
 										<Button.Group floated="right">
 											<Button
 												basic
-												color="green"
 												icon="plus"
 												onClick={() => this.props.addItemHour(index, item)}
 											/>
 											<Button
 												basic
-												color="blue"
 												icon="minus"
 												onClick={() =>
 													this.props.removeItemHour(index, item)
@@ -37,7 +41,6 @@ class Cart extends Component {
 											/>
 											<Button
 												basic
-												color="red"
 												icon="trash"
 												onClick={() => this.props.removeItem(index)}
 											/>
@@ -46,7 +49,7 @@ class Cart extends Component {
 								)}
 								{showPrices && (
 									<List.Content floated="right">
-										${hours*bike.hourlyRate}
+										${hours * bike.hourlyRate}
 									</List.Content>
 								)}
 								<List.Content>
@@ -63,27 +66,21 @@ class Cart extends Component {
 					{showPrices && (
 						<Fragment>
 							<List.Item>
-								<List.Content floated="right">
-									${subtotal}
-								</List.Content>
+								<List.Content floated="right">${subtotal}</List.Content>
 								<List.Content>
 									<List.Header>Subtotal</List.Header>
 								</List.Content>
 							</List.Item>
 
 							<List.Item>
-								<List.Content floated="right">
-									${tax}
-								</List.Content>
+								<List.Content floated="right">${tax}</List.Content>
 								<List.Content>
 									<List.Header>Tax</List.Header>
 								</List.Content>
 							</List.Item>
 
 							<List.Item>
-								<List.Content floated="right">
-									${total}
-								</List.Content>
+								<List.Content floated="right">${total}</List.Content>
 								<List.Content>
 									<List.Header>Total</List.Header>
 								</List.Content>

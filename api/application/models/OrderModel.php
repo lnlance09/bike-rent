@@ -10,17 +10,90 @@ class OrderModel extends CI_Model {
 	}
 
 	public function create($data) {
-		$this->db->insert($this->tables, $data);
+		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
 	}
 
 	public function get($id) {
 		$this->db->select('');
 		$this->db->where('id', $id);
-		$result = $this->db->get('blog_posts')->result_array();
+		$result = $this->db->get($this->table)->result_array();
 	}
 
 	public function getAll($where, $sort) {
 		
+	}
+
+	public function getOrderData($cart, $storeId) {
+		$bikes = [];
+		$array = [];
+
+		for ($i=0;$i<count($cart['items']);$i++) {
+			$item = $cart['items'][$i];
+			$bike = $item['bike'];
+			$store = $item['store'];
+			$hour = $item['hours'];
+			$bikeId = $bike['id'];
+
+			if ($store['id'] == $storeId) {
+				$array[] = [
+					'bike_id' => $bikeId,
+					'hours' => $hour
+				];
+				$bikes[] = $bikeId;
+			}
+		}
+
+		usort($array, function($a, $b) {
+			return $a['bike_id'] <=> $b['bike_id'];
+		});
+
+		$prices = $this->getBikePrices(array_unique($bikes));
+
+		$final = [];
+		$subtotal = 0;
+
+		for ($i=0;$i<count($array);$i++) {
+			$bike_id = $array[$i]['bike_id'];
+			$hours = $array[$i]['hours'];
+
+			for ($x=0;$x<count($prices);$x++) {
+				if ($bike_id == $prices[$x]['id']) {
+					$price = $hours*$prices[$x]['hourlyRate'];
+					$subtotal = $subtotal+$price;
+
+					$final[] = [
+						'bikeId' => $bike_id,
+						'hours' => $hours,
+						'image' => $prices[$x]['image'],
+						'name' => $prices[$x]['name'],
+						'price' => $price
+					];
+					break;
+				}
+			}
+		}
+
+		$tax = round($subtotal*0.0875, 2);
+		$total = $subtotal+$tax;
+
+		return [
+			'items' => $final,
+			'subtotal' => $subtotal,
+			'tax' => $tax,
+			'total' => $total
+		];
+	}
+
+	public function getBikePrices($bikes) {
+		$select = "s.id AS storeId, sb.hourly_rate AS hourlyRate, sb.id, sb.quantity, b.description, b.image, b.name";
+
+		$this->db->select($select);
+		$this->db->join('bikes b', 'sb.bike_id = b.id');
+		$this->db->join('stores s', 'sb.store_id = s.id');
+		$this->db->where_in('sb.id', $bikes);
+		$results = $this->db->get('store_bikes sb')->result_array();
+		return $results;
 	}
 
 	public function getPayPalToken() {
@@ -41,6 +114,16 @@ class OrderModel extends CI_Model {
 
 		$decode = @json_decode($data, true);
 		return $decode->access_token;
+	}
+
+	public function insertOrderDetails($items, $orderId) {
+		for ($i=0;$i<count($items);$i++) {
+			$this->db->insert('order_details', [
+				'bike_id' => $items[$i]['bikeId'],
+				'hours' => $items[$i]['hours'],
+				'order_id' => $orderId
+			]);
+		}
 	}
 
 	public function makePurchase(

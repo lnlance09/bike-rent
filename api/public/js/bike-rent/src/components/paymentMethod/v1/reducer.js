@@ -12,7 +12,8 @@ const payments = (state = initial(), action) => {
 			return {
 				...state,
 				error: payload.error ? true : false,
-				errorMsg: payload.error
+				errorMsg: payload.error,
+				paymentId: payload.paymentId
 			}
 
 		case constants.GET_PAYMENTS:

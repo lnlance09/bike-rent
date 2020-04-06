@@ -37,5 +37,6 @@ export const GET_IMAGES = "library:GET_IMAGES"
 export const TOGGLE_ADD_IMAGE_MODAL = "library:TOGGLE_ADD_IMAGE_MODAL"
 
 export const CREATE_ORDER = "order:CREATE_ORDER"
+export const TOGGLE_CONFIRMATION_MODAL = "order:TOGGLE_CONFIRMATION_MODAL"
 
 export const GET_STORE = "store:GET_STORE"

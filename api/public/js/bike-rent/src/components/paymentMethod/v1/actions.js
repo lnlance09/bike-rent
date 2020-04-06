@@ -7,12 +7,23 @@ toast.configure({
 	draggable: false
 })
 
-export const addPayment = ({ bearer, callback, cvc, expiry, name, number }) => dispatch => {
+export const addPayment = ({
+	bearer,
+	callback,
+	cvc,
+	email,
+	emailRequired,
+	expiry,
+	name,
+	number
+}) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/users/addPaymentMethod`,
 		{
 			form: {
 				cvc,
+				email,
+				emailRequired,
 				expiry,
 				name,
 				number
@@ -31,7 +42,7 @@ export const addPayment = ({ bearer, callback, cvc, expiry, name, number }) => d
 			if (!body.error) {
 				toast.success("Your card has been added")
 				dispatch(getPayments({ bearer }))
-				callback()
+				callback(body.paymentId, email)
 			}
 		}
 	)

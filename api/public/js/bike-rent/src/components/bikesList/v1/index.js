@@ -54,7 +54,7 @@ class BikesList extends Component {
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {
-				const { description, hourlyRate, id, image, meta, name } = result
+				const { bike_id, description, hourlyRate, id, image, meta, name } = result
 				if (id) {
 					return (
 						<ResultItem
@@ -79,7 +79,7 @@ class BikesList extends Component {
 							redirect
 							// tags={[result.tags]}
 							title={name}
-							url={`/bikes/${id}`}
+							url={`/bikes/${bike_id}`}
 							useCard={useCards}
 						/>
 					)

@@ -1,10 +1,23 @@
 import { connect, Provider } from "react-redux"
 import { DisplayMetaTags } from "utils/metaFunctions"
+import { createOrder, toggleConfirmationModal } from "redux/actions/order"
 import { editItemHour, removeFromCart } from "components/authentication/v1/actions"
-import { Button, Container, Divider, Grid, Header } from "semantic-ui-react"
+import {
+	Button,
+	Container,
+	Divider,
+	Grid,
+	Header,
+	Message,
+	Modal,
+	Segment,
+	Transition
+} from "semantic-ui-react"
 import { Link } from "react-router-dom"
 import React, { Component, Fragment } from "react"
 import Cart from "components/cart/v1/"
+import Confetti from "react-confetti"
+import MapBox from "components/mapBox/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PaymentsList from "components/paymentMethod/v1/list/"
@@ -24,35 +37,79 @@ class Checkout extends Component {
 
 		this.state = {
 			auth,
-			bearer
+			bearer,
+			email: "",
+			paymentId: null,
+			showForm: true
 		}
 	}
 
-	componentDidMount() {
-		
-	}
+	componentDidMount() {}
+
+	setEmail = email => this.setState({ email: email })
+
+	setPaymentId = id => this.setState({ paymentId: id })
+
+	toggleForm = () => this.setState({ showForm: !this.state.showForm })
 
 	render() {
-		const { auth, bearer } = this.state
-		const { data, settings } = this.props
+		const { auth, bearer, email, paymentId, showForm } = this.state
+		const { data, order, settings } = this.props
 		const { checkoutPage } = settings
 		const { cart } = data
-		const storeInfo = cart.items[0].store
-		console.log("props")
-		console.log(this.props)
-		console.log(storeInfo)
+		const cartEmpty = cart.items.length === 0
+		const storeInfo = !cartEmpty ? cart.items[0].store : {}
+		console.log("checkout")
+		console.log(this.state)
+
+		const ConfirmationModal = (
+			<Transition animation="zoom" duration={500} visible={order.confirmationModalOpen}>
+				<Modal
+					centered={false}
+					className="confirmationModal"
+					closeIcon
+					onClose={() => window.location.reload()}
+					open={order.confirmationModalOpen}
+					size="large"
+				>
+					<Modal.Header>Congratulations</Modal.Header>
+					<Modal.Content>
+						<Modal.Description>
+							Check your email for a confirmation at {email}
+						</Modal.Description>
+					</Modal.Content>
+				</Modal>
+			</Transition>
+		)
 
 		const StoreInfo = store => (
 			<div>
-				<Header>
+				<Header style={{ marginBottom: 0 }}>
 					<Link to={`/stores/${store.id}`}>{store.name}</Link>
 				</Header>
-				<Header style={{ marginTop: 0 }}>
+				<Header size="small" style={{ marginTop: 0 }}>
 					{store.address}
 					<Header.Subheader>
 						{store.city}, {store.state}
 					</Header.Subheader>
 				</Header>
+				{storeInfo.lat > 0 && (
+					<MapBox
+						height="300px"
+						lat={storeInfo.lat}
+						lng={storeInfo.lon}
+						markerId={storeInfo.id}
+						markers={[
+							{
+								id: storeInfo.id,
+								lat: storeInfo.lat,
+								lon: storeInfo.lon
+							}
+						]}
+						width="100%"
+						zoom={12}
+					/>
+				)}
 			</div>
 		)
 
@@ -82,22 +139,50 @@ class Checkout extends Component {
 						<StepProcess activeItem="checkout" index={2} />
 						<Divider hidden />
 
-						<Header dividing size="huge">Checkout</Header>
+						<Header dividing size="huge">
+							Checkout
+						</Header>
 
-						<Grid className="checkoutGrid">
+						<Grid className="checkoutGrid" stackable>
 							<Grid.Column className="leftSide" width={10}>
-								{auth ? (
+								{!cartEmpty ? (
 									<Fragment>
 										{StoreInfo(storeInfo)}
-										<Header>Choose a payment method</Header>
-										<PaymentsList bearer={bearer} />
+
+										{auth && (
+											<Fragment>
+												<Header>Choose a payment method</Header>
+												<PaymentsList
+													bearer={bearer}
+													onClick={id => this.setPaymentId(id)}
+												/>
+											</Fragment>
+										)}
+
+										<Divider horizontal section>
+											Add a card
+										</Divider>
+
+										<Segment>
+											<PaymentMethod
+												bearer={bearer}
+												buttonText="Use this card"
+												callback={(id, email) => {
+													this.setPaymentId(id)
+													this.setEmail(email)
+													this.toggleForm()
+												}}
+												displayForm={showForm}
+												showEmailInput={!auth}
+											/>
+										</Segment>
 									</Fragment>
 								) : (
-									<Fragment>
-										<PaymentMethod
-											showForm
-										/>
-									</Fragment>
+									<Segment placeholder>
+										<Header icon size="large">
+											Your cart is empty
+										</Header>
+									</Segment>
 								)}
 							</Grid.Column>
 							<Grid.Column className="rightSide" width={6}>
@@ -117,12 +202,26 @@ class Checkout extends Component {
 								<Button
 									color="blue"
 									content="Complete Purchase"
+									disabled={cartEmpty}
 									fluid
+									onClick={() => {
+										this.props.createOrder({
+											cart,
+											email,
+											paymentId,
+											storeId: storeInfo.id
+										})
+									}}
 									size="big"
 								/>
+								{order.error && <Message content={order.errorMsg} error />}
 							</Grid.Column>
 						</Grid>
 					</Container>
+
+					{ConfirmationModal}
+
+					{order.confirmationModalOpen && <Confetti />}
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
@@ -132,14 +231,28 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
+	createOrder: PropTypes.func,
 	editItemHour: PropTypes.func,
+	order: PropTypes.shape({
+		confirmationModalOpen: PropTypes.bool,
+		error: PropTypes.bool,
+		errorMsg: PropTypes.string
+	}),
 	removeFromCart: PropTypes.func,
-	settings: PropTypes.object
+	settings: PropTypes.object,
+	toggleConfirmationModal: PropTypes.func
 }
 
 Checkout.defaultProps = {
+	createOrder,
 	editItemHour,
-	removeFromCart
+	order: {
+		confirmationModalOpen: false,
+		error: false,
+		errorMsg: ""
+	},
+	removeFromCart,
+	toggleConfirmationModal
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -151,6 +264,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(mapStateToProps, {
+	createOrder,
 	editItemHour,
-	removeFromCart
+	removeFromCart,
+	toggleConfirmationModal
 })(Checkout)

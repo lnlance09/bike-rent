@@ -192,6 +192,8 @@ class Stores extends Component {
 							address: _store.address,
 							city: _store.city,
 							id: _store.id,
+							lat: _store.lat,
+							lon: _store.lon,
 							name: _store.name,
 							state: _store.state
 						}}
@@ -217,12 +219,83 @@ class Stores extends Component {
 
 		const SingleStore = props => {
 			const { avgRating, description, id, image, lat, lon, name, reviewCount } = props.store
+
+			const LeftColumn = (
+				<Fragment>
+					<Header dividing size="huge">
+						{name}
+						{id && (
+							<Header.Subheader>
+								<Rating
+									defaultRating={avgRating}
+									disabled
+									icon="star"
+									maxRating={5}
+								/>{" "}
+								{reviewCount} {formatPlural(reviewCount, "review")}
+							</Header.Subheader>
+						)}
+					</Header>
+
+					{id ? (
+						<Image fluid rounded src={image} />
+					) : (
+						<Placeholder fluid>
+							<Placeholder.Image square />
+						</Placeholder>
+					)}
+
+					<Divider hidden />
+
+					<Header>About this business</Header>
+					<p>{description}</p>
+				</Fragment>
+			)
+
+			const RightColumn = name ? (
+				<div style={{ width: "100%" }}>
+					<MapBox height="280px" lat={lat} lng={lon} width="100%" />
+					<Divider hidden />
+
+					<div>{StoreList(props)}</div>
+					<Divider hidden />
+
+					<Button
+						color="blue"
+						content="Leave a review"
+						fluid
+						icon="star"
+						onClick={this.toggleModal}
+					/>
+					<Divider />
+					<Button
+						color="olive"
+						content="Proceed to checkout"
+						fluid
+						icon="cart"
+						onClick={() => this.props.history.push("/checkout")}
+					/>
+				</div>
+			) : (
+				<Placeholder fluid>
+					<Placeholder.Image square />
+				</Placeholder>
+			)
+
 			return (
 				<Fragment>
 					<Responsive maxWidth={1024}>
-						<Grid className="storeGrid">
-							<Grid.Row></Grid.Row>
-							<Grid.Row></Grid.Row>
+						<Grid className="storeGrid" stackable>
+							<Grid.Row>
+								{LeftColumn}
+								<Divider hidden />
+							</Grid.Row>
+							<Grid.Row>{RightColumn}</Grid.Row>
+							<Grid.Row>
+								<Divider hidden section />
+								{StoreMenu(props)}
+								{StoreMenuContent(props)}
+							</Grid.Row>
 						</Grid>
 					</Responsive>
 
@@ -232,72 +305,13 @@ class Stores extends Component {
 
 						<Grid className="storeGrid">
 							<Grid.Column className="leftSide" width={11}>
-								<Header dividing size="huge">
-									{name}
-									{id && (
-										<Header.Subheader>
-											<Rating
-												defaultRating={avgRating}
-												disabled
-												icon="star"
-												maxRating={5}
-											/>{" "}
-											{reviewCount} {formatPlural(reviewCount, "review")}
-										</Header.Subheader>
-									)}
-								</Header>
-
-								{id ? (
-									<Image fluid rounded src={image} />
-								) : (
-									<Placeholder fluid>
-										<Placeholder.Image square />
-									</Placeholder>
-								)}
-
-								<Divider hidden />
-
-								<div>
-									<Header>About this business</Header>
-									<p>{description}</p>
-
-									<Divider hidden section />
-
-									{StoreMenu(props)}
-
-									{StoreMenuContent(props)}
-								</div>
+								{LeftColumn}
+								<Divider hidden section />
+								{StoreMenu(props)}
+								{StoreMenuContent(props)}
 							</Grid.Column>
 							<Grid.Column className="rightSide" width={5}>
-								{name ? (
-									<div>
-										<MapBox height="280px" lat={lat} lng={lon} width="100%" />
-										<Divider hidden />
-
-										<div>{StoreList(props)}</div>
-										<Divider hidden />
-
-										<Button
-											color="blue"
-											content="Leave a review"
-											fluid
-											icon="star"
-											onClick={this.toggleModal}
-										/>
-										<Divider />
-										<Button
-											color="olive"
-											content="Proceed to checkout"
-											fluid
-											icon="cart"
-											onClick={() => this.props.history.push("/checkout")}
-										/>
-									</div>
-								) : (
-									<Placeholder fluid>
-										<Placeholder.Image square />
-									</Placeholder>
-								)}
+								{RightColumn}
 							</Grid.Column>
 						</Grid>
 					</Responsive>

@@ -17,29 +17,53 @@ class Order extends CI_Controller {
 
 	public function create() {
 		$cart = $this->input->post('cart');
-		$cvc = $this->input->post('cvc');
 		$email = $this->input->post('email');
-		$expiry = $this->input->post('expiry');
-		$firstName = $this->input->post('firstName');
-		$lastName = $this->input->post('lastName');
-		$name = $this->input->post('cardName');
-		$number = $this->input->post('cardNumber');
+		$paymentId = $this->input->post('paymentId');
 		$storeId = $this->input->post('storeId');
-		$type = $this->input->post('cardType');
+		$user = $this->user;
 
-		$exp = explode("/", $expiry);
-		$expMonth = $exp[0];
-		$expYear = end($exp);
+		$card = $this->users->getPaymentMethod($paymentId);
+		if (!$card) {
+			echo json_encode([
+				'error' => 'Please select a payment method'
+			]);
+			exit;
+		}
 
-		$createOrder = $this->order->create([
-			'amount_after_tax' => $amountAfterTax,
-			'amount_before_tax' => $amountBeforeTax,
-			'payment_method' => $paymentMethod,
+		if ($card['email'] !== $email && !$user) {
+			echo json_encode([
+				'error' => 'Please select a payment method'
+			]);
+			exit;
+		}
+
+		if ($user ? $card['user_id'] != $user->id : false) {
+			echo json_encode([
+				'error' => 'Please select a payment method'
+			]);
+			exit;
+		}
+
+		if (!is_array($cart) || empty($cart)) {
+			echo json_encode([
+				'error' => 'Your cart is empty'
+			]);
+			exit;
+		}
+
+		$orderData = $this->order->getOrderData($cart, $storeId);
+		$orderId = $this->order->create([
+			'amount_after_tax' => $orderData['total'],
+			'amount_before_tax' => $orderData['subtotal'],
+			'payment_method' => $paymentId,
 			'store_id' => $storeId,
-			'tax' => $tax
+			'tax' => $orderData['tax']
 		]);
 
 
+		$this->order->insertOrderDetails($orderData['items'], $orderId);
+
+		/*
 		$payPalToken = $this->order->getPayPalToken();
 		if (empty($payPalToken)) {
 			echo json_encode([
@@ -59,6 +83,12 @@ class Order extends CI_Controller {
 			$total,
 			$token
 		);
+		*/
+
+		echo json_encode([
+			'error' => false,
+			'orderId' => $orderId
+		]);
 	}
 
 	public function getPaymentMethods() {

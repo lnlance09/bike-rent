@@ -2,7 +2,7 @@ import "./style.css"
 import { adjustTimezone } from "utils/dateFunctions"
 import { getPayments, makeDefault } from "./actions"
 import { connect, Provider } from "react-redux"
-import { Header, List, Radio, Segment, Visibility } from "semantic-ui-react"
+import { Header, Icon, List, Radio, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
 import LazyLoad from "components/lazyLoad/v1/"
 import Moment from "react-moment"
@@ -40,11 +40,14 @@ class PaymentsList extends Component {
 	}
 
 	render() {
-		const { bearer, emptyMsgContent, results } = this.props
+		const { activeItem } = this.state
+		const { bearer, canMakeDefault, emptyMsgContent, results } = this.props
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {
 				const { created_at, id, number, preferred, type } = result
+				const showCheckmark = activeItem === i && !canMakeDefault
+
 				if (id) {
 					let icon = "credit card"
 					if (type === "Mastercard") {
@@ -64,7 +67,19 @@ class PaymentsList extends Component {
 					}
 
 					return (
-						<List.Item>
+						<List.Item
+							active={activeItem === i}
+							onClick={() => {
+								this.setState({ activeItem: i }, () => {
+									props.onClick(result.id)
+								})
+							}}
+						>
+							{showCheckmark && (
+								<List.Content floated="right">
+									<Icon color="green" name="checkmark" />
+								</List.Content>
+							)}
 							<List.Icon
 								color="blue"
 								name={icon}
@@ -82,19 +97,21 @@ class PaymentsList extends Component {
 										fromNow
 										interval={60000}
 									/>
-									<span style={{ marginLeft: "20px" }}>
-										<Radio
-											checked={preferred === "1"}
-											label="Make default"
-											name="defaultCreditCard"
-											onChange={() => {
-												this.props.makeDefault({
-													bearer,
-													id
-												})
-											}}
-										/>
-									</span>
+									{canMakeDefault && (
+										<span style={{ marginLeft: "16px" }}>
+											<Radio
+												checked={preferred === "1"}
+												label="Make default"
+												name="defaultCreditCard"
+												onChange={() => {
+													this.props.makeDefault({
+														bearer,
+														id
+													})
+												}}
+											/>
+										</span>
+									)}
 								</List.Description>
 							</List.Content>
 						</List.Item>
@@ -135,19 +152,23 @@ class PaymentsList extends Component {
 
 PaymentsList.propTypes = {
 	bearer: PropTypes.string,
+	canMakeDefault: PropTypes.bool,
 	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
 	getPayments: PropTypes.func,
 	history: PropTypes.object,
 	makeDefault: PropTypes.func,
+	onClick: PropTypes.func,
 	results: PropTypes.array
 }
 
 PaymentsList.defaultProps = {
+	canMakeDefault: false,
 	count: 10,
 	emptyMsgContent: "You haven't added any payment methods",
 	getPayments,
 	makeDefault,
+	onClick: () => null,
 	results: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 }
 

@@ -19,6 +19,7 @@ class PaymentMethod extends Component {
 			cardName: card.name,
 			cardNumber: card.number,
 			cvc: card.cvc,
+			email: "",
 			expiry: `${card.expiry.month}${card.expiry.year}`,
 			focus: ""
 		}
@@ -32,10 +33,12 @@ class PaymentMethod extends Component {
 
 	onChangeCvc = (e, { value }) => this.setState({ cvc: value })
 
+	onChangeEmail = (e, { value }) => this.setState({ email: value })
+
 	onChangeExpiry = e => this.setState({ expiry: e.target.rawValue })
 
 	render() {
-		const { cardName, cardNumber, cvc, expiry, focus } = this.state
+		const { cardName, cardNumber, cvc, email, expiry, focus } = this.state
 		const {
 			bearer,
 			buttonText,
@@ -43,8 +46,11 @@ class PaymentMethod extends Component {
 			displayCard,
 			displayForm,
 			error,
-			errorMsg
+			errorMsg,
+			formSize,
+			showEmailInput
 		} = this.props
+		const emailRequired = showEmailInput ? 1 : 0
 
 		return (
 			<Provider store={store}>
@@ -59,7 +65,7 @@ class PaymentMethod extends Component {
 						/>
 					)}
 					{displayForm && (
-						<Form as={Segment}>
+						<Form as={Segment} size={formSize}>
 							<Form.Field>
 								<Cleave
 									name="number"
@@ -101,21 +107,38 @@ class PaymentMethod extends Component {
 									/>
 								</Form.Field>
 							</Form.Group>
+							{showEmailInput && (
+								<Form.Field>
+									<Input
+										icon="mail"
+										iconPosition="left"
+										name="email"
+										onChange={this.onChangeEmail}
+										placeholder="Email"
+										value={email}
+									/>
+								</Form.Field>
+							)}
 							{displayButton && (
 								<Button
 									color="blue"
 									content={buttonText}
 									fluid
 									onClick={() => {
-										this.props.addPayment({
-											bearer,
-											callback: this.props.callback,
-											cvc,
-											expiry,
-											name: cardName,
-											number: cardNumber
+										this.setState({ focus: "name" }, () => {
+											this.props.addPayment({
+												bearer,
+												callback: this.props.callback,
+												cvc,
+												email,
+												emailRequired,
+												expiry,
+												name: cardName,
+												number: cardNumber
+											})
 										})
 									}}
+									size={formSize}
 								/>
 							)}
 						</Form>
@@ -145,12 +168,15 @@ PaymentMethod.propTypes = {
 	displayCard: PropTypes.bool,
 	displayForm: PropTypes.bool,
 	error: PropTypes.bool,
-	errorMsg: PropTypes.string
+	errorMsg: PropTypes.string,
+	formSize: PropTypes.string,
+	showEmailInput: PropTypes.bool
 }
 
 PaymentMethod.defaultProps = {
 	addPayment,
 	buttonText: "Checkout",
+	callback: () => null,
 	card: {
 		cvc: "",
 		expiry: {
@@ -163,7 +189,9 @@ PaymentMethod.defaultProps = {
 	displayButton: true,
 	displayCard: true,
 	displayForm: true,
-	error: false
+	error: false,
+	formSize: "big",
+	showEmailInput: false
 }
 
 const mapStateToProps = (state, ownProps) => {

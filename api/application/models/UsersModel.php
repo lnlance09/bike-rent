@@ -10,6 +10,7 @@ class UsersModel extends CI_Model {
 
 	public function addPaymentMethod($data) {
 		$this->db->insert('payment_methods', $data);
+		return $this->db->insert_id();
 	}
 
 	public function createUser($data) {
@@ -41,9 +42,10 @@ class UsersModel extends CI_Model {
 	}
 
 	public function getPaymentMethod($id) {
-		$this->db->select('created_at, cvc, exp_month, exp_year, id, name, number, preferred, type, user_id');
-		$this->db->where('id', $id);
-		$result = $this->db->get('payment_methods')->result_array();
+		$this->db->select('pm.created_at, pm.cvc, pm.exp_month, pm.exp_year, pm.id, pm.name, pm.number, pm.preferred, pm.type, pm.user_id, u.email');
+		$this->db->join('users u', 'pm.user_id = u.id');
+		$this->db->where('pm.id', $id);
+		$result = $this->db->get('payment_methods pm')->result_array();
 		if (empty($result)) {
 			return false;
 		}
@@ -54,6 +56,7 @@ class UsersModel extends CI_Model {
 	public function getPaymentMethods($id) {
 		$this->db->select('created_at, cvc, exp_month, exp_year, id, name, number, preferred, type, user_id');
 		$this->db->where('user_id', $id);
+		$this->db->order_by('created_at DESC');
 		$results = $this->db->get('payment_methods')->result_array();
 		return $results;
 	}
@@ -155,7 +158,10 @@ class UsersModel extends CI_Model {
 			];
 		}
 
-		return false;
+		return [
+			'error' => true,
+			'msg' => ''
+		];
 	}
 
 	public function search($q, $where, $page = 0, $just_count = false, $limit = 20) {
