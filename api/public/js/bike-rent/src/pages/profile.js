@@ -49,7 +49,7 @@ class Profile extends Component {
 
 	handleItemClick = (e, { name }) => {
 		this.setState({ activeItem: name }, () => {
-			this.props.history.push(`/profile/${name}`)
+			// this.props.history.push(`/profile/${name}`)
 		})
 	}
 
@@ -169,7 +169,9 @@ class Profile extends Component {
 							/>
 						)}
 
-						{activeItem === "payment-methods" && <PaymentsList bearer={bearer} />}
+						{activeItem === "payment-methods" && (
+							<PaymentsList bearer={bearer} canMakeDefault />
+						)}
 					</Container>
 
 					{AddPaymentModal}

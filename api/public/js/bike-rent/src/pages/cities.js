@@ -77,7 +77,7 @@ class Cities extends Component {
 
 		const RenderStoresList = ({ props }) => {
 			return (
-				<Container textAlign="left">
+				<div style={{ textAlign: "left" }}>
 					<StoresList
 						cityId={id}
 						history={props.history}
@@ -87,7 +87,7 @@ class Cities extends Component {
 						storesByBike={false}
 						useCards={true}
 					/>
-				</Container>
+				</div>
 			)
 		}
 
@@ -96,7 +96,7 @@ class Cities extends Component {
 			const showMap = lat && lon
 
 			return (
-				<Grid>
+				<Grid stackable>
 					<Grid.Column width={11}>
 						{tab === "blog" ? (
 							<Fragment>
@@ -230,6 +230,8 @@ class Cities extends Component {
 									{citiesPage.title}
 									<Header.Subheader>{citiesPage.description}</Header.Subheader>
 								</Header>
+
+								<Divider hidden />
 
 								<CitiesList
 									emptyMsgContent="There are no featured cities"

@@ -62,16 +62,17 @@ class Bikes extends Component {
 
 		const RenderStoresList = ({ props }) => {
 			return (
-				<Container textAlign="left">
+				<div style={{ textAlign: "left" }}>
 					<StoresList
 						bikeId={id}
+						emptyMsgContent="No stores carry this bike"
 						history={props.history}
 						key="store"
 						storesByBike
 						storeId={storeId}
 						useCards={true}
 					/>
-				</Container>
+				</div>
 			)
 		}
 
@@ -180,7 +181,7 @@ class Bikes extends Component {
 									<Header.Subheader>{bikesPage.description}</Header.Subheader>
 								</Header>
 
-								{bikesPage.useCards === "0" && <Divider />}
+								<Divider hidden />
 
 								<BikesList
 									emptyMsgContent="There are no bikes available"
