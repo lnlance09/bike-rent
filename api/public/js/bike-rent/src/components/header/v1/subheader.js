@@ -33,7 +33,13 @@ class SubHeader extends Component {
 					}
 				>
 					<Dropdown.Menu as={Segment} style={{ padding: "16px" }}>
-						<Cart editable={false} history={this.props.history} items={items} showCheckoutBtn size="medium" />
+						<Cart
+							editable={false}
+							history={this.props.history}
+							items={items}
+							showCheckoutBtn
+							size="medium"
+						/>
 					</Dropdown.Menu>
 				</Dropdown>
 			</Menu.Menu>

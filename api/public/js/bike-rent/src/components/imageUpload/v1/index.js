@@ -59,7 +59,7 @@ class ImageUpload extends Component {
 					onMouseLeave={this.toggleDimmer}
 					rounded
 					size={fluid ? null : imgSize}
-					src={img ? img : ImagePic}
+					src={img}
 				/>
 			</div>
 		)
@@ -79,6 +79,7 @@ ImageUpload.propTypes = {
 ImageUpload.defaultProps = {
 	fluid: false,
 	headerSize: "medium",
+	img: ImagePic,
 	imgSize: "medium",
 	msg: "Select a picture"
 }

@@ -144,6 +144,8 @@ BikesList.propTypes = {
 		address: PropTypes.string,
 		city: PropTypes.string,
 		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		lat: PropTypes.string,
+		lon: PropTypes.string,
 		name: PropTypes.string,
 		state: PropTypes.string
 	}),

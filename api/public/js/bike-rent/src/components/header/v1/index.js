@@ -16,7 +16,7 @@ import {
 	Sidebar,
 	Visibility
 } from "semantic-ui-react"
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import ImagePic from "images/avatar/default-profile.jpg"
 import Logo from "./images/logo.svg"
 import PropTypes from "prop-types"
@@ -213,7 +213,12 @@ class AppHeader extends Component {
 								{LoginButton(this.props)}
 							</Container>
 						</Menu>
-						<SubHeader history={this.props.history} items={cart.items} language={language} languages={languages} />
+						<SubHeader
+							history={this.props.history}
+							items={cart.items}
+							language={language}
+							languages={languages}
+						/>
 						{showMainContent && (
 							<HeroContent
 								backgroundImage={backgroundImage}
@@ -305,13 +310,28 @@ class AppHeader extends Component {
 					>
 						{authenticated ? "Sign Out" : "Sign In"}
 					</Menu.Item>
+					{authenticated && (
+						<Fragment>
+							<Menu.Item
+								name="My Purchases"
+								onClick={() => this.props.history.push(`/profile/purchases`)}
+							/>
+							<Menu.Item
+								name="My Reviews"
+								onClick={() => this.props.history.push(`/profile/reviews`)}
+							/>
+							<Menu.Item
+								name="My Account"
+								onClick={() => this.props.history.push(`/profile/payment-methods`)}
+							/>
+						</Fragment>
+					)}
 					{items.map((item, i) => (
 						<Menu.Item
 							key={`${item.link}${i}`}
+							name={item.text}
 							onClick={() => this.props.history.push(`/${item.link}`)}
-						>
-							{item.text}
-						</Menu.Item>
+						/>
 					))}
 				</Sidebar>
 			</Provider>

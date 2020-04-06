@@ -190,7 +190,7 @@
         "title": "We're hiring"
     },
     "header": {
-        "backgroundColor": "black",
+        "backgroundColor": "blue",
         "items": [
             {
                 "link": "cities",
@@ -240,7 +240,8 @@
         "Armenian",
         "Avestan",
         "Afar",
-        "Abkhazian"
+        "Abkhazian",
+        "Akan"
     ],
     "partnersPage": {
         "content": "partners 1",
@@ -320,12 +321,27 @@
             "title": ""
         }
     },
-    "theme": "minty",
+    "theme": "amazon",
     "themes": [
+        {
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/amazon.png",
+            "tag": "Super active",
+            "title": "amazon"
+        },
+        {
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/bootstrap3.png",
+            "tag": "Plain and modest",
+            "title": "bootstrap3"
+        },
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cerulean.png",
             "tag": "A calm blue sky",
             "title": "cerulean"
+        },
+        {
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/chubby.png",
+            "tag": "Blowin' in the wind",
+            "title": "chubby"
         },
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/cosmo.png",
@@ -343,9 +359,19 @@
             "title": "darkly"
         },
         {
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/flat.png",
+            "tag": "Smooth your mood",
+            "title": "flat"
+        },
+        {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/flatly.png",
             "tag": "Flat and modern",
             "title": "flatly"
+        },
+        {
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/github.png",
+            "tag": "Cool & friendly",
+            "title": "github"
         },
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/journal.png",
@@ -373,6 +399,11 @@
             "title": "materia"
         },
         {
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/material.png",
+            "tag": "Shadow leads you to light",
+            "title": "material"
+        },
+        {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/minty.png",
             "tag": "A fresh feel",
             "title": "minty"
@@ -386,6 +417,11 @@
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/sandstone.png",
             "tag": "A touch of warmth",
             "title": "sandstone"
+        },
+        {
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/semantic.png",
+            "tag": "Default is good enough",
+            "title": "semantic"
         },
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/simplex.png",
@@ -416,6 +452,11 @@
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/superhero.png",
             "tag": "The brave and the blue",
             "title": "superhero"
+        },
+        {
+            "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/twitter.png",
+            "tag": "Connect everyone",
+            "title": "twitter"
         },
         {
             "img": "https:\/\/bike-rent.s3-us-west-2.amazonaws.com\/themes\/united.png",

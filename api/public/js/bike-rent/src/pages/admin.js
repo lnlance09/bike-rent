@@ -385,7 +385,7 @@ class Admin extends Component {
 
 		const Header = (
 			<Menu borderless className="adminHeaderMenu" secondary={false} size="large">
-				<Container>
+				<Container fluid>
 					<Menu.Item
 						onClick={() => {
 							this.props.history.push("/admin")

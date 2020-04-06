@@ -31,8 +31,8 @@ class App extends Component {
 			title: ""
 		}
 
-		console.log("props")
-		console.log(this.props)
+		// console.log("props")
+		// console.log(this.props)
 	}
 
 	componentDidMount() {
@@ -46,7 +46,6 @@ class App extends Component {
 		style.href = url
 		style.rel = "stylesheet"
 		style.async = true
-
 		document.head.appendChild(style)
 	}
 
@@ -338,9 +337,9 @@ App.propTypes = {
 		}),
 		applyPage: PropTypes.shape({
 			applyButton: PropTypes.shape({
-				basic: PropTypes.string,
+				basic: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				color: PropTypes.string,
-				inverted: PropTypes.bool,
+				inverted: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				text: PropTypes.string
 			}),
 			backgroundImg: PropTypes.string,
@@ -361,7 +360,7 @@ App.propTypes = {
 			}),
 			sort: PropTypes.string,
 			title: PropTypes.string,
-			useCards: PropTypes.bool,
+			useCards: PropTypes.string,
 			useList: PropTypes.bool
 		}),
 		checkoutPage: PropTypes.shape({
@@ -375,9 +374,9 @@ App.propTypes = {
 		}),
 		citiesPage: PropTypes.shape({
 			cityButton: PropTypes.shape({
-				basic: PropTypes.string,
+				basic: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				color: PropTypes.string,
-				inverted: PropTypes.bool,
+				inverted: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				text: PropTypes.string
 			}),
 			seo: PropTypes.shape({
@@ -388,7 +387,7 @@ App.propTypes = {
 			}),
 			sort: PropTypes.string,
 			title: PropTypes.string,
-			useCards: PropTypes.bool,
+			useCards: PropTypes.string,
 			useList: PropTypes.bool
 		}),
 		contactPage: PropTypes.shape({
@@ -444,24 +443,24 @@ App.propTypes = {
 			})),
 			logo: PropTypes.string,
 			signInButton: PropTypes.shape({
-				basic: PropTypes.string,
+				basic: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				color: PropTypes.string,
-				inverted: PropTypes.bool,
+				inverted: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				text: PropTypes.string
 			}),
 			signUpButton: PropTypes.shape({
-				basic: PropTypes.string,
+				basic: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				color: PropTypes.string,
-				inverted: PropTypes.bool,
+				inverted: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				text: PropTypes.string
 			}),
 		}),
 		homePage: PropTypes.shape({
 			hero: PropTypes.shape({
 				button: PropTypes.shape({
-					basic: PropTypes.string,
+					basic: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 					color: PropTypes.string,
-					inverted: PropTypes.bool,
+					inverted: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 					text: PropTypes.string
 				}),
 				img: PropTypes.string,
@@ -510,7 +509,7 @@ App.propTypes = {
 				keywords: PropTypes.string,
 				title: PropTypes.string,
 			}),
-			useCards: PropTypes.bool,
+			useCards: PropTypes.string,
 			useList: PropTypes.bool
 		}),
 		termsPage: PropTypes.shape({

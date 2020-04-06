@@ -218,7 +218,7 @@ class AdminCities extends Component {
 															positive
 														/>
 														<Divider />
-														<Button content="Remove" fluid negative />
+														{/*<Button content="Remove" fluid negative />*/}
 													</Fragment>
 												)}
 											</Form>

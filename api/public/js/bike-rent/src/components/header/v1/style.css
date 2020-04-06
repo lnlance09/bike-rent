@@ -63,7 +63,7 @@
   .mainWrapper .gridSegment p {
     font-size: 1.25em; }
 
-.mainWrapper .heroContainer {
+.mainWrapper .ui.container.heroContainer {
   background: rgba(255, 255, 255, 0);
   background-size: cover;
   height: 600px;
@@ -71,30 +71,38 @@
   margin-right: 0 !important;
   padding-top: 50px;
   width: 100% !important; }
-  .mainWrapper .heroContainer .heroHeaderOne, .mainWrapper .heroContainer .heroHeaderTwo {
+  .mainWrapper .ui.container.heroContainer .heroHeaderOne, .mainWrapper .ui.container.heroContainer .heroHeaderTwo {
     color: #1B1C1D;
     font-size: 4em;
     font-weight: bold; }
-  .mainWrapper .heroContainer .heroHeaderTwo {
+  .mainWrapper .ui.container.heroContainer .heroHeaderTwo {
     font-size: 1.7em;
     font-weight: normal; }
-  .mainWrapper .heroContainer .button {
+  .mainWrapper .ui.container.heroContainer .button {
     margin-top: 15px; }
-  .mainWrapper .heroContainer .container {
+  .mainWrapper .ui.container.heroContainer .container {
     padding: 0 20px; }
-  .mainWrapper .heroContainer .heroSegment {
+  .mainWrapper .ui.container.heroContainer .heroSegment {
     margin-top: 50px !important;
     opacity: 0.9; }
-    .mainWrapper .heroContainer .heroSegment .grid .column {
+    .mainWrapper .ui.container.heroContainer .heroSegment .grid .column {
       margin-bottom: 0; }
-      .mainWrapper .heroContainer .heroSegment .grid .column .react-datepicker-wrapper {
+      .mainWrapper .ui.container.heroContainer .heroSegment .grid .column .react-datepicker-wrapper {
         width: 100% !important; }
-      .mainWrapper .heroContainer .heroSegment .grid .column .storeDropdown, .mainWrapper .heroContainer .heroSegment .grid .column .timeDropdown {
+      .mainWrapper .ui.container.heroContainer .heroSegment .grid .column .storeDropdown, .mainWrapper .ui.container.heroContainer .heroSegment .grid .column .timeDropdown {
         font-size: 18px;
         height: 98.5%;
         min-height: 98.5%; }
-      .mainWrapper .heroContainer .heroSegment .grid .column .button {
+      .mainWrapper .ui.container.heroContainer .heroSegment .grid .column .button {
         margin-top: 0 !important; }
+
+@media only screen and (max-width: 1025px) {
+  .ui.container.heroContainer {
+    margin-left: 0 !important;
+    margin-right: 0 !important; }
+  .ui.container.sidebarContainer {
+    margin-left: 0 !important;
+    margin-right: 0 !important; } }
 
 .ui.vertical.ui.push.left.sidebar.menu {
   z-index: 1001 !important; }

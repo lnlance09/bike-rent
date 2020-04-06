@@ -42,7 +42,7 @@ class StoreModel extends CI_Model {
 		$limit = 25
 	) {
 		if ($store_id && !$bike_id) {
-			$select = "s.id AS storeId, sb.hourly_rate AS hourlyRate, sb.quantity, b.id, b.description, b.image, b.name";
+			$select = "s.id AS storeId, sb.hourly_rate AS hourlyRate, sb.id, sb.quantity, b.description, b.image, b.name";
 		}
 
 		if ($bike_id) {

@@ -283,6 +283,7 @@ class MainPage extends Component {
 								<AceEditor
 									fontSize={16}
 									highlightActiveLine
+									minLines={100}
 									mode="html"
 									name="cssEditor"
 									onChange={code => this.setState({ content: code })}

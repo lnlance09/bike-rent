@@ -12,7 +12,6 @@ import {
 	Divider,
 	Dropdown,
 	Form,
-	Icon,
 	Input,
 	Item,
 	Message,
@@ -220,7 +219,6 @@ class AdminBlog extends Component {
 						<Item.Content>
 							<Item.Header>{blog.title}</Item.Header>
 							<Item.Meta>
-								<Icon name="clock outline" />{" "}
 								<Moment
 									date={adjustTimezone(blog.date_created)}
 									fromNow
