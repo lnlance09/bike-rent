@@ -1,5 +1,5 @@
 import * as constants from "../constants"
-import { parseJwt, setToken } from "utils/token"
+import { parseJwt, setToken } from "utils/tokenFunctions"
 import request from "request"
 
 export const createOrder = ({ bearer, cart, email, paymentId, storeId }) => dispatch => {

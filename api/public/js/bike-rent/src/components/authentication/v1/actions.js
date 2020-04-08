@@ -1,6 +1,6 @@
 import * as constants from "./constants"
 import { toast } from "react-toastify"
-import { defaultData, parseJwt, setToken } from "utils/token"
+import { defaultData, parseJwt, setToken } from "utils/tokenFunctions"
 import jwt from "jsonwebtoken"
 import request from "request"
 

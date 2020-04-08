@@ -1,5 +1,5 @@
 import * as constants from "./constants"
-import { defaultData } from "utils/token"
+import { defaultData } from "utils/tokenFunctions"
 import jwt from "jsonwebtoken"
 
 let authenticated = false
