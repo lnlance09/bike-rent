@@ -8,9 +8,10 @@ import {
 } from "./actions"
 import { Provider, connect } from "react-redux"
 import { Redirect } from "react-router-dom"
+import { FacebookProvider, Login } from "react-facebook"
 import { Button, Divider, Form, Header, Icon, Input, Message, Segment } from "semantic-ui-react"
-import PropTypes from "prop-types"
 import React, { Component, Fragment } from "react"
+import PropTypes from "prop-types"
 import store from "store"
 
 class Authentication extends Component {
@@ -179,6 +180,32 @@ class Authentication extends Component {
 			return null
 		}
 
+		const FacebookLogin = props => (
+			<FacebookProvider appId="123456789">
+				<Login
+					scope="email"
+					onCompleted={this.handleResponse}
+					onError={this.handleError}
+				>
+					{({ loading, handleClick, error, data }) => {
+						return (
+							<Fragment>
+								<Button
+									color="facebook"
+									content="Login with Facebook"
+									fluid
+									onClick={this.handleClick}
+								/>
+								{loading && (
+									<span>Loading...</span>
+								)}
+							</Fragment>
+						)
+					}}
+				</Login>
+			</FacebookProvider>
+		)
+
 		const GoogleLogin = props => (
 			<Button
 				className="googleBtn"
@@ -313,7 +340,11 @@ class Authentication extends Component {
 					{!this.props.verify && (
 						<Fragment>
 							<Divider horizontal>Or</Divider>
-							<Segment>{GoogleLogin(this.props)}</Segment>
+							<Segment>
+								{GoogleLogin(this.props)}
+								<Divider />
+								{FacebookLogin(this.props)}
+							</Segment>
 						</Fragment>
 					)}
 				</div>
