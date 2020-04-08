@@ -75,57 +75,6 @@ const settings = (state = initial(), action) => {
 				sitemap: payload
 			}
 
-		case constants.GET_BIKES:
-			const bikes =
-				payload.page > 0 ? [...state.bikes.results, ...payload.results] : payload.results
-
-			return {
-				...state,
-				bikes: {
-					count: payload.count,
-					hasMore: payload.pagination.hasMore,
-					loadingMore: false,
-					page: payload.pagination.nextPage,
-					results: bikes
-				}
-			}
-
-		case constants.GET_BLOGS:
-			const blogs =
-				payload.page > 0 ? [...state.blogs.results, ...payload.results] : payload.results
-
-			return {
-				...state,
-				blogs: {
-					count: payload.count,
-					hasMore: payload.pagination.hasMore,
-					loadingMore: false,
-					page: payload.pagination.nextPage,
-					results: blogs
-				}
-			}
-
-		case constants.GET_CITIES:
-			const results =
-				payload.page > 0 ? [...state.cities.results, ...payload.results] : payload.results
-
-			return {
-				...state,
-				cities: {
-					count: payload.count,
-					hasMore: payload.pagination.hasMore,
-					loadingMore: false,
-					page: payload.pagination.nextPage,
-					results
-				}
-			}
-
-		case constants.GET_CSS:
-			return {
-				...state,
-				css: payload
-			}
-
 		case constants.GET_EMAIL:
 			let emails = {}
 			if (emailType === "application-confirmation") {
@@ -164,6 +113,72 @@ const settings = (state = initial(), action) => {
 		case constants.EDIT_PAGE:
 			return {
 				...state
+			}
+
+		case constants.GET_BIKES:
+			const bikes =
+				payload.page > 0 ? [...state.bikes.results, ...payload.results] : payload.results
+
+			return {
+				...state,
+				bikes: {
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: bikes
+				}
+			}
+
+		case constants.GET_BLOGS:
+			const blogs =
+				payload.page > 0 ? [...state.blogs.results, ...payload.results] : payload.results
+
+			return {
+				...state,
+				blogs: {
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: blogs
+				}
+			}
+
+		case constants.GET_CITIES:
+			const cities =
+				payload.page > 0 ? [...state.cities.results, ...payload.results] : payload.results
+
+			return {
+				...state,
+				cities: {
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: cities
+				}
+			}
+
+		case constants.GET_CSS:
+			return {
+				...state,
+				css: payload
+			}
+
+		case constants.GET_ORDERS:
+			const orders =
+				payload.page > 0 ? [...state.orders.results, ...payload.orders] : payload.orders
+			return {
+				...state,
+				orders: {
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loaded: true,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: orders
+				}
 			}
 
 		case constants.GET_SITEMAP:

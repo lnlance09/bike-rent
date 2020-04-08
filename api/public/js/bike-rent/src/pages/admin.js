@@ -5,10 +5,11 @@ import {
 	getCities,
 	getCss,
 	getEmail,
+	getOrders,
 	getSitemap,
 	getStores
 } from "redux/actions/app"
-import { Accordion, Container, Grid, Menu, Responsive } from "semantic-ui-react"
+import { Accordion, Grid, Menu, Responsive } from "semantic-ui-react"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import React, { Component } from "react"
 import camelCase from "camelcase"
@@ -75,6 +76,7 @@ class Admin extends Component {
 		this.props.getBikes()
 		this.props.getBlogs()
 		this.props.getCities()
+		this.props.getOrders({})
 		this.props.getStores()
 		this.props.getSitemap({ url: this.props.sitemapUrl })
 		this.props.getCss({ url: this.props.cssUrl })
@@ -110,6 +112,7 @@ class Admin extends Component {
 			cities,
 			css,
 			emails,
+			orders,
 			settings,
 			sitemap,
 			sitemapUrl,
@@ -383,21 +386,6 @@ class Admin extends Component {
 			</Accordion>
 		)
 
-		const Header = (
-			<Menu borderless className="adminHeaderMenu" secondary={false} size="large">
-				<Container fluid>
-					<Menu.Item
-						onClick={() => {
-							this.props.history.push("/admin")
-						}}
-						style={{ padding: "7px" }}
-					>
-						<span className="logoText">Admin Panel</span>
-					</Menu.Item>
-				</Container>
-			</Menu>
-		)
-
 		const MainContent = () => {
 			if (adminPages.includes(activeItem) && pageData) {
 				return (
@@ -527,10 +515,10 @@ class Admin extends Component {
 				)
 			}
 
-			if (activeItem === "view-orders") {
+			if (activeItem === "view-orders" && orders.loaded) {
 				return (
 					<div>
-						<AdminOrders />
+						<AdminOrders bearer={bearer} orders={orders} />
 					</div>
 				)
 			}
@@ -563,7 +551,6 @@ class Admin extends Component {
 									{AdminMenu(this.props)}
 								</Grid.Column>
 								<Grid.Column className="rightSide" width={13}>
-									{Header}
 									<div className="mainContent">{MainContent()}</div>
 								</Grid.Column>
 							</Grid>
@@ -631,8 +618,24 @@ Admin.propTypes = {
 	getCities: PropTypes.func,
 	getCss: PropTypes.func,
 	getEmail: PropTypes.func,
+	getOrders: PropTypes.func,
 	getSitemap: PropTypes.func,
 	getStores: PropTypes.func,
+	orders: PropTypes.shape({
+		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		hasMore: PropTypes.bool,
+		loaded: PropTypes.bool,
+		loadingMore: PropTypes.bool,
+		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		results: PropTypes.arrayOf(
+			PropTypes.shape({
+				date_created: PropTypes.string,
+				date_updated: PropTypes.string,
+				entry: PropTypes.string,
+				title: PropTypes.string
+			})
+		)
+	}),
 	settings: PropTypes.object,
 	sitemap: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 	sitemapUrl: PropTypes.string,
@@ -696,8 +699,17 @@ Admin.defaultProps = {
 	getCities,
 	getCss,
 	getEmail,
+	getOrders,
 	getSitemap,
 	getStores,
+	orders: {
+		count: 0,
+		hasMore: false,
+		loaded: false,
+		loadingMore: false,
+		page: 0,
+		results: [{}, {}, {}, {}]
+	},
 	sitemap: false,
 	sitemapUrl: "https://bike-rent.s3-us-west-2.amazonaws.com/sitemaps/sitemap.xml",
 	stores: {
@@ -722,6 +734,7 @@ export default connect(mapStateToProps, {
 	getCities,
 	getCss,
 	getEmail,
+	getOrders,
 	getSitemap,
 	getStores
 })(Admin)

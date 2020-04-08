@@ -68,7 +68,7 @@ class CityModel extends CI_Model {
 		$lat,
 		$lon,
 		$just_count,
-		$page = false,
+		$page = 0,
 		$limit = 25
 	) {
 		$select = "fl.id, fl.description, fl.image, fl.location_id, fl.slug, l.city AS title, l.county, l.lat, l.lon, l.state, l.zip_code";
@@ -85,7 +85,6 @@ class CityModel extends CI_Model {
 		}
 
 		if (!$just_count) {
-			$limit = 25;
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
 		}

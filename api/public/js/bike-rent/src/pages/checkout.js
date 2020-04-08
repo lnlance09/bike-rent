@@ -206,6 +206,7 @@ class Checkout extends Component {
 									fluid
 									onClick={() => {
 										this.props.createOrder({
+											bearer,
 											cart,
 											email,
 											paymentId,

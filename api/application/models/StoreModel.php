@@ -38,7 +38,7 @@ class StoreModel extends CI_Model {
 		$store_id,
 		$bike_id,
 		$just_count,
-		$page = false,
+		$page = 0,
 		$limit = 25
 	) {
 		if ($store_id && !$bike_id) {
@@ -72,7 +72,6 @@ class StoreModel extends CI_Model {
 		}
 
 		if (!$just_count) {
-			$limit = 25;
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
 		}
@@ -89,7 +88,7 @@ class StoreModel extends CI_Model {
 	public function getImages(
 		$id,
 		$just_count,
-		$page = false,
+		$page = 0,
 		$limit = 25
 	) {
 		$select = "image";
@@ -102,7 +101,6 @@ class StoreModel extends CI_Model {
 		$this->db->where('si store_id', $id);
 
 		if (!$just_count) {
-			$limit = 25;
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
 		}
@@ -146,7 +144,6 @@ class StoreModel extends CI_Model {
 		$this->db->where('sr.store_id', $id);
 
 		if (!$just_count) {
-			$limit = 25;
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
 		}
@@ -161,6 +158,12 @@ class StoreModel extends CI_Model {
 			return $results[0]['average_rating'];
 		}
 
+		return $results;
+	}
+
+	public function getStores() {
+		$this->db->select("CONCAT(name, ', ', name, '') AS `key`, CONCAT(name, ', ', name, '') AS text, id AS value");
+		$results = $this->db->get('stores')->result_array();
 		return $results;
 	}
 
@@ -191,7 +194,6 @@ class StoreModel extends CI_Model {
 		}
 
 		if (!$just_count) {
-			$limit = 25;
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
 		}

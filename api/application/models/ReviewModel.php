@@ -43,7 +43,7 @@ class ReviewModel extends CI_Model {
 		$store_id,
 		$user_id,
 		$just_count,
-		$page = false,
+		$page = 0,
 		$limit = 25
 	) {
 		$select = "sr.comment, sr.date_created, sr.id, sr.rating, sr.store_id, sr.user_id";
@@ -69,7 +69,6 @@ class ReviewModel extends CI_Model {
 		}
 
 		if (!$just_count) {
-			$limit = 25;
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
 		}

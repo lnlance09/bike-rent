@@ -146,6 +146,27 @@ export const addStore = ({
 	)
 }
 
+export const createRefund = ({ bearer, callback = () => null, id }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/order/createRefund`,
+		{
+			form: {
+				id
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				callback()
+				toast.success("A refund has been issued!")
+			}
+		}
+	)
+}
+
 export const editBike = ({ bearer, description, id, image, name, order, visible }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/bike/edit`,
@@ -466,6 +487,28 @@ export const getEmail = ({ type }) => dispatch => {
 				emailType: type,
 				payload: body,
 				type: constants.GET_EMAIL
+			})
+		}
+	)
+}
+
+export const getOrders = ({ callback = () => null, storeId }) => dispatch => {
+	request.get(
+		`${window.location.origin}/api/order/getAll`,
+		{
+			json: true,
+			qs: {
+				storeId
+			}
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				callback(body.orders)
+			}
+
+			dispatch({
+				payload: body,
+				type: constants.GET_ORDERS
 			})
 		}
 	)

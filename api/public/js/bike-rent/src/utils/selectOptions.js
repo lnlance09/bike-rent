@@ -34,6 +34,16 @@ export const fetchLocations = async q => {
 	return data.locations
 }
 
+export const fetchStores = async q => {
+	const response = await fetch(`${window.location.origin}/api/store/getStores`, {
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+	const data = await response.json()
+	return data.stores
+}
+
 export const monthOptions = [
 	{ key: "jan", text: "January", value: "01" },
 	{ key: "feb", text: "February", value: "02" },

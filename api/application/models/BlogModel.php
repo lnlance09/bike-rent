@@ -26,7 +26,7 @@ class BlogModel extends CI_Model {
 	public function search(
 		$city_id,
 		$just_count,
-		$page = false,
+		$page = 0,
 		$limit = 25
 	) {
 		$select = "city_id, date_created, date_updated, entry, id, title";
@@ -42,7 +42,6 @@ class BlogModel extends CI_Model {
 		}
 
 		if (!$just_count) {
-			$limit = 25;
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
 		}

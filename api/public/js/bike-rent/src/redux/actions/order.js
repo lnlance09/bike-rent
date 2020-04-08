@@ -2,7 +2,7 @@ import * as constants from "../constants"
 import { parseJwt, setToken } from "utils/token"
 import request from "request"
 
-export const createOrder = ({ cart, email, paymentId, storeId }) => dispatch => {
+export const createOrder = ({ bearer, cart, email, paymentId, storeId }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/order/create`,
 		{
@@ -11,6 +11,9 @@ export const createOrder = ({ cart, email, paymentId, storeId }) => dispatch => 
 				email,
 				paymentId,
 				storeId
+			},
+			headers: {
+				Authorization: bearer
 			},
 			json: true
 		},

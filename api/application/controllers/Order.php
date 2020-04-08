@@ -37,7 +37,7 @@ class Order extends CI_Controller {
 			exit;
 		}
 
-		if ($user ? $card['user_id'] != $user->id : false) {
+		if ($user ? $card['user_id'] != $user->id : true) {
 			echo json_encode([
 				'error' => 'Please select a payment method'
 			]);
@@ -89,6 +89,60 @@ class Order extends CI_Controller {
 			'error' => false,
 			'orderId' => $orderId
 		]);
+	}
+
+	public function createRefund() {
+		$id = $this->input->post('id');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in'
+			]);
+			exit;
+		}
+
+		$this->order->update($id, [
+			'is_refunded' => 1,
+			'refund_date' => date('Y-m-d H:i:s')
+		]);
+
+		echo json_encode([
+			'error' => false
+		]);
+	}
+
+	public function getAll() {
+		$storeId = $this->input->get('storeId');
+		$page = 0;
+		$limit = 100;
+
+		$where = [];
+		if (!empty($storeId)) {
+			$where['o.store_id'] = $storeId;
+		}
+
+		$count = $this->order->getAll($where, true);
+		$results = $this->order->getAll($where, false);
+
+		if ($count > 0) {
+			$count = count($results);
+			$pages = ceil($count/$limit);
+			$has_more = $page+1 < $pages ? true : false;
+		} else {
+			$count = 0;
+			$pages = 0;
+			$has_more = false;
+		}
+
+		echo json_encode([
+			'count' => $count,
+			'pagination' => [
+				'hasMore' => $has_more,
+				'nextPage' => $page+1,
+			],
+			'orders' => $results
+		], true);
 	}
 
 	public function getPaymentMethods() {

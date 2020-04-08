@@ -258,6 +258,15 @@ class Store extends CI_Controller {
 		], true);
 	}
 
+	public function getStores() {
+		$stores = $this->store->getStores();
+
+		echo json_encode([
+			'error' => false,
+			'stores' => $stores
+		]);
+	}
+
 	public function search() {
 		$cityId = $this->input->get('cityId');
 		$lat = $this->input->get('lat');

@@ -15,13 +15,61 @@ class OrderModel extends CI_Model {
 	}
 
 	public function get($id) {
-		$this->db->select('');
+		$this->db->select('*');
 		$this->db->where('id', $id);
 		$result = $this->db->get($this->table)->result_array();
+		if (empty($result)) {
+			return false;
+		}
+
+		return $result[0];
 	}
 
-	public function getAll($where, $sort) {
-		
+	public function getAll(
+		$where,
+		$just_count = false,
+		$page = 0,
+		$limit = 100
+	) {
+		$select = 'o.id, o.amount_after_tax, o.amount_before_tax, o.created_at, o.is_refunded, o.refund_date, o.store_id, o.tax, ';
+		$select .= 'pm.number, ';
+		$select .= 'od.bike_id, ';
+		$select .= 's.name AS store_name, ';
+		$select .= 'sb.hourly_rate, ';
+		$select .= 'b.name, b.image';
+
+		if ($just_count) {
+			$select = 'COUNT(*) AS count';
+		}
+
+		$this->db->select($select);
+		$this->db->join('payment_methods pm', 'o.payment_method = pm.id');
+		$this->db->join('order_details od', 'o.id = od.order_id');
+		$this->db->join('stores s', 'o.store_id = s.id');
+		$this->db->join('store_bikes sb', 'od.bike_id = sb.id');
+		$this->db->join('bikes b', 'sb.bike_id = b.id');
+
+		if (!$just_count) {
+			$start = $page*$limit;
+			$this->db->limit($limit, $start);
+		}
+
+		if (!empty($where)) {
+			$this->db->where($where);
+		}
+
+		if (!$just_count) {
+			$this->db->group_by('o.id');
+			$this->db->order_by('o.created_at', 'DESC');
+		}
+
+		$results = $this->db->get('orders o')->result_array();
+
+		if ($just_count) {
+			return $results[0]['count'];
+		}
+
+		return $results;
 	}
 
 	public function getOrderData($cart, $storeId) {
@@ -62,14 +110,16 @@ class OrderModel extends CI_Model {
 					$price = $hours*$prices[$x]['hourlyRate'];
 					$subtotal = $subtotal+$price;
 
-					$final[] = [
-						'bikeId' => $bike_id,
-						'hours' => $hours,
-						'image' => $prices[$x]['image'],
-						'name' => $prices[$x]['name'],
-						'price' => $price
-					];
-					break;
+					if ($hours > 0) {
+						$final[] = [
+							'bikeId' => $bike_id,
+							'hours' => $hours,
+							'image' => $prices[$x]['image'],
+							'name' => $prices[$x]['name'],
+							'price' => $price
+						];
+						break;
+					}
 				}
 			}
 		}
@@ -87,7 +137,6 @@ class OrderModel extends CI_Model {
 
 	public function getBikePrices($bikes) {
 		$select = "s.id AS storeId, sb.hourly_rate AS hourlyRate, sb.id, sb.quantity, b.description, b.image, b.name";
-
 		$this->db->select($select);
 		$this->db->join('bikes b', 'sb.bike_id = b.id');
 		$this->db->join('stores s', 'sb.store_id = s.id');
@@ -190,7 +239,7 @@ class OrderModel extends CI_Model {
 		}
 	}
 
-	public function update($id, $data, $tags) {
+	public function update($id, $data) {
 		$this->db->where('id', $id);
 		$this->db->update($this->table, $data);
 	}
