@@ -1,12 +1,13 @@
-import "react-datepicker/dist/react-datepicker.css"
+import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css"
 import { connect, Provider } from "react-redux"
 import { DisplayMetaTags } from "utils/metaFunctions"
+import { fetchCities } from "utils/selectOptions"
 import { Button, Grid, Input, Select } from "semantic-ui-react"
 import React, { Component } from "react"
-import DatePicker from "react-datepicker"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PropTypes from "prop-types"
+import SemanticDatepicker from "react-semantic-ui-datepickers"
 import store from "store"
 
 class Home extends Component {
@@ -21,48 +22,65 @@ class Home extends Component {
 		this.state = {
 			auth,
 			bearer,
-			startDate: new Date()
+			city: "",
+			cityOptions: [],
+			citySlug: "",
+			date: new Date()
 		}
 	}
 
-	componentDidMount() {}
+	async componentDidMount() {
+		const cityOptions = await fetchCities("")
+		this.setState({ cityOptions })
+	}
+
+	onChangeCity = (e, { value }) => {
+		const { cityOptions } = this.state
+		const { name } = cityOptions.find(city => city.value === value)
+		this.setState({ city: value, citySlug: `${name.toLowerCase()}-${value}` })
+	}
+
+	onChangeDate = (e, { value }) => this.setState({ date: value })
 
 	render() {
-		const { auth } = this.state
+		const { auth, city, cityOptions, citySlug, date } = this.state
 		const { settings } = this.props
 		const { homePage } = settings
-
-		const CustomDateInput = ({ value, onClick }) => (
-			<Input
-				fluid
-				icon="calendar"
-				iconPosition="left"
-				onClick={onClick}
-				placeholder="Pick a date"
-				value={value}
-			/>
-		)
 
 		const BookingForm = (
 			<Grid columns={3} stackable>
 				<Grid.Row>
-					<Grid.Column stretched width={6}>
-						<DatePicker
-							customInput={<CustomDateInput />}
-							minDate={new Date()}
-							onChange={this.handleChange}
+					<Grid.Column className="datePicker" stretched width={6}>
+						<SemanticDatepicker
+							datePickerOnly
+							format="MMM Do, YYYY"
+							locale="en-US"
+							onChange={this.onChangeDate}
+							type="basic"
+							value={date}
 						/>
 					</Grid.Column>
 					<Grid.Column width={6}>
 						<Select
 							className="cityDropdown"
 							fluid
-							// options={timeOptions}
+							onChange={this.onChangeCity}
+							options={cityOptions}
 							placeholder="City"
 						/>
 					</Grid.Column>
 					<Grid.Column width={4}>
-						<Button color="blue" content="Let's go" fluid size="big" />
+						<Button
+							color="blue"
+							content="Let's go"
+							fluid
+							onClick={() => {
+								if (city !== "") {
+									this.props.history.push(`/cities/${citySlug}`)
+								}
+							}}
+							size="big"
+						/>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
@@ -81,6 +99,7 @@ class Home extends Component {
 					<PageHeader
 						activeItem="home"
 						authenticated={auth}
+						content={BookingForm}
 						backgroundColor={settings.header.backgroundColor}
 						backgroundImage={homePage.hero.img}
 						headerOne={homePage.hero.headerOne}

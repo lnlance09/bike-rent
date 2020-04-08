@@ -64,6 +64,9 @@ body {
   color: #2185D0;
   cursor: pointer; }
 
+.datePicker .ui.icon.input {
+  width: 100%; }
+
 .applyPage {
   height: 100vh; }
 

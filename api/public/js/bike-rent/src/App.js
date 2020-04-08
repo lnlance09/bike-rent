@@ -39,6 +39,7 @@ class App extends Component {
 		const theme = this.props.settings.theme
 		const cssUrl = `https://bike-rent.s3-us-west-2.amazonaws.com/css/themes/semantic.${theme}.min.css`
 		this.addStyle(cssUrl)
+		this.addStyle("https://bike-rent.s3-us-west-2.amazonaws.com/css/style.css")
 	}
 
 	addStyle = url => {

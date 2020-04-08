@@ -182,11 +182,7 @@ class Authentication extends Component {
 
 		const FacebookLogin = props => (
 			<FacebookProvider appId="123456789">
-				<Login
-					scope="email"
-					onCompleted={this.handleResponse}
-					onError={this.handleError}
-				>
+				<Login scope="email" onCompleted={this.handleResponse} onError={this.handleError}>
 					{({ loading, handleClick, error, data }) => {
 						return (
 							<Fragment>
@@ -196,9 +192,7 @@ class Authentication extends Component {
 									fluid
 									onClick={this.handleClick}
 								/>
-								{loading && (
-									<span>Loading...</span>
-								)}
+								{loading && <span>Loading...</span>}
 							</Fragment>
 						)
 					}}

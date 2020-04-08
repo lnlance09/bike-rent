@@ -46,6 +46,7 @@
     "react-router-scroll-top": "^0.2.1",
     "react-scripts": "3.4.0",
     "react-semantic-ui": "^0.2.0",
+    "react-semantic-ui-datepickers": "^2.4.0",
     "react-share": "^4.0.1",
     "react-svg": "^11.0.12",
     "react-text-truncate": "^0.16.0",

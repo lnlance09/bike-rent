@@ -37,7 +37,7 @@ class CityModel extends CI_Model {
 	}
 
 	public function getFeaturedCities() {
-		$this->db->select("CONCAT(city, ', ', state, '') AS `key`, CONCAT(city, ', ', state, '') AS text, l.id AS value");
+		$this->db->select("CONCAT(city, ', ', state, '') AS `key`, city AS name, CONCAT(city, ', ', state, '') AS text, l.id AS value");
 		$this->db->join('locations l', 'fl.location_id = l.id');
 		$results = $this->db->get('featured_locations fl')->result_array();
 		return $results;
