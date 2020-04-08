@@ -1,22 +1,22 @@
 import "./style.css"
 import _ from "lodash"
-import { createRefund, getOrders } from "redux/actions/app"
+import { getReviews } from "redux/actions/app"
+import { adjustTimezone } from "utils/dateFunctions"
 import { fetchStores } from "utils/selectOptions"
 import { connect } from "react-redux"
-import { adjustTimezone } from "utils/dateFunctions"
-import { Button, Container, Form, Header, Message, Modal, Select, Table } from "semantic-ui-react"
+import { Button, Container, Form, Header, Message, Modal, Rating, Select, Table } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import Moment from "react-moment"
 import PropTypes from "prop-types"
 
-class AdminOrders extends Component {
+class AdminReviews extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
 			column: "created_at",
 			currentItem: {},
-			data: this.props.orders.results,
+			data: this.props.reviews.results,
 			direction: null,
 			modalOpen: false,
 			options: [],
@@ -50,7 +50,7 @@ class AdminOrders extends Component {
 
 	setStore = (e, { value }) => {
 		this.setState({ storeId: value }, () => {
-			this.props.getOrders({
+			this.props.getReviews({
 				callback: data => this.setData(data),
 				storeId: value
 			})
@@ -61,9 +61,9 @@ class AdminOrders extends Component {
 
 	render() {
 		const { column, currentItem, data, direction, modalOpen, options, storeId } = this.state
-		const { bearer, orders } = this.props
+		const { bearer, reviews } = this.props
 
-		const OrderModal = (
+		const ReviewModal = (
 			<Modal centered={false} closeIcon onClose={() => this.toggleModal()} open={modalOpen}>
 				<Modal.Content>
 					<Container textAlign="center">
@@ -76,17 +76,7 @@ class AdminOrders extends Component {
 									color="green"
 									content="Issue Refund"
 									onClick={() => {
-										this.props.createRefund({
-											bearer,
-											callback: () => {
-												this.toggleModal()
-												this.props.getOrders({
-													callback: data => this.setData(data),
-													storeId
-												})
-											},
-											id: currentItem.id
-										})
+										
 									}}
 									size="big"
 								/>
@@ -97,7 +87,7 @@ class AdminOrders extends Component {
 									${currentItem.amount_before_tax} was refunded on{" "}
 									<Moment
 										date={adjustTimezone(currentItem.refund_date)}
-										format="MMM Do Y, h:mm a"
+										format="MMM Do Y, h:mm A"
 									/>
 									.
 								</Header>
@@ -109,7 +99,9 @@ class AdminOrders extends Component {
 		)
 
 		return (
-			<div className="adminOrders">
+			<div className="adminReviews">
+				<Header size="large">Reviews</Header>
+
 				<Form size="big">
 					<Select
 						fluid
@@ -120,52 +112,36 @@ class AdminOrders extends Component {
 					/>
 				</Form>
 
-				{orders.count > 0 ? (
+				{reviews.count > 0 ? (
 					<Table celled selectable sortable striped structured>
 						<Table.Header>
 							<Table.Row>
 								<Table.HeaderCell
-									sorted={column === "created_at" ? direction : null}
-									onClick={this.handleSort("created_at")}
-									rowSpan="2"
+									onClick={this.handleSort("date_created")}
+									sorted={column === "date_created" ? direction : null}
 								>
-									Date
+									Left On
 								</Table.HeaderCell>
 								<Table.HeaderCell
-									sorted={column === "store_name" ? direction : null}
+									onClick={this.handleSort("user_name")}
+									sorted={column === "user_name" ? direction : null}
+								>
+									Left By
+								</Table.HeaderCell>
+								<Table.HeaderCell
 									onClick={this.handleSort("store_name")}
-									rowSpan="2"
+									sorted={column === "store_name" ? direction : null}
 								>
 									Store
 								</Table.HeaderCell>
 								<Table.HeaderCell
-									sorted={column === "is_refunded" ? direction : null}
-									onClick={this.handleSort("is_refunded")}
-									rowSpan="2"
+									onClick={this.handleSort("rating")}
+									sorted={column === "rating" ? direction : null}
 								>
-									Refunded
+									Rating
 								</Table.HeaderCell>
-								<Table.HeaderCell colSpan="3">Totals</Table.HeaderCell>
-							</Table.Row>
-
-							<Table.Row>
-								<Table.HeaderCell
-									sorted={column === "amount_before_tax" ? direction : null}
-									onClick={this.handleSort("amount_before_tax")}
-								>
-									Subtotal
-								</Table.HeaderCell>
-								<Table.HeaderCell
-									sorted={column === "amount_after_tax" ? direction : null}
-									onClick={this.handleSort("amount_after_tax")}
-								>
-									Total
-								</Table.HeaderCell>
-								<Table.HeaderCell
-									sorted={column === "tax" ? direction : null}
-									onClick={this.handleSort("tax")}
-								>
-									Tax
+								<Table.HeaderCell>
+									Comment
 								</Table.HeaderCell>
 							</Table.Row>
 						</Table.Header>
@@ -178,25 +154,32 @@ class AdminOrders extends Component {
 										<Table.Row
 											active={item.id === currentItem.id}
 											error={refunded}
-											key={`orderRow${i}`}
 											onClick={() => {
 												this.setState({
 													currentItem: item,
-													modalOpen: true
+													// modalOpen: true
 												})
 											}}
 										>
 											<Table.Cell>
 												<Moment
-													date={adjustTimezone(item.created_at)}
+													date={adjustTimezone(item.date_created)}
 													format="MMM Do Y, h:mm A"
 												/>
 											</Table.Cell>
+											<Table.Cell>
+												{item.user_name}
+											</Table.Cell>
 											<Table.Cell>{item.store_name}</Table.Cell>
-											<Table.Cell>{refunded ? "Yes" : "No"}</Table.Cell>
-											<Table.Cell>${item.amount_before_tax}</Table.Cell>
-											<Table.Cell>${item.amount_after_tax}</Table.Cell>
-											<Table.Cell>${item.tax}</Table.Cell>
+											<Table.Cell>
+												<Rating
+													disabled
+													icon="star"
+													maxRating={5}
+													rating={parseInt(item.rating, 10)}
+												/>
+											</Table.Cell>
+											<Table.Cell>{item.comment}</Table.Cell>
 										</Table.Row>
 									)
 								})}
@@ -207,46 +190,39 @@ class AdminOrders extends Component {
 					<Message error header="No results" size="big" />
 				)}
 
-				{OrderModal}
+				{ReviewModal}
 			</div>
 		)
 	}
 }
 
-AdminOrders.propTypes = {
+AdminReviews.propTypes = {
 	bearer: PropTypes.string,
-	createRefund: PropTypes.func,
-	getOrders: PropTypes.func,
-	orders: PropTypes.shape({
+	getReviews: PropTypes.func,
+	reviews: PropTypes.shape({
 		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		hasMore: PropTypes.bool,
 		loadingMore: PropTypes.bool,
 		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		results: PropTypes.arrayOf(
 			PropTypes.shape({
-				amount_after_tax: PropTypes.string,
-				amount_before_tax: PropTypes.string,
-				created_at: PropTypes.string,
-				bike_id: PropTypes.string,
+				comment: PropTypes.string,
+				date_created: PropTypes.string,
 				id: PropTypes.string,
-				hourly_rate: PropTypes.string,
-				image: PropTypes.string,
-				is_refunded: PropTypes.string,
-				name: PropTypes.string,
-				number: PropTypes.string,
-				refund_date: PropTypes.string,
+				rating: PropTypes.string,
 				store_id: PropTypes.string,
 				store_name: PropTypes.string,
-				tax: PropTypes.string
+				user_id: PropTypes.string,
+				user_img: PropTypes.string,
+				user_name: PropTypes.string
 			})
 		)
 	})
 }
 
-AdminOrders.defaultProps = {
-	createRefund,
-	getOrders,
-	orders: {
+AdminReviews.defaultProps = {
+	getReviews,
+	reviews: {
 		count: "0",
 		hasMore: false,
 		loadingMore: false,
@@ -256,11 +232,10 @@ AdminOrders.defaultProps = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	...state.app.order,
+	...state.app.review,
 	...ownProps
 })
 
 export default connect(mapStateToProps, {
-	createRefund,
-	getOrders
-})(AdminOrders)
+	getReviews
+})(AdminReviews)

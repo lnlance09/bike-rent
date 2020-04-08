@@ -6,6 +6,7 @@ import {
 	getCss,
 	getEmail,
 	getOrders,
+	getReviews,
 	getSitemap,
 	getStores
 } from "redux/actions/app"
@@ -24,6 +25,7 @@ import AdminLanguages from "components/admin/languages/v1/"
 import AdminLibrary from "components/admin/library/v1/"
 import AdminOrders from "components/admin/orders/v1/"
 import AdminPages from "components/admin/pages/v1/"
+import AdminReviews from "components/admin/reviews/v1/"
 import AdminSitemap from "components/admin/sitemap/v1/"
 import AdminStores from "components/admin/stores/v1/"
 import AdminThemes from "components/admin/themes/v1/"
@@ -77,6 +79,7 @@ class Admin extends Component {
 		this.props.getBlogs()
 		this.props.getCities()
 		this.props.getOrders({})
+		this.props.getReviews({})
 		this.props.getStores()
 		this.props.getSitemap({ url: this.props.sitemapUrl })
 		this.props.getCss({ url: this.props.cssUrl })
@@ -113,6 +116,7 @@ class Admin extends Component {
 			css,
 			emails,
 			orders,
+			reviews,
 			settings,
 			sitemap,
 			sitemapUrl,
@@ -360,6 +364,18 @@ class Admin extends Component {
 					</Menu.Menu>
 				</Menu.Item>
 				<Menu.Item>
+					Reviews
+					<Menu.Menu>
+						<Menu.Item
+							active={activeItem === "view-reviews"}
+							name="view-reviews"
+							onClick={this.handleItemClick}
+						>
+							View reviews
+						</Menu.Item>
+					</Menu.Menu>
+				</Menu.Item>
+				<Menu.Item>
 					SEO
 					<Menu.Menu>
 						<Menu.Item
@@ -523,6 +539,14 @@ class Admin extends Component {
 				)
 			}
 
+			if (activeItem === "view-reviews" && reviews.loaded) {
+				return (
+					<div>
+						<AdminReviews bearer={bearer} reviews={reviews} />
+					</div>
+				)
+			}
+
 			if (activeItem === "view-stores") {
 				return (
 					<div>
@@ -619,9 +643,25 @@ Admin.propTypes = {
 	getCss: PropTypes.func,
 	getEmail: PropTypes.func,
 	getOrders: PropTypes.func,
+	getReviews: PropTypes.func,
 	getSitemap: PropTypes.func,
 	getStores: PropTypes.func,
 	orders: PropTypes.shape({
+		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		hasMore: PropTypes.bool,
+		loaded: PropTypes.bool,
+		loadingMore: PropTypes.bool,
+		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		results: PropTypes.arrayOf(
+			PropTypes.shape({
+				date_created: PropTypes.string,
+				date_updated: PropTypes.string,
+				entry: PropTypes.string,
+				title: PropTypes.string
+			})
+		)
+	}),
+	reviews: PropTypes.shape({
 		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		hasMore: PropTypes.bool,
 		loaded: PropTypes.bool,
@@ -700,9 +740,18 @@ Admin.defaultProps = {
 	getCss,
 	getEmail,
 	getOrders,
+	getReviews,
 	getSitemap,
 	getStores,
 	orders: {
+		count: 0,
+		hasMore: false,
+		loaded: false,
+		loadingMore: false,
+		page: 0,
+		results: [{}, {}, {}, {}]
+	},
+	reviews: {
 		count: 0,
 		hasMore: false,
 		loaded: false,
@@ -735,6 +784,7 @@ export default connect(mapStateToProps, {
 	getCss,
 	getEmail,
 	getOrders,
+	getReviews,
 	getSitemap,
 	getStores
 })(Admin)

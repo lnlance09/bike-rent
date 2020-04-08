@@ -30,9 +30,10 @@ body {
 	}
 
 	.grid {
+		margin: 0 !important;
+
 		.leftSide {
-			padding-bottom: 0 !important;
-			padding-right: 0 !important;
+			padding: 0 !important;
 
 			.menu {
 				border-radius: 0 !important;
@@ -45,7 +46,7 @@ body {
 			padding-left: 0 !important;
 
 			.mainContent {
-				padding: 20px !important;
+				padding: 0 16px !important;
 
 				#cssEditor {
 					height: 850px !important;

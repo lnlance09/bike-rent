@@ -181,6 +181,21 @@ const settings = (state = initial(), action) => {
 				}
 			}
 
+		case constants.GET_REVIEWS:
+			const reviews =
+				payload.page > 0 ? [...state.reviews.results, ...payload.results] : payload.results
+			return {
+				...state,
+				reviews: {
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loaded: true,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: reviews
+				}
+			}
+
 		case constants.GET_SITEMAP:
 			return {
 				...state,

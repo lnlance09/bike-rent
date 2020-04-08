@@ -514,6 +514,28 @@ export const getOrders = ({ callback = () => null, storeId }) => dispatch => {
 	)
 }
 
+export const getReviews = ({ callback = () => null, storeId }) => dispatch => {
+	request.get(
+		`${window.location.origin}/api/review/search`,
+		{
+			json: true,
+			qs: {
+				storeId
+			}
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				callback(body.results)
+			}
+
+			dispatch({
+				payload: body,
+				type: constants.GET_REVIEWS
+			})
+		}
+	)
+}
+
 export const getSettings = () => dispatch => {
 	request.get(
 		`${window.location.origin}/api/settings/`,

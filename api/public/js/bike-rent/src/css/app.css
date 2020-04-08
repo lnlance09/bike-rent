@@ -22,20 +22,21 @@ body {
       font-size: 24px;
       font-style: italic;
       font-weight: bold; }
-  .adminContainer .grid .leftSide {
-    padding-bottom: 0 !important;
-    padding-right: 0 !important; }
-    .adminContainer .grid .leftSide .menu {
-      border-radius: 0 !important;
-      height: 100%; }
-  .adminContainer .grid .rightSide {
-    margin-left: 0 !important;
-    padding-left: 0 !important; }
-    .adminContainer .grid .rightSide .mainContent {
-      padding: 20px !important; }
-      .adminContainer .grid .rightSide .mainContent #cssEditor {
-        height: 850px !important;
-        width: 100% !important; }
+  .adminContainer .grid {
+    margin: 0 !important; }
+    .adminContainer .grid .leftSide {
+      padding: 0 !important; }
+      .adminContainer .grid .leftSide .menu {
+        border-radius: 0 !important;
+        height: 100%; }
+    .adminContainer .grid .rightSide {
+      margin-left: 0 !important;
+      padding-left: 0 !important; }
+      .adminContainer .grid .rightSide .mainContent {
+        padding: 0 16px !important; }
+        .adminContainer .grid .rightSide .mainContent #cssEditor {
+          height: 850px !important;
+          width: 100% !important; }
 
 .mainWrapper .paddedSegment {
   padding: 8em 0em !important; }
