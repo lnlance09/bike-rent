@@ -16,17 +16,18 @@ export const addToCart = ({ item }) => dispatch => {
 	}
 
 	const { cart } = localData
-	const itemCount = cart.items.length
+	const newItems = cart.items.filter(_item => _item.store.id === item.item.store.id)
+	const itemCount = newItems.length
 	item.item.index = parseInt(itemCount + 1, 10)
 	item.item.hours = 1
 
-	const items = [...cart.items, item.item]
+	const items = [...newItems, item.item]
 	localData.cart = {
 		...cart,
 		items
 	}
-
 	setToken(localData)
+
 	toast.success("Added to cart")
 	dispatch({
 		payload: localData,
@@ -131,20 +132,17 @@ export const logout = () => dispatch => {
 	})
 }
 
-export const removeFromCart = ({ item }) => dispatch => {
+export const removeFromCart = ({ index }) => dispatch => {
 	let localData = parseJwt()
 	if (!localData) {
 		localData = defaultData
 	}
 
 	const { cart } = localData
-	const items = [...cart.items, item.item]
-	localData.cart = {
-		...cart,
-		items
-	}
-
+	const newCart = cart.items.filter(item => item.index !== index)
+	localData.cart.items = newCart
 	setToken(localData)
+
 	dispatch({
 		payload: localData,
 		type: constants.REMOVE_FROM_CART

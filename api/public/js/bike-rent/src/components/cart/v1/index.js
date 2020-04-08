@@ -42,7 +42,7 @@ class Cart extends Component {
 											<Button
 												basic
 												icon="trash"
-												onClick={() => this.props.removeItem(index)}
+												onClick={() => this.props.removeFromCart(index)}
 											/>
 										</Button.Group>
 									</List.Content>
