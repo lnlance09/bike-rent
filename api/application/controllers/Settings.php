@@ -200,6 +200,8 @@ class Settings extends CI_Controller {
 	public function updateHeader() {
 		$backgroundColor = $this->input->post('backgroundColor');
 		$listItems = $this->input->post('listItems');
+		$logo = $this->input->post('logo');
+		$logoText = $this->input->post('logoText');
 		$signInButton = $this->input->post('signInButton');
 		$signUpButton = $this->input->post('signUpButton');
 
@@ -216,6 +218,8 @@ class Settings extends CI_Controller {
 		$header = $settings->updateHeader(
 			$backgroundColor,
 			$listItems,
+			$logo,
+			$logoText,
 			$signInButton,
 			$signUpButton
 		);

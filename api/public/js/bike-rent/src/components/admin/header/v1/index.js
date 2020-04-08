@@ -12,11 +12,13 @@ class AdminHeader extends Component {
 		super(props)
 
 		const { headerData } = this.props
-		const { backgroundColor, items, signInButton, signUpButton } = headerData
+		const { backgroundColor, items, logo, logoText, signInButton, signUpButton } = headerData
 
 		this.state = {
 			backgroundColor,
 			listItems: items,
+			logo,
+			logoText,
 			signInBasic: signInButton.basic,
 			signInColor: signInButton.color,
 			signInInverted: signInButton.inverted,
@@ -46,6 +48,10 @@ class AdminHeader extends Component {
 
 	onChangeBackgroundColor = (e, { value }) => this.setState({ backgroundColor: value })
 
+	onChangeLogo = (e, { value }) => this.setState({ logo: value })
+
+	onChangeLogoText = (e, { value }) => this.setState({ logoText: value })
+
 	onChangeSignInColor = (e, { value }) => this.setState({ signInColor: value })
 
 	onChangeSignInText = (e, { value }) => this.setState({ signInText: value })
@@ -70,6 +76,8 @@ class AdminHeader extends Component {
 			backgroundColor,
 			colorOptions,
 			listItems,
+			logo,
+			logoText,
 			signInBasic,
 			signInColor,
 			signInInverted,
@@ -83,6 +91,24 @@ class AdminHeader extends Component {
 		return (
 			<div className="adminHeader">
 				<Form>
+					<Form.Field>
+						<Header size="small">Logo</Header>
+					</Form.Field>
+					<Form.Field>
+						<Input onChange={this.onChangeLogo} placeholder="Logo" value={logo} />
+					</Form.Field>
+
+					<Form.Field>
+						<Header size="small">Site name</Header>
+					</Form.Field>
+					<Form.Field>
+						<Input
+							onChange={this.onChangeLogoText}
+							placeholder="Site name"
+							value={logoText}
+						/>
+					</Form.Field>
+
 					<Form.Field>
 						<Header size="small">Background Color</Header>
 					</Form.Field>
@@ -277,6 +303,8 @@ class AdminHeader extends Component {
 							backgroundColor,
 							bearer,
 							listItems,
+							logo,
+							logoText,
 							signInButton: {
 								signInBasic,
 								signInColor,

@@ -723,6 +723,8 @@ export const submitHeaderForm = ({
 	backgroundColor,
 	bearer,
 	listItems,
+	logo,
+	logoText,
 	signInButton,
 	signUpButton
 }) => dispatch => {
@@ -732,6 +734,8 @@ export const submitHeaderForm = ({
 			form: {
 				backgroundColor,
 				listItems,
+				logo,
+				logoText,
 				signInButton,
 				signUpButton
 			},

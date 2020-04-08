@@ -59,8 +59,6 @@ class Checkout extends Component {
 		const { cart } = data
 		const cartEmpty = cart.items.length === 0
 		const storeInfo = !cartEmpty ? cart.items[0].store : {}
-		console.log("checkout")
-		console.log(this.state)
 
 		const ConfirmationModal = (
 			<Transition animation="zoom" duration={500} visible={order.confirmationModalOpen}>
@@ -130,6 +128,8 @@ class Checkout extends Component {
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
+						logo={settings.header.logo}
+						logoText={settings.header.logoText}
 						showMainContent={false}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}

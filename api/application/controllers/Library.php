@@ -28,7 +28,7 @@ class Library extends CI_Controller {
 		}
 
 		$this->load->library('upload', [
-			'allowed_types' => 'jpg|jpeg|png|gif',
+			'allowed_types' => '*',
 			'file_ext_tolower' => true,
 			'max_height' => 0,
 			'max_size' => 25000,

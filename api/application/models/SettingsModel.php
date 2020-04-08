@@ -81,6 +81,8 @@ class SettingsModel extends CI_Model {
 	public function updateHeader(
 		$color,
 		$listItems,
+		$logo,
+		$logoText,
 		$signIn,
 		$signUp
 	) {
@@ -88,6 +90,8 @@ class SettingsModel extends CI_Model {
 		$decode['header'] = [
 			'backgroundColor' => $color,
 			'items' => $listItems,
+			'logo' => $logo,
+			'logoText' => $logoText,
 			'signInButton' => [
 				'basic' => (int)$signIn['signInBasic'],
 				'color' => $signIn['signInColor'],

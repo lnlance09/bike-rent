@@ -206,6 +206,8 @@ class Cities extends Component {
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
+						logo={settings.header.logo}
+						logoText={settings.header.logoText}
 						showMainContent={slug ? true : false}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}

@@ -443,6 +443,7 @@ App.propTypes = {
 				text: PropTypes.string
 			})),
 			logo: PropTypes.string,
+			logoText: PropTypes.string,
 			signInButton: PropTypes.shape({
 				basic: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 				color: PropTypes.string,

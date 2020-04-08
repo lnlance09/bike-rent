@@ -3,10 +3,6 @@
 /*---   Neutrals  ---*/
 /*---   Misc  ---*/
 /*---   Social colors  ---*/
-@font-face {
-  font-family: logoFont;
-  src: url("../../../css/fonts/dealerplate california.ttf"); }
-
 .pageHeader .languageMenu {
   background: #F9FAFB !important;
   border-radius: 0 !important;
@@ -30,17 +26,15 @@
     .pageHeader .mobileSegment .globalHeaderMenu .headerLink, .pageHeader .desktopSegment .globalHeaderMenu .headerLink {
       font-size: 15px !important;
       font-weight: bold !important; }
-    .pageHeader .mobileSegment .globalHeaderMenu .headerLogo svg, .pageHeader .desktopSegment .globalHeaderMenu .headerLogo svg {
+    .pageHeader .mobileSegment .globalHeaderMenu .headerLogo, .pageHeader .desktopSegment .globalHeaderMenu .headerLogo {
       cursor: pointer;
       display: inline;
-      fill: #2185D0;
-      line-height: 1;
       margin-right: 12px;
-      vertical-align: middle; }
+      vertical-align: middle;
+      width: 50px; }
     .pageHeader .mobileSegment .globalHeaderMenu .logoText, .pageHeader .desktopSegment .globalHeaderMenu .logoText {
-      font-family: logoFont;
-      font-size: 45px;
-      margin: 10px 10px 0 0; }
+      font-size: 32px;
+      margin: 0 10px 0 0; }
     .pageHeader .mobileSegment .globalHeaderMenu .signInLink, .pageHeader .desktopSegment .globalHeaderMenu .signInLink {
       padding-right: 0; }
 

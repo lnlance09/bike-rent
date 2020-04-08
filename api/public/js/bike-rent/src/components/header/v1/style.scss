@@ -1,10 +1,5 @@
 @import '../../../css/colors.scss';
 
-@font-face {
-	font-family: logoFont;
-	src: url('../../../css/fonts/dealerplate california.ttf');
-}
-
 .pageHeader {
 	.languageMenu {
 		background: $offWhite !important;
@@ -38,19 +33,17 @@
 				font-weight: bold !important;
 			}
 
-			.headerLogo svg {
+			.headerLogo {
 				cursor: pointer;
 				display: inline;
-				fill: $blue;
-				line-height: 1;
 				margin-right: 12px;
 				vertical-align: middle;
+				width: 50px;
 			}
 
 			.logoText {
-				font-family: logoFont;
-				font-size: 45px;
-				margin: 10px 10px 0 0;
+				font-size: 32px;
+				margin: 0 10px 0 0;
 			}
 
 			.signInLink {

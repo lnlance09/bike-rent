@@ -53,6 +53,8 @@ class Contact extends Component {
 						items={settings.header.items}
 						language={settings.language}
 						languages={settings.languages}
+						logo={settings.header.logo}
+						logoText={settings.header.logoText}
 						showMainContent={contactPage.useHeroImage === "1"}
 						signInButton={settings.header.signInButton}
 						signUpButton={settings.header.signUpButton}

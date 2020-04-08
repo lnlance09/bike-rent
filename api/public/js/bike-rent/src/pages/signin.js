@@ -51,6 +51,8 @@ class Signin extends Component {
 					items={settings.header.items}
 					language={settings.language}
 					languages={settings.languages}
+					logo={settings.header.logo}
+					logoText={settings.header.logoText}
 					showMainContent={false}
 					signInButton={settings.header.signInButton}
 					signUpButton={settings.header.signUpButton}

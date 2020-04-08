@@ -1,7 +1,6 @@
 import "./style.css"
 import { logout } from "components/authentication/v1/actions"
 import { Provider, connect } from "react-redux"
-import { ReactSVG } from "react-svg"
 import {
 	Button,
 	Container,
@@ -18,7 +17,6 @@ import {
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import ImagePic from "images/avatar/default-profile.jpg"
-import Logo from "./images/logo.svg"
 import PropTypes from "prop-types"
 import SubHeader from "./subheader"
 import store from "store"
@@ -87,6 +85,8 @@ class AppHeader extends Component {
 			items,
 			language,
 			languages,
+			logo,
+			logoText,
 			showMainContent,
 			signInButton,
 			signUpButton
@@ -190,16 +190,8 @@ class AppHeader extends Component {
 									}}
 									style={{ padding: "7px" }}
 								>
-									<ReactSVG
-										beforeInjection={svg => {
-											svg.classList.add("svgHeaderLogo")
-											svg.setAttribute("style", "height: 50px; width: 50px")
-										}}
-										className="headerLogo"
-										evalScripts="always"
-										src={Logo}
-									/>
-									<span className="logoText">Bike Rent</span>
+									<Image className="headerLogo" src={logo} />
+									<span className="logoText">{logoText}</span>
 								</Menu.Item>
 								{items.map((item, i) => (
 									<Menu.Item
@@ -254,16 +246,8 @@ class AppHeader extends Component {
 									}}
 									style={{ padding: "7px" }}
 								>
-									<ReactSVG
-										beforeInjection={svg => {
-											svg.classList.add("svgHeaderLogo")
-											svg.setAttribute("style", "height: 36px; width: 36px")
-										}}
-										className="headerLogo"
-										evalScripts="always"
-										src={Logo}
-									/>
-									<span className="logoText">Bike Rent</span>
+									<Image className="headerLogo" src={logo} />
+									<span className="logoText">{logoText}</span>
 								</Menu.Item>
 								<Menu.Item position="right" onClick={this.toggleSidebar}>
 									<Icon name="sidebar" size="large" />
@@ -356,6 +340,8 @@ AppHeader.propTypes = {
 		})
 	),
 	languages: PropTypes.array,
+	logo: PropTypes.string,
+	logoText: PropTypes.string,
 	logout: PropTypes.func,
 	minHeight: PropTypes.string,
 	showMainContent: PropTypes.bool,
