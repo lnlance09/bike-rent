@@ -20,19 +20,19 @@
 
 	var_dump($uri);
 	switch ($uri) {
-		case "":
-		case "about":
-		case "apply":
-		case "bikes":
-		case "checkout":
-		case "cities":
-		case "contact":
-		case "faq":
-		case "home":
-		case "partners":
-		case "signin":
-		case "stores":
-		case "terms":
+		case "/":
+		case "/about":
+		case "/apply":
+		case "/bikes":
+		case "/checkout":
+		case "/cities":
+		case "/contact":
+		case "/faq":
+		case "/home":
+		case "/partners":
+		case "/signin":
+		case "/stores":
+		case "/terms":
 
 			$array = explode($uri, "/");
 			$page_name = end($array);
@@ -180,10 +180,12 @@
 	<script src="/static/js/main.11cb3694.chunk.js"></script>
 	<script src="/static/js/runtime-main.ea387562.js"></script>
 
+	<!--
 	<script>
 		var sc_project=12158654;
 		var sc_invisible=1;
 		var sc_security="265125c2";
 	</script>
 	<script src="https://www.statcounter.com/counter/counter.js" async></script>
+	-->
 </html>
