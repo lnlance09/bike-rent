@@ -236,5 +236,9 @@ class StoreModel extends CI_Model {
 				]);
 			}
 		}
+
+		$this->db->where('store_id', $id);
+		$this->db->where_not_in('bike_id', $bikes);
+		$this->db->delete('store_bikes');
 	}
 }
