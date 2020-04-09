@@ -741,6 +741,42 @@ export const submitFooterForm = ({
 	)
 }
 
+export const submitGeneralInfo = ({
+	bearer,
+	favicon,
+	fbAppId,
+	fbPageUrl,
+	instagramScreenName,
+	twitterScreenName
+}) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/settings/updateGeneralInfo`,
+		{
+			form: {
+				favicon,
+				fbAppId,
+				fbPageUrl,
+				instagramScreenName,
+				twitterScreenName
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			dispatch({
+				payload: body,
+				type: constants.GET_SETTINGS
+			})
+
+			if (!body.error) {
+				toast.success("Info updated!")
+			}
+		}
+	)
+}
+
 export const submitHeaderForm = ({
 	backgroundColor,
 	bearer,

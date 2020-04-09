@@ -66,14 +66,17 @@ class Checkout extends Component {
 					centered={false}
 					className="confirmationModal"
 					closeIcon
+					dimmer="inverted"
 					onClose={() => window.location.reload()}
 					open={order.confirmationModalOpen}
-					size="large"
+					size="small"
 				>
-					<Modal.Header>Congratulations</Modal.Header>
 					<Modal.Content>
+						<Header size="huge" textAlign="center">Congratulations</Header>
 						<Modal.Description>
-							Check your email for a confirmation at {email}
+							<Header size="big">
+								Check your email for a confirmation at {email}
+							</Header>
 						</Modal.Description>
 					</Modal.Content>
 				</Modal>
@@ -222,7 +225,7 @@ class Checkout extends Component {
 
 					{ConfirmationModal}
 
-					{order.confirmationModalOpen && <Confetti />}
+					{order.confirmationModalOpen && <Confetti colors={["#B5CC18"]} />}
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>

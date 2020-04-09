@@ -2,7 +2,7 @@ import { connect, Provider } from "react-redux"
 import { getBike } from "redux/actions/bike"
 import { formatPlural } from "utils/textFunctions"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Button, Container, Divider, Header, Image } from "semantic-ui-react"
+import { Button, Container, Divider, Header, Image, Segment } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import BikesList from "components/bikesList/v1/"
 import ImagePic from "images/images/image-square.png"
@@ -65,6 +65,7 @@ class Bikes extends Component {
 				<div style={{ textAlign: "left" }}>
 					<StoresList
 						bikeId={id}
+						extra={ctaButton.visible === "1" ? CtaButton : null}
 						emptyMsgContent="No stores carry this bike"
 						history={props.history}
 						key="store"
@@ -81,57 +82,59 @@ class Bikes extends Component {
 
 			return (
 				<Container textAlign="center">
-					<Image
-						centered
-						onError={i => (i.target.src = ImagePic)}
-						rounded
-						size="large"
-						src={image}
-					/>
-
-					<Divider hidden />
-
-					<Header size="huge">{name}</Header>
-					<p>{description}</p>
-
-					<Divider hidden />
-
-					{stores.length > 0 && (
-						<MapBox
-							height="300px"
-							lat={storeId !== "0" ? lat : stores[0].lat}
-							lng={storeId !== "0" ? lon : stores[0].lon}
-							markerId={storeId}
-							markers={stores}
-							onClickMarker={(id, lat, lon) => {
-								this.setState({ storeId: id, lat, lon, zoom: 12 })
-							}}
-							width="100%"
-							zoom={zoom}
+					<Segment>
+						<Image
+							centered
+							onError={i => (i.target.src = ImagePic)}
+							rounded
+							size="large"
+							src={image}
 						/>
-					)}
 
-					<Header size="huge">
-						{storeCount !== undefined &&
-							`Available in ${storeCount} ${formatPlural(storeCount, "store")}`}
-						{storeId !== "0" && (
-							<Header.Subheader>
-								<a
-									href={`${window.location.origin}`}
-									onClick={e => {
-										e.preventDefault()
-										this.setState({ storeId: "0", lat: "", lon: "", zoom: 10 })
-									}}
-								>
-									Clear filter
-								</a>
-							</Header.Subheader>
+						<Divider />
+
+						<Header size="huge">{name}</Header>
+						<p>{description}</p>
+
+						<Divider hidden />
+
+						{stores.length > 0 && (
+							<MapBox
+								height="300px"
+								lat={storeId !== "0" ? lat : stores[0].lat}
+								lng={storeId !== "0" ? lon : stores[0].lon}
+								markerId={storeId}
+								markers={stores}
+								onClickMarker={(id, lat, lon) => {
+									this.setState({ storeId: id, lat, lon, zoom: 12 })
+								}}
+								width="100%"
+								zoom={zoom}
+							/>
 						)}
-					</Header>
 
-					<Divider hidden />
+						<Header size="huge">
+							{storeCount !== undefined &&
+								`Available in ${storeCount} ${formatPlural(storeCount, "store")}`}
+							{storeId !== "0" && (
+								<Header.Subheader>
+									<a
+										href={`${window.location.origin}`}
+										onClick={e => {
+											e.preventDefault()
+											this.setState({ storeId: "0", lat: "", lon: "", zoom: 10 })
+										}}
+									>
+										Clear filter
+									</a>
+								</Header.Subheader>
+							)}
+						</Header>
 
-					<RenderStoresList props={props} />
+						<Divider hidden />
+
+						<RenderStoresList props={props} />
+					</Segment>
 				</Container>
 			)
 		}

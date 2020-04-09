@@ -16,7 +16,7 @@ import {
 	Visibility
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
-import ImagePic from "images/avatar/default-profile.jpg"
+import ImagePic from "images/avatar/small/christian.jpg"
 import PropTypes from "prop-types"
 import SubHeader from "./subheader"
 import store from "store"

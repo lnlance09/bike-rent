@@ -80,6 +80,7 @@ class Cities extends Component {
 				<div style={{ textAlign: "left" }}>
 					<StoresList
 						cityId={id}
+						extra={ctaButton.visible === "1" ? CtaButton : null}
 						history={props.history}
 						itemsPerRow={2}
 						key="store"

@@ -78,7 +78,18 @@ class Stores extends Component {
 		const { activeItem, auth, bearer, id, modalOpen, userId } = this.state
 		const { settings } = this.props
 		const { storesPage } = settings
+		const { ctaButton } = storesPage
 		const _store = this.props.store
+
+		const CtaButton = (
+			<Button
+				basic={ctaButton.basic === "1"}
+				color={ctaButton.color}
+				content={ctaButton.text}
+				inverted={ctaButton.inverted === "1"}
+				fluid
+			/>
+		)
 
 		const ReviewModal = (
 			<Modal centered={false} closeIcon onClose={() => this.toggleModal()} open={modalOpen}>
@@ -354,6 +365,7 @@ class Stores extends Component {
 								<Header size="huge">Pick a store</Header>
 
 								<StoresList
+									extra={ctaButton.visible === "1" ? CtaButton : null}
 									history={this.props.history}
 									key="store"
 									showCityFilter

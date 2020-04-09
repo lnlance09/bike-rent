@@ -1,6 +1,6 @@
 import { connect, Provider } from "react-redux"
 import { DisplayMetaTags } from "utils/metaFunctions"
-// import { Container } from "semantic-ui-react"
+import { Container } from "semantic-ui-react"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import React, { Component } from "react"
@@ -53,6 +53,10 @@ class Faq extends Component {
 						signUpButton={settings.header.signUpButton}
 						{...this.props}
 					/>
+
+					<Container className="mainContainer">
+						<div dangerouslySetInnerHTML={{ __html: faqPage.content }} />
+					</Container>
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>

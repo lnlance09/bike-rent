@@ -69,7 +69,7 @@ class StoresList extends Component {
 
 	render() {
 		const { options } = this.state
-		const { emptyMsgContent, itemsPerRow, results, showCityFilter, useCards } = this.props
+		const { emptyMsgContent, extra, itemsPerRow, results, showCityFilter, useCards } = this.props
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {
@@ -77,7 +77,7 @@ class StoresList extends Component {
 					return (
 						<ResultItem
 							description={result.description}
-							extra={<Button color="green" content="Get some wheels now" fluid />}
+							extra={extra}
 							history={props.history}
 							id={`${props.key}${i}`}
 							img={props.showPics ? result.image : null}
@@ -158,6 +158,7 @@ StoresList.propTypes = {
 	cityId: PropTypes.string,
 	count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	emptyMsgContent: PropTypes.string,
+	extra: PropTypes.func,
 	getStores: PropTypes.func,
 	getStoresByBike: PropTypes.func,
 	hasMore: PropTypes.bool,

@@ -80,6 +80,12 @@ body {
 .contactPage .container.mainContainer {
   padding-top: 0 !important; }
 
+.faqPage .container.mainContainer {
+  padding-top: 0 !important; }
+
+.partnersPage .container.mainContainer {
+  padding-top: 0 !important; }
+
 .profilePage .container.mainContainer {
   padding-top: 0 !important; }
 
@@ -96,3 +102,12 @@ body {
 .storesPage .googleMapsBox {
   height: 270px;
   width: 100%; }
+
+.termsPage .container.mainContainer {
+  padding-top: 0 !important; }
+
+.ui.inverted.modals.dimmer .ui.modal.confirmationModal {
+  border: solid 1px #F3F4F5; }
+  .ui.inverted.modals.dimmer .ui.modal.confirmationModal .content {
+    min-height: 300px;
+    z-index: 1; }

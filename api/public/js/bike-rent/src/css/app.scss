@@ -137,6 +137,18 @@ body {
 	}
 }
 
+.faqPage {
+	.container.mainContainer {
+		padding-top: 0 !important;
+	}
+}
+
+.partnersPage {
+	.container.mainContainer {
+		padding-top: 0 !important;
+	}
+}
+
 .profilePage {
 	.container.mainContainer {
 		padding-top: 0 !important;
@@ -164,10 +176,29 @@ body {
 	}
 }
 
-
 .storesPage {
 	.googleMapsBox {
 		height: 270px;
 		width: 100%;
+	}
+}
+
+.termsPage {
+	.container.mainContainer {
+		padding-top: 0 !important;
+	}
+}
+
+.ui.inverted.modals.dimmer {
+	// z-index: 0 !important;
+
+	.ui.modal.confirmationModal {
+		border: solid 1px $darkWhite;
+		// box-shadow: none !important;
+
+		.content {
+			min-height: 300px;
+			z-index: 1;
+		}
 	}
 }

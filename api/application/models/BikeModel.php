@@ -36,7 +36,7 @@ class BikeModel extends CI_Model {
 		$page = 0,
 		$limit = 25
 	) {
-		$select = "id, description, image, name, visible";
+		$select = "id, id AS bike_id, description, image, name, visible";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';

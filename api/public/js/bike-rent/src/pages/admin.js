@@ -20,6 +20,7 @@ import AdminCities from "components/admin/cities/v1/"
 import AdminCss from "components/admin/css/v1/"
 import AdminEmail from "components/admin/email/v1/"
 import AdminFooter from "components/admin/footer/v1/"
+import AdminGeneral from "components/admin/general/v1/"
 import AdminHeader from "components/admin/header/v1/"
 import AdminLanguages from "components/admin/languages/v1/"
 import AdminLibrary from "components/admin/library/v1/"
@@ -235,6 +236,18 @@ class Admin extends Component {
 							onClick={this.handleItemClick}
 						>
 							Refund
+						</Menu.Item>
+					</Menu.Menu>
+				</Menu.Item>
+				<Menu.Item>
+					General
+					<Menu.Menu>
+						<Menu.Item
+							active={activeItem === "general"}
+							name="general"
+							onClick={this.handleItemClick}
+						>
+							Basic site info
 						</Menu.Item>
 					</Menu.Menu>
 				</Menu.Item>
@@ -489,6 +502,17 @@ class Admin extends Component {
 				return (
 					<div>
 						<AdminFooter bearer={bearer} footerData={settings.footer} />
+					</div>
+				)
+			}
+
+			if (activeItem === "general") {
+				return (
+					<div>
+						<AdminGeneral
+							bearer={bearer}
+							languages={settings.languages}
+						/>
 					</div>
 				)
 			}
