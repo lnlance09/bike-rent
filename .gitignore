@@ -8,6 +8,8 @@ application/logs/*
 
 !application/*/.htaccess
 
+api/application/third_party/settings.json
+
 composer.lock
 
 vendor/
