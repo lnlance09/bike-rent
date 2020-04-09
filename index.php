@@ -108,7 +108,7 @@
 					while ($row = $result->fetch_assoc()) {
 						$description = $row['description'];
 						$img = $row['image'];
-						$title = $row['city'];
+						$title = $row['name'];
 					}
 					$result->close();
 				}
