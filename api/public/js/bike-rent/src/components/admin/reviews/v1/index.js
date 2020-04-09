@@ -4,7 +4,17 @@ import { getReviews } from "redux/actions/app"
 import { adjustTimezone } from "utils/dateFunctions"
 import { fetchStores } from "utils/selectOptions"
 import { connect } from "react-redux"
-import { Button, Container, Form, Header, Message, Modal, Rating, Select, Table } from "semantic-ui-react"
+import {
+	Button,
+	Container,
+	Form,
+	Header,
+	Message,
+	Modal,
+	Rating,
+	Select,
+	Table
+} from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import Moment from "react-moment"
 import PropTypes from "prop-types"
@@ -75,9 +85,7 @@ class AdminReviews extends Component {
 								<Button
 									color="green"
 									content="Issue Refund"
-									onClick={() => {
-										
-									}}
+									onClick={() => {}}
 									size="big"
 								/>
 							</Fragment>
@@ -100,7 +108,7 @@ class AdminReviews extends Component {
 
 		return (
 			<div className="adminReviews">
-				<Header size="large">Reviews</Header>
+				<Header size="huge">Reviews</Header>
 
 				<Form size="big">
 					<Select
@@ -140,9 +148,7 @@ class AdminReviews extends Component {
 								>
 									Rating
 								</Table.HeaderCell>
-								<Table.HeaderCell>
-									Comment
-								</Table.HeaderCell>
+								<Table.HeaderCell>Comment</Table.HeaderCell>
 							</Table.Row>
 						</Table.Header>
 
@@ -156,7 +162,7 @@ class AdminReviews extends Component {
 											error={refunded}
 											onClick={() => {
 												this.setState({
-													currentItem: item,
+													currentItem: item
 													// modalOpen: true
 												})
 											}}
@@ -167,9 +173,7 @@ class AdminReviews extends Component {
 													format="MMM Do Y, h:mm A"
 												/>
 											</Table.Cell>
-											<Table.Cell>
-												{item.user_name}
-											</Table.Cell>
+											<Table.Cell>{item.user_name}</Table.Cell>
 											<Table.Cell>{item.store_name}</Table.Cell>
 											<Table.Cell>
 												<Rating

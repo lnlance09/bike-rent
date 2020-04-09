@@ -87,6 +87,7 @@ class AdminFooter extends Component {
 
 		return (
 			<div className="adminFooter">
+				<Header size="huge">Footer</Header>
 				<Form>
 					<Form.Field>
 						Inverted: <b>This will make the footer appear dark</b>

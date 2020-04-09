@@ -5,6 +5,7 @@ import {
 	Button,
 	Divider,
 	Form,
+	Header,
 	Input,
 	Item,
 	Message,
@@ -400,6 +401,8 @@ class AdminStores extends Component {
 
 		return (
 			<div className="adminStores">
+				<Header size="huge">Stores</Header>
+
 				<Button
 					color="blue"
 					content="Add a store"

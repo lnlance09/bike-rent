@@ -110,6 +110,8 @@ class AdminOrders extends Component {
 
 		return (
 			<div className="adminOrders">
+				<Header size="huge">Orders</Header>
+
 				<Form size="big">
 					<Select
 						fluid

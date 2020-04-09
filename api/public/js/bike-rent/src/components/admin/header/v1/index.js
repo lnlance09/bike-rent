@@ -90,6 +90,8 @@ class AdminHeader extends Component {
 
 		return (
 			<div className="adminHeader">
+				<Header size="huge">Header</Header>
+
 				<Form>
 					<Form.Field>
 						<Header size="small">Logo</Header>

@@ -1,7 +1,7 @@
 import "./style.css"
 import { setLanguages } from "redux/actions/app"
 import { connect } from "react-redux"
-import { Button, Checkbox, Divider, Form } from "semantic-ui-react"
+import { Button, Checkbox, Divider, Form, Header } from "semantic-ui-react"
 import React, { Component } from "react"
 import languages from "languages.json"
 import PropTypes from "prop-types"
@@ -36,6 +36,8 @@ class AdminLanguages extends Component {
 
 		return (
 			<div className="adminLanguages">
+				<Header size="huge">Supported Languages</Header>
+
 				{languages.length > 0 && (
 					<div>
 						<Form>

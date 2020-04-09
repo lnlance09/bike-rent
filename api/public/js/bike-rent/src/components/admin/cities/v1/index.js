@@ -6,6 +6,7 @@ import {
 	Divider,
 	Dropdown,
 	Form,
+	Header,
 	Input,
 	Item,
 	Message,
@@ -153,6 +154,8 @@ class AdminCities extends Component {
 
 		return (
 			<div className="adminCities">
+				<Header size="huge">Cities</Header>
+
 				<Button
 					color="blue"
 					content="Add a city"

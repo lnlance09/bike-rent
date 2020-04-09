@@ -20,9 +20,7 @@ class AdminGeneral extends Component {
 		}
 	}
 
-	componentDidMount() {
-
-	}
+	componentDidMount() {}
 
 	onChangeFavicon = (e, { value }) => this.setState({ favicon: value })
 
@@ -40,40 +38,70 @@ class AdminGeneral extends Component {
 
 		return (
 			<div className="adminGeneral">
+				<Header size="huge">General</Header>
+
 				<Form>
 					<Form.Field>
 						<Header size="small">Favicon</Header>
 					</Form.Field>
 					<Form.Field>
-						<Input onChange={this.onChangeFavicon} placeholder="Favicon" value={favicon} />
+						<Input
+							onChange={this.onChangeFavicon}
+							placeholder="Favicon"
+							value={favicon}
+						/>
 					</Form.Field>
 
 					<Form.Field>
 						<Header size="small">Facebook App ID</Header>
 					</Form.Field>
 					<Form.Field>
-						<Input onChange={this.onChangeFbAppId} placeholder="Facebook App ID" value={fbAppId} />
+						<Input
+							icon="facebook f"
+							iconPosition="left"
+							onChange={this.onChangeFbAppId}
+							placeholder="Facebook App ID"
+							value={fbAppId}
+						/>
 					</Form.Field>
 
 					<Form.Field>
 						<Header size="small">Facebook Handle</Header>
 					</Form.Field>
 					<Form.Field>
-						<Input onChange={this.onChangeFbHandle} placeholder="Facebook Handle" value={fbPageUrl} />
+						<Input
+							icon="facebook f"
+							iconPosition="left"
+							onChange={this.onChangeFbHandle}
+							placeholder="Facebook Handle"
+							value={fbPageUrl}
+						/>
 					</Form.Field>
 
 					<Form.Field>
 						<Header size="small">Twitter Handle</Header>
 					</Form.Field>
 					<Form.Field>
-						<Input onChange={this.onChangeTwitterHandle} placeholder="Twitter Handle" value={twitterScreenName} />
+						<Input
+							icon="twitter"
+							iconPosition="left"
+							onChange={this.onChangeTwitterHandle}
+							placeholder="Twitter Handle"
+							value={twitterScreenName}
+						/>
 					</Form.Field>
 
 					<Form.Field>
 						<Header size="small">Instagram Handle</Header>
 					</Form.Field>
 					<Form.Field>
-						<Input onChange={this.onChangeInstagramHandle} placeholder="Instagram Handle" value={instagramScreenName} />
+						<Input
+							icon="instagram"
+							iconPosition="left"
+							onChange={this.onChangeInstagramHandle}
+							placeholder="Instagram Handle"
+							value={instagramScreenName}
+						/>
 					</Form.Field>
 				</Form>
 

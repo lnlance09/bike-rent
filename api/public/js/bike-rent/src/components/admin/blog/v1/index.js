@@ -12,6 +12,7 @@ import {
 	Divider,
 	Dropdown,
 	Form,
+	Header,
 	Input,
 	Item,
 	Message,
@@ -237,6 +238,8 @@ class AdminBlog extends Component {
 
 		return (
 			<div className="adminBlog">
+				<Header size="huge">Blogs</Header>
+
 				{createNewBlog && <Segment>{AddBlogPanel}</Segment>}
 
 				{!createNewBlog && <div>{DisplayBlogPosts}</div>}

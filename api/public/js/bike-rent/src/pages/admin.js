@@ -509,10 +509,7 @@ class Admin extends Component {
 			if (activeItem === "general") {
 				return (
 					<div>
-						<AdminGeneral
-							bearer={bearer}
-							languages={settings.languages}
-						/>
+						<AdminGeneral bearer={bearer} languages={settings.languages} />
 					</div>
 				)
 			}

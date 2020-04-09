@@ -5,6 +5,7 @@ import {
 	Button,
 	Divider,
 	Form,
+	Header,
 	Input,
 	Item,
 	Message,
@@ -132,6 +133,8 @@ class AdminBikes extends Component {
 
 		return (
 			<div className="adminBikes">
+				<Header size="huge">Bikes</Header>
+
 				<Button
 					color="blue"
 					content="Add a bike"

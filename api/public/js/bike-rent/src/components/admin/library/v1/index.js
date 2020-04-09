@@ -1,7 +1,7 @@
 import "./style.css"
 import { addImageToLibrary, getImages, toggleAddImageModal } from "redux/actions/library"
 import { connect } from "react-redux"
-import { Button, Divider, Grid, Image, Modal, Placeholder } from "semantic-ui-react"
+import { Button, Divider, Grid, Header, Image, Modal, Placeholder } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import ImagePic from "images/images/image-square.png"
 import ImageUpload from "components/imageUpload/v1/"
@@ -95,7 +95,7 @@ class AdminLibrary extends Component {
 
 		return (
 			<div className="adminLibrary">
-				{AddImgModal}
+				<Header size="huge">Image Library</Header>
 
 				<Button
 					color="blue"
@@ -144,6 +144,8 @@ class AdminLibrary extends Component {
 						)
 					})}
 				</Grid>
+
+				{AddImgModal}
 			</div>
 		)
 	}

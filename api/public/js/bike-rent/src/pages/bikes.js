@@ -122,7 +122,12 @@ class Bikes extends Component {
 										href={`${window.location.origin}`}
 										onClick={e => {
 											e.preventDefault()
-											this.setState({ storeId: "0", lat: "", lon: "", zoom: 10 })
+											this.setState({
+												storeId: "0",
+												lat: "",
+												lon: "",
+												zoom: 10
+											})
 										}}
 									>
 										Clear filter

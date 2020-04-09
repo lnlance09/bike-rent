@@ -34,13 +34,17 @@ class Checkout extends Component {
 		const user = currentState.user
 		const auth = user.authenticated
 		const bearer = user.bearer
+		const userData = user.data
 
+		console.log("userData")
+		console.log(userData)
 		this.state = {
 			auth,
 			bearer,
 			email: "",
 			paymentId: null,
-			showForm: true
+			showForm: true,
+			userData: userData.user
 		}
 	}
 
@@ -53,7 +57,7 @@ class Checkout extends Component {
 	toggleForm = () => this.setState({ showForm: !this.state.showForm })
 
 	render() {
-		const { auth, bearer, email, paymentId, showForm } = this.state
+		const { auth, bearer, email, paymentId, showForm, userData } = this.state
 		const { data, order, settings } = this.props
 		const { checkoutPage } = settings
 		const { cart } = data
@@ -66,16 +70,19 @@ class Checkout extends Component {
 					centered={false}
 					className="confirmationModal"
 					closeIcon
-					dimmer="inverted"
+					// dimmer="inverted"
 					onClose={() => window.location.reload()}
 					open={order.confirmationModalOpen}
 					size="small"
 				>
 					<Modal.Content>
-						<Header size="huge" textAlign="center">Congratulations</Header>
+						<Header size="huge" textAlign="center">
+							Congratulations
+						</Header>
 						<Modal.Description>
 							<Header size="big">
-								Check your email for a confirmation at {email}
+								Check your email for a confirmation at{" "}
+								{auth ? userData.email : email}
 							</Header>
 						</Modal.Description>
 					</Modal.Content>

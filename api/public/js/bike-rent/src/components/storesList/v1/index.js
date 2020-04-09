@@ -2,17 +2,7 @@ import "./style.css"
 import { fetchCities } from "utils/selectOptions"
 import { getStores, getStoresByBike, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
-import {
-	Card,
-	Button,
-	Divider,
-	Dropdown,
-	Header,
-	Item,
-	List,
-	Segment,
-	Visibility
-} from "semantic-ui-react"
+import { Card, Divider, Dropdown, Header, Item, List, Segment, Visibility } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import LazyLoad from "components/lazyLoad/v1/"
 import PropTypes from "prop-types"
@@ -69,7 +59,14 @@ class StoresList extends Component {
 
 	render() {
 		const { options } = this.state
-		const { emptyMsgContent, extra, itemsPerRow, results, showCityFilter, useCards } = this.props
+		const {
+			emptyMsgContent,
+			extra,
+			itemsPerRow,
+			results,
+			showCityFilter,
+			useCards
+		} = this.props
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {

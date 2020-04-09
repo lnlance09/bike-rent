@@ -1,7 +1,7 @@
 import "./style.css"
 import { setTheme } from "redux/actions/app"
 import { connect, Provider } from "react-redux"
-import { Button, Card, Image } from "semantic-ui-react"
+import { Button, Card, Divider, Header, Image } from "semantic-ui-react"
 import { capitalizeWord } from "utils/textFunctions"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
@@ -20,6 +20,10 @@ class AdminThemes extends Component {
 		return (
 			<Provider store={store}>
 				<div className="adminThemes">
+					<Header size="huge">Themes</Header>
+
+					<Divider />
+
 					<Card.Group itemsPerRow={3}>
 						{themes.map((item, i) => (
 							<Card key={item.title} raised={item.title === theme}>

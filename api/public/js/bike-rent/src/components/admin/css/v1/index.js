@@ -1,7 +1,7 @@
 import "./style.css"
 import { editCss } from "redux/actions/app"
 import { connect } from "react-redux"
-import { Button, Divider } from "semantic-ui-react"
+import { Button, Divider, Header } from "semantic-ui-react"
 import React, { Component } from "react"
 import AceEditor from "react-ace"
 import PropTypes from "prop-types"
@@ -23,6 +23,7 @@ class AdminCss extends Component {
 
 		return (
 			<div className="adminCss">
+				<Header size="huge">CSS</Header>
 				<AceEditor
 					fontSize={16}
 					highlightActiveLine
