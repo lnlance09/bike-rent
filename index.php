@@ -5,8 +5,8 @@
 
 	$set = false;
 
-	$base_url = "https://tpusa.pro/";
-	$canonical_url = "https://tpusa.pro".$uri;
+	$base_url = "http://ec2-54-189-130-245.us-west-2.compute.amazonaws.com/";
+	$canonical_url = substr($base_url, 0, -1).$uri;
 	$settings = file_get_contents($base_url."api/settings/");
 	$settings = @json_decode($settings);
 
@@ -37,7 +37,7 @@
 	}
 
 	if (!$set) {
-		$mysqli = new mysqli("turning-point.cgyqtjcifq2g.us-east-1.rds.amazonaws.com:3306", "admin", "XZ6m17NmxhkB!DB", "turning_point");
+		$mysqli = new mysqli("bike-rent.cni5l9jtlymn.us-west-2.rds.amazonaws.com:3306", "admin", "7,C35-K4ns9SC2e", "bike-rent");
 		if ($mysqli->connect_errno) {
 			printf("Connect failed: %s\n", $mysqli->connect_error);
 			exit();
