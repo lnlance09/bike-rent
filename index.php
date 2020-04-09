@@ -25,7 +25,8 @@
 		case "/stores":
 		case "/terms":
 
-			$page_name = end(explode($uri, "/"));
+			$array = explode($uri, "/");
+			$page_name = end($array);
 			$data = $settings[$page_name.'Page']['seo'];
 			$title = $data['title'];
 			$description = $data['description'];
