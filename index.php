@@ -4,19 +4,10 @@
 	array_splice($paths, 0, 1);
 
 	$set = false;
-
 	$base_url = "http://ec2-54-189-130-245.us-west-2.compute.amazonaws.com/";
 	$canonical_url = substr($base_url, 0, -1).$uri;
 	$settings = file_get_contents($base_url."api/settings/");
-	$settings = (array) @json_decode($settings, true);
-
-	/*
-	var_dump($uri);
-	var_dump($paths);
-	echo '<pre>';
-	print_r($settings);
-	echo '</pre>';
-	*/
+	$settings = @json_decode($settings, true);
 
 	switch ($uri) {
 		case "/":
@@ -34,17 +25,11 @@
 		case "/terms":
 
 			$page_name = substr($uri, 1);
-			var_dump('Page name: '.$page_name.'Page');
 			$data = $settings[$page_name.'Page']['seo'];
 			$title = $data['title'];
 			$description = $data['description'];
 			$img = $data['image'];
 			$keywords = $data['keywords'];
-
-			echo '<pre>';
-			print_r($data);
-			echo '</pre>';
-
 			$set = true;
 			break;
 	}
