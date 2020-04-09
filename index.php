@@ -43,6 +43,10 @@
 			$keywords = $data['keywords'];
 
 			var_dump($title);
+			var_dump($page_name.'Page');
+			echo '<pre>';
+			print_r($settings);
+			echo '</pre>';
 			$set = true;
 			break;
 	}
