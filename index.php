@@ -18,7 +18,7 @@
 	echo '</pre>';
 	*/
 
-
+	var_dump($uri);
 	switch ($uri) {
 		case "":
 		case "about":
