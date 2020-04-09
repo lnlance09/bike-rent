@@ -18,6 +18,7 @@
 	echo '</pre>';
 	*/
 
+
 	switch ($uri) {
 		case "":
 		case "about":
@@ -172,7 +173,7 @@
 
 		<div id="root"></div>
 		<div style="display: none;">
-			<?php echo $html; ?>
+			
 		</div>
 	</body>
 	<script src="/static/js/2.b9567930.chunk.js"></script>
