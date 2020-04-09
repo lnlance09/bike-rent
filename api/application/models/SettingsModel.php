@@ -78,6 +78,23 @@ class SettingsModel extends CI_Model {
 		return $json;
 	}
 
+	public function updateGeneralInfo($favicon, $fbAppId, $fbPageUrl, $instagramScreenName, $twitterScreenName
+	) {
+		$decode = $this->decodeSettings();
+		$decode['basic'] = [
+			'favicon' => $favicon,
+			'fbAppId' => $fbAppId,
+			'fbPageUrl' => $fbPageUrl,
+			'instagramScreenName' => $instagramScreenName,
+			'twitterScreenName' => $twitterScreenName
+		];
+
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
+		file_put_contents($this->configFile, $json);
+
+		return $json;
+	}
+
 	public function updateHeader(
 		$color,
 		$listItems,

@@ -197,6 +197,34 @@ class Settings extends CI_Controller {
 		echo $footer;
 	}
 
+	public function updateGeneralInfo() {
+		$favicon = $this->input->post('favicon');
+		$fbAppId = $this->input->post('fbAppId');
+		$fbPageUrl = $this->input->post('fbPageUrl');
+		$instagramScreenName = $this->input->post('instagramScreenName');
+		$twitterScreenName = $this->input->post('twitterScreenName');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in to make changes'
+			]);
+			exit;
+		}
+
+		$settings = $this->settings;
+		$settings = new $settings();
+		$header = $settings->updateGeneralInfo(
+			$favicon,
+			$fbAppId,
+			$fbPageUrl,
+			$instagramScreenName,
+			$twitterScreenName
+		);
+
+		echo $header;
+	}
+
 	public function updateHeader() {
 		$backgroundColor = $this->input->post('backgroundColor');
 		$listItems = $this->input->post('listItems');

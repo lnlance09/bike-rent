@@ -9,7 +9,7 @@ class AdminGeneral extends Component {
 	constructor(props) {
 		super(props)
 
-		const { favicon, fbAppId, fbPageUrl, instagramScreenName, twitterScreenName } = this.props
+		const { favicon, fbAppId, fbPageUrl, instagramScreenName, twitterScreenName } = this.props.basic
 
 		this.state = {
 			favicon,
@@ -40,7 +40,7 @@ class AdminGeneral extends Component {
 			<div className="adminGeneral">
 				<Header size="huge">General</Header>
 
-				<Form>
+				<Form size="big">
 					<Form.Field>
 						<Header size="small">Favicon</Header>
 					</Form.Field>
@@ -129,15 +129,18 @@ class AdminGeneral extends Component {
 
 AdminGeneral.propTypes = {
 	bearer: PropTypes.string,
-	favicon: PropTypes.string,
-	fbAppId: PropTypes.string,
-	fbPageUrl: PropTypes.string,
-	instagramScreenName: PropTypes.string,
-	submitGeneralInfo: PropTypes.func,
-	twitterScreenNam: PropTypes.string
+	basic: PropTypes.shape({
+		favicon: PropTypes.string,
+		fbAppId: PropTypes.string,
+		fbPageUrl: PropTypes.string,
+		instagramScreenName: PropTypes.string,
+		submitGeneralInfo: PropTypes.func,
+		twitterScreenNam: PropTypes.string
+	})
 }
 
 AdminGeneral.defaultProps = {
+	basic: {},
 	submitGeneralInfo
 }
 
