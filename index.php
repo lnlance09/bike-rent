@@ -41,11 +41,12 @@
 			$img = $data['image'];
 			$keywords = $data['keywords'];
 
-			var_dump($title);
-			var_dump($page_name.'Page');
+
+			var_dump('Page name: '.$page_name.'Page');
 			echo '<pre>';
-			print_r($settings);
+			print_r($data);
 			echo '</pre>';
+
 			$set = true;
 			break;
 	}
