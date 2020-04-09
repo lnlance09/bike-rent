@@ -352,6 +352,14 @@ App.propTypes = {
 			}),
 			title: PropTypes.string
 		}),
+		basic: PropTypes.shape({
+			favicon: PropTypes.string,
+			fbAppId: PropTypes.string,
+			fbPageUrl: PropTypes.string,
+			instagramScreenName: PropTypes.string,
+			submitGeneralInfo: PropTypes.func,
+			twitterScreenNam: PropTypes.string
+		}),
 		bikesPage: PropTypes.shape({
 			seo: PropTypes.shape({
 				desciption: PropTypes.string,
