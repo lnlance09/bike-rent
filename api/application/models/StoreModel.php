@@ -21,6 +21,7 @@ class StoreModel extends CI_Model {
 
 	public function create($data) {
 		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
 	}
 
 	public function get($id) {
@@ -216,5 +217,24 @@ class StoreModel extends CI_Model {
 	public function update($id, $data) {
 		$this->db->where('id', $id);
 		$this->db->update($this->table, $data);
+	}
+
+	public function updateInventory($id, $bikes) {
+		for ($i=0;$i<count($bikes);$i++) {
+			$bike_id = trim($bikes[$i]);
+
+			$this->db->select("COUNT(*) AS count");
+			$this->db->where([
+				'bike_id' => $bike_id,
+				'store_id' => $id
+			]);
+			$result = $this->db->get('store_bikes')->result();
+			if ($result[0]->count == 0) {
+				$this->db->insert('store_bikes', [
+					'bike_id' => $bike_id,
+					'store_id' => $id
+				]);
+			}
+		}
 	}
 }

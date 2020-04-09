@@ -1,9 +1,11 @@
 import "./style.css"
+import { fetchBikes } from "utils/selectOptions"
 import { addStore, editStore, toggleAddStoreModal } from "redux/actions/app"
 import { connect } from "react-redux"
 import {
 	Button,
 	Divider,
+	Dropdown,
 	Form,
 	Header,
 	Input,
@@ -21,10 +23,12 @@ import ImagePic from "images/images/image-square.png"
 import PropTypes from "prop-types"
 
 const StoreForm = ({
+	bikeOptions,
 	error,
 	errorMsg,
 	item,
 	onChangeAddress,
+	onChangeBikes,
 	onChangeCity,
 	onChangeClosingTime,
 	onChangeDescription,
@@ -46,6 +50,7 @@ const StoreForm = ({
 
 	const {
 		address,
+		bike_ids,
 		city,
 		closingTime,
 		description,
@@ -58,6 +63,9 @@ const StoreForm = ({
 		state,
 		visible
 	} = item
+
+	const bikesValue = bike_ids === null ? [] : bike_ids.split("| ")
+
 	return (
 		<Form error={error}>
 			<Form.Field>
@@ -161,6 +169,20 @@ const StoreForm = ({
 			</Form.Field>
 
 			<Form.Field>
+				<label>Bikes available here</label>
+				<Dropdown
+					fluid
+					multiple
+					onChange={onChangeBikes}
+					options={bikeOptions}
+					placeholder="Bikes available here"
+					search
+					selection
+					value={bikesValue}
+				/>
+			</Form.Field>
+
+			<Form.Field>
 				<label>
 					<b>Visible</b>
 				</label>
@@ -194,6 +216,8 @@ class AdminStores extends Component {
 
 		this.state = {
 			address: "",
+			bike_ids: null,
+			bike_names: null,
 			city: "",
 			closingTime: "",
 			description: "",
@@ -210,7 +234,17 @@ class AdminStores extends Component {
 		}
 	}
 
+	async componentDidMount() {
+		const bikeOptions = await fetchBikes("")
+		this.setState({ bikeOptions })
+	}
+
 	onChangeAddress = (e, { value }) => this.setState({ address: value })
+
+	onChangeBikes = (e, { value }) => {
+		const newBikes = value.join("| ")
+		this.setState({ bike_ids: newBikes })
+	}
 
 	onChangeCity = (e, { value }) => this.setState({ city: value })
 
@@ -235,6 +269,8 @@ class AdminStores extends Component {
 	setActive = (item, reset) => {
 		const {
 			address,
+			bike_ids,
+			bike_names,
 			city,
 			closingTime,
 			description,
@@ -248,8 +284,11 @@ class AdminStores extends Component {
 			state,
 			visible
 		} = item
+
 		let stateData = {
 			address,
+			bike_ids,
+			bike_names,
 			city,
 			closingTime,
 			description,
@@ -268,6 +307,8 @@ class AdminStores extends Component {
 		if (reset) {
 			stateData = {
 				address: "",
+				bike_ids: null,
+				bike_names: null,
 				city: "",
 				closingTime: "",
 				description: "",
@@ -295,6 +336,9 @@ class AdminStores extends Component {
 	render() {
 		const {
 			address,
+			bikeOptions,
+			bike_ids,
+			bike_names,
 			city,
 			closingTime,
 			description,
@@ -321,10 +365,13 @@ class AdminStores extends Component {
 				<Modal.Header>{isNew ? "Add a new store" : "Edit this store"}</Modal.Header>
 				<Modal.Content>
 					<StoreForm
+						bikeOptions={bikeOptions}
 						error={error}
 						errorMsg={errorMsg}
 						item={{
 							address,
+							bike_ids,
+							bike_names,
 							city,
 							closingTime,
 							description,
@@ -338,6 +385,7 @@ class AdminStores extends Component {
 							visible
 						}}
 						onChangeAddress={this.onChangeAddress}
+						onChangeBikes={this.onChangeBikes}
 						onChangeCity={this.onChangeCity}
 						onChangeClosingTime={this.onChangeClosingTime}
 						onChangeDescription={this.onChangeDescription}
@@ -361,6 +409,8 @@ class AdminStores extends Component {
 							if (isNew) {
 								this.props.addStore({
 									address,
+									bike_ids,
+									bike_names,
 									bearer,
 									city,
 									closingTime,
@@ -378,6 +428,8 @@ class AdminStores extends Component {
 								this.props.editStore({
 									address,
 									bearer,
+									bike_ids,
+									bike_names,
 									city,
 									closingTime,
 									description,
