@@ -147,7 +147,8 @@
 		<link rel="canonical" href="<?php echo $canonical_url; ?>" />
 		<link rel="home" href="<?php echo $base_url; ?>" />
 
-		<link rel="stylesheet" type="text/css" href="/static/css/main.c6524b60.chunk.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/main.4c88868d.chunk.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/2.ec813231.chunk.css">
 		<link rel="manifest" href="/manifest.json">
 		<link rel="shortcut icon" href="/favicon.ico?v=3">
 		<link rel="apple-touch-icon" sizes="128x128" href="/favicon.ico?v=3">
@@ -165,9 +166,9 @@
 			<?php echo $html; ?>
 		</div>
 	</body>
-	<script src="/static/js/2.091a881f.chunk.js"></script>
-	<script src="/static/js/main.c36fc648.chunk.js"></script>
-	<script src="/static/js/runtime-main.c2aea362.js"></script>
+	<script src="/static/js/2.b9567930.chunk.js"></script>
+	<script src="/static/js/main.11cb3694.chunk.j"></script>
+	<script src="/static/js/runtime-main.ea387562.js"></script>
 
 	<script>
 		var sc_project=12158654;
