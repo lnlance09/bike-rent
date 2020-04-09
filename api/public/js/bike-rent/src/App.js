@@ -55,7 +55,7 @@ class App extends Component {
 
 		return (
 			<Provider store={store}>
-				<div className="app">
+				<div className={`app ${settings.theme}`}>
 					<Router history={history}>
 						<ScrollToTop>
 							<Route

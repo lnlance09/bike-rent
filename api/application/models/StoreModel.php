@@ -178,7 +178,7 @@ class StoreModel extends CI_Model {
 		$page = 0,
 		$limit = 25
 	) {
-		$select = "s.address, s.city, s.closing_time AS closingTime, s.description, s.id, s.image, s.lat, s.lon, s.name, s.opening_time AS openingTime, s.order, s.phone_number AS phone, s.state, s.zip_code, ";
+		$select = "s.address, s.city, s.closing_time AS closingTime, s.description, s.id, s.image, s.lat, s.lon, s.name, s.opening_time AS openingTime, s.order, s.phone_number AS phone, s.state, s.visible, s.zip_code, ";
 
 		$select .= "GROUP_CONCAT(DISTINCT b.id ORDER BY b.id ASC SEPARATOR '| ') bike_ids, GROUP_CONCAT(DISTINCT b.name ORDER BY b.id ASC SEPARATOR '| ') AS bike_names";
 
