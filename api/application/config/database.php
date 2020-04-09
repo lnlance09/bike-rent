@@ -75,10 +75,14 @@ $query_builder = true;
 
 $db['default'] = [
 	'dsn' => '',
-	'hostname' => 'localhost',
-	// 'hostname' => 'turning-point.cgyqtjcifq2g.us-east-1.rds.amazonaws.com:3306',
-	'username' => 'root',
-	'password' => 'root',
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
+	// 'password' => 'root',
+
+	'hostname' => 'bike-rent.cni5l9jtlymn.us-west-2.rds.amazonaws.com:3306',
+	'username' => 'admin',
+	'password' => '7,C35-K4ns9SC2e',
+
 	'database' => 'bike-rent',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
