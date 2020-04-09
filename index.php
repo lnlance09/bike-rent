@@ -9,6 +9,13 @@
 	$settings = file_get_contents($base_url."api/settings/");
 	$settings = @json_decode($settings, true);
 
+	$basic = $settings['basic'];
+	$favicon = $basic['favicon'];
+	$fb_app_id = $basic['fbAppId'];
+	$fb_screenname = $basic['fbPageUrl'];
+	$instagram_screenname = $basic['instagramScreenName'];
+	$twitter_screenname = $basic['twitterScreenName'];
+
 	switch ($uri) {
 		case "/":
 		case "/about":
@@ -73,7 +80,7 @@
 				$sql = "SELECT fl.description, fl.image, l.city
 						FROM featured_locations fl
 						INNER JOIN locations l ON fl.location_id = l.id
-						WHERE id = '".$id."'";
+						WHERE l.id = '".$id."'";
 				$result = $mysqli->query($sql);
 
 				if ($result->num_rows === 1) {
@@ -122,6 +129,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=0">
 		<meta name="theme-color" content="#d50042">
 
+		<meta property="fb:app_id" content="<?php echo $fb_app_id; ?>">
 		<meta property="og:description" content="<?php echo htmlentities($description); ?>">
 		<meta property="og:image" content="<?php echo $img; ?>">
 		<meta property="og:image:height" content="<?php echo $height; ?>">
@@ -132,8 +140,8 @@
 		<meta property="og:url" content="<?php echo $canonical_url; ?>">
 
 		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:site" content="@bikerentnyc">
-		<meta name="twitter:creator" content="@bikerentnyc">
+		<meta name="twitter:site" content="@<?php echo $twitter_screenname; ?>">
+		<meta name="twitter:creator" content="@<?php echo $twitter_screenname; ?>">
 		<meta name="twitter:title" content="<?php echo htmlentities($title); ?>">
 		<meta name="twitter:description" content="<?php echo htmlentities($description); ?>">
 		<meta name="twitter:image" content="<?php echo $img; ?>">
@@ -148,8 +156,8 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/main.4c88868d.chunk.css">
 		<link rel="stylesheet" type="text/css" href="/static/css/2.ec813231.chunk.css">
 		<link rel="manifest" href="/manifest.json">
-		<link rel="shortcut icon" href="/favicon.ico?v=3">
-		<link rel="apple-touch-icon" sizes="128x128" href="/favicon.ico?v=3">
+		<link rel="shortcut icon" href="<?php echo $basic['favicon'].'?v='.time(); ?>">
+		<link rel="apple-touch-icon" sizes="128x128" href="<?php echo $basic['favicon'].'?v='.time(); ?>">
 
 		<title><?php echo $title; ?></title>
 	</head>
