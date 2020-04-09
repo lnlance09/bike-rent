@@ -190,6 +190,7 @@ class Authentication extends Component {
 									color="facebook"
 									content="Login with Facebook"
 									fluid
+									icon="facebook f"
 									onClick={this.handleClick}
 								/>
 								{loading && <span>Loading...</span>}
@@ -204,11 +205,11 @@ class Authentication extends Component {
 			<Button
 				className="googleBtn"
 				color="red"
+				content={`${login ? "Sign in" : "Sign up"} with Google`}
 				fluid
+				icon="google"
 				onClick={() => this.redirectToUrl(props.data.user.googleUrl)}
-			>
-				<Icon name="google" /> {login ? "Sign in" : "Sign up"} with Google
-			</Button>
+			/>
 		)
 
 		const MainForm = props => {
