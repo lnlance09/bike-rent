@@ -188,8 +188,10 @@ class StoreModel extends CI_Model {
 
 		$this->db->select($select);
 
-		$this->db->join('store_bikes sb', 's.id = sb.store_id', 'left');
-		$this->db->join('bikes b', 'sb.bike_id = b.id');
+		if (!$just_count) {
+			$this->db->join('store_bikes sb', 's.id = sb.store_id', 'left');
+			$this->db->join('bikes b', 'sb.bike_id = b.id');
+		}
 
 		if (!empty($cityId)) {
 			$this->db->where('location_id', $cityId);
@@ -204,7 +206,10 @@ class StoreModel extends CI_Model {
 			$this->db->limit($limit, $start);
 		}
 
-		$this->db->group_by('s.id');
+		if (!$just_count) {
+			$this->db->group_by('s.id');
+		}
+
 		$results = $this->db->get('stores s')->result_array();
 
 		if ($just_count) {
