@@ -146,7 +146,7 @@ class SettingsModel extends CI_Model {
 		$decode = $this->decodeSettings();
 		$decode['theme'] = $theme;
 		$json = json_encode($decode, JSON_PRETTY_PRINT);
-		file_put_contents($this->configFile, $json);
+		file_put_contents($this->configFile, $json) or die('cant');
 
 		return $json;
 	}
