@@ -1,6 +1,7 @@
 <?php
 	$uri = $_SERVER['REQUEST_URI'];
 	$paths = explode('/', $uri);
+	var_dump($paths);
 	array_splice($paths, 0, 1);
 
 	$set = false;
@@ -9,6 +10,12 @@
 	$canonical_url = substr($base_url, 0, -1).$uri;
 	$settings = file_get_contents($base_url."api/settings/");
 	$settings = (array) @json_decode($settings);
+
+	var_dump($uri);
+	var_dump($paths);
+	echo '<pre>';
+	print_r($settings);
+	echo '</pre>';
 
 	switch ($uri) {
 		case "/":
