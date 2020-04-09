@@ -18,7 +18,6 @@
 	echo '</pre>';
 	*/
 
-	var_dump($uri);
 	switch ($uri) {
 		case "/":
 		case "/about":
@@ -35,14 +34,13 @@
 		case "/terms":
 
 			$page_name = substr($uri, 1);
+			var_dump('Page name: '.$page_name.'Page');
 			$data = (array)$settings[$page_name.'Page']['seo'];
 			$title = $data['title'];
 			$description = $data['description'];
 			$img = $data['image'];
 			$keywords = $data['keywords'];
 
-
-			var_dump('Page name: '.$page_name.'Page');
 			echo '<pre>';
 			print_r($data);
 			echo '</pre>';
