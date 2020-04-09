@@ -169,10 +169,12 @@
 	<script src="/static/js/main.c36fc648.chunk.js"></script>
 	<script src="/static/js/runtime-main.c2aea362.js"></script>
 
+	<!--
 	<script>
 		var sc_project=12158654;
 		var sc_invisible=1;
 		var sc_security="265125c2";
 	</script>
 	<script src="https://www.statcounter.com/counter/counter.js" async></script>
+	-->
 </html>
