@@ -1,7 +1,6 @@
 <?php
 	$uri = $_SERVER['REQUEST_URI'];
 	$paths = explode('/', $uri);
-	var_dump($paths);
 	array_splice($paths, 0, 1);
 
 	$set = false;
@@ -11,26 +10,28 @@
 	$settings = file_get_contents($base_url."api/settings/");
 	$settings = (array) @json_decode($settings);
 
+	/*
 	var_dump($uri);
 	var_dump($paths);
 	echo '<pre>';
 	print_r($settings);
 	echo '</pre>';
+	*/
 
 	switch ($uri) {
-		case "/":
-		case "/about":
-		case "/apply":
-		case "/bikes":
-		case "/checkout":
-		case "/cities":
-		case "/contact":
-		case "/faq":
-		case "/home":
-		case "/partners":
-		case "/signin":
-		case "/stores":
-		case "/terms":
+		case "":
+		case "about":
+		case "apply":
+		case "bikes":
+		case "checkout":
+		case "cities":
+		case "contact":
+		case "faq":
+		case "home":
+		case "partners":
+		case "signin":
+		case "stores":
+		case "terms":
 
 			$array = explode($uri, "/");
 			$page_name = end($array);
