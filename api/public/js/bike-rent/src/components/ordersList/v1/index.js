@@ -1,9 +1,11 @@
 import "./style.css"
+import { adjustTimezone } from "utils/dateFunctions"
 import { getOrders, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
-import { Card, Header, Item, Segment, Visibility } from "semantic-ui-react"
-import React, { Component } from "react"
+import { Button, Card, Header, Item, Modal, Segment, Visibility } from "semantic-ui-react"
+import React, { Component, Fragment } from "react"
 import LazyLoad from "components/lazyLoad/v1/"
+import Moment from "react-moment"
 import PropTypes from "prop-types"
 import ResultItem from "components/item/v1/"
 import store from "store"
@@ -13,12 +15,14 @@ class OrdersList extends Component {
 		super(props)
 
 		this.state = {
-			loadingMore: false
+			loadingMore: false,
+			modalOpen: false
 		}
 	}
 
 	componentDidMount() {
-		this.props.getOrders({ page: 0, visible: 1 })
+		const { storeId, userId } = this.props
+		this.props.getOrders({ page: 0, storeId, userId })
 	}
 
 	componentDidUpdate(prevProps) {
@@ -30,17 +34,63 @@ class OrdersList extends Component {
 	loadMore = () => {
 		if (this.props.hasMore && !this.props.loadingMore) {
 			// const newPage = parseInt(this.props.page + 1, 10)
-			this.props.toggleLoading()
-			this.props.retrieveItems()
 		}
 	}
 
+	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen })
+
 	render() {
-		const { emptyMsgContent, extra, itemsPerRow, results, useCards } = this.props
+		const { modalOpen } = this.state
+		const { emptyMsgContent, itemsPerRow, results, useCards } = this.props
+
+		const OrderDetailsModal = (
+			<Modal centered={false} closeIcon onClose={() => this.toggleModal()} open={modalOpen}>
+				<Modal.Header>About this purchase</Modal.Header>
+				<Modal.Content>
+					<Modal.Description></Modal.Description>
+				</Modal.Content>
+			</Modal>
+		)
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {
-				const { description, hourlyRate, id, image, meta, name } = result
+				const {
+					amount_after_tax,
+					created_at,
+					id,
+					is_refunded,
+					refund_date,
+					store_img,
+					store_name
+				} = result
+				const description = <p>${amount_after_tax}</p>
+				let extra = (
+					<Fragment>
+						<Button
+							basic
+							color="blue"
+							compact
+							content="See details"
+							onClick={() => {
+								this.toggleModal()
+							}}
+							size="small"
+						/>
+						<Button
+							basic={is_refunded === "1" ? false : true}
+							color="red"
+							compact
+							content={is_refunded === "1" ? "Refunded" : "Get a refund"}
+							size="small"
+						/>
+					</Fragment>
+				)
+				const meta = (
+					<p>
+						<Moment date={adjustTimezone(created_at)} fromNow interval={60000} />
+					</p>
+				)
+
 				if (id) {
 					return (
 						<ResultItem
@@ -48,13 +98,12 @@ class OrdersList extends Component {
 							extra={extra}
 							history={props.history}
 							id={`${props.key}${i}`}
-							img={props.showPics ? image : null}
-							key={`${props.key}${i}`}
+							img={store_img}
+							key={`order${i}`}
 							meta={meta}
-							redirect
-							// tags={[result.tags]}
-							title={name}
-							url={`/bikes/${id}`}
+							redirect={false}
+							title={store_name}
+							url={null}
 							useCard={useCards}
 						/>
 					)
@@ -92,6 +141,8 @@ class OrdersList extends Component {
 							</Segment>
 						</div>
 					)}
+
+					{OrderDetailsModal}
 				</div>
 			</Provider>
 		)
@@ -109,16 +160,36 @@ OrdersList.propTypes = {
 	key: PropTypes.string,
 	loadingMore: PropTypes.bool,
 	page: PropTypes.number,
-	results: PropTypes.array,
+	results: PropTypes.arrayOf(
+		PropTypes.shape({
+			amount_after_tax: PropTypes.string,
+			amount_before_tax: PropTypes.string,
+			bike_id: PropTypes.string,
+			created_at: PropTypes.string,
+			hourly_rate: PropTypes.string,
+			id: PropTypes.string,
+			image: PropTypes.string,
+			is_refunded: PropTypes.string,
+			name: PropTypes.string,
+			number: PropTypes.string,
+			refund_date: PropTypes.string,
+			store_id: PropTypes.string,
+			store_img: PropTypes.string,
+			store_name: PropTypes.string,
+			tax: PropTypes.string
+		})
+	),
 	showPics: PropTypes.bool,
+	storeId: PropTypes.string,
 	toggleLoading: PropTypes.func,
 	useCards: PropTypes.bool,
-	useInternally: PropTypes.bool
+	useInternally: PropTypes.bool,
+	userId: PropTypes.string
 }
 
 OrdersList.defaultProps = {
 	count: 10,
-	emptyMsgContent: "",
+	emptyMsgContent: "There are no orders",
 	getOrders,
 	itemsPerRow: 3,
 	loadingMore: false,

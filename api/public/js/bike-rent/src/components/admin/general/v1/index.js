@@ -9,7 +9,13 @@ class AdminGeneral extends Component {
 	constructor(props) {
 		super(props)
 
-		const { favicon, fbAppId, fbPageUrl, instagramScreenName, twitterScreenName } = this.props.basic
+		const {
+			favicon,
+			fbAppId,
+			fbPageUrl,
+			instagramScreenName,
+			twitterScreenName
+		} = this.props.basic
 
 		this.state = {
 			favicon,

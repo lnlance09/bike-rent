@@ -102,7 +102,7 @@ class UsersModel extends CI_Model {
 	public function login($email, $password) {
 		$column = filter_var($email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-		$select = "u.id, u.name, u.username, u.img, email, email_verified AS emailVerified, verification_code AS verificationCode, date_created AS dateCreated, u.privilege";
+		$select = "u.id, u.name, u.username, CONCAT('".S3_PATH."', img) AS img, email, email_verified AS emailVerified, verification_code AS verificationCode, date_created AS dateCreated, u.privilege";
 		$this->db->select($select);
 
 		$where = $column.' = "'.$email.'" ';

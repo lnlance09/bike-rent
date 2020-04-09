@@ -9,16 +9,18 @@ import TextTruncate from "react-text-truncate"
 
 class ResultItem extends Component {
 	redirectToUrl = e => {
-		e.stopPropagation()
-		if (this.props.redirect && !e.metaKey) {
-			this.props.history.push(this.props.url)
-		} else {
-			window.open(this.props.url, "_blank").focus()
+		if (this.props.redirect) {
+			e.stopPropagation()
+			if (!e.metaKey) {
+				this.props.history.push(this.props.url)
+			} else {
+				window.open(this.props.url, "_blank").focus()
+			}
 		}
 	}
 
 	render() {
-		const { description, id, img, label, meta, title, useCard } = this.props
+		const { description, id, img, label, meta, redirect, title, useCard } = this.props
 
 		const ItemExtra = props => {
 			if (props.extra.length > 1) {
@@ -116,7 +118,11 @@ class ResultItem extends Component {
 		)
 
 		const FullItem = (
-			<Item className="resultItem" key={id} onClick={this.redirectToUrl}>
+			<Item
+				className={`resultItem${redirect ? "hover" : ""}`}
+				key={id}
+				onClick={this.redirectToUrl}
+			>
 				{img && (
 					<Item.Image
 						bordered

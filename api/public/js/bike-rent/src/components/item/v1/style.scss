@@ -2,8 +2,11 @@
 
 .resultItem {
     background: $white;
-    cursor: pointer;
     width: 100%;
+
+    &.hover {
+        cursor: pointer;
+    }
 
     .placeholderSegment {
         width: 100% !important;

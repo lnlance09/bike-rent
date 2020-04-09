@@ -708,6 +708,8 @@ Admin.propTypes = {
 		results: PropTypes.arrayOf(
 			PropTypes.shape({
 				address: PropTypes.string,
+				bike_ids: PropTypes.string,
+				bike_names: PropTypes.string,
 				city: PropTypes.string,
 				closingTime: PropTypes.string,
 				description: PropTypes.string,

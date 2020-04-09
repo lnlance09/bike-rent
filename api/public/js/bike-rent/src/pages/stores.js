@@ -171,7 +171,7 @@ class Stores extends Component {
 
 		const StoreMenu = props => {
 			return (
-				<Menu pointing secondary size="big">
+				<Menu fluid pointing secondary size="big" stackable>
 					<Menu.Item
 						active={activeItem === "bicycles"}
 						name="bicycles"
@@ -265,7 +265,20 @@ class Stores extends Component {
 
 			const RightColumn = name ? (
 				<div style={{ width: "100%" }}>
-					<MapBox height="280px" lat={lat} lng={lon} width="100%" />
+					<MapBox
+						markerId={_store.id}
+						markers={[
+							{
+								id: _store.id,
+								lat: _store.lat,
+								lon: _store.lon
+							}
+						]}
+						height="280px"
+						lat={lat}
+						lng={lon}
+						width="100%"
+					/>
 					<Divider hidden />
 
 					<div>{StoreList(props)}</div>

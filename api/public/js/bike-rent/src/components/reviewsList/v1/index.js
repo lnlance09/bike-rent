@@ -52,8 +52,6 @@ class ReviewsList extends Component {
 	loadMore = () => {
 		if (this.props.hasMore && !this.props.loadingMore) {
 			// const newPage = parseInt(this.props.page + 1, 10)
-			this.props.toggleLoading()
-			this.props.retrieveItems()
 		}
 	}
 
@@ -174,6 +172,7 @@ class ReviewsList extends Component {
 										/>
 										<Rating
 											defaultRating={parseInt(rating, 10)}
+											disabled
 											icon="star"
 											maxRating={5}
 										/>
