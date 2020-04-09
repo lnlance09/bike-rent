@@ -5,8 +5,9 @@
 /*---   Social colors  ---*/
 .resultItem {
   background: #FFFFFF;
-  cursor: pointer;
   width: 100%; }
+  .resultItem.hover {
+    cursor: pointer; }
   .resultItem .placeholderSegment {
     width: 100% !important; }
   .resultItem .meta {

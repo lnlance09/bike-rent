@@ -6,6 +6,7 @@ import { Button, Container, Divider, Grid, Header, Icon, Menu, Modal } from "sem
 import React, { Component } from "react"
 import ImageUpload from "components/imageUpload/v1/"
 import Moment from "react-moment"
+import OrdersList from "components/ordersList/v1/"
 import PageFooter from "components/footer/v1/"
 import PageHeader from "components/header/v1/"
 import PaymentsList from "components/paymentMethod/v1/list/"
@@ -112,7 +113,6 @@ class Profile extends Component {
 											file
 										})
 									}}
-									fluid
 									img={user.img}
 									msg="Change your pic"
 								/>
@@ -134,7 +134,7 @@ class Profile extends Component {
 
 						<Divider hidden />
 
-						<Menu pointing secondary size="large">
+						<Menu pointing secondary size="large" stackable>
 							<Menu.Item
 								active={activeItem === "purchases"}
 								name="purchases"
@@ -161,6 +161,15 @@ class Profile extends Component {
 								/>
 							</Menu.Item>
 						</Menu>
+
+						{activeItem === "purchases" && (
+							<OrdersList
+								bearer={bearer}
+								history={this.props.history}
+								useCards={false}
+								userId={userId}
+							/>
+						)}
 
 						{activeItem === "reviews" && (
 							<ReviewsList

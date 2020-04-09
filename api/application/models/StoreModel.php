@@ -21,6 +21,7 @@ class StoreModel extends CI_Model {
 
 	public function create($data) {
 		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
 	}
 
 	public function get($id) {
@@ -177,13 +178,18 @@ class StoreModel extends CI_Model {
 		$page = 0,
 		$limit = 25
 	) {
-		$select = "s.address, s.city, s.closing_time AS closingTime, s.description, s.id, s.image, s.lat, s.lon, s.name, s.opening_time AS openingTime, s.order, s.phone_number AS phone, s.state, s.zip_code";
+		$select = "s.address, s.city, s.closing_time AS closingTime, s.description, s.id, s.image, s.lat, s.lon, s.name, s.opening_time AS openingTime, s.order, s.phone_number AS phone, s.state, s.zip_code, ";
+
+		$select .= "GROUP_CONCAT(DISTINCT b.id ORDER BY b.id ASC SEPARATOR '| ') bike_ids, GROUP_CONCAT(DISTINCT b.name ORDER BY b.id ASC SEPARATOR '| ') AS bike_names";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';
 		}
 
 		$this->db->select($select);
+
+		$this->db->join('store_bikes sb', 's.id = sb.store_id', 'left');
+		$this->db->join('bikes b', 'sb.bike_id = b.id');
 
 		if (!empty($cityId)) {
 			$this->db->where('location_id', $cityId);
@@ -198,6 +204,7 @@ class StoreModel extends CI_Model {
 			$this->db->limit($limit, $start);
 		}
 
+		$this->db->group_by('s.id');
 		$results = $this->db->get('stores s')->result_array();
 
 		if ($just_count) {
@@ -210,5 +217,28 @@ class StoreModel extends CI_Model {
 	public function update($id, $data) {
 		$this->db->where('id', $id);
 		$this->db->update($this->table, $data);
+	}
+
+	public function updateInventory($id, $bikes) {
+		for ($i=0;$i<count($bikes);$i++) {
+			$bike_id = trim($bikes[$i]);
+
+			$this->db->select("COUNT(*) AS count");
+			$this->db->where([
+				'bike_id' => $bike_id,
+				'store_id' => $id
+			]);
+			$result = $this->db->get('store_bikes')->result();
+			if ($result[0]->count == 0) {
+				$this->db->insert('store_bikes', [
+					'bike_id' => $bike_id,
+					'store_id' => $id
+				]);
+			}
+		}
+
+		$this->db->where('store_id', $id);
+		$this->db->where_not_in('bike_id', $bikes);
+		$this->db->delete('store_bikes');
 	}
 }

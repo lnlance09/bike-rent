@@ -397,27 +397,21 @@ class Users extends CI_Controller {
 			exit;
 		}
 
-		$msg = file_get_contents("https://bike-rent.s3-us-west-2.amazonaws.com/emails/confirm-your-email.html");
-		// $msg = "Hi ".$params['name'].',<br><br>Your verification code is '.$params['verification_code'];
+		$message = file_get_contents("https://bike-rent.s3-us-west-2.amazonaws.com/emails/confirm-your-email.html");
+		$message = str_replace('{NAME}', $params['name'], $message);
+		$message = str_replace('{VERIFICATION_CODE}', $verification_code, $message);
+		$subject = 'Please verify your email';
+		$from = EMAIL_RECEIVERS;
+		$email = $this->media->sendEmail($subject, $message, $from);
 
-		$mail = new PHPMailer();
-		$mail->IsSMTP();
-		$mail->SMTPAuth = true;
-		$mail->SMTPSecure = 'ssl';
-		$mail->Host = 'smtpout.secureserver.net';
-		$mail->Port = 465;
-		$mail->Username = 'admin@tpusa.pro';
-		$mail->Password = 'Jl8RdSLz7DF8:PJ';
-		$mail->SetFrom('admin@tpusa.pro', 'TP USA Pro');
-		$mail->Subject = 'Please verify your email';
-		$mail->Body = $msg;
-		$mail->AltBody = $msg;
-		$mail->AddAddress($params['email'], $params['name']);
-
-		if ($mail->Send()) {
-			echo json_encode($register);
+		if (!$email) {
+			echo json_encode([
+				'error' => 'Something went wrong.'
+			]);
 			exit;
 		}
+
+		echo json_encode($register);
 	}
 
 	public function search() {

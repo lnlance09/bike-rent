@@ -16,6 +16,8 @@ class Store extends CI_Controller {
 
 	public function create() {
 		$address = $this->input->post('address');
+		$bike_ids = $this->input->post('bike_ids');
+		$bike_names = $this->input->post('bike_names');
 		$city = $this->input->post('city');
 		$closingTime = $this->input->post('closingTime');
 		$description = $this->input->post('description');
@@ -50,7 +52,7 @@ class Store extends CI_Controller {
 			$lon = '-73.99110000';
 		}
 
-		$this->store->create([
+		$store_id = $this->store->create([
 			'address' => $address,
 			'city' => $city,
 			'closing_time' => $closingTime,
@@ -65,6 +67,8 @@ class Store extends CI_Controller {
 			'visible' => $visible
 		]);
 
+		$this->store->updateInventory($store_id, explode('| ', $bike_ids));
+
 		echo json_encode([
 			'error' => false
 		]);
@@ -72,6 +76,8 @@ class Store extends CI_Controller {
 
 	public function edit() {
 		$address = $this->input->post('address');
+		$bike_ids = $this->input->post('bike_ids');
+		$bike_names = $this->input->post('bike_names');
 		$city = $this->input->post('city');
 		$closingTime = $this->input->post('closingTime');
 		$description = $this->input->post('description');
@@ -121,6 +127,8 @@ class Store extends CI_Controller {
 			'state' => $state,
 			'visible' => $visible
 		]);
+
+		$this->store->updateInventory($id, explode('| ', $bike_ids));
 
 		echo json_encode([
 			'error' => false

@@ -7,27 +7,7 @@
         text-align: center;
     }
 
-    .cards {
-        @media only screen and (max-width: 1025px) {
-            margin-top: 10px;
-        }
-
-        .card {
-            .content {
-                word-break: break-word;
-
-                .description {
-                    max-height: 240px;
-                    overflow: hidden;
-                    white-space: pre-line;
-                }
-            }
-
-            .image {
-                img {
-                    height: 225px !important;
-                }
-            }
-        }
+    .comments {
+        max-width: none !important;
     }
 }

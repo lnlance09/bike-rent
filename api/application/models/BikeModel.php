@@ -30,6 +30,12 @@ class BikeModel extends CI_Model {
 		return $results;
 	}
 
+	public function getBikes() {
+		$this->db->select("name AS `key`, name AS text, id AS value");
+		$results = $this->db->get('bikes')->result_array();
+		return $results;
+	}
+
 	public function search(
 		$visible,
 		$just_count,

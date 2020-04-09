@@ -34,7 +34,7 @@ class OrderModel extends CI_Model {
 		$select = 'o.id, o.amount_after_tax, o.amount_before_tax, o.created_at, o.is_refunded, o.refund_date, o.store_id, o.tax, ';
 		$select .= 'pm.number, ';
 		$select .= 'od.bike_id, ';
-		$select .= 's.name AS store_name, ';
+		$select .= 's.name AS store_name, s.image AS store_img, ';
 		$select .= 'sb.hourly_rate, ';
 		$select .= 'b.name, b.image';
 
@@ -70,6 +70,26 @@ class OrderModel extends CI_Model {
 		}
 
 		return $results;
+	}
+
+	public function getDetails($id) {
+		$select = 'od.bike_id, ';
+		$select .= 'sb.hourly_rate, ';
+		$select .= 'b.description, b.name, b.image';
+
+		$this->db->select($select);
+		$this->db->join('order_details od', 'o.id = od.order_id');
+		$this->db->join('store_bikes sb', 'od.bike_id = sb.id');
+		$this->db->join('bikes b', 'sb.bike_id = b.id');
+		$this->db->where('o.id', $id);
+		$this->db->group_by('sb.id');
+		$result = $this->db->get('orders o')->result_array();
+
+		if ($empty($result)) {
+			return false;
+		}
+
+		return $result[0];
 	}
 
 	public function getOrderData($cart, $storeId) {

@@ -96,6 +96,8 @@ export const addCity = ({ bearer, description, id, image }) => dispatch => {
 export const addStore = ({
 	address,
 	bearer,
+	bike_ids,
+	bike_names,
 	city,
 	closingTime,
 	description,
@@ -114,6 +116,8 @@ export const addStore = ({
 			form: {
 				address,
 				bearer,
+				bike_ids,
+				bike_names,
 				city,
 				closingTime,
 				description,
@@ -364,6 +368,8 @@ export const editSitemap = ({ bearer, sitemap }) => dispatch => {
 export const editStore = ({
 	address,
 	bearer,
+	bike_ids,
+	bike_names,
 	city,
 	closingTime,
 	description,
@@ -383,6 +389,8 @@ export const editStore = ({
 			form: {
 				address,
 				bearer,
+				bike_ids,
+				bike_names,
 				city,
 				closingTime,
 				description,

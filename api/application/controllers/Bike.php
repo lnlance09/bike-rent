@@ -126,6 +126,15 @@ class Bike extends CI_Controller {
 		]);
 	}
 
+	public function getBikes() {
+		$bikes = $this->bike->getBikes();
+
+		echo json_encode([
+			'bikes' => $bikes,
+			'error' => false
+		]);
+	}
+
 	public function search() {
 		$page = $this->input->get('page');
 		$limit = $this->input->get('limit');

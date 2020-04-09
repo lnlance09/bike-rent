@@ -114,12 +114,26 @@ class Order extends CI_Controller {
 
 	public function getAll() {
 		$storeId = $this->input->get('storeId');
+		$userId = $this->input->get('userId');
+
 		$page = 0;
 		$limit = 100;
 
 		$where = [];
 		if (!empty($storeId)) {
 			$where['o.store_id'] = $storeId;
+		}
+
+		if (!empty($userId)) {
+			$user = $this->user;
+			if ($user ? $this->user->id == $userId : false) {
+				echo json_encode([
+					'error' => 'You do not have permission to do that'
+				]);
+				exit;
+			}
+
+			$where['pm.user_id'] = $userId;
 		}
 
 		$count = $this->order->getAll($where, true);
@@ -143,6 +157,24 @@ class Order extends CI_Controller {
 			],
 			'orders' => $results
 		], true);
+	}
+
+	public function getDetails() {
+		$id = $this->input->get('id');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You do not have permission to do that'
+			]);
+			exit;
+		}
+
+		$count = $this->order->getDetails($id);
+
+		echo json_encode([
+			'error' => false
+		]);
 	}
 
 	public function getPaymentMethods() {
