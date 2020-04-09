@@ -132,14 +132,14 @@
 		<meta property="og:url" content="<?php echo $canonical_url; ?>">
 
 		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:site" content="@tpusapro">
-		<meta name="twitter:creator" content="@tpusapro">
+		<meta name="twitter:site" content="@bikerentnyc">
+		<meta name="twitter:creator" content="@bikerentnyc">
 		<meta name="twitter:title" content="<?php echo htmlentities($title); ?>">
 		<meta name="twitter:description" content="<?php echo htmlentities($description); ?>">
 		<meta name="twitter:image" content="<?php echo $img; ?>">
 
 		<meta name="description" content="<?php echo htmlentities($description); ?>">
-		<meta name="keywords" content="<?php echo implode(",", array_unique($keywords)); ?>">
+		<meta name="keywords" content="<?php echo $keywords; ?>">
 		<meta name="title" content="<?php echo htmlentities($title); ?>">
 
 		<link rel="canonical" href="<?php echo $canonical_url; ?>" />
