@@ -42,6 +42,7 @@
 			$img = $data['image'];
 			$keywords = $data['keywords'];
 
+			var_dump($title);
 			$set = true;
 			break;
 	}
