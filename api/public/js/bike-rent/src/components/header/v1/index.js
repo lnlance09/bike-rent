@@ -240,7 +240,7 @@ class AppHeader extends Component {
 						vertical
 					>
 						<Container className="sidebarContainer">
-							<Menu className="globalHeaderMenu" color={backgroundColor} size="large">
+							<Menu className="globalHeaderMenu" color={backgroundColor} inverted size="large">
 								<Menu.Item
 									onClick={() => {
 										this.props.history.push("/")
