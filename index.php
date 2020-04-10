@@ -173,7 +173,7 @@
 		</div>
 	</body>
 	<script src="/static/js/2.afb2d1a3.chunk.js"></script>
-	<script src="/static/js/main.cb58b740.chunk.js"></script>
+	<script src="/static/js/main.9fdbd280.chunk.js"></script>
 	<script src="/static/js/runtime-main.ea387562.js"></script>
 
 	<!--
