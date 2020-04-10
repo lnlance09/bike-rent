@@ -310,6 +310,11 @@ class AppHeader extends Component {
 							/>
 						</Fragment>
 					)}
+					<Menu.Item
+						key="cart"
+						name="cart"
+						onClick={() => this.props.history.push("/checkout")}
+					/>
 					{items.map((item, i) => (
 						<Menu.Item
 							key={`${item.link}${i}`}

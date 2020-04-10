@@ -2,7 +2,7 @@ import { connect, Provider } from "react-redux"
 import { changeProfilePic } from "components/authentication/v1/actions"
 import { adjustTimezone } from "utils/dateFunctions"
 import { DisplayMetaTags } from "utils/metaFunctions"
-import { Button, Container, Divider, Grid, Header, Icon, Menu, Modal } from "semantic-ui-react"
+import { Button, Container, Divider, Grid, Header, Icon, Menu, Modal, Responsive } from "semantic-ui-react"
 import React, { Component } from "react"
 import ImageUpload from "components/imageUpload/v1/"
 import Moment from "react-moment"
@@ -81,6 +81,16 @@ class Profile extends Component {
 			</Modal>
 		)
 
+		const AddCardButton = (
+			<Button
+				color="blue"
+				content="Add a payment method"
+				fluid
+				icon="credit card"
+				onClick={() => this.togglePaymentModal()}
+			/>
+		)
+
 		return (
 			<Provider store={store}>
 				<DisplayMetaTags page="profile" props={this.props} state={this.state} />
@@ -153,14 +163,16 @@ class Profile extends Component {
 								Payment Methods
 							</Menu.Item>
 							<Menu.Item position="right" style={{ paddingRight: 0 }}>
-								<Button
-									color="blue"
-									content="Add a payment method"
-									icon="credit card"
-									onClick={() => this.togglePaymentModal()}
-								/>
+								<Responsive minWidth={1025}>
+									{AddCardButton}
+								</Responsive>
 							</Menu.Item>
 						</Menu>
+
+						<Responsive maxWidth={1024}>
+							{AddCardButton}
+							<Divider />
+						</Responsive>
 
 						{activeItem === "purchases" && (
 							<OrdersList

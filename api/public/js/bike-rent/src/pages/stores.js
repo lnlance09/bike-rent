@@ -251,7 +251,7 @@ class Stores extends Component {
 					{id ? (
 						<Fragment>
 							<Responsive maxWidth={1024}>
-								<Image rounded size="medium" src={image} />
+								<Image rounded size="large" src={image} />
 							</Responsive>
 							<Responsive minWidth={1025}>
 								<Image fluid rounded src={image} />
