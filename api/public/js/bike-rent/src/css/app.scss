@@ -118,6 +118,10 @@ body {
 }
 
 .checkoutPage {
+	.container.mainContainer {
+		padding-top: 0 !important;
+	}
+
 	.grid {
 		.rightSide {
 			// padding-left: 0 !important;
@@ -177,6 +181,10 @@ body {
 }
 
 .storesPage {
+	.container.mainContainer {
+		padding-top: 0 !important;
+	}
+
 	.googleMapsBox {
 		height: 270px;
 		width: 100%;

@@ -81,7 +81,7 @@ class Bikes extends Component {
 			const { description, image, name, storeCount, stores } = props.bike
 
 			return (
-				<Container textAlign="center">
+				<div>
 					<Segment>
 						<Image
 							centered
@@ -93,8 +93,10 @@ class Bikes extends Component {
 
 						<Divider />
 
-						<Header size="huge">{name}</Header>
-						<p>{description}</p>
+						<Header size="huge" textAlign="center">
+							{name}
+						</Header>
+						<p style={{ textAlign: "center" }}>{description}</p>
 
 						<Divider hidden />
 
@@ -113,7 +115,7 @@ class Bikes extends Component {
 							/>
 						)}
 
-						<Header size="huge">
+						<Header size="huge" textAlign="center">
 							{storeCount !== undefined &&
 								`Available in ${storeCount} ${formatPlural(storeCount, "store")}`}
 							{storeId !== "0" && (
@@ -140,7 +142,7 @@ class Bikes extends Component {
 
 						<RenderStoresList props={props} />
 					</Segment>
-				</Container>
+				</div>
 			)
 		}
 
