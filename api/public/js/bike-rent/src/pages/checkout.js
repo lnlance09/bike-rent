@@ -36,8 +36,6 @@ class Checkout extends Component {
 		const bearer = user.bearer
 		const userData = user.data
 
-		console.log("userData")
-		console.log(userData)
 		this.state = {
 			auth,
 			bearer,
@@ -70,7 +68,7 @@ class Checkout extends Component {
 					centered={false}
 					className="confirmationModal"
 					closeIcon
-					// dimmer="inverted"
+					dimmer="inverted"
 					onClose={() => window.location.reload()}
 					open={order.confirmationModalOpen}
 					size="small"
@@ -149,9 +147,7 @@ class Checkout extends Component {
 						<StepProcess activeItem="checkout" index={2} />
 						<Divider hidden />
 
-						<Header dividing size="huge">
-							Checkout
-						</Header>
+						<Header size="huge">Checkout</Header>
 
 						<Grid className="checkoutGrid" stackable>
 							<Grid.Column className="leftSide" width={10}>
@@ -232,7 +228,11 @@ class Checkout extends Component {
 
 					{ConfirmationModal}
 
-					{order.confirmationModalOpen && <Confetti colors={["#B5CC18"]} />}
+					{order.confirmationModalOpen && (
+						<Confetti
+							// colors={["#B5CC18"]}
+						/>
+					)}
 
 					<PageFooter footerData={settings.footer} history={this.props.history} />
 				</div>
