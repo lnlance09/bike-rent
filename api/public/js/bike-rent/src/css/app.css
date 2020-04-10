@@ -70,6 +70,8 @@ body {
 
 .applyPage {
   height: 100vh; }
+  .applyPage .container.mainContainer {
+    padding-top: 0 !important; }
 
 .bikesPage .container.mainContainer {
   padding-top: 0 !important; }

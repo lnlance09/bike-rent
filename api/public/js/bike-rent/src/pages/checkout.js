@@ -48,7 +48,7 @@ class Checkout extends Component {
 
 	componentDidMount() {}
 
-	setEmail = email => this.setState({ email: email })
+	setEmail = email => this.setState({ email })
 
 	setPaymentId = id => this.setState({ paymentId: id })
 
@@ -165,23 +165,21 @@ class Checkout extends Component {
 											</Fragment>
 										)}
 
-										<Divider horizontal section>
+										<Header size="large">
 											Add a card
-										</Divider>
+										</Header>
 
-										<Segment>
-											<PaymentMethod
-												bearer={bearer}
-												buttonText="Use this card"
-												callback={(id, email) => {
-													this.setPaymentId(id)
-													this.setEmail(email)
-													this.toggleForm()
-												}}
-												displayForm={showForm}
-												showEmailInput={!auth}
-											/>
-										</Segment>
+										<PaymentMethod
+											bearer={bearer}
+											buttonText="Use this card"
+											callback={(id, email) => {
+												this.setPaymentId(id)
+												this.setEmail(email)
+												this.toggleForm()
+											}}
+											displayForm={showForm}
+											showEmailInput={!auth}
+										/>
 									</Fragment>
 								) : (
 									<Segment placeholder>

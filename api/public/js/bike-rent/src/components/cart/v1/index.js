@@ -47,17 +47,17 @@ class Cart extends Component {
 										</Button.Group>
 									</List.Content>
 								)}
-								{showPrices && (
-									<List.Content floated="right">
-										${hours * bike.hourlyRate}
-									</List.Content>
-								)}
 								<List.Content>
 									<List.Header>{bike.name}</List.Header>
 									<List.Description>{bike.description} </List.Description>
 									<List.Description>
 										{hours} {formatPlural(hours, "hour")}
 									</List.Description>
+									{showPrices && (
+										<List.Description>
+											${hours * bike.hourlyRate}
+										</List.Description>
+									)}
 								</List.Content>
 							</List.Item>
 						)

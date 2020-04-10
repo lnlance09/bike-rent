@@ -37,7 +37,7 @@ class Order extends CI_Controller {
 			exit;
 		}
 
-		if ($user ? $card['user_id'] != $user->id : true) {
+		if ($user ? $card['user_id'] != $user->id : false) {
 			echo json_encode([
 				'error' => 'Please select a payment method'
 			]);
