@@ -30,9 +30,6 @@ class App extends Component {
 		this.state = {
 			title: ""
 		}
-
-		// console.log("props")
-		// console.log(this.props)
 	}
 
 	componentDidMount() {

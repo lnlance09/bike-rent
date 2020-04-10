@@ -314,6 +314,34 @@ export const editEmail = ({ bearer, email, type }) => dispatch => {
 	)
 }
 
+export const editInventory = ({ bearer, callback, hourlyRate, id, quantity }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/inventory/update`,
+		{
+			form: {
+				hourlyRate,
+				id,
+				quantity
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				toast.success("Inventory successfully edited")
+				callback()
+			}
+
+			dispatch({
+				payload: body,
+				type: constants.EDIT_INVENTORY
+			})
+		}
+	)
+}
+
 export const editPage = ({ bearer, data, page }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/settings/updatePage`,
@@ -495,6 +523,28 @@ export const getEmail = ({ type }) => dispatch => {
 				emailType: type,
 				payload: body,
 				type: constants.GET_EMAIL
+			})
+		}
+	)
+}
+
+export const getInventory = ({ callback = () => null, storeId }) => dispatch => {
+	request.get(
+		`${window.location.origin}/api/inventory/getAll`,
+		{
+			json: true,
+			qs: {
+				storeId
+			}
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				callback(body.results)
+			}
+
+			dispatch({
+				payload: body,
+				type: constants.GET_INVENTORY
 			})
 		}
 	)

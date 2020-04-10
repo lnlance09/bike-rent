@@ -69,6 +69,18 @@ const settings = (state = initial(), action) => {
 				css: payload
 			}
 
+		case constants.EDIT_INVENTORY:
+			return {
+				...state,
+				inventory: {
+					...state.inventory,
+					edit: {
+						error: payload.error ? true : false,
+						errorMsg: payload.error
+					}
+				}
+			}
+
 		case constants.EDIT_SITEMAP:
 			return {
 				...state,
@@ -164,6 +176,23 @@ const settings = (state = initial(), action) => {
 			return {
 				...state,
 				css: payload
+			}
+
+		case constants.GET_INVENTORY:
+			const inventory =
+				payload.page > 0
+					? [...state.inventory.results, ...payload.results]
+					: payload.results
+			return {
+				...state,
+				inventory: {
+					count: payload.count,
+					hasMore: payload.pagination.hasMore,
+					loaded: true,
+					loadingMore: false,
+					page: payload.pagination.nextPage,
+					results: inventory
+				}
 			}
 
 		case constants.GET_ORDERS:
