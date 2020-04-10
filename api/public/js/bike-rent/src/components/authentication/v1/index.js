@@ -9,7 +9,7 @@ import {
 import { Provider, connect } from "react-redux"
 import { Redirect } from "react-router-dom"
 import { FacebookProvider, Login } from "react-facebook"
-import { Button, Divider, Form, Header, Icon, Input, Message, Segment } from "semantic-ui-react"
+import { Button, Divider, Form, Header, Input, Message, Segment } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import store from "store"

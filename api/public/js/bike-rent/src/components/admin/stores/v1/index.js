@@ -189,7 +189,7 @@ const StoreForm = ({
 			</Form.Field>
 			<Form.Field>
 				<Radio
-					checked={visible === 1}
+					checked={visible === "1"}
 					label="Yes"
 					name="visible"
 					onChange={toggleVisibilty}
@@ -198,7 +198,7 @@ const StoreForm = ({
 			</Form.Field>
 			<Form.Field>
 				<Radio
-					checked={visible === 0}
+					checked={visible === "0"}
 					label="No"
 					name="visible"
 					onChange={toggleVisibilty}
@@ -230,7 +230,7 @@ class AdminStores extends Component {
 			openingTime: "",
 			order: 0,
 			state: "",
-			visible: 0
+			visible: "0"
 		}
 	}
 
@@ -331,7 +331,7 @@ class AdminStores extends Component {
 		})
 	}
 
-	toggleVisibilty = (e, { value }) => this.setState({ visible: value === "on" ? 1 : 0 })
+	toggleVisibilty = (e, { value }) => this.setState({ visible: value === "on" ? "1" : "0" })
 
 	render() {
 		const {

@@ -2,7 +2,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import "./style.css"
 import { adjustTimezone } from "utils/dateFunctions"
 import { fetchCities } from "utils/selectOptions"
-import { addBlog, editBlog, toggleEditBlogModal } from "redux/actions/app"
+import { addBlog, deleteBlog, editBlog, toggleEditBlogModal } from "redux/actions/app"
 import { connect } from "react-redux"
 import { Editor } from "react-draft-wysiwyg"
 import { EditorState, ContentState, convertFromHTML } from "draft-js"
@@ -66,7 +66,7 @@ class AdminBlog extends Component {
 		const { bearer, blogs, createNewBlog, error, errorMsg, modalOpen } = this.props
 
 		const AddBlogPanel = (
-			<Form error={error} size="big">
+			<Form error={error}>
 				<Input
 					fluid
 					onChange={this.onChangeBlogTitle}
@@ -122,7 +122,6 @@ class AdminBlog extends Component {
 							title: blogTitle
 						})
 					}}
-					size="big"
 				/>
 
 				{error && <Message content={errorMsg} error />}
@@ -130,9 +129,15 @@ class AdminBlog extends Component {
 		)
 
 		const EditBlogModal = (
-			<Modal centered={false} open={modalOpen} size="large">
+			<Modal
+				centered={false}
+				closeIcon
+				onClose={() => this.props.toggleEditBlogModal()}
+				open={modalOpen}
+				size="large"
+			>
 				<Modal.Content>
-					<Form error={error} size="big">
+					<Form error={error}>
 						<Input
 							fluid
 							onChange={this.onChangeCurrentBlogTitle}
@@ -172,8 +177,13 @@ class AdminBlog extends Component {
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>
-					<Button color="red" onClick={() => this.props.toggleEditBlogModal()}>
-						Cancel
+					<Button
+						color="red"
+						onClick={() => {
+							this.props.deleteBlog({ bearer, id: currentBlogId })
+						}}
+					>
+						Delete
 					</Button>
 					<Button
 						color="green"
@@ -268,6 +278,7 @@ AdminBlog.propTypes = {
 		)
 	}),
 	createNewBlog: PropTypes.bool,
+	deleteBlog: PropTypes.func,
 	editBlog: PropTypes.func,
 	error: PropTypes.bool,
 	errorMsg: PropTypes.string,
@@ -285,6 +296,7 @@ AdminBlog.defaultProps = {
 		results: [{}, {}, {}, {}]
 	},
 	createNewBlog: false,
+	deleteBlog,
 	editBlog,
 	error: false,
 	modalOpen: false,
@@ -298,6 +310,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 export default connect(mapStateToProps, {
 	addBlog,
+	deleteBlog,
 	editBlog,
 	toggleEditBlogModal
 })(AdminBlog)

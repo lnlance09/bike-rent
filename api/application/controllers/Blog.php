@@ -57,6 +57,24 @@ class Blog extends CI_Controller {
 		]);
 	}
 
+	public function delete() {
+		$id = $this->input->post('id');
+
+		$user = $this->user;
+		if (!$user) {
+			echo json_encode([
+				'error' => 'You must be logged in'
+			]);
+			exit;
+		}
+
+		$this->blog->delete($id);
+
+		echo json_encode([
+			'error' => false
+		]);
+	}
+
 	public function get() {
 
 	}

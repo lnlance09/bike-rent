@@ -30,9 +30,6 @@ class App extends Component {
 		this.state = {
 			title: ""
 		}
-
-		// console.log("props")
-		// console.log(this.props)
 	}
 
 	componentDidMount() {
@@ -55,7 +52,7 @@ class App extends Component {
 
 		return (
 			<Provider store={store}>
-				<div className="app">
+				<div className={`app ${settings.theme}`}>
 					<Router history={history}>
 						<ScrollToTop>
 							<Route

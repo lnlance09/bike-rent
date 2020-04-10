@@ -13,6 +13,11 @@ class BlogModel extends CI_Model {
 		$this->db->insert($this->table, $data);
 	}
 
+	public function delete($id) {
+		$this->db->where('id', $id);
+		$this->db->delete($this->table);
+	}
+
 	public function get($id) {
 		$this->db->select('');
 		$this->db->where('id', $id);

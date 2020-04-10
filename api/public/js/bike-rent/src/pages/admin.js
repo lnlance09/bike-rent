@@ -5,6 +5,7 @@ import {
 	getCities,
 	getCss,
 	getEmail,
+	getInventory,
 	getOrders,
 	getReviews,
 	getSitemap,
@@ -22,6 +23,7 @@ import AdminEmail from "components/admin/email/v1/"
 import AdminFooter from "components/admin/footer/v1/"
 import AdminGeneral from "components/admin/general/v1/"
 import AdminHeader from "components/admin/header/v1/"
+import AdminInventory from "components/admin/inventory/v1/"
 import AdminLanguages from "components/admin/languages/v1/"
 import AdminLibrary from "components/admin/library/v1/"
 import AdminOrders from "components/admin/orders/v1/"
@@ -79,6 +81,7 @@ class Admin extends Component {
 		this.props.getBikes()
 		this.props.getBlogs()
 		this.props.getCities()
+		this.props.getInventory({ storeId: "1" })
 		this.props.getOrders({})
 		this.props.getReviews({})
 		this.props.getStores()
@@ -116,6 +119,7 @@ class Admin extends Component {
 			cities,
 			css,
 			emails,
+			inventory,
 			orders,
 			reviews,
 			settings,
@@ -248,6 +252,18 @@ class Admin extends Component {
 							onClick={this.handleItemClick}
 						>
 							Basic site info
+						</Menu.Item>
+					</Menu.Menu>
+				</Menu.Item>
+				<Menu.Item>
+					Inventory
+					<Menu.Menu>
+						<Menu.Item
+							active={activeItem === "inventory"}
+							name="inventory"
+							onClick={this.handleItemClick}
+						>
+							View inventory
 						</Menu.Item>
 					</Menu.Menu>
 				</Menu.Item>
@@ -530,6 +546,14 @@ class Admin extends Component {
 				)
 			}
 
+			if (activeItem === "inventory" && inventory.loaded) {
+				return (
+					<div>
+						<AdminInventory bearer={bearer} inventory={inventory} />
+					</div>
+				)
+			}
+
 			if (activeItem === "languages") {
 				return (
 					<div>
@@ -663,10 +687,36 @@ Admin.propTypes = {
 	getCities: PropTypes.func,
 	getCss: PropTypes.func,
 	getEmail: PropTypes.func,
+	getInventory: PropTypes.func,
 	getOrders: PropTypes.func,
 	getReviews: PropTypes.func,
 	getSitemap: PropTypes.func,
 	getStores: PropTypes.func,
+	inventory: PropTypes.shape({
+		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		hasMore: PropTypes.bool,
+		loadingMore: PropTypes.bool,
+		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		results: PropTypes.arrayOf(
+			PropTypes.shape({
+				address: PropTypes.string,
+				bike_ids: PropTypes.string,
+				bike_names: PropTypes.string,
+				city: PropTypes.string,
+				closingTime: PropTypes.string,
+				description: PropTypes.string,
+				image: PropTypes.string,
+				lat: PropTypes.string,
+				lon: PropTypes.string,
+				name: PropTypes.string,
+				phone: PropTypes.string,
+				openingTime: PropTypes.string,
+				order: PropTypes.string,
+				state: PropTypes.string,
+				visible: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+			})
+		)
+	}),
 	orders: PropTypes.shape({
 		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		hasMore: PropTypes.bool,
@@ -762,10 +812,19 @@ Admin.defaultProps = {
 	getCities,
 	getCss,
 	getEmail,
+	getInventory,
 	getOrders,
 	getReviews,
 	getSitemap,
 	getStores,
+	inventory: {
+		count: 0,
+		hasMore: false,
+		loaded: false,
+		loadingMore: false,
+		page: 0,
+		results: [{}, {}, {}, {}]
+	},
 	orders: {
 		count: 0,
 		hasMore: false,
@@ -806,6 +865,7 @@ export default connect(mapStateToProps, {
 	getCities,
 	getCss,
 	getEmail,
+	getInventory,
 	getOrders,
 	getReviews,
 	getSitemap,
