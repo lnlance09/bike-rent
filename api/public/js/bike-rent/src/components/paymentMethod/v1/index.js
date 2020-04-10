@@ -190,7 +190,7 @@ PaymentMethod.defaultProps = {
 	displayCard: true,
 	displayForm: true,
 	error: false,
-	formSize: "big",
+	formSize: "medium",
 	showEmailInput: false
 }
 
