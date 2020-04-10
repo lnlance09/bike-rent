@@ -249,7 +249,7 @@ class Stores extends Component {
 					</Header>
 
 					{id ? (
-						<Image fluid rounded src={image} />
+						<Image rounded src={image} />
 					) : (
 						<Placeholder fluid>
 							<Placeholder.Image square />
