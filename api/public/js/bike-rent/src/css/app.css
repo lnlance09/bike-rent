@@ -74,6 +74,9 @@ body {
 .bikesPage .container.mainContainer {
   padding-top: 0 !important; }
 
+.checkoutPage .container.mainContainer {
+  padding-top: 0 !important; }
+
 .citiesPage .container.mainContainer {
   padding-top: 0 !important; }
 
@@ -98,6 +101,9 @@ body {
       margin-top: 0; }
     .signInPage .signInContainer .loginForm .grid .column {
       max-width: 450px; }
+
+.storesPage .container.mainContainer {
+  padding-top: 0 !important; }
 
 .storesPage .googleMapsBox {
   height: 270px;
