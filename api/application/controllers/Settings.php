@@ -302,10 +302,6 @@ class Settings extends CI_Controller {
 		$settings = $this->settings;
 		$settings = new $settings();
 		$filtered = $settings->filterPageData($page, $data);
-		// FormatArray($data);
-		// FormatArray($filtered);
-		// die;
-
 		$newPage = $settings->updatePage($page, $data);
 
 		echo $newPage;
