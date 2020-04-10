@@ -8,6 +8,7 @@ import {
 	Header,
 	Icon,
 	Image,
+	Label,
 	Menu,
 	Placeholder,
 	Responsive,
@@ -277,51 +278,73 @@ class AppHeader extends Component {
 				<Sidebar
 					animation="push"
 					as={Menu}
-					color={backgroundColor}
+					borderless
 					onHide={this.toggleSidebar}
 					size="large"
 					vertical
 					visible={sidebarOpened}
 				>
 					<Menu.Item
+						className="logoListItem"
 						onClick={() => {
-							if (authenticated) {
-								this.onLogout()
-							} else {
-								this.props.history.push("/signin")
-							}
+							this.props.history.push("/")
 						}}
 					>
-						{authenticated ? "Sign Out" : "Sign In"}
+						<Image className="headerLogo" inline size="mini" src={logo} />{" "}
+						<span className="logoText">{logoText}</span>
 					</Menu.Item>
-					{authenticated && (
+					{authenticated ? (
 						<Fragment>
 							<Menu.Item
-								name="My Purchases"
-								onClick={() => this.props.history.push(`/profile/purchases`)}
-							/>
-							<Menu.Item
-								name="My Reviews"
-								onClick={() => this.props.history.push(`/profile/reviews`)}
-							/>
-							<Menu.Item
-								name="My Account"
-								onClick={() => this.props.history.push(`/profile/payment-methods`)}
-							/>
+								onClick={() => {
+									this.props.history.push("/profile")
+								}}
+							>
+								{this.props.data.user.name}
+							</Menu.Item>
+							<Menu.Menu size="large" style={{ marginLeft: "10px" }} vertical>
+								<Menu.Item
+									name="My Purchases"
+									onClick={() => this.props.history.push(`/profile/purchases`)}
+								/>
+								<Menu.Item
+									name="My Reviews"
+									onClick={() => this.props.history.push(`/profile/reviews`)}
+								/>
+								<Menu.Item
+									name="My Account"
+									onClick={() =>
+										this.props.history.push(`/profile/payment-methods`)
+									}
+								/>
+								<Menu.Item onClick={() => this.onLogout()}>Sign Out</Menu.Item>
+							</Menu.Menu>
+						</Fragment>
+					) : (
+						<Fragment>
+							<Menu.Item onClick={() => this.props.history.push("/signin")}>
+								Sign In
+							</Menu.Item>
 						</Fragment>
 					)}
-					<Menu.Item
-						key="cart"
-						name="cart"
-						onClick={() => this.props.history.push("/checkout")}
-					/>
 					{items.map((item, i) => (
 						<Menu.Item
+							active={activeItem === item.text}
 							key={`${item.link}${i}`}
 							name={item.text}
 							onClick={() => this.props.history.push(`/${item.link}`)}
 						/>
 					))}
+					<Menu.Item
+						key="cart"
+						name="cart"
+						onClick={() => this.props.history.push("/checkout")}
+					>
+						<Label circular color="olive">
+							{cart.items.length}
+						</Label>{" "}
+						Cart
+					</Menu.Item>
 				</Sidebar>
 			</Provider>
 		)

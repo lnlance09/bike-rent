@@ -265,7 +265,7 @@ class Stores extends Component {
 
 					<Divider hidden />
 
-					<Header>About this business</Header>
+					<Header size="large">About this business</Header>
 					<p>{description}</p>
 				</Fragment>
 			)
@@ -297,6 +297,7 @@ class Stores extends Component {
 						fluid
 						icon="star"
 						onClick={this.toggleModal}
+						size="big"
 					/>
 					<Divider />
 					<Button
@@ -305,6 +306,7 @@ class Stores extends Component {
 						fluid
 						icon="cart"
 						onClick={() => this.props.history.push("/checkout")}
+						size="big"
 					/>
 				</div>
 			) : (
