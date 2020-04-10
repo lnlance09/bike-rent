@@ -171,6 +171,28 @@ export const createRefund = ({ bearer, callback = () => null, id }) => dispatch 
 	)
 }
 
+export const deleteBlog = ({ bearer, id }) => dispatch => {
+	request.post(
+		`${window.location.origin}/api/blog/delete`,
+		{
+			form: {
+				id
+			},
+			headers: {
+				Authorization: bearer
+			},
+			json: true
+		},
+		function(err, response, body) {
+			if (!body.error) {
+				toast.success("Blog has been deleted")
+				dispatch(getBlogs())
+				dispatch(toggleEditBlogModal())
+			}
+		}
+	)
+}
+
 export const editBike = ({ bearer, description, id, image, name, order, visible }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/bike/edit`,
