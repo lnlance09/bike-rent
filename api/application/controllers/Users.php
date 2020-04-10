@@ -399,9 +399,13 @@ class Users extends CI_Controller {
 
 		$message = file_get_contents("https://bike-rent.s3-us-west-2.amazonaws.com/emails/confirm-your-email.html");
 		$message = str_replace('{NAME}', $params['name'], $message);
-		$message = str_replace('{VERIFICATION_CODE}', $verification_code, $message);
+		$message = str_replace('{VERIFICATION_CODE}', $params['verification_code'], $message);
 		$subject = 'Please verify your email';
 		$from = EMAIL_RECEIVERS;
+		$from[] = [
+			'email' => $params['email'],
+			'name' => $params['name']
+		];
 		$email = $this->media->sendEmail($subject, $message, $from);
 
 		if (!$email) {

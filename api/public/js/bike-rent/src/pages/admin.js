@@ -472,7 +472,7 @@ class Admin extends Component {
 				) {
 					return (
 						<div>
-							<AdminEmail emails={emails} type={activeItem} />
+							<AdminEmail bearer={bearer} emails={emails} type={activeItem} />
 						</div>
 					)
 				}
