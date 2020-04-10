@@ -233,7 +233,7 @@ class Stores extends Component {
 
 			const LeftColumn = (
 				<Fragment>
-					<Header dividing size="huge">
+					<Header size="huge">
 						{name}
 						{id && (
 							<Header.Subheader>
@@ -249,7 +249,14 @@ class Stores extends Component {
 					</Header>
 
 					{id ? (
-						<Image rounded src={image} />
+						<Fragment>
+							<Responsive maxWidth={1024}>
+								<Image rounded size="small" src={image} />
+							</Responsive>
+							<Responsive minWidth={1025}>
+								<Image fluid rounded src={image} />
+							</Responsive>
+						</Fragment>
 					) : (
 						<Placeholder fluid>
 							<Placeholder.Image square />
