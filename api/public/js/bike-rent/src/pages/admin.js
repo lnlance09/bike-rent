@@ -11,7 +11,8 @@ import {
 	getSitemap,
 	getStores
 } from "redux/actions/app"
-import { Accordion, Grid, Menu, Responsive } from "semantic-ui-react"
+import { logout } from "components/authentication/v1/actions"
+import { Accordion, Button, Divider, Grid, Menu, Responsive } from "semantic-ui-react"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import React, { Component } from "react"
 import camelCase from "camelcase"
@@ -100,6 +101,11 @@ class Admin extends Component {
 		})
 	}
 
+	onLogout = () => {
+		this.props.logout()
+		window.location.reload()
+	}
+
 	setSeo = name => {
 		if (this.state.adminPages.includes(name)) {
 			const key = camelCase(name)
@@ -130,6 +136,23 @@ class Admin extends Component {
 
 		const AdminMenu = props => (
 			<Accordion as={Menu} className="adminMenu" fluid inverted vertical>
+				<Menu.Item>
+					<Button
+						color="blue"
+						content=" Go to site"
+						fluid
+						icon="world"
+						onClick={() => this.props.history.push("/home")}
+					/>
+					<Divider />
+					<Button
+						color="red"
+						content="Logout"
+						fluid
+						icon="arrow left"
+						onClick={() => this.onLogout()}
+					/>
+				</Menu.Item>
 				<Menu.Item>
 					Apperance
 					<Menu.Menu>
@@ -729,6 +752,7 @@ Admin.propTypes = {
 			})
 		)
 	}),
+	logout: PropTypes.func,
 	orders: PropTypes.shape({
 		count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		hasMore: PropTypes.bool,
@@ -849,6 +873,7 @@ Admin.defaultProps = {
 		page: 0,
 		results: [{}, {}, {}, {}]
 	},
+	logout,
 	orders: {
 		count: 0,
 		hasMore: false,
@@ -893,5 +918,6 @@ export default connect(mapStateToProps, {
 	getOrders,
 	getReviews,
 	getSitemap,
-	getStores
+	getStores,
+	logout
 })(Admin)

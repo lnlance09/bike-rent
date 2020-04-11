@@ -69,6 +69,18 @@ class App extends Component {
 
 							<Route
 								exact
+								path="/home"
+								render={props => (
+									<Home
+										key={window.location.pathname}
+										settings={settings}
+										{...props}
+									/>
+								)}
+							/>
+
+							<Route
+								exact
 								path="/about"
 								render={props => (
 									<About
