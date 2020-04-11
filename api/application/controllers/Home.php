@@ -9,6 +9,8 @@ class Home extends CI_Controller {
 
 		$this->load->model('MediaModel', 'media');
 		$this->load->model('SettingsModel', 'settings');
+
+		$this->load->helper('validation');
 	}
 
 	public function index() {
@@ -18,12 +20,7 @@ class Home extends CI_Controller {
 	public function sendContactMsg() {
 		$msg = $this->input->post('msg');
 
-		if (empty($msg)) {
-			echo json_encode([
-				'error' => 'You must leave a message'
-			]);
-			exit;
-		}
+		validateEmptyField($msg, 'You must leave a message');
 
 		$message = "Someone from BikeRent.com has contacted you <br><br> Here's what they said: <br><br> ".$msg;
 		$subject = 'Someone from BikeRent.com has contacted you';
@@ -47,26 +44,9 @@ class Home extends CI_Controller {
 		$msg = $this->input->post('msg');
 		$name = $this->input->post('name');
 
-		if (empty($name)) {
-			echo json_encode([
-				'error' => 'You must provide your name'
-			]);
-			exit;
-		}
-
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			echo json_encode([
-				'error' => 'A valid email is required'
-			]);
-			exit;
-		}
-
-		if (empty($msg)) {
-			echo json_encode([
-				'error' => 'You must leave a message'
-			]);
-			exit;
-		}
+		validateEmptyField($name, 'You must provide your name');
+		validateEmail($email, 'A valid email is required');
+		validateEmptyField($msg, 'You must leave a message');
 
 		$this->settings->insertApplication($email, $msg, $name);
 

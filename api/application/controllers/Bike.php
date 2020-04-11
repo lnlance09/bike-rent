@@ -9,10 +9,8 @@ class Bike extends CI_Controller {
 
 		$this->load->model('BikeModel', 'bike');
 		$this->load->model('StoreModel', 'store');
-	}
 
-	public function index() {
-
+		$this->load->helper('validation');
 	}
 
 	public function create() {
@@ -21,33 +19,11 @@ class Bike extends CI_Controller {
 		$name = $this->input->post('name');
 
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
 
-		if (empty($name)) {
-			echo json_encode([
-				'error' => 'You must provide a name'
-			]);
-			exit;
-		}
-
-		if (empty($description)) {
-			echo json_encode([
-				'error' => 'You must provide a description'
-			]);
-			exit;
-		}
-
-		if (empty($image)) {
-			echo json_encode([
-				'error' => 'You must provide an image'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must be logged in');
+		validateEmptyField($name, 'You must provide a name');
+		validateEmptyField($description, 'You must provide a description');
+		validateEmptyField($image, 'You must provide an image');
 
 		$this->bike->create([
 			'description' => $description,
@@ -66,14 +42,12 @@ class Bike extends CI_Controller {
 		$image = $this->input->post('image');
 		$name = $this->input->post('name');
 		$visible = $this->input->post('visible');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in');
+		validateEmptyField($name, 'You must provide a name');
+		validateEmptyField($description, 'You must provide a description');
+		validateEmptyField($image, 'You must provide an image');
 
 		$this->bike->update($id, [
 			'description' => $description,
@@ -91,14 +65,7 @@ class Bike extends CI_Controller {
 		$id = $this->input->get('id');
 
 		$bike = $this->bike->get($id);
-
-		if (!$bike) {
-			echo json_encode([
-				'bike' => false,
-				'error' => true
-			]);
-			exit;
-		}
+		validateEmptyField($bike, 'That bike does not exist');
 
 		$page = 0;
 		$limit = 25;

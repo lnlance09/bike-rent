@@ -10,6 +10,8 @@ class Settings extends CI_Controller {
 		$this->load->model('MediaModel', 'media');
 		$this->load->model('SettingsModel', 'settings');
 
+		$this->load->helper('validation');
+
 		$this->emails = [
 			'application-confirmation',
 			'confirm-your-email',
@@ -95,12 +97,7 @@ class Settings extends CI_Controller {
 		$email = $this->input->post('email');
 		$type = $this->input->post('type');
 
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			echo json_encode([
-				'error' => 'A valid email is required'
-			]);
-			exit;
-		}
+		validateEmail($email, 'A valid email is required');
 
 		if (!in_array($type, $this->emails)) {
 			echo json_encode([
@@ -135,14 +132,9 @@ class Settings extends CI_Controller {
 
 	public function updateCss() {
 		$css = $this->input->post('css');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in');
 
 		$file = APPPATH.'third_party/style.css';
 		file_put_contents($file, $css);
@@ -159,14 +151,9 @@ class Settings extends CI_Controller {
 		$key = $this->input->post('key');
 		$recipients = $this->input->post('recipients');
 		$type = $this->input->post('type');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in');
 
 		// Update the email template in S3
 		$file = APPPATH.'third_party/'.$type.'.html';
@@ -205,14 +192,9 @@ class Settings extends CI_Controller {
 		$listTwoTitle = $this->input->post('listTwoTitle');
 		$subTitle = $this->input->post('subTitle');
 		$title = $this->input->post('title');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to make changes');
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -235,14 +217,9 @@ class Settings extends CI_Controller {
 		$fbPageUrl = $this->input->post('fbPageUrl');
 		$instagramScreenName = $this->input->post('instagramScreenName');
 		$twitterScreenName = $this->input->post('twitterScreenName');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to make changes');
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -264,14 +241,9 @@ class Settings extends CI_Controller {
 		$logoText = $this->input->post('logoText');
 		$signInButton = $this->input->post('signInButton');
 		$signUpButton = $this->input->post('signUpButton');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to make changes');
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -289,21 +261,10 @@ class Settings extends CI_Controller {
 
 	public function updateLanguages() {
 		$languages = $this->input->post('languages');
-
-		if (empty($languages)) {
-			echo json_encode([
-				'error' => 'You must select at least one language'
-			]);
-			exit;
-		}
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to make changes');
+		validateEmptyField($languages, 'You must select at least one language');
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -315,14 +276,9 @@ class Settings extends CI_Controller {
 	public function updatePage() {
 		$data = $this->input->post('data');
 		$page = $this->input->post('page');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to make changes');
 
 		if (!in_array($page, $this->pages)) {
 			echo json_encode([
@@ -342,14 +298,9 @@ class Settings extends CI_Controller {
 	public function updateSeo() {
 		$page = $this->input->post('page');
 		$seo = $this->input->post('seo');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to make changes');
 
 		$settings = $this->settings;
 		$settings = new $settings();
@@ -360,21 +311,10 @@ class Settings extends CI_Controller {
 
 	public function updateSitemap() {
 		$sitemap = $this->input->post('sitemap');
-
-		if (empty($sitemap)) {
-			echo json_encode([
-				'error' => 'Your sitemap cannot be empty'
-			]);
-			exit;
-		}
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to make changes');
+		validateEmptyField($sitemap, 'Your sitemap cannot be empty');
 
 		$file = APPPATH.'third_party/sitemap.xml';
 		file_put_contents($file, $sitemap);
@@ -388,6 +328,7 @@ class Settings extends CI_Controller {
 
 	public function updateTheme() {
 		$theme = $this->input->post('theme');
+		$user = $this->user;
 
 		if (!in_array($theme, $this->themes)) {
 			echo json_encode([
@@ -396,13 +337,7 @@ class Settings extends CI_Controller {
 			exit;
 		}
 
-		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must be logged in to make changes');
 
 		$settings = $this->settings;
 		$settings = new $settings();

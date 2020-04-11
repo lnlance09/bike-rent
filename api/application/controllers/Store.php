@@ -8,10 +8,8 @@ class Store extends CI_Controller {
 		$this->base_url = $this->config->base_url();
 
 		$this->load->model('StoreModel', 'store');
-	}
 
-	public function index() {
-
+		$this->load->helper('validation');
 	}
 
 	public function create() {
@@ -30,19 +28,8 @@ class Store extends CI_Controller {
 		$state = $this->input->post('state');
 		$visible = (int)$this->input->post('visible');
 
-		if (empty($name)) {
-			echo json_encode([
-				'error' => 'You must provide a name'
-			]);
-			exit;
-		}
-
-		if (empty($description)) {
-			echo json_encode([
-				'error' => 'You must provide a description'
-			]);
-			exit;
-		}
+		validateEmptyField($name, 'You must provide a name');
+		validateEmptyField($description, 'You must provide a description');
 
 		if (empty($lat)) {
 			$lat = '40.73590000';
@@ -91,19 +78,8 @@ class Store extends CI_Controller {
 		$state = $this->input->post('state');
 		$visible = (int)$this->input->post('visible');
 
-		if (empty($name)) {
-			echo json_encode([
-				'error' => 'You must provide a name'
-			]);
-			exit;
-		}
-
-		if (empty($description)) {
-			echo json_encode([
-				'error' => 'You must provide a description'
-			]);
-			exit;
-		}
+		validateEmptyField($name, 'You must provide a name');
+		validateEmptyField($description, 'You must provide a description');
 
 		if (empty($lat)) {
 			$lat = '40.73590000';

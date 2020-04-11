@@ -9,47 +9,27 @@ class City extends CI_Controller {
 
 		$this->load->model('CityModel', 'city');
 		$this->load->model('StoreModel', 'store');
+
+		$this->load->helper('validation');
 	}
 
 	public function index() {
 		set_time_limit(0);
-		$this->city->insertLocation();
+		// $this->city->insertLocation();
 	}
 
 	public function create() {
 		$id = $this->input->post('id');
 		$description = $this->input->post('description');
 		$image = $this->input->post('image');
+		$user = $this->user;
 
 		$city = $this->city->getLocation($id);
-		if (!$city) {
-			echo json_encode([
-				'error' => 'This city does not exist'
-			]);
-			exit;
-		}
 
-		if (empty($description)) {
-			echo json_encode([
-				'error' => 'You must provide a description'
-			]);
-			exit;
-		}
-
-		if (empty($image)) {
-			echo json_encode([
-				'error' => 'You must provide an image'
-			]);
-			exit;
-		}
-
-		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must be logged in');
+		validateEmptyField($city, 'This city does not exist');
+		validateEmptyField($description, 'You must provide a description');
+		validateEmptyField($image, 'You must provide an image');
 
 		$exists = $this->city->checkIfExists($id);
 		if ($exists) {
@@ -76,14 +56,11 @@ class City extends CI_Controller {
 		$description = $this->input->post('description');
 		$image = $this->input->post('image');
 		$order = $this->input->post('order');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
+		
+		validateLoggedIn($user, 'You must be logged in');
+		validateEmptyField($description, 'You must provide a description');
+		validateEmptyField($image, 'You must provide an image');
 
 		$this->city->update($id, [
 			'description' => $description,

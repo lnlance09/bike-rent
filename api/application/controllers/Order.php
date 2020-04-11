@@ -9,10 +9,8 @@ class Order extends CI_Controller {
 
 		$this->load->model('OrderModel', 'order');
 		$this->load->model('UsersModel', 'users');
-	}
 
-	public function index() {
-		
+		$this->load->helper('validation');
 	}
 
 	public function create() {
@@ -23,33 +21,15 @@ class Order extends CI_Controller {
 		$user = $this->user;
 
 		$card = $this->users->getPaymentMethod($paymentId);
-		if (!$card) {
-			echo json_encode([
-				'error' => 'Please select a payment method'
-			]);
-			exit;
+		validateEmptyField($card, 'Please select a payment method');
+
+		if (!$user) {
+			validateItemsMatch($card['email'], $email, 'Please select a payment method');
+		} else {
+			validateItemsMatch($card['user_id'], $user->id, 'Please select a payment method');
 		}
 
-		if ($card['email'] !== $email && !$user) {
-			echo json_encode([
-				'error' => 'Please select a payment method'
-			]);
-			exit;
-		}
-
-		if ($user ? $card['user_id'] != $user->id : false) {
-			echo json_encode([
-				'error' => 'Please select a payment method'
-			]);
-			exit;
-		}
-
-		if (!is_array($cart) || empty($cart)) {
-			echo json_encode([
-				'error' => 'Your cart is empty'
-			]);
-			exit;
-		}
+		validateEmptyField($cart, 'Your cart is empty');
 
 		$orderData = $this->order->getOrderData($cart, $storeId);
 		$items = $orderData['items'];
@@ -125,14 +105,9 @@ class Order extends CI_Controller {
 
 	public function createRefund() {
 		$id = $this->input->post('id');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
+		
+		validateLoggedIn($user, 'You must be logged in');
 
 		$this->order->update($id, [
 			'is_refunded' => 1,
@@ -193,14 +168,9 @@ class Order extends CI_Controller {
 
 	public function getDetails() {
 		$id = $this->input->get('id');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You do not have permission to do that'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You do not have permission to do that');
 
 		$count = $this->order->getDetails($id);
 
@@ -211,12 +181,8 @@ class Order extends CI_Controller {
 
 	public function getPaymentMethods() {
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in');
 
 		$methods = $this->users->getPaymentMethods($user->id);
 
