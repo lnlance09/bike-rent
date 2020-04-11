@@ -1,7 +1,17 @@
 import "./style.css"
 import { editEmail, sendEmail } from "redux/actions/app"
 import { connect } from "react-redux"
-import { Button, Divider, Form, Header, Icon, Input, Message, Segment } from "semantic-ui-react"
+import {
+	Button,
+	Divider,
+	Form,
+	Header,
+	Icon,
+	Input,
+	List,
+	Message,
+	Segment
+} from "semantic-ui-react"
 import React, { Component } from "react"
 import AceEditor from "react-ace"
 import PropTypes from "prop-types"
@@ -41,17 +51,96 @@ class AdminEmail extends Component {
 		} = this.state
 
 		const EmailEditor = type => {
+			let reference = ""
 			let value = ""
+
 			if (type === "application-confirmation") {
+				reference = (
+					<List bulleted size="big">
+						<List.Item>
+							<b>{"{NAME}"}</b> The name of the person applying
+						</List.Item>
+					</List>
+				)
 				value = applicationConfirmation
 			}
+
 			if (type === "confirm-your-email") {
+				reference = (
+					<List bulleted size="big">
+						<List.Item>
+							<b>{"{NAME}"}</b> The name of the person signing up
+						</List.Item>
+						<List.Item>
+							<b>{"{VERIFICATION_CODE}"}</b> A unique alphanumeric code that is sent
+							to every user's email upon signging up
+						</List.Item>
+					</List>
+				)
 				value = confirmYourEmail
 			}
+
 			if (type === "order-confirmation") {
+				reference = (
+					<List bulleted size="big">
+						<List.Item>
+							<b>{"{CARD_NUMBER}"}</b> The number of the card used to complete the
+							purchase
+						</List.Item>
+						<List.Item>
+							<b>{"{CARD_TYPE}"}</b> The type (AMEX,VISA,MC,etc..) of card used to
+							complete the purchase
+						</List.Item>
+						<List.Item>
+							<b>{"{CONFIRMATION_NUMBER}"}</b> An order number that is auto-generated
+							for each and every purchase
+						</List.Item>
+						<List.Item>
+							<b>{"{EXP_MONTH}"}</b> The month portion of the card's expiration date
+						</List.Item>
+						<List.Item>
+							<b>{"{EXP_YEAR}"}</b> The year portion of the card's expiration date
+						</List.Item>
+						<List.Item>
+							<b>{"{SUBTOTAL}"}</b> The total of all items before taxes
+						</List.Item>
+						<List.Item>
+							<b>{"{TAX_PRICE}"}</b> The amount in sales tax paid
+						</List.Item>
+						<List.Item>
+							<b>{"{TOTAL}"}</b> The total amount in USD of the order
+						</List.Item>
+					</List>
+				)
 				value = orderConfirmation
 			}
+
 			if (type === "refund") {
+				reference = (
+					<List bulleted size="big">
+						<List.Item>
+							<b>{"{CONFIRMATION_NUMBER}"}</b> An order number that is auto-generated
+							for each and every purchase
+						</List.Item>
+						<List.Item>
+							<b>{"{TOTAL}"}</b> The total amount in USD of the order
+						</List.Item>
+						<List.Item>
+							<b>{"{CARD_NUMBER}"}</b> The number of the card used to complete the
+							purchase
+						</List.Item>
+						<List.Item>
+							<b>{"{CARD_TYPE}"}</b> The type (AMEX,VISA,MC,etc..) of card used to
+							complete the purchase
+						</List.Item>
+						<List.Item>
+							<b>{"{EXP_MONTH}"}</b> The month portion of the card's expiration date
+						</List.Item>
+						<List.Item>
+							<b>{"{EXP_YEAR}"}</b> The year portion of the card's expiration date
+						</List.Item>
+					</List>
+				)
 				value = refund
 			}
 
@@ -79,6 +168,10 @@ class AdminEmail extends Component {
 						theme="monokai"
 						value={value}
 					/>
+					<Divider hidden />
+
+					{reference}
+
 					<Divider />
 					<Segment>
 						<div

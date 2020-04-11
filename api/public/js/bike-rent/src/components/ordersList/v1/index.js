@@ -59,7 +59,6 @@ class OrdersList extends Component {
 					created_at,
 					id,
 					is_refunded,
-					refund_date,
 					store_img,
 					store_name
 				} = result

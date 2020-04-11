@@ -14,6 +14,27 @@ class OrderModel extends CI_Model {
 		return $this->db->insert_id();
 	}
 
+	public function formatItemsHtml($items) {
+		$html = '';
+		for ($i=0;$i<count($items);$i++) {
+			$item = $items[$i];
+			$name = $item['name'];
+			$price = $items['price'];
+			$hours = (int)$item['hours'];
+
+			$html .= '<tr>
+				<td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+						'.$name.' ('.$hours.' hr'.($hours > 1 ? 's' : '').')
+				</td>
+				<td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+						$'.round($price*$hours, 2).'
+				</td>
+			</tr>';
+		}
+
+		return $html;
+	}
+
 	public function get($id) {
 		$this->db->select('*');
 		$this->db->where('id', $id);

@@ -397,18 +397,22 @@ class Users extends CI_Controller {
 			exit;
 		}
 
-		$message = file_get_contents("https://bike-rent.s3-us-west-2.amazonaws.com/emails/confirm-your-email.html");
-		$message = str_replace('{NAME}', $params['name'], $message);
-		$message = str_replace('{VERIFICATION_CODE}', $params['verification_code'], $message);
-		$subject = 'Please verify your email';
+		$email_template = $this->media->generateTemplate('confirm-your-email', [
+			'name' => $params['name'],
+			'verification_code' => $params['verification_code']
+		]);
+		$title = $email_template['title'];
+		$msg = $email_template['msg'];
 		$from = EMAIL_RECEIVERS;
-		$from[] = [
-			'email' => $params['email'],
-			'name' => $params['name']
+		$to = [
+			[
+				'email' => $params['email'],
+				'name' => $params['name']
+			]
 		];
-		$email = $this->media->sendEmail($subject, $message, $from);
+		$mail = $this->media->sendEmail($title, $msg, $from, $to);
 
-		if (!$email) {
+		if (!$mail) {
 			echo json_encode([
 				'error' => 'Something went wrong.'
 			]);

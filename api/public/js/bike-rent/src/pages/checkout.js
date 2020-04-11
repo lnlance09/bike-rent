@@ -78,7 +78,7 @@ class Checkout extends Component {
 							Congratulations
 						</Header>
 						<Modal.Description>
-							<Header size="big">
+							<Header size="large">
 								Check your email for a confirmation at{" "}
 								{auth ? userData.email : email}
 							</Header>
@@ -104,7 +104,7 @@ class Checkout extends Component {
 						height="300px"
 						lat={storeInfo.lat}
 						lng={storeInfo.lon}
-						markerId={storeInfo.id}
+						markerId={`${storeInfo.id}`}
 						markers={[
 							{
 								id: storeInfo.id,
@@ -165,9 +165,7 @@ class Checkout extends Component {
 											</Fragment>
 										)}
 
-										<Header size="large">
-											Add a card
-										</Header>
+										<Header size="large">Add a card</Header>
 
 										<PaymentMethod
 											bearer={bearer}
@@ -228,7 +226,7 @@ class Checkout extends Component {
 
 					{order.confirmationModalOpen && (
 						<Confetti
-							// colors={["#B5CC18"]}
+						// colors={["#B5CC18"]}
 						/>
 					)}
 

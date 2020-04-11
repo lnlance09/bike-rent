@@ -89,36 +89,27 @@ class Settings extends CI_Controller {
 			exit;
 		}
 
-		$template = file_get_contents('https://bike-rent.s3-us-west-2.amazonaws.com/emails/'.$type.'.html');
-
-		$title = 'Your application has been received';
-		$msg = str_replace('{name}', '<b>USER</b>', $template);
-
-		if ($email === 'confirm-your-email') {
-			$title = 'Please confirm your email';
-			$msg = str_replace('{verificationCode}', '<b>VERIFICATION_CODE</b>', $template);
-		}
-
-		if ($email === 'order-confirmation') {
-			$title = 'Your order summary';
-		}
-
-		if ($email === 'refund') {
-			$title = 'Your order has been refunded';
-		}
-
+		$email_template = $this->media->generateTemplate($type, EMAIL_TEMPLATE_DATA);
+		$title = $email_template['title'];
+		$msg = $email_template['msg'];
 		$from = EMAIL_RECEIVERS;
-		$email = $this->media->sendEmail($title, $msg, $from);
+		$to = [
+			[
+				'email' => $email,
+				'name' => 'Admin Panel User'
+			]
+		];
+		$mail = $this->media->sendEmail($title, $msg, $from, $to);
 
-		if ($mail->Send()) {
+		if (!$mail) {
 			echo json_encode([
-				'error' => false
+				'error' => 'Something went wrong'
 			]);
 			exit;
 		}
 
 		echo json_encode([
-			'error' => 'Something went wrong.'
+			'error' => false
 		]);
 	}
 

@@ -240,7 +240,12 @@ class AppHeader extends Component {
 						vertical
 					>
 						<Container className="sidebarContainer">
-							<Menu className="globalHeaderMenu" color={backgroundColor} inverted size="large">
+							<Menu
+								className="globalHeaderMenu"
+								color={backgroundColor}
+								inverted
+								size="large"
+							>
 								<Menu.Item
 									onClick={() => {
 										this.props.history.push("/")
@@ -302,7 +307,7 @@ class AppHeader extends Component {
 							>
 								{this.props.data.user.name}
 							</Menu.Item>
-							<Menu.Menu size="large" style={{ marginLeft: "10px" }} vertical>
+							<Menu.Menu size="large" style={{ marginLeft: "10px" }}>
 								<Menu.Item
 									name="My Purchases"
 									onClick={() => this.props.history.push(`/profile/purchases`)}

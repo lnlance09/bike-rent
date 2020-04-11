@@ -28,7 +28,7 @@ class Home extends CI_Controller {
 		$message = "Someone from BikeRent.com has contacted you <br><br> Here's what they said: <br><br> ".$msg;
 		$subject = 'Someone from BikeRent.com has contacted you';
 		$from = EMAIL_RECEIVERS;
-		$email = $this->media->sendEmail($subject, $message, $from);
+		$email = $this->media->sendEmail($subject, $message, $from, $from);
 
 		if (!$email) {
 			echo json_encode([
@@ -70,13 +70,21 @@ class Home extends CI_Controller {
 
 		$this->settings->insertApplication($email, $msg, $name);
 
-		$subject = 'Your application has been received';
-		$template = file_get_contents(APPLY_EMAIL_URL);
-		$msg = str_replace('{name}', $name, $template);
+		$email_template = $this->media->generateTemplate('application-confirmation', [
+			'name' => $name
+		]);
+		$title = $email_template['title'];
+		$msg = $email_template['msg'];
 		$from = EMAIL_RECEIVERS;
-		$email = $this->media->sendEmail($subject, $msg, $from);
+		$to = [
+			[
+				'email' => $email,
+				'name' => $name
+			]
+		];
+		$mail = $this->media->sendEmail($title, $msg, $from, $to);
 
-		if (!$email) {
+		if (!$mail) {
 			echo json_encode([
 				'error' => 'Something went wrong.'
 			]);

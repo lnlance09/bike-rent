@@ -52,6 +52,7 @@ class Order extends CI_Controller {
 		}
 
 		$orderData = $this->order->getOrderData($cart, $storeId);
+		$items = $orderData['items'];
 		$orderId = $this->order->create([
 			'amount_after_tax' => $orderData['total'],
 			'amount_before_tax' => $orderData['subtotal'],
@@ -60,8 +61,39 @@ class Order extends CI_Controller {
 			'tax' => $orderData['tax']
 		]);
 
+		$this->order->insertOrderDetails($items, $orderId);
+		// FormatArray($card);
+		// FormatArray($orderData);
 
-		$this->order->insertOrderDetails($orderData['items'], $orderId);
+		$itemsHtml = $this->order->formatItemsHtml($items);
+		$email_template = $this->media->generateTemplate('order-confirmation', [
+			'items' => $itemsHtml,
+			'card_number' => '************'.substr($card['number'], -4),
+			'card_type' => $card['type'],
+			'confirmation_number' => '',
+			'exp_month' => $card['exp_month'],
+			'exp_year' => $card['exp_year'],
+			'subtotal' => $orderData['subtotal'],
+			'tax_price' => $orderData['tax'],
+			'total' => $orderData['total']
+		]);
+		$title = $email_template['title'];
+		$msg = $email_template['msg'];
+		$from = EMAIL_RECEIVERS;
+		$to = [
+			[
+				'email' => $email,
+				'name' => $card['name']
+			]
+		];
+		$mail = $this->media->sendEmail($title, $msg, $from, $to);
+
+		if (!$mail) {
+			echo json_encode([
+				'error' => 'Something went wrong.'
+			]);
+			exit;
+		}
 
 		/*
 		$payPalToken = $this->order->getPayPalToken();
