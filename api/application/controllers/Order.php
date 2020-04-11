@@ -7,7 +7,9 @@ class Order extends CI_Controller {
 
 		$this->base_url = $this->config->base_url();
 
+		$this->load->model('MediaModel', 'media');
 		$this->load->model('OrderModel', 'order');
+		$this->load->model('SettingsModel', 'settings');
 		$this->load->model('UsersModel', 'users');
 
 		$this->load->helper('validation');
@@ -59,10 +61,10 @@ class Order extends CI_Controller {
 		]);
 		$title = $email_template['title'];
 		$msg = $email_template['msg'];
-		$from = EMAIL_RECEIVERS;
+		$from = $this->settings->getEmailRecipients('orderConfirmation');
 		$to = [
 			[
-				'email' => $email,
+				'email' => $card['email'],
 				'name' => $card['name']
 			]
 		];

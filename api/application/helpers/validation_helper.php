@@ -64,7 +64,7 @@ function validateItemsDifferent($item_one, $item_two, $msg) {
 }
 
 function validateItemsMatch($item_one, $item_two, $msg) {
-	if ($item_one != $item_Two) {
+	if ($item_one != $item_two) {
 		echo json_encode([
 			'error' => $msg
 		]);
@@ -128,7 +128,7 @@ function validateUsername($username, $msg) {
 
 	if (strlen($username) > 18) {
 		echo json_encode([
-			'error' => 'Your username is too long'
+			'error' => $msg
 		]);
 		exit;
 	}

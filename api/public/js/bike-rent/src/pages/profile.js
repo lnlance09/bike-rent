@@ -14,6 +14,7 @@ import {
 	Responsive
 } from "semantic-ui-react"
 import React, { Component } from "react"
+import ImagePic from "images/avatar/large/christian.jpg"
 import ImageUpload from "components/imageUpload/v1/"
 import Moment from "react-moment"
 import OrdersList from "components/ordersList/v1/"
@@ -133,7 +134,7 @@ class Profile extends Component {
 											file
 										})
 									}}
-									img={user.img}
+									img={user.img ? user.img : ImagePic}
 									msg="Change your pic"
 								/>
 							</Grid.Column>
