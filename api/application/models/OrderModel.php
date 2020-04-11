@@ -14,6 +14,27 @@ class OrderModel extends CI_Model {
 		return $this->db->insert_id();
 	}
 
+	public function formatItemsHtml($items) {
+		$html = '';
+		for ($i=0;$i<count($items);$i++) {
+			$item = $items[$i];
+			$name = $item['name'];
+			$price = $item['price'];
+			$hours = (int)$item['hours'];
+
+			$html .= '<tr>
+				<td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+						'.$name.' ('.$hours.' hr'.($hours > 1 ? 's' : '').')
+				</td>
+				<td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+						$'.round($price*$hours, 2).'
+				</td>
+			</tr>';
+		}
+
+		return $html;
+	}
+
 	public function get($id) {
 		$this->db->select('*');
 		$this->db->where('id', $id);
@@ -36,7 +57,8 @@ class OrderModel extends CI_Model {
 		$select .= 'od.bike_id, ';
 		$select .= 's.name AS store_name, s.image AS store_img, ';
 		$select .= 'sb.hourly_rate, ';
-		$select .= 'b.name, b.image';
+		$select .= 'b.name, b.image, ';
+		$select .= 'u.email';
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';
@@ -44,6 +66,7 @@ class OrderModel extends CI_Model {
 
 		$this->db->select($select);
 		$this->db->join('payment_methods pm', 'o.payment_method = pm.id');
+		$this->db->join('users u', 'pm.user_id = u.id');
 		$this->db->join('order_details od', 'o.id = od.order_id');
 		$this->db->join('stores s', 'o.store_id = s.id');
 		$this->db->join('store_bikes sb', 'od.bike_id = sb.id');

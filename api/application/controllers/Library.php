@@ -10,6 +10,7 @@ class Library extends CI_Controller {
 		$this->load->model('MediaModel', 'media');
 
 		$this->load->helper('common_helper');
+		$this->load->helper('validation');
 	}
 
 	public function index() {
@@ -19,13 +20,7 @@ class Library extends CI_Controller {
 	public function addImage() {
 		$user = $this->user;
 
-		if (!$user) {
-			$this->output->set_status_header(401);
-			echo json_encode([
-				'error' => 'You must be logged in to add a picture'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must be logged in to add a picture');
 
 		$this->load->library('upload', [
 			'allowed_types' => '*',

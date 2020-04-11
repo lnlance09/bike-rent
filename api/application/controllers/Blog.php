@@ -9,42 +9,22 @@ class Blog extends CI_Controller {
 
 		$this->load->model('BlogModel', 'blog');
 		$this->load->model('CityModel', 'city');
+
+		$this->load->helper('validation');
 	}
 
 	public function create() {
 		$cityId = $this->input->post('cityId');
 		$entry = $this->input->post('entry');
 		$title = $this->input->post('title');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
 
-		if (empty($title)) {
-			echo json_encode([
-				'error' => 'You must provide a title'
-			]);
-			exit;
-		}
-
-		if (empty($entry)) {
-			echo json_encode([
-				'error' => 'The blog post cannot be empty'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must be logged in');
+		validateEmptyField($title, 'You must provide a title');
+		validateEmptyField($entry, 'The blog post cannot be empty');
 
 		$city = $this->city->checkIfExists($cityId);
-		if (!$city) {
-			echo json_encode([
-				'error' => 'That city does not exist'
-			]);
-			exit;
-		}
+		validateEmptyField($city, 'That city does not exist');
 
 		$this->blog->create([
 			'city_id' => $cityId,
@@ -59,28 +39,15 @@ class Blog extends CI_Controller {
 
 	public function delete() {
 		$id = $this->input->post('id');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in');
 
 		$this->blog->delete($id);
 
 		echo json_encode([
 			'error' => false
 		]);
-	}
-
-	public function get() {
-
-	}
-
-	public function getAll() {
-
 	}
 
 	public function search() {
@@ -131,36 +98,14 @@ class Blog extends CI_Controller {
 		$entry = $this->input->post('entry');
 		$id = $this->input->post('id');
 		$title = $this->input->post('title');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
-
-		if (empty($title)) {
-			echo json_encode([
-				'error' => 'You must provide a title'
-			]);
-			exit;
-		}
-
-		if (empty($entry)) {
-			echo json_encode([
-				'error' => 'The blog post cannot be empty'
-			]);
-			exit;
-		}
+		
+		validateLoggedIn($user, 'You must be logged in');
+		validateEmptyField($title, 'You must provide a title');
+		validateEmptyField($entry, 'The blog post cannot be empty');
 
 		$city = $this->city->checkIfExists($cityId);
-		if (!$city) {
-			echo json_encode([
-				'error' => 'That city does not exist'
-			]);
-			exit;
-		}
+		validateEmptyField($city, 'That city does not exist');
 
 		$this->blog->update($id, [
 			'city_id' => $cityId,

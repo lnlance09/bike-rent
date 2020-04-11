@@ -64,11 +64,13 @@ class AdminCities extends Component {
 	onChangeNewImage = (e, { value }) => this.setState({ newImage: value })
 
 	setActive = (i, description, image) => {
-		this.setState({
-			currentItem: i,
-			descriptionVal: description,
-			imageVal: image
-		})
+		if (this.state.currentItem !== i) {
+			this.setState({
+				currentItem: i,
+				descriptionVal: description,
+				imageVal: image
+			})
+		}
 	}
 
 	updateSearchTerm = e => {

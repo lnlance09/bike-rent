@@ -48,7 +48,7 @@ class Checkout extends Component {
 
 	componentDidMount() {}
 
-	setEmail = email => this.setState({ email: email })
+	setEmail = email => this.setState({ email })
 
 	setPaymentId = id => this.setState({ paymentId: id })
 
@@ -78,7 +78,7 @@ class Checkout extends Component {
 							Congratulations
 						</Header>
 						<Modal.Description>
-							<Header size="big">
+							<Header size="large">
 								Check your email for a confirmation at{" "}
 								{auth ? userData.email : email}
 							</Header>
@@ -104,7 +104,7 @@ class Checkout extends Component {
 						height="300px"
 						lat={storeInfo.lat}
 						lng={storeInfo.lon}
-						markerId={storeInfo.id}
+						markerId={`${storeInfo.id}`}
 						markers={[
 							{
 								id: storeInfo.id,
@@ -165,23 +165,19 @@ class Checkout extends Component {
 											</Fragment>
 										)}
 
-										<Divider horizontal section>
-											Add a card
-										</Divider>
+										<Header size="large">Add a card</Header>
 
-										<Segment>
-											<PaymentMethod
-												bearer={bearer}
-												buttonText="Use this card"
-												callback={(id, email) => {
-													this.setPaymentId(id)
-													this.setEmail(email)
-													this.toggleForm()
-												}}
-												displayForm={showForm}
-												showEmailInput={!auth}
-											/>
-										</Segment>
+										<PaymentMethod
+											bearer={bearer}
+											buttonText="Use this card"
+											callback={(id, email) => {
+												this.setPaymentId(id)
+												this.setEmail(email)
+												this.toggleForm()
+											}}
+											displayForm={showForm}
+											showEmailInput={!auth}
+										/>
 									</Fragment>
 								) : (
 									<Segment placeholder>
@@ -230,7 +226,7 @@ class Checkout extends Component {
 
 					{order.confirmationModalOpen && (
 						<Confetti
-							// colors={["#B5CC18"]}
+						// colors={["#B5CC18"]}
 						/>
 					)}
 

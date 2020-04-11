@@ -1,11 +1,18 @@
 import "./style.css"
 import { addImageToLibrary, getImages, toggleAddImageModal } from "redux/actions/library"
+import { CopyToClipboard } from "react-copy-to-clipboard"
+import { toast } from "react-toastify"
 import { connect } from "react-redux"
-import { Button, Divider, Grid, Header, Image, Modal, Placeholder } from "semantic-ui-react"
+import { Button, Divider, Grid, Header, Image, List, Modal, Placeholder } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import ImagePic from "images/images/image-square.png"
 import ImageUpload from "components/imageUpload/v1/"
 import PropTypes from "prop-types"
+
+toast.configure({
+	autoClose: 4000,
+	draggable: false
+})
 
 class AdminLibrary extends Component {
 	constructor(props) {
@@ -52,34 +59,65 @@ class AdminLibrary extends Component {
 					) : (
 						<Fragment>
 							<Image
+								bordered
 								onError={i => (i.target.src = ImagePic)}
 								rounded
 								size="medium"
 								src={`${baseUrl}${currentImg}`}
 							/>
 							<Modal.Description>
-								<p>
-									<b>Public Url:</b>{" "}
-									<a
-										href={`${baseUrl}${currentImg}`}
-										rel="noopener noreferrer"
-										target="_blank"
-									>
-										{baseUrl}
-										{currentImg}
-									</a>
-								</p>
-								<p>
-									<b>S3 Url:</b>{" "}
-									<a
-										href={`${s3Url}${currentImg}`}
-										rel="noopener noreferrer"
-										target="_blank"
-									>
-										{s3Url}
-										{currentImg}
-									</a>
-								</p>
+								<List relaxed="very">
+									<List.Item>
+										<CopyToClipboard
+											onCopy={() => toast.success("Copied to clipboard")}
+											text={`${baseUrl}${currentImg}`}
+										>
+											<List.Icon
+												className="clipboardIcon"
+												color="blue"
+												name="clipboard"
+											/>
+										</CopyToClipboard>
+										<List.Content>
+											<List.Header>Public Url:</List.Header>
+											<List.Description>
+												<a
+													href={`${baseUrl}${currentImg}`}
+													rel="noopener noreferrer"
+													target="_blank"
+												>
+													{baseUrl}
+													{currentImg}
+												</a>
+											</List.Description>
+										</List.Content>
+									</List.Item>
+									<List.Item>
+										<CopyToClipboard
+											onCopy={() => toast.success("Copied to clipboard")}
+											text={`${s3Url}${currentImg}`}
+										>
+											<List.Icon
+												className="clipboardIcon"
+												color="blue"
+												name="clipboard"
+											/>
+										</CopyToClipboard>
+										<List.Content>
+											<List.Header>S3 Url:</List.Header>
+											<List.Description>
+												<a
+													href={`${s3Url}${currentImg}`}
+													rel="noopener noreferrer"
+													target="_blank"
+												>
+													{s3Url}
+													{currentImg}
+												</a>
+											</List.Description>
+										</List.Content>
+									</List.Item>
+								</List>
 							</Modal.Description>
 						</Fragment>
 					)}
@@ -121,7 +159,9 @@ class AdminLibrary extends Component {
 							<Grid.Column>
 								{item.Key ? (
 									<Image
+										bordered
 										className="libraryImg"
+										fluid
 										onClick={() => {
 											this.setState(
 												{

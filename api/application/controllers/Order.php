@@ -7,12 +7,12 @@ class Order extends CI_Controller {
 
 		$this->base_url = $this->config->base_url();
 
+		$this->load->model('MediaModel', 'media');
 		$this->load->model('OrderModel', 'order');
+		$this->load->model('SettingsModel', 'settings');
 		$this->load->model('UsersModel', 'users');
-	}
 
-	public function index() {
-		
+		$this->load->helper('validation');
 	}
 
 	public function create() {
@@ -23,35 +23,18 @@ class Order extends CI_Controller {
 		$user = $this->user;
 
 		$card = $this->users->getPaymentMethod($paymentId);
-		if (!$card) {
-			echo json_encode([
-				'error' => 'Please select a payment method'
-			]);
-			exit;
+		validateEmptyField($card, 'Please select a payment method');
+
+		if (!$user) {
+			validateItemsMatch($card['email'], $email, 'Please select a payment method');
+		} else {
+			validateItemsMatch($card['user_id'], $user->id, 'Please select a payment method');
 		}
 
-		if ($card['email'] !== $email && !$user) {
-			echo json_encode([
-				'error' => 'Please select a payment method'
-			]);
-			exit;
-		}
-
-		if ($user ? $card['user_id'] != $user->id : true) {
-			echo json_encode([
-				'error' => 'Please select a payment method'
-			]);
-			exit;
-		}
-
-		if (!is_array($cart) || empty($cart)) {
-			echo json_encode([
-				'error' => 'Your cart is empty'
-			]);
-			exit;
-		}
+		validateEmptyField($cart, 'Your cart is empty');
 
 		$orderData = $this->order->getOrderData($cart, $storeId);
+		$items = $orderData['items'];
 		$orderId = $this->order->create([
 			'amount_after_tax' => $orderData['total'],
 			'amount_before_tax' => $orderData['subtotal'],
@@ -60,8 +43,39 @@ class Order extends CI_Controller {
 			'tax' => $orderData['tax']
 		]);
 
+		$this->order->insertOrderDetails($items, $orderId);
+		// FormatArray($card);
+		// FormatArray($orderData);
 
-		$this->order->insertOrderDetails($orderData['items'], $orderId);
+		$itemsHtml = $this->order->formatItemsHtml($items);
+		$email_template = $this->media->generateTemplate('order-confirmation', [
+			'items' => $itemsHtml,
+			'card_number' => '************'.substr($card['number'], -4),
+			'card_type' => $card['type'],
+			'confirmation_number' => '',
+			'exp_month' => $card['exp_month'],
+			'exp_year' => $card['exp_year'],
+			'subtotal' => $orderData['subtotal'],
+			'tax_price' => $orderData['tax'],
+			'total' => $orderData['total']
+		]);
+		$title = $email_template['title'];
+		$msg = $email_template['msg'];
+		$from = $this->settings->getEmailRecipients('orderConfirmation');
+		$to = [
+			[
+				'email' => $card['email'],
+				'name' => $card['name']
+			]
+		];
+		$mail = $this->media->sendEmail($title, $msg, $from, $to);
+
+		if (!$mail) {
+			echo json_encode([
+				'error' => 'Something went wrong.'
+			]);
+			exit;
+		}
 
 		/*
 		$payPalToken = $this->order->getPayPalToken();
@@ -93,14 +107,9 @@ class Order extends CI_Controller {
 
 	public function createRefund() {
 		$id = $this->input->post('id');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
+		
+		validateLoggedIn($user, 'You must be logged in');
 
 		$this->order->update($id, [
 			'is_refunded' => 1,
@@ -161,14 +170,9 @@ class Order extends CI_Controller {
 
 	public function getDetails() {
 		$id = $this->input->get('id');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You do not have permission to do that'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You do not have permission to do that');
 
 		$count = $this->order->getDetails($id);
 
@@ -179,12 +183,8 @@ class Order extends CI_Controller {
 
 	public function getPaymentMethods() {
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in');
 
 		$methods = $this->users->getPaymentMethods($user->id);
 

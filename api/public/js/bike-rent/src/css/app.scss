@@ -9,6 +9,10 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.clipboardIcon {
+	cursor: pointer;
+}
+
 .mainContainer {
 	min-height: 100vh;
 	margin: 1.4em 0;
@@ -109,6 +113,10 @@ body {
 
 .applyPage {
 	height: 100vh;
+
+	.container.mainContainer {
+		padding-top: 0 !important;
+	}
 }
 
 .bikesPage {

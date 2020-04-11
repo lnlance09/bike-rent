@@ -34,6 +34,8 @@ export const addImageToLibrary = ({ bearer, file }) => dispatch => {
 					toast.success("Image has been added")
 					dispatch(getImages())
 					dispatch(toggleAddImageModal())
+				} else {
+					toast.error(body.error)
 				}
 			}
 		)

@@ -47,7 +47,6 @@ class PaymentMethod extends Component {
 			displayForm,
 			error,
 			errorMsg,
-			formSize,
 			showEmailInput
 		} = this.props
 		const emailRequired = showEmailInput ? 1 : 0
@@ -65,7 +64,7 @@ class PaymentMethod extends Component {
 						/>
 					)}
 					{displayForm && (
-						<Form as={Segment} size={formSize}>
+						<Form as={Segment}>
 							<Form.Field>
 								<Cleave
 									name="number"
@@ -138,7 +137,6 @@ class PaymentMethod extends Component {
 											})
 										})
 									}}
-									size={formSize}
 								/>
 							)}
 						</Form>
@@ -190,7 +188,7 @@ PaymentMethod.defaultProps = {
 	displayCard: true,
 	displayForm: true,
 	error: false,
-	formSize: "medium",
+	formSize: "large",
 	showEmailInput: false
 }
 

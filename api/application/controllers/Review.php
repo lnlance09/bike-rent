@@ -9,46 +9,22 @@ class Review extends CI_Controller {
 
 		$this->load->model('ReviewModel', 'review');
 		$this->load->model('StoreModel', 'store');
-	}
 
-	public function index() {
-
+		$this->load->helper('validation');
 	}
 
 	public function create() {
 		$comment = $this->input->post('comment');
 		$rating = (int)$this->input->post('rating');
 		$storeId = $this->input->post('storeId');
+		$user = $this->user;
 
-		if (empty($comment)) {
-			echo json_encode([
-				'error' => 'You must provide a comment'
-			]);
-			exit;
-		}
-
-		if ($rating < 1 || $rating > 5) {
-			echo json_encode([
-				'error' => 'You must provide a valid rating'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must be logged in');
+		validateEmptyField($comment, 'You must provide a comment');
+		validateRating($rating, 'You must provide a valid rating');
 
 		$storeExists = $this->store->checkIfExists($storeId);
-		if (!$storeExists) {
-			echo json_encode([
-				'error' => 'That store does not exist'
-			]);
-			exit;
-		}
-
-		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to create a review'
-			]);
-			exit;
-		}
+		validateEmptyField($storeExists, 'That store does not exist');
 
 		$this->review->create([
 			'comment' => $comment,
@@ -64,30 +40,13 @@ class Review extends CI_Controller {
 
 	public function delete() {
 		$id = $this->input->post('id');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to delete reviews'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to delete reviews');
 
 		$review = $this->review->get($id);
-
-		if (!$review) {
-			echo json_encode([
-				'error' => 'This review does not exist'
-			]);
-			exit;
-		}
-
-		if ($review['user_id'] != $user->id) {
-			echo json_encode([
-				'error' => 'You do not have permission to delete this review'
-			]);
-			exit;
-		}
+		validateEmptyField($review, 'This review does not exist');
+		validateItemsMatch($review['user_id'], $user->id, 'You do not have permission to delete this review');
 
 		$this->review->delete($id);
 
@@ -100,44 +59,15 @@ class Review extends CI_Controller {
 		$id = $this->input->post('id');
 		$comment = $this->input->post('comment');
 		$rating = (int)$this->input->post('rating');
-
-		if (empty($comment)) {
-			echo json_encode([
-				'error' => 'You must provide a comment'
-			]);
-			exit;
-		}
-
-		if ($rating < 1 || $rating > 5) {
-			echo json_encode([
-				'error' => 'You must provide a valid rating'
-			]);
-			exit;
-		}
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to edit reviews'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to edit reviews');
+		validateEmptyField($comment, 'You must provide a comment');
+		validateRating($rating, 'You must provide a valid rating');
 
 		$review = $this->review->get($id);
-
-		if (!$review) {
-			echo json_encode([
-				'error' => 'This review does not exist'
-			]);
-			exit;
-		}
-
-		if ($review['user_id'] != $user->id) {
-			echo json_encode([
-				'error' => 'You do not have permission to edit this review'
-			]);
-			exit;
-		}
+		validateEmptyField($review, 'This review does not exist');
+		validateItemsMatch($review['user_id'], $user->id, 'You do not have permission to edit this review');
 
 		$this->review->update($id, [
 			'comment' => $comment,

@@ -131,6 +131,13 @@ class AdminOrders extends Component {
 									onClick={this.handleSort("created_at")}
 									rowSpan="2"
 								>
+									Order ID
+								</Table.HeaderCell>
+								<Table.HeaderCell
+									sorted={column === "created_at" ? direction : null}
+									onClick={this.handleSort("created_at")}
+									rowSpan="2"
+								>
 									Date
 								</Table.HeaderCell>
 								<Table.HeaderCell
@@ -146,6 +153,13 @@ class AdminOrders extends Component {
 									rowSpan="2"
 								>
 									Refunded
+								</Table.HeaderCell>
+								<Table.HeaderCell
+									sorted={column === "email" ? direction : null}
+									onClick={this.handleSort("email")}
+									rowSpan="2"
+								>
+									Email
 								</Table.HeaderCell>
 								<Table.HeaderCell colSpan="3">Totals</Table.HeaderCell>
 							</Table.Row>
@@ -188,6 +202,7 @@ class AdminOrders extends Component {
 												})
 											}}
 										>
+											<Table.Cell>{item.id}</Table.Cell>
 											<Table.Cell>
 												<Moment
 													date={adjustTimezone(item.created_at)}
@@ -196,6 +211,7 @@ class AdminOrders extends Component {
 											</Table.Cell>
 											<Table.Cell>{item.store_name}</Table.Cell>
 											<Table.Cell>{refunded ? "Yes" : "No"}</Table.Cell>
+											<Table.Cell>{item.email}</Table.Cell>
 											<Table.Cell>${item.amount_before_tax}</Table.Cell>
 											<Table.Cell>${item.amount_after_tax}</Table.Cell>
 											<Table.Cell>${item.tax}</Table.Cell>

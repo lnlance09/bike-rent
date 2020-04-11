@@ -46,7 +46,7 @@ class AdminGeneral extends Component {
 			<div className="adminGeneral">
 				<Header size="huge">General</Header>
 
-				<Form size="big">
+				<Form>
 					<Form.Field>
 						<Header size="small">Favicon</Header>
 					</Form.Field>

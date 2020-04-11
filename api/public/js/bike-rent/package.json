@@ -24,6 +24,7 @@
     "react": "^16.13.0",
     "react-ace": "^8.1.0",
     "react-confetti": "^5.0.1",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-credit-cards": "^0.8.0",
     "react-datepicker": "^2.14.0",
     "react-debounce-input": "^3.2.2",

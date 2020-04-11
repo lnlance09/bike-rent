@@ -87,10 +87,10 @@ class Admin extends Component {
 		this.props.getStores()
 		this.props.getSitemap({ url: this.props.sitemapUrl })
 		this.props.getCss({ url: this.props.cssUrl })
-		this.props.getEmail({ type: "application-confirmation" })
-		this.props.getEmail({ type: "confirm-your-email" })
-		this.props.getEmail({ type: "order-confirmation" })
-		this.props.getEmail({ type: "refund" })
+		this.props.getEmail({ key: "applicationConfirmation", type: "application-confirmation" })
+		this.props.getEmail({ key: "confirmYourEmail", type: "confirm-your-email" })
+		this.props.getEmail({ key: "orderConfirmation", type: "order-confirmation" })
+		this.props.getEmail({ key: "refund", type: "refund" })
 	}
 
 	handleItemClick = (e, { name }) => {
@@ -465,14 +465,14 @@ class Admin extends Component {
 				activeItem === "refund"
 			) {
 				if (
-					emails.applicationConfirmation &&
-					emails.confirmYourEmail &&
-					emails.orderConfirmation &&
+					emails.applicationConfirmation.template &&
+					emails.confirmYourEmail.template &&
+					emails.orderConfirmation.template &&
 					emails.refund
 				) {
 					return (
 						<div>
-							<AdminEmail emails={emails} type={activeItem} />
+							<AdminEmail bearer={bearer} emails={emails} type={activeItem} />
 						</div>
 					)
 				}
@@ -677,10 +677,22 @@ Admin.propTypes = {
 	css: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 	cssUrl: PropTypes.string,
 	emails: PropTypes.shape({
-		applicationConfirmation: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-		confirmYourEmail: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-		orderConfirmation: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-		refund: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+		applicationConfirmation: PropTypes.shape({
+			recipients: PropTypes.array,
+			template: PropTypes.string
+		}),
+		confirmYourEmail: PropTypes.shape({
+			recipients: PropTypes.array,
+			template: PropTypes.string
+		}),
+		orderConfirmation: PropTypes.shape({
+			recipients: PropTypes.array,
+			template: PropTypes.string
+		}),
+		refund: PropTypes.shape({
+			recipients: PropTypes.array,
+			template: PropTypes.string
+		})
 	}),
 	getBikes: PropTypes.func,
 	getBlogs: PropTypes.func,
@@ -802,10 +814,22 @@ Admin.defaultProps = {
 	css: false,
 	cssUrl: "https://bike-rent.s3-us-west-2.amazonaws.com/css/style.css",
 	emails: {
-		applicationConfirmation: false,
-		confirmYourEmail: false,
-		orderConfirmation: false,
-		refund: false
+		applicationConfirmation: {
+			recipients: [],
+			template: ""
+		},
+		confirmYourEmail: {
+			recipients: [],
+			template: ""
+		},
+		orderConfirmation: {
+			recipients: [],
+			template: ""
+		},
+		refund: {
+			recipients: [],
+			template: ""
+		}
 	},
 	getBikes,
 	getBlogs,

@@ -107,11 +107,12 @@ export const editItemHour = ({ add, index, item }) => dispatch => {
 	for (let i = 0; i < localData.cart.items.length; i++) {
 		const item = localData.cart.items[i]
 		if (item.index === index) {
+			const hours = localData.cart.items[i].hours
 			if (add) {
 				localData.cart.items[i].hours++
 			}
 
-			if (!add) {
+			if (!add && hours > 1) {
 				localData.cart.items[i].hours--
 			}
 			break

@@ -71,7 +71,7 @@ class AdminReviews extends Component {
 
 	render() {
 		const { column, currentItem, data, direction, modalOpen, options, storeId } = this.state
-		const { bearer, reviews } = this.props
+		const { reviews } = this.props
 
 		const ReviewModal = (
 			<Modal centered={false} closeIcon onClose={() => this.toggleModal()} open={modalOpen}>

@@ -13,6 +13,24 @@ const initial = () => ({
 		error: false,
 		modalOpen: false
 	},
+	emails: {
+		applicationConfirmation: {
+			recipients: [],
+			template: ""
+		},
+		confirmYourEmail: {
+			recipients: [],
+			template: ""
+		},
+		orderConfirmation: {
+			recipients: [],
+			template: ""
+		},
+		refund: {
+			recipients: [],
+			template: ""
+		}
+	},
 	store: {
 		error: false,
 		modalOpen: false
@@ -92,28 +110,40 @@ const settings = (state = initial(), action) => {
 			if (emailType === "application-confirmation") {
 				emails = {
 					...state.emails,
-					applicationConfirmation: payload
+					applicationConfirmation: {
+						recipients: payload.recipients,
+						template: payload.email
+					}
 				}
 			}
 
 			if (emailType === "confirm-your-email") {
 				emails = {
 					...state.emails,
-					confirmYourEmail: payload
+					confirmYourEmail: {
+						recipients: payload.recipients,
+						template: payload.email
+					}
 				}
 			}
 
 			if (emailType === "order-confirmation") {
 				emails = {
 					...state.emails,
-					orderConfirmation: payload
+					orderConfirmation: {
+						recipients: payload.recipients,
+						template: payload.email
+					}
 				}
 			}
 
 			if (emailType === "refund") {
 				emails = {
 					...state.emails,
-					refund: payload
+					refund: {
+						recipients: payload.recipients,
+						template: payload.email
+					}
 				}
 			}
 

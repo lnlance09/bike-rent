@@ -11,7 +11,10 @@ class Users extends CI_Controller {
 		$this->load->library('My_PHPMailer');
 
 		$this->load->model('MediaModel', 'media');
+		$this->load->model('SettingsModel', 'settings');
 		$this->load->model('UsersModel', 'users');
+
+		$this->load->helper('validation');
 	}
 
 	public function addPaymentMethod() {
@@ -26,56 +29,17 @@ class Users extends CI_Controller {
 		$user_id = $user ? $user->id : null;
 
 		$cardType = checkCreditCard($number);
-		if (!$cardType) {
-			echo json_encode([
-				'error' => 'Please enter a valid card number'
-			]);
-			exit;
-		}
 
-		if (empty($name)) {
-			echo json_encode([
-				'error' => 'Please enter a valid name'
-			]);
-			exit;
-		}
-
-		if (strlen($cvc) > 4 || strlen($cvc) < 3 || !is_numeric($cvc)) {
-			echo json_encode([
-				'error' => 'Please enter a valid CVC value'
-			]);
-			exit;
-		}
-
-		if (strlen($expiry) !== 4) {
-			echo json_encode([
-				'error' => 'Please enter a valid expiration date'
-			]);
-			exit;
-		}
+		validateEmptyField($cardType, 'Please enter a valid card number');
+		validateEmptyField($name, 'Please enter a valid name');
+		validateCvc($cvc, 'Please enter a valid CVC value');
+		validateExpDate($expiry, 'Please enter a valid expiration date');
 
 		$month = substr($expiry, 0, 2);
 		$year = substr($expiry, 2);
 
-		if ($month > 12 || $month < 1) {
-			echo json_encode([
-				'error' => 'Please enter a valid expiration month'
-			]);
-			exit;
-		}
-
-		if ($year < date('y')) {
-			echo json_encode([
-				'error' => 'This card has expired'
-			]);
-			exit;
-		}
-
-		if ($emailRequired && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			echo json_encode([
-				'error' => 'Please enter a valid email'
-			]);
-			exit;
+		if ($emailRequired) {
+			validateEmail($email, 'Please enter a valid email');
 		}
 
 		if (!$user) {
@@ -123,51 +87,16 @@ class Users extends CI_Controller {
 		$currentPassword = $this->input->post('current_password');
 		$newPassword = $this->input->post('new_password');
 		$confirmPassword = $this->input->post('confirm_password');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to change your password'
-			]);
-			exit;
-		}
-		
-		if (empty($currentPassword)) {
-			echo json_encode([
-				'error' => 'You must enter your current password'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must be logged in to change your password');
+		validateEmptyField($currentPassword, 'You must enter your current password');
 
 		$exists = $this->users->getUserByCurrentPassword($user->id, $currentPassword);
-
-		if (!$exists) {
-			echo json_encode([
-				'error' => 'Your current password is incorrect'
-			]);
-			exit;
-		}
-
-		if (strlen($newPassword) < 7) {
-			echo json_encode([
-				'error' => 'Your password must be at least 7 characters long'
-			]);
-			exit;
-		}
-
-		if ($newPassword !== $confirmPassword) {
-			echo json_encode([
-				'error' => 'Your passwords do not match'
-			]);
-			exit;
-		}
-
-		if ($newPassword === $currentPassword) {
-			echo json_encode([
-				'error' => 'Your password must be different than your old one'
-			]);
-			exit;
-		}
+		validateEmptyField($exists, 'Your current password is incorrect');
+		validatePassword($newPassword, 'Your password must be at least 7 characters long');
+		validateItemsMatch($newPassword, $confirmPassword, 'Your passwords do not match');
+		validateItemsDifferent($newPassword, $currentPassword, 'Your password must be different than your old one');
 
 		$this->users->updateUser($user->id, [
 			'password' => sha1($newPassword),
@@ -181,12 +110,7 @@ class Users extends CI_Controller {
 	public function changeProfilePic() {
 		$user = $this->user;
 
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to change your picture'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must be logged in to change your picture');
 
 		$this->load->library('upload', [
 			'allowed_types' => 'jpg|jpeg|png',
@@ -227,7 +151,6 @@ class Users extends CI_Controller {
 
 		$s3Path = 'users/'.$user->id.'_'.$file;
 		$s3Link = $this->media->addToS3($s3Path, $path);
-
 		$this->users->updateUser($user->id, [
 			'img' => $s3Path
 		]);
@@ -238,18 +161,21 @@ class Users extends CI_Controller {
 		]);
 	}
 
+	public function getAdmins() {
+		$admins = $this->users->getAdmins();
+
+		echo json_encode([
+			'admins' => $admins,
+			'error' => false
+		]);
+	}
+
 	public function getInfo() {
 		$username = $this->input->get('username');
 
 		$select = "date_created, email_verified, u.id AS id, u.img AS img, u.name, username";
 		$info = $this->users->getUserInfo($username, $select);
-
-		if (!$info) {
-			echo json_encode([
-				'error' => 'That user does not exist'
-			]);
-			exit;
-		}
+		validateEmptyField($info, 'That user does not exist');
 
 		if (empty($info['bio'])) {
 			$info['bio'] = $info['name']." does not have a bio yet";
@@ -263,12 +189,7 @@ class Users extends CI_Controller {
 
 	public function getPaymentMethods() {
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must login to view your payment methods'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must login to view your payment methods');
 
 		$methods = $this->users->getPaymentMethods($user->id);
 
@@ -283,28 +204,11 @@ class Users extends CI_Controller {
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
 
-		if (empty($email)) {
-			echo json_encode([
-				'error' => 'Username or email is required'
-			]);
-			exit;
-		}
-
-		if (empty($password)) {
-			echo json_encode([
-				'error' => 'Password is required'
-			]);
-			exit;
-		}
+		validateEmptyField($email, 'Username or email is required');
+		validateEmptyField($password, 'Password is required');
 
 		$login = $this->users->login($email, $password);
-
-		if (!$login) {
-			echo json_encode([
-				'error' => 'Incorrect login credentials'
-			]);
-			exit;
-		}
+		validateEmptyField($login, 'Incorrect login credentials');
 
 		$user = $login[0];
 		$user['emailVerified'] = $user['emailVerified'] === '1';
@@ -339,55 +243,12 @@ class Users extends CI_Controller {
 			'verification_code' => generateAlphaNumString(10)
 		];
 
-		if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
-			echo json_encode([
-				'error' => 'A valid email is required'
-			]);
-			exit;
-		}
-
-		if (strlen($params['password']) < 7) {
-			echo json_encode([
-				'error' => 'Your password is not long enough'
-			]);
-			exit;
-		}
-
-		if (empty($params['name'])) {
-			echo json_encode([
-				'error' => 'A name is required'
-			]);
-			exit;
-		}
-
-		if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $params['name'])) {
-			echo json_encode([
-				'error' => 'Your name cannot contain special characters'
-			]);
-			exit;
-		}
-
-		if (empty($params['username'])) {
-			echo json_encode([
-				'error' => 'A username is required'
-			]);
-			exit;
-		}
-
-		if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $params['username'])
-		|| strpos($params['username'], " ")) {
-			echo json_encode([
-				'error' => 'Your username cannot contain special characters or spaces'
-			]);
-			exit;
-		}
-
-		if (strlen($params['username']) > 18) {
-			echo json_encode([
-				'error' => 'Your username is too long'
-			]);
-			exit;
-		}
+		validateEmail($params['email'], 'A valid email is required');
+		validatePassword($params['password'], 'Your password is not long enough');
+		validateEmptyField($params['name'], 'A name is required');
+		validateName($params['name'], 'Your name cannot contain special characters');
+		validateEmptyField($params['username'], 'A username is required');
+		validateUsername($params['username'], 'Your username cannot contain special characters or spaces');
 
 		$register = $this->users->register($params);
 		if ($register['error']) {
@@ -397,14 +258,23 @@ class Users extends CI_Controller {
 			exit;
 		}
 
-		$message = file_get_contents("https://bike-rent.s3-us-west-2.amazonaws.com/emails/confirm-your-email.html");
-		$message = str_replace('{NAME}', $params['name'], $message);
-		$message = str_replace('{VERIFICATION_CODE}', $verification_code, $message);
-		$subject = 'Please verify your email';
-		$from = EMAIL_RECEIVERS;
-		$email = $this->media->sendEmail($subject, $message, $from);
+		$email_template = $this->media->generateTemplate('confirm-your-email', [
+			'name' => $params['name'],
+			'verification_code' => $params['verification_code']
+		]);
+		$title = $email_template['title'];
+		$msg = $email_template['msg'];
+		$from = $this->settings->getEmailRecipients('confirmYourEmail');
+		$to = [
+			[
+				'email' => $params['email'],
+				'name' => $params['name']
+			]
+		];
 
-		if (!$email) {
+		$mail = $this->media->sendEmail($title, $msg, $from, $to);
+
+		if (!$mail) {
 			echo json_encode([
 				'error' => 'Something went wrong.'
 			]);
@@ -424,7 +294,6 @@ class Users extends CI_Controller {
 
 		$count = $this->users->search($q, $where, $page, true, $limit);
 		$pages = ceil($count/$limit);
-
 		$results = $this->users->search($q, $where, $page, false, $limit);
 
 		echo json_encode([
@@ -439,30 +308,13 @@ class Users extends CI_Controller {
 
 	public function setDefaultPaymentMethod() {
 		$id = $this->input->post('id');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must login to edit payment methods'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must login to edit payment methods');
 
 		$method = $this->users->getPaymentMethod($id);
-
-		if (!$method) {
-			echo json_encode([
-				'error' => 'This payment method does not exist'
-			]);
-			exit;
-		}
-
-		if ($method['user_id'] != $user->id) {
-			echo json_encode([
-				'error' => 'You do not have permission to edit this payment method'
-			]);
-			exit;
-		}
+		validateEmptyField($method, 'This payment method does not exist');
+		validateItemsMatch($method['user_id'], $user->id, 'You do not have permission to edit this payment method');
 
 		$this->users->setDefaultPaymentMethod($id, $user->id);
 
@@ -473,17 +325,11 @@ class Users extends CI_Controller {
 
 	public function update() {
 		$bio = $this->input->post('bio');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must login to update your account'
-			]);
-			exit;
-		}
+
+		validateLoggedIn($user, 'You must login to update your account');
 
 		$data = [];
-
 		if (!empty($bio)) {
 			$data['bio'] = $bio;
 		}
@@ -497,21 +343,11 @@ class Users extends CI_Controller {
 	}
 
 	public function verifyEmail() {
+		$code = $this->input->post('code');
 		$user = $this->user;
 
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must login to verify your account'
-			]);
-			exit;
-		}
-
-		if ($this->input->post('code') !== $user->verificationCode) {
-			echo json_encode([
-				'error' => 'Incorrect verification code'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must login to update your account');
+		validateItemsMatch($code, $user->verificationCode, 'Incorrect verification code');
 
 		$this->users->updateUser($user->id, [
 			'email_verified' => 1

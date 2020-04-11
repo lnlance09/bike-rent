@@ -41,6 +41,20 @@ class UsersModel extends CI_Model {
 		return $name.rand(1000, 9999);
 	}
 
+	public function getAdminEmails($ids) {
+		$this->db->select('name, email');
+		$this->db->where_in('id', $ids);
+		$results = $this->db->get('users')->result_array();
+		return $results;
+	}
+
+	public function getAdmins() {
+		$this->db->select('name AS `key`, name AS text, id AS value');
+		$this->db->where('privilege', 1);
+		$results = $this->db->get('users')->result_array();
+		return $results;
+	}
+
 	public function getPaymentMethod($id) {
 		$this->db->select('pm.created_at, pm.cvc, pm.exp_month, pm.exp_year, pm.id, pm.name, pm.number, pm.preferred, pm.type, pm.user_id, u.email');
 		$this->db->join('users u', 'pm.user_id = u.id');
@@ -257,5 +271,22 @@ class UsersModel extends CI_Model {
 			'img' => $query[0]['img'],
 			'name' => $query[0]['name']
 		];
+	}
+
+	public function validateAdmins($ids) {
+		$this->db->select('id');
+		$this->db->where('privilege', 1);
+		$this->db->where_in('id', $ids);
+		$results = $this->db->get('users')->result_array();
+		if (empty($results)) {
+			return [];
+		}
+
+		$ids = [];
+		for ($i=0;$i<count($results);$i++) {
+			$ids[] = $results[$i]['id'];
+		}
+
+		return $ids;
 	}
 }

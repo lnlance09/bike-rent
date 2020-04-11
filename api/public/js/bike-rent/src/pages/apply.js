@@ -43,6 +43,10 @@ class Apply extends Component {
 
 	onChangeName = (e, { value }) => this.setState({ name: value })
 
+	resetState = () => {
+		this.setState({ email: "", msg: "", name: "" })
+	}
+
 	render() {
 		const { auth, email, msg, name } = this.state
 		const { error, errorMsg, settings } = this.props
@@ -112,7 +116,12 @@ class Apply extends Component {
 										content="Apply"
 										fluid
 										onClick={() =>
-											this.props.submitApplication({ email, msg, name })
+											this.props.submitApplication({
+												callback: this.resetState,
+												email,
+												msg,
+												name
+											})
 										}
 										type="submit"
 									/>

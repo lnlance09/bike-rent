@@ -48,13 +48,15 @@ class AdminBikes extends Component {
 	onChangeNewName = (e, { value }) => this.setState({ newName: value })
 
 	setActive = (i, description, image, name, visible) => {
-		this.setState({
-			currentItem: i,
-			descriptionVal: description,
-			imageVal: image,
-			nameVal: name,
-			visibleVal: visible
-		})
+		if (this.state.currentItem !== i) {
+			this.setState({
+				currentItem: i,
+				descriptionVal: description,
+				imageVal: image,
+				nameVal: name,
+				visibleVal: visible
+			})
+		}
 	}
 
 	toggleVisibilty = (e, { value }) => this.setState({ visibleVal: value === "on" ? "1" : "0" })

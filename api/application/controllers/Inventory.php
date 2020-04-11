@@ -8,6 +8,8 @@ class Inventory extends CI_Controller {
 		$this->base_url = $this->config->base_url();
 
 		$this->load->model('InventoryModel', 'inventory');
+
+		$this->load->helper('validation');
 	}
 
 	public function get() {
@@ -54,28 +56,11 @@ class Inventory extends CI_Controller {
 		$id = $this->input->post('id');
 		$hourlyRate = $this->input->post('hourlyRate');
 		$quantity = $this->input->post('quantity');
-
 		$user = $this->user;
-		if (!$user) {
-			echo json_encode([
-				'error' => 'You must be logged in to make changes'
-			]);
-			exit;
-		}
 
-		if (!is_numeric($hourlyRate)) {
-			echo json_encode([
-				'error' => 'You must provide a valid hourly rate'
-			]);
-			exit;
-		}
-
-		if (!is_numeric($quantity)) {
-			echo json_encode([
-				'error' => 'You must provide a valid quantity'
-			]);
-			exit;
-		}
+		validateLoggedIn($user, 'You must be logged in to make changes');
+		validateNumber($hourlyRate, 'You must provide a valid hourly rate');
+		validateNumber($quantity, 'You must provide a valid quantity');
 
 		$this->inventory->update($id, [
 			'hourly_rate' => $hourlyRate,

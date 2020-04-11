@@ -69,6 +69,7 @@ class PaymentsList extends Component {
 					return (
 						<List.Item
 							active={activeItem === i}
+							key={`paymentMethod${i}`}
 							onClick={() => {
 								this.setState({ activeItem: i }, () => {
 									props.onClick(result.id)
