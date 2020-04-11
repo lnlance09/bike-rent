@@ -76,9 +76,12 @@ export const editReview = ({ bearer, callback, comment, id, rating }) => dispatc
 
 export const getStore = ({ id }) => dispatch => {
 	request.get(
-		`${window.location.origin}/api/store/get?id=${id}`,
+		`${window.location.origin}/api/store/get`,
 		{
-			json: true
+			json: true,
+			qs: {
+				id
+			}
 		},
 		function(err, response, body) {
 			dispatch({

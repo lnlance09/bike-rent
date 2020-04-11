@@ -48,6 +48,21 @@ class SettingsModel extends CI_Model {
 		]);
 	}
 
+	public function updateEmailRecipients($type, $recipients) {
+		$decode = $this->decodeSettings();
+		$emails = $decode['emails'];
+
+		if (!array_key_exists($type, $emails)) {
+			return false;
+		}
+
+		$decode['emails'][$type]['recipients'] = $recipients;
+		$json = json_encode($decode, JSON_PRETTY_PRINT);
+		file_put_contents($this->configFile, $json);
+
+		return true;
+	}
+
 	public function updateFooter(
 		$listOneItems,
 		$listOneTitle,

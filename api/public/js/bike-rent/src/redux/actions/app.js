@@ -310,12 +310,14 @@ export const editCss = ({ bearer, css }) => dispatch => {
 	)
 }
 
-export const editEmail = ({ bearer, email, type }) => dispatch => {
+export const editEmail = ({ bearer, email, key, recipients, type }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/settings/updateEmail`,
 		{
 			form: {
 				email,
+				key,
+				recipients,
 				type
 			},
 			headers: {
@@ -534,10 +536,14 @@ export const getCss = ({ url }) => dispatch => {
 	)
 }
 
-export const getEmail = ({ type }) => dispatch => {
+export const getEmail = ({ key, type }) => dispatch => {
 	request.get(
-		`https://bike-rent.s3-us-west-2.amazonaws.com/emails/${type}.html`,
+		`${window.location.origin}/api/settings/getEmail`,
 		{
+			qs: {
+				key,
+				type
+			},
 			json: true
 		},
 		function(err, response, body) {

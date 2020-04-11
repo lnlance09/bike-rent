@@ -71,6 +71,26 @@ class Settings extends CI_Controller {
 		echo $settings->config;
 	}
 
+	public function getEmail() {
+		$key = $this->input->get('key');
+		$type = $this->input->get('type');
+
+		$url = 'https://bike-rent.s3-us-west-2.amazonaws.com/emails/'.$type.'.html';
+		$email = @file_get_contents($url);
+
+		$settings = $this->settings;
+		$settings = new $settings();
+		$decode = $settings->decodeSettings();
+		$emails = $decode['emails'];
+		$recipients = $emails[$key]['recipients'];
+
+		echo json_encode([
+			'email' => $email,
+			'recipients' => $recipients,
+			'error' => false
+		]);
+	}
+
 	public function sendTestEmail() {
 		$email = $this->input->post('email');
 		$type = $this->input->post('type');
@@ -136,6 +156,8 @@ class Settings extends CI_Controller {
 
 	public function updateEmail() {
 		$email = $this->input->post('email');
+		$key = $this->input->post('key');
+		$recipients = $this->input->post('recipients');
 		$type = $this->input->post('type');
 
 		$user = $this->user;
@@ -146,13 +168,32 @@ class Settings extends CI_Controller {
 			exit;
 		}
 
+		// Update the email template in S3
 		$file = APPPATH.'third_party/'.$type.'.html';
 		file_put_contents($file, $email);
 		$this->media->addToS3('emails/'.$type.'.html', $file, true, true);
 
+		if (empty($recipients)) {
+			$recipients = [];
+		} else {
+			$recipients = $this->users->validateAdmins($recipients);
+		}
+
+		$settings = $this->settings;
+		$settings = new $settings();
+		$updatedEmail = $settings->updateEmailRecipients($key, $recipients);
+
+		if (!$updatedEmail) {
+			echo json_encode([
+				'error' => 'There was an error updating the recipients'
+			]);
+			exit;
+		}
+
 		echo json_encode([
 			'email' => $email,
-			'error' => false
+			'error' => false,
+			'recipients' => $recipients
 		]);
 	}
 

@@ -238,6 +238,15 @@ class Users extends CI_Controller {
 		]);
 	}
 
+	public function getAdmins() {
+		$admins = $this->users->getAdmins();
+
+		echo json_encode([
+			'admins' => $admins,
+			'error' => false
+		]);
+	}
+
 	public function getInfo() {
 		$username = $this->input->get('username');
 

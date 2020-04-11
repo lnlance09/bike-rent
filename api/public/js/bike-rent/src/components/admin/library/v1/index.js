@@ -59,6 +59,7 @@ class AdminLibrary extends Component {
 					) : (
 						<Fragment>
 							<Image
+								bordered
 								onError={i => (i.target.src = ImagePic)}
 								rounded
 								size="medium"
@@ -158,7 +159,9 @@ class AdminLibrary extends Component {
 							<Grid.Column>
 								{item.Key ? (
 									<Image
+										bordered
 										className="libraryImg"
+										fluid
 										onClick={() => {
 											this.setState(
 												{
