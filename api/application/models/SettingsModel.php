@@ -11,6 +11,18 @@ class SettingsModel extends CI_Model {
 		return @json_decode($this->config, true);
 	}
 
+	public function getEmailRecipients($key) {
+		$decode = $this->decodeSettings();
+		$emails = $decode['emails'];
+		if (!array_key_exists($key, $emails)) {
+			return false;
+		}
+
+		$recipients = $emails[$key]['recipients'];
+		$users = $this->users->getAdminEmails($recipients);
+		return $users;
+	}
+
 	public function filterPageData($page, $data) {
 		$allowed = ['content', 'description', 'hero', 'title', 'useHeroImage'];
 

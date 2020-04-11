@@ -11,6 +11,7 @@ class Users extends CI_Controller {
 		$this->load->library('My_PHPMailer');
 
 		$this->load->model('MediaModel', 'media');
+		$this->load->model('SettingsModel', 'settings');
 		$this->load->model('UsersModel', 'users');
 
 		$this->load->helper('validation');
@@ -263,13 +264,14 @@ class Users extends CI_Controller {
 		]);
 		$title = $email_template['title'];
 		$msg = $email_template['msg'];
-		$from = EMAIL_RECEIVERS;
+		$from = $this->settings->getEmailRecipients('confirmYourEmail');
 		$to = [
 			[
 				'email' => $params['email'],
 				'name' => $params['name']
 			]
 		];
+
 		$mail = $this->media->sendEmail($title, $msg, $from, $to);
 
 		if (!$mail) {

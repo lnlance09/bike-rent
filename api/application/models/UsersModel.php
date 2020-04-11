@@ -41,6 +41,13 @@ class UsersModel extends CI_Model {
 		return $name.rand(1000, 9999);
 	}
 
+	public function getAdminEmails($ids) {
+		$this->db->select('name, email');
+		$this->db->where_in('id', $ids);
+		$results = $this->db->get('users')->result_array();
+		return $results;
+	}
+
 	public function getAdmins() {
 		$this->db->select('name AS `key`, name AS text, id AS value');
 		$this->db->where('privilege', 1);

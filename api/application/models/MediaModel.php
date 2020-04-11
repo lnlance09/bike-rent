@@ -87,7 +87,7 @@ class MediaModel extends CI_Model {
 		$mail = new PHPMailer();
 		$mail->IsSMTP();
 		$mail->SMTPAuth = true;
-		$mail->SMTPDebug = 2;
+		// $mail->SMTPDebug = 2;
 		$mail->SMTPSecure = 'ssl';
 		$mail->Host = 'smtpout.secureserver.net';
 		$mail->Port = 465;

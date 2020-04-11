@@ -213,14 +213,10 @@ export const editBike = ({ bearer, description, id, image, name, order, visible 
 		function(err, response, body) {
 			if (!body.error) {
 				toast.success("Your edit was successful")
+				dispatch(getBikes())
+			} else {
+				toast.error(body.error)
 			}
-
-			dispatch({
-				payload: body,
-				type: constants.EDIT_BIKE
-			})
-
-			dispatch(getBikes())
 		}
 	)
 }
@@ -241,15 +237,12 @@ export const editBlog = ({ bearer, cityId, entry, id, title }) => dispatch => {
 			json: true
 		},
 		function(err, response, body) {
-			dispatch({
-				payload: body,
-				type: constants.EDIT_BLOG
-			})
-
 			if (!body.error) {
 				toast.success("Your edit was successful")
 				dispatch(toggleEditBlogModal())
 				dispatch(getBlogs())
+			} else {
+				toast.error(body.error)
 			}
 		}
 	)
@@ -273,14 +266,10 @@ export const editCity = ({ bearer, description, id, image, order }) => dispatch 
 		function(err, response, body) {
 			if (!body.error) {
 				toast.success("Your edit was successful")
+				dispatch(getCities())
+			} else {
+				toast.error(body.error)
 			}
-
-			dispatch({
-				payload: body,
-				type: constants.EDIT_CITY
-			})
-
-			dispatch(getCities())
 		}
 	)
 }
@@ -329,11 +318,6 @@ export const editEmail = ({ bearer, email, key, recipients, type }) => dispatch 
 			if (!body.error) {
 				toast.success("Your email was successfully edited")
 			}
-
-			dispatch({
-				payload: body,
-				type: constants.EDIT_EMAIL
-			})
 		}
 	)
 }
@@ -356,12 +340,9 @@ export const editInventory = ({ bearer, callback, hourlyRate, id, quantity }) =>
 			if (!body.error) {
 				toast.success("Inventory successfully edited")
 				callback()
+			} else {
+				toast.error(body.error)
 			}
-
-			dispatch({
-				payload: body,
-				type: constants.EDIT_INVENTORY
-			})
 		}
 	)
 }
@@ -383,11 +364,6 @@ export const editPage = ({ bearer, data, page }) => dispatch => {
 			if (!body.error) {
 				toast.success("Your edit was successful")
 			}
-
-			dispatch({
-				payload: body,
-				type: constants.EDIT_PAGE
-			})
 		}
 	)
 }
@@ -407,12 +383,9 @@ export const editSitemap = ({ bearer, sitemap }) => dispatch => {
 		function(err, response, body) {
 			if (!body.error) {
 				toast.success("Sitemap was successful edited")
+			} else {
+				toast.error(body.error)
 			}
-
-			dispatch({
-				payload: body,
-				type: constants.EDIT_SITEMAP
-			})
 		}
 	)
 }
@@ -462,15 +435,12 @@ export const editStore = ({
 			json: true
 		},
 		function(err, response, body) {
-			dispatch({
-				payload: body,
-				type: constants.EDIT_STORE
-			})
-
 			if (!body.error) {
 				toast.success("The store has been edited")
 				dispatch(getStores())
 				dispatch(toggleAddStoreModal())
+			} else {
+				toast.error(body.error)
 			}
 		}
 	)
@@ -732,6 +702,8 @@ export const setLanguages = ({ bearer, languages }) => dispatch => {
 
 			if (!body.error) {
 				toast.success("Languages have been updated")
+			} else {
+				toast.error(body.error)
 			}
 		}
 	)
@@ -815,13 +787,10 @@ export const submitFooterForm = ({
 			json: true
 		},
 		function(err, response, body) {
-			dispatch({
-				payload: body,
-				type: constants.GET_SETTINGS
-			})
-
 			if (!body.error) {
 				toast.success("Footer updated!")
+			} else {
+				toast.error(body.error)
 			}
 		}
 	)
@@ -851,13 +820,10 @@ export const submitGeneralInfo = ({
 			json: true
 		},
 		function(err, response, body) {
-			dispatch({
-				payload: body,
-				type: constants.GET_SETTINGS
-			})
-
 			if (!body.error) {
 				toast.success("Info updated!")
+			} else {
+				toast.error(body.error)
 			}
 		}
 	)
@@ -889,13 +855,10 @@ export const submitHeaderForm = ({
 			json: true
 		},
 		function(err, response, body) {
-			dispatch({
-				payload: body,
-				type: constants.GET_SETTINGS
-			})
-
 			if (!body.error) {
 				toast.success("Header updated!")
+			} else {
+				toast.error(body.error)
 			}
 		}
 	)
@@ -946,6 +909,8 @@ export const updateSeo = ({ bearer, page, seo }) => dispatch => {
 
 			if (!body.error) {
 				toast.success("SEO has been updated!")
+			} else {
+				toast.error(body.error)
 			}
 		}
 	)
