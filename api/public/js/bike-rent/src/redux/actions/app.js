@@ -735,7 +735,7 @@ export const setTheme = ({ bearer, theme }) => dispatch => {
 	)
 }
 
-export const submitApplication = ({ email, msg, name }) => dispatch => {
+export const submitApplication = ({ callback, email, msg, name }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/home/submitApplication`,
 		{
@@ -754,6 +754,7 @@ export const submitApplication = ({ email, msg, name }) => dispatch => {
 
 			if (!body.error) {
 				toast.success("Application submitted")
+				callback()
 			}
 		}
 	)

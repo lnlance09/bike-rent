@@ -55,7 +55,7 @@ class Home extends CI_Controller {
 		]);
 		$title = $email_template['title'];
 		$msg = $email_template['msg'];
-		$from = EMAIL_RECEIVERS;
+		$from = $this->settings->getEmailRecipients('applicationConfirmation');
 		$to = [
 			[
 				'email' => $email,
