@@ -86,6 +86,8 @@ class AdminInventory extends Component {
 							<Form.Field>
 								<label>Hourly Rate</label>
 								<Input
+									icon="usd"
+									iconPosition="left"
 									onChange={this.onChangeHourlyRate}
 									placeholder="Hourly rate"
 									value={hourlyRate}

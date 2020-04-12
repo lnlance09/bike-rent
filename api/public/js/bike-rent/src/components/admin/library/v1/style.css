@@ -1,2 +1,16 @@
+/*---  Colors  ---*/
+/*---  Light Colors  ---*/
+/*---   Neutrals  ---*/
+/*---   Misc  ---*/
+/*---   Social colors  ---*/
 .adminLibrary .grid img {
   cursor: pointer !important; }
+
+.ui.input.copyToClipboard input {
+  cursor: pointer !important; }
+  .ui.input.copyToClipboard input:hover .copy.icon {
+    color: #2185D0; }
+
+.ui.input.copyToClipboard:hover .copy.icon {
+  color: #21BA45;
+  transition: 0.6s; }
