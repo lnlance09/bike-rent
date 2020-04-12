@@ -70,6 +70,7 @@ class StoreModel extends CI_Model {
 			}
 
 			$this->db->where('sb.bike_id', $bike_id);
+			$this->db->where('s.visible', '1');
 		}
 
 		$this->db->where('sb.visible', '1');
