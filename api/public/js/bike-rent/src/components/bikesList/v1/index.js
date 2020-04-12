@@ -1,7 +1,7 @@
 import "./style.css"
 import { getBikes, getBikesByStore, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
-import { Card, Header, Item, Segment, Visibility } from "semantic-ui-react"
+import { Card, Header, Icon, Item, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
 import LazyLoad from "components/lazyLoad/v1/"
 import PropTypes from "prop-types"
@@ -24,7 +24,7 @@ class BikesList extends Component {
 				storeId: this.props.storeId
 			})
 		} else {
-			this.props.getBikes({ page: 0, visible: 1 })
+			this.props.getBikes({})
 		}
 	}
 
@@ -54,7 +54,22 @@ class BikesList extends Component {
 
 		const RenderItems = ({ props }) => {
 			return props.results.map((result, i) => {
-				const { bike_id, description, hourlyRate, id, image, meta, name } = result
+				let { bike_id, description, hourlyRate, id, image, meta, name, quantity } = result
+				if (quantity < 10 && quantity > 0) {
+					meta = (
+						<span className="error">
+							<Icon color="red" name="warning sign" /> Only {quantity} left
+						</span>
+					)
+				}
+				if (quantity === "0") {
+					meta = (
+						<span className="error">
+							<Icon color="red" name="warning sign" /> This item is sold out
+						</span>
+					)
+				}
+
 				if (id) {
 					return (
 						<ResultItem
@@ -63,6 +78,7 @@ class BikesList extends Component {
 								bike: {
 									description,
 									hourlyRate,
+									quantity,
 									id,
 									name
 								},

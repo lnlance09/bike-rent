@@ -64,14 +64,12 @@ class CityModel extends CI_Model {
 	}
 
 	public function search(
-		$q,
-		$lat,
-		$lon,
+		$show_hidden,
 		$just_count,
 		$page = 0,
 		$limit = 25
 	) {
-		$select = "fl.id, fl.description, fl.image, fl.location_id, fl.slug, l.city AS title, l.county, l.lat, l.lon, l.state, l.zip_code";
+		$select = "fl.id, fl.description, fl.image, fl.location_id, fl.slug, fl.visible, l.city AS title, l.county, l.lat, l.lon, l.state, l.zip_code";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';
@@ -82,6 +80,10 @@ class CityModel extends CI_Model {
 
 		if (!empty($q)) {
 			$this->db->like('city', $q);
+		}
+
+		if (!$show_hidden) {
+			$this->db->where('fl.visible', '1');
 		}
 
 		if (!$just_count) {

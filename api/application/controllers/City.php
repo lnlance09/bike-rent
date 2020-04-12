@@ -56,6 +56,7 @@ class City extends CI_Controller {
 		$description = $this->input->post('description');
 		$image = $this->input->post('image');
 		$order = $this->input->post('order');
+		$visible = $this->input->post('visible');
 		$user = $this->user;
 		
 		validateLoggedIn($user, 'You must be logged in');
@@ -65,7 +66,8 @@ class City extends CI_Controller {
 		$this->city->update($id, [
 			'description' => $description,
 			'image' => $image,
-			'order' => $order
+			'order' => $order,
+			'visible' => $visible
 		]);
 
 		echo json_encode([
@@ -89,20 +91,16 @@ class City extends CI_Controller {
 		$page = 0;
 		$limit = 25;
 		$store_count = $this->store->search(
-			null,
-			null,
-			null,
 			$id,
 			null,
+			false,
 			true
 		);
 
 		$results = $this->store->search(
-			null,
-			null,
-			null,
 			$id,
 			null,
+			false,
 			false
 		);
 
@@ -134,29 +132,23 @@ class City extends CI_Controller {
 	}
 
 	public function search() {
-		$q = $this->input->get('q');
-		$lat = $this->input->get('lat');
-		$lon = $this->input->get('lon');
 		$page = $this->input->get('page');
 		$limit = $this->input->get('limit');
+		$showHidden = (int)$this->input->get('showHidden');
 
 		if ($limit === null) {
 			$limit = 25;
 		}
 
 		$count = $this->city->search(
-			$q,
-			$lat,
-			$lon,
+			$showHidden,
 			true,
 			$page,
 			$limit
 		);
 
 		$results = $this->city->search(
-			$q,
-			$lat,
-			$lon,
+			$showHidden,
 			false,
 			$page,
 			$limit

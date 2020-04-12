@@ -6,6 +6,8 @@ class OrderModel extends CI_Model {
 		$this->load->database();
 		$this->load->helper('common_helper');
 
+		$this->load->model('InventoryModel', 'inventory');
+
 		$this->table = 'orders';
 	}
 
@@ -149,11 +151,14 @@ class OrderModel extends CI_Model {
 			$hours = $array[$i]['hours'];
 
 			for ($x=0;$x<count($prices);$x++) {
-				if ($bike_id == $prices[$x]['id']) {
+				$inventory_id = $prices[$x]['id'];
+
+				if ($bike_id == $inventory_id) {
+					$quantity = $prices[$x]['quantity'];
 					$price = $hours*$prices[$x]['hourlyRate'];
 					$subtotal = $subtotal+$price;
 
-					if ($hours > 0) {
+					if ($hours > 0 && $quantity > 0) {
 						$final[] = [
 							'bikeId' => $bike_id,
 							'hours' => $hours,
@@ -161,6 +166,7 @@ class OrderModel extends CI_Model {
 							'name' => $prices[$x]['name'],
 							'price' => $price
 						];
+						$this->inventory->updateQuantity(false, $inventory_id);
 						break;
 					}
 				}

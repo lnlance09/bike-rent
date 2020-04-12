@@ -18,7 +18,7 @@ class CitiesList extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getCities({ page: 0, visible: 1 })
+		this.props.getCities({ page: 0, showHidden: 0 })
 	}
 
 	componentDidUpdate(prevProps) {

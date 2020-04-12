@@ -98,16 +98,15 @@ export const addStore = ({
 	bearer,
 	bike_ids,
 	bike_names,
-	city,
 	closingTime,
 	description,
 	image,
 	lat,
+	location_id,
 	lon,
 	name,
 	openingTime,
 	phone,
-	state,
 	visible
 }) => dispatch => {
 	request.post(
@@ -118,16 +117,15 @@ export const addStore = ({
 				bearer,
 				bike_ids,
 				bike_names,
-				city,
 				closingTime,
 				description,
 				image,
 				lat,
+				location_id,
 				lon,
 				name,
 				openingTime,
 				phone,
-				state,
 				visible
 			},
 			headers: {
@@ -248,7 +246,7 @@ export const editBlog = ({ bearer, cityId, entry, id, title }) => dispatch => {
 	)
 }
 
-export const editCity = ({ bearer, description, id, image, order }) => dispatch => {
+export const editCity = ({ bearer, description, id, image, order, visible }) => dispatch => {
 	request.post(
 		`${window.location.origin}/api/city/edit`,
 		{
@@ -256,7 +254,8 @@ export const editCity = ({ bearer, description, id, image, order }) => dispatch 
 				description,
 				id,
 				image,
-				order
+				order,
+				visible
 			},
 			headers: {
 				Authorization: bearer
@@ -395,17 +394,16 @@ export const editStore = ({
 	bearer,
 	bike_ids,
 	bike_names,
-	city,
 	closingTime,
 	description,
 	id,
 	image,
 	lat,
+	location_id,
 	lon,
 	name,
 	openingTime,
 	phone,
-	state,
 	visible
 }) => dispatch => {
 	request.post(
@@ -416,17 +414,16 @@ export const editStore = ({
 				bearer,
 				bike_ids,
 				bike_names,
-				city,
 				closingTime,
 				description,
 				id,
 				image,
 				lat,
+				location_id,
 				lon,
 				name,
 				openingTime,
 				phone,
-				state,
 				visible
 			},
 			headers: {
@@ -450,7 +447,10 @@ export const getBikes = () => dispatch => {
 	request.get(
 		`${window.location.origin}/api/bike/search`,
 		{
-			json: true
+			json: true,
+			qs: {
+				showHidden: 1
+			}
 		},
 		function(err, response, body) {
 			dispatch({
@@ -480,7 +480,10 @@ export const getCities = () => dispatch => {
 	request.get(
 		`${window.location.origin}/api/city/search`,
 		{
-			json: true
+			json: true,
+			qs: {
+				showHidden: 1
+			}
 		},
 		function(err, response, body) {
 			dispatch({
@@ -626,7 +629,10 @@ export const getStores = () => dispatch => {
 	request.get(
 		`${window.location.origin}/api/store/search`,
 		{
-			json: true
+			json: true,
+			qs: {
+				showHidden: 1
+			}
 		},
 		function(err, response, body) {
 			dispatch({

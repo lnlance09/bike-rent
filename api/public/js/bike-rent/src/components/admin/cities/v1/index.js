@@ -1,4 +1,5 @@
 import "./style.css"
+import { fetchLocations } from "utils/selectOptions"
 import { addCity, editCity, toggleAddCityModal } from "redux/actions/app"
 import { connect } from "react-redux"
 import {
@@ -11,6 +12,7 @@ import {
 	Item,
 	Message,
 	Modal,
+	Radio,
 	TextArea
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
@@ -31,28 +33,14 @@ class AdminCities extends Component {
 			newDescription: "",
 			newImage: "",
 			orderVal: 0,
-			q: ""
+			q: "",
+			visibleVal: ""
 		}
-
-		this.fetchLocations("")
 	}
 
-	// TODO - Replace this with one used in selectOptions
-	fetchLocations(q) {
-		return fetch(`${window.location.origin}/api/city/getLocations?q=${q}`, {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(response => {
-				if (response.ok) {
-					response.json().then(data => {
-						const cityOptions = data.locations
-						this.setState({ cityOptions })
-					})
-				}
-			})
-			.catch(err => console.log(err))
+	async componentDidMount() {
+		const cityOptions = await fetchLocations("")
+		this.setState({ cityOptions })
 	}
 
 	onChangeDescription = (e, { value }) => this.setState({ descriptionVal: value })
@@ -63,20 +51,24 @@ class AdminCities extends Component {
 
 	onChangeNewImage = (e, { value }) => this.setState({ newImage: value })
 
-	setActive = (i, description, image) => {
+	setActive = (i, description, image, visible) => {
 		if (this.state.currentItem !== i) {
 			this.setState({
 				currentItem: i,
 				descriptionVal: description,
-				imageVal: image
+				imageVal: image,
+				visibleVal: visible
 			})
 		}
 	}
 
+	toggleVisibilty = (e, { value }) => this.setState({ visibleVal: value === "on" ? "1" : "0" })
+
 	updateSearchTerm = e => {
 		const q = e.target.value
-		this.setState({ q }, () => {
-			this.fetchLocations(q)
+		this.setState({ q }, async () => {
+			const cityOptions = await fetchLocations(q)
+			this.setState({ cityOptions })
 		})
 	}
 
@@ -89,7 +81,8 @@ class AdminCities extends Component {
 			newCityId,
 			newDescription,
 			newImage,
-			orderVal
+			orderVal,
+			visibleVal
 		} = this.state
 		const { bearer, cities, error, errorMsg, modalOpen } = this.props
 
@@ -170,7 +163,7 @@ class AdminCities extends Component {
 				{cities.count > 0 ? (
 					<Item.Group divided relaxed>
 						{cities.results.map((item, i) => {
-							const { description, image, title } = item
+							const { description, image, title, visible } = item
 							const isActive = currentItem === i
 
 							return (
@@ -188,19 +181,76 @@ class AdminCities extends Component {
 												<TextArea
 													onChange={this.onChangeDescription}
 													onClick={() =>
-														this.setActive(i, description, image)
+														this.setActive(
+															i,
+															description,
+															image,
+															visible
+														)
 													}
 													placeholder="Enter a description"
 													value={isActive ? descriptionVal : description}
 												/>
 												<Divider />
+												<Form.Field>
+													<label>
+														<b>Visible</b>
+													</label>
+												</Form.Field>
+												<Form.Field>
+													<Radio
+														checked={
+															isActive
+																? visibleVal === "1"
+																: visible === "1"
+														}
+														label="Yes"
+														name="visible"
+														onChange={this.toggleVisibilty}
+														onClick={() =>
+															this.setActive(
+																i,
+																description,
+																image,
+																visible
+															)
+														}
+														value="on"
+													/>
+												</Form.Field>
+												<Form.Field>
+													<Radio
+														checked={
+															isActive
+																? visibleVal === "0"
+																: visible === "0"
+														}
+														label="No"
+														name="visible"
+														onChange={this.toggleVisibilty}
+														onClick={() =>
+															this.setActive(
+																i,
+																description,
+																image,
+																visible
+															)
+														}
+														value="off"
+													/>
+												</Form.Field>
 												<Input
 													fluid
 													icon="image"
 													iconPosition="left"
 													onChange={this.onChangeImage}
 													onClick={() =>
-														this.setActive(i, description, image)
+														this.setActive(
+															i,
+															description,
+															image,
+															visible
+														)
 													}
 													placeholder="Image"
 													value={isActive ? imageVal : image}
@@ -217,12 +267,12 @@ class AdminCities extends Component {
 																	description: descriptionVal,
 																	id: item.id,
 																	image: imageVal,
-																	order: orderVal
+																	order: orderVal,
+																	visible: visibleVal
 																})
 															}}
 															positive
 														/>
-														<Divider />
 														{/*<Button content="Remove" fluid negative />*/}
 													</Fragment>
 												)}

@@ -7,6 +7,7 @@ class Store extends CI_Controller {
 
 		$this->base_url = $this->config->base_url();
 
+		$this->load->model('CityModel', 'city');
 		$this->load->model('StoreModel', 'store');
 
 		$this->load->helper('validation');
@@ -16,27 +17,32 @@ class Store extends CI_Controller {
 		$address = $this->input->post('address');
 		$bike_ids = $this->input->post('bike_ids');
 		$bike_names = $this->input->post('bike_names');
-		$city = $this->input->post('city');
 		$closingTime = $this->input->post('closingTime');
 		$description = $this->input->post('description');
 		$image = $this->input->post('image');
 		$lat = $this->input->post('lat');
+		$location_id = $this->input->post('location_id');
 		$lon = $this->input->post('lon');
 		$name = $this->input->post('name');
 		$openingTime = $this->input->post('openingTime');
 		$phone = $this->input->post('phone');
-		$state = $this->input->post('state');
 		$visible = (int)$this->input->post('visible');
 
 		validateEmptyField($name, 'You must provide a name');
 		validateEmptyField($description, 'You must provide a description');
 
+		$location = $this->city->get($location_id);
+		validateEmptyField($location, 'That location does not exist');
+
+		$city = $location['city'];
+		$state = $location['state'];
+
 		if (empty($lat)) {
-			$lat = '40.73590000';
+			$lat = $location['lat'];
 		}
 
 		if (empty($lon)) {
-			$lon = '-73.99110000';
+			$lon = $location['lon'];
 		}
 
 		$store_id = $this->store->create([
@@ -45,6 +51,7 @@ class Store extends CI_Controller {
 			'closing_time' => $closingTime,
 			'description' => $description,
 			'image' => $image,
+			'location_id' => $location_id,
 			'lat' => $lat,
 			'lon' => $lon,
 			'name' => $name,
@@ -54,7 +61,9 @@ class Store extends CI_Controller {
 			'visible' => $visible
 		]);
 
-		$this->store->updateInventory($store_id, explode('| ', $bike_ids));
+		if (!empty($bike_ids)) {
+			$this->store->updateInventory($store_id, explode('| ', $bike_ids));
+		}
 
 		echo json_encode([
 			'error' => false
@@ -65,28 +74,33 @@ class Store extends CI_Controller {
 		$address = $this->input->post('address');
 		$bike_ids = $this->input->post('bike_ids');
 		$bike_names = $this->input->post('bike_names');
-		$city = $this->input->post('city');
 		$closingTime = $this->input->post('closingTime');
 		$description = $this->input->post('description');
 		$id = $this->input->post('id');
 		$image = $this->input->post('image');
 		$lat = $this->input->post('lat');
+		$location_id = $this->input->post('location_id');
 		$lon = $this->input->post('lon');
 		$name = $this->input->post('name');
 		$openingTime = $this->input->post('openingTime');
 		$phone = $this->input->post('phone');
-		$state = $this->input->post('state');
 		$visible = (int)$this->input->post('visible');
 
 		validateEmptyField($name, 'You must provide a name');
 		validateEmptyField($description, 'You must provide a description');
 
+		$location = $this->city->get($location_id);
+		validateEmptyField($location, 'That location does not exist');
+
+		$city = $location['city'];
+		$state = $location['state'];
+
 		if (empty($lat)) {
-			$lat = '40.73590000';
+			$lat = $location['lat'];
 		}
 
 		if (empty($lon)) {
-			$lon = '-73.99110000';
+			$lon = $location['lon'];
 		}
 
 		$this->store->update($id, [
@@ -96,6 +110,7 @@ class Store extends CI_Controller {
 			'description' => $description,
 			'image' => $image,
 			'lat' => $lat,
+			'location_id' => $location_id,
 			'lon' => $lon,
 			'name' => $name,
 			'opening_time' => $openingTime,
@@ -104,7 +119,9 @@ class Store extends CI_Controller {
 			'visible' => $visible
 		]);
 
-		$this->store->updateInventory($id, explode('| ', $bike_ids));
+		if (!empty($bike_ids)) {
+			$this->store->updateInventory($id, explode('| ', $bike_ids));
+		}
 
 		echo json_encode([
 			'error' => false
@@ -253,11 +270,9 @@ class Store extends CI_Controller {
 
 	public function search() {
 		$cityId = $this->input->get('cityId');
-		$lat = $this->input->get('lat');
-		$lon = $this->input->get('lon');
-		$radius = $this->input->get('radius');
 		$page = $this->input->get('page');
 		$limit = $this->input->get('limit');
+		$showHidden = (int)$this->input->get('showHidden');
 		$storeId = $this->input->get('storeId');
 
 		if ($limit === null) {
@@ -265,22 +280,18 @@ class Store extends CI_Controller {
 		}
 
 		$count = $this->store->search(
-			$radius,
-			$lat,
-			$lon,
 			$cityId,
 			$storeId,
+			$showHidden,
 			true,
 			$page,
 			$limit
 		);
 
 		$results = $this->store->search(
-			$radius,
-			$lat,
-			$lon,
 			$cityId,
 			$storeId,
+			$showHidden,
 			false,
 			$page,
 			$limit

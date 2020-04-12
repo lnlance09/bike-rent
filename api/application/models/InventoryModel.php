@@ -57,6 +57,8 @@ class InventoryModel extends CI_Model {
 			$this->db->where('sb.store_id', $storeId);
 		}
 
+		$this->db->where('sb.visible', '1');
+
 		if (!$just_count) {
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
@@ -69,6 +71,12 @@ class InventoryModel extends CI_Model {
 		}
 
 		return $results;
+	}
+
+	public function updateQuantity($add, $id) {
+		$new_quantity = $add ? 'quantity+1' : 'quantity-1';
+		$sql = "UPDATE store_bikes SET quantity = ".$new_quantity." WHERE id = ?";
+		$this->db->query($sql, [$id]);
 	}
 
 	public function update($id, $data) {
