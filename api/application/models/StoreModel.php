@@ -200,7 +200,7 @@ class StoreModel extends CI_Model {
 			$this->db->join('store_bikes sb', 's.id = sb.store_id', 'left');
 			$this->db->join('bikes b', 'sb.bike_id = b.id', 'left');
 
-			if (!$show_hidden) {
+			if ($show_hidden) {
 				$this->db->where('sb.visible', '1');
 			}
 		}
