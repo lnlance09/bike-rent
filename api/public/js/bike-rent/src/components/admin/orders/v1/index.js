@@ -112,7 +112,7 @@ class AdminOrders extends Component {
 			<div className="adminOrders">
 				<Header size="huge">Orders</Header>
 
-				<Form size="big">
+				<Form>
 					<Select
 						fluid
 						onChange={this.setStore}
