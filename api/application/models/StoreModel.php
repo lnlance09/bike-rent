@@ -77,6 +77,10 @@ class StoreModel extends CI_Model {
 			$this->db->limit($limit, $start);
 		}
 
+		if ($bike_id && $store_id) {
+			$this->db->group_by('s.id');
+		}
+
 		$results = $this->db->get('store_bikes sb')->result_array();
 
 		if ($just_count) {

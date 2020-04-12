@@ -2,6 +2,7 @@ import * as constants from "../constants"
 
 const initial = () => ({
 	order: {
+		confettiVisible: false,
 		confirmationModalOpen: false,
 		error: false,
 		errorMsg: ""
@@ -17,9 +18,17 @@ const order = (state = initial(), action) => {
 				...state,
 				order: {
 					...state.order,
-					confirmationModalOpen: payload.error ? false : true,
 					error: payload.error ? true : false,
 					errorMsg: payload.error ? payload.error : ""
+				}
+			}
+
+		case constants.TOGGLE_CONFETTI:
+			return {
+				...state,
+				order: {
+					...state.order,
+					confettiVisible: !state.order.confettiVisible
 				}
 			}
 
