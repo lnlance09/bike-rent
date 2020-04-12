@@ -12,7 +12,7 @@ import {
 	getStores
 } from "redux/actions/app"
 import { logout } from "components/authentication/v1/actions"
-import { Accordion, Button, Divider, Grid, Menu, Responsive } from "semantic-ui-react"
+import { Accordion, Button, Divider, Grid, Header, Menu, Responsive } from "semantic-ui-react"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import React, { Component } from "react"
 import camelCase from "camelcase"
@@ -137,6 +137,16 @@ class Admin extends Component {
 		const AdminMenu = props => (
 			<Accordion as={Menu} className="adminMenu" fluid inverted vertical>
 				<Menu.Item>
+					<Header
+						className="adminLogoText"
+						dividing
+						inverted
+						textAlign="center"
+						size="huge"
+					>
+						Admin Panel
+						<Header.Subheader>v1.2</Header.Subheader>
+					</Header>
 					<Button
 						color="blue"
 						content=" Go to site"

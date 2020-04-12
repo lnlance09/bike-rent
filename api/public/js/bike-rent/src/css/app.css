@@ -3,6 +3,11 @@
 /*---   Neutrals  ---*/
 /*---   Misc  ---*/
 /*---   Social colors  ---*/
+@import url("https://fonts.googleapis.com/css?family=Quantico&display=swap");
+@font-face {
+  font-family: dsterm;
+  src: url("fonts/AtariBold.ttf"); }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -32,6 +37,8 @@ body {
       .adminContainer .grid .leftSide .menu {
         border-radius: 0 !important;
         height: 100%; }
+        .adminContainer .grid .leftSide .menu .adminLogoText {
+          font-family: "Quantico"; }
     .adminContainer .grid .rightSide {
       margin-left: 0 !important;
       padding-left: 0 !important; }

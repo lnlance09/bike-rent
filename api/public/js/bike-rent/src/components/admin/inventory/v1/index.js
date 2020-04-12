@@ -131,7 +131,7 @@ class AdminInventory extends Component {
 			<div className="adminOrders">
 				<Header size="huge">Inventory</Header>
 
-				<Form size="big">
+				<Form>
 					<Select
 						fluid
 						onChange={this.setStore}

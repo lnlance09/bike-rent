@@ -1,5 +1,12 @@
 @import 'colors.scss';
 
+@font-face {
+    font-family: dsterm;
+    src: url("fonts/AtariBold.ttf");
+}
+
+@import url('https://fonts.googleapis.com/css?family=Quantico&display=swap');
+
 body {
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -42,6 +49,13 @@ body {
 			.menu {
 				border-radius: 0 !important;
 				height: 100%;
+
+				.adminLogoText {
+					// color: $offWhite;
+					font-family: "Quantico";
+					// font-family: "dsterm" !important;
+					// font-size: 40px;
+				}
 			}
 		}
 
