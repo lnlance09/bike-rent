@@ -153,7 +153,7 @@
 		<link rel="canonical" href="<?php echo $canonical_url; ?>" />
 		<link rel="home" href="<?php echo $base_url; ?>" />
 
-		<link rel="stylesheet" type="text/css" href="/static/css/main.4ac893d0.chunk.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/main.ef688787.chunk.css">
 		<link rel="stylesheet" type="text/css" href="/static/css/2.ec813231.chunk.css">
 		<link rel="manifest" href="/manifest.json">
 		<link rel="shortcut icon" href="<?php echo $basic['favicon'].'?v='.time(); ?>">
@@ -173,7 +173,7 @@
 		</div>
 	</body>
 	<script src="/static/js/2.db472d7e.chunk.js"></script>
-	<script src="/static/js/main.0910eca8.chunk.js"></script>
+	<script src="/static/js/main.acc05acc.chunk.js"></script>
 	<script src="/static/js/runtime-main.eedf273f.js"></script>
 
 	<script>
