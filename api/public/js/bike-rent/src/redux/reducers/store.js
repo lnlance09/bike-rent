@@ -19,8 +19,8 @@ const store = (state = initial(), action) => {
 					error,
 					id: parseInt(payload.store.id, 10),
 					image: payload.store.image,
-					lat: parseFloat(payload.store.lat),
-					lon: parseFloat(payload.store.lon),
+					lat: payload.store.lat,
+					lon: payload.store.lon,
 					name: payload.store.name,
 					phoneNumber: payload.store.phone_number,
 					openingTime: payload.store.opening_time,
@@ -28,6 +28,12 @@ const store = (state = initial(), action) => {
 					state: payload.store.state,
 					zipCode: payload.store.zip_code
 				}
+			}
+
+		case constants.RESET_TO_DEFAULT:
+			return {
+				...state,
+				store: {}
 			}
 
 		default:

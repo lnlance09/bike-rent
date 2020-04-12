@@ -91,3 +91,9 @@ export const getStore = ({ id }) => dispatch => {
 		}
 	)
 }
+
+export const resetToDefault = () => dispatch => {
+	dispatch({
+		type: constants.RESET_TO_DEFAULT
+	})
+}

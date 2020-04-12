@@ -1,6 +1,6 @@
 import { connect, Provider } from "react-redux"
 import { addToCart } from "components/authentication/v1/actions"
-import { createReview, getStore } from "redux/actions/store"
+import { createReview, getStore, resetToDefault } from "redux/actions/store"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import { formatPlural } from "utils/textFunctions"
 import {
@@ -60,6 +60,12 @@ class Stores extends Component {
 		if (id) {
 			this.props.getStore({ id })
 		}
+	}
+
+	componentWillUnmount() {
+		this.setState({ id: null }, () => {
+			this.props.resetToDefault()
+		})
 	}
 
 	addToCart = item => {
@@ -171,7 +177,7 @@ class Stores extends Component {
 
 		const StoreMenu = props => {
 			return (
-				<Menu fluid pointing secondary size="big" stackable>
+				<Menu fluid pointing secondary size="large" stackable>
 					<Menu.Item
 						active={activeItem === "bicycles"}
 						name="bicycles"
@@ -187,9 +193,6 @@ class Stores extends Component {
 		}
 
 		const StoreMenuContent = props => {
-			if (activeItem === "accessories") {
-			}
-
 			if (activeItem === "bicycles") {
 				return (
 					<BikesList
@@ -238,10 +241,10 @@ class Stores extends Component {
 						{id && (
 							<Header.Subheader>
 								<Rating
-									defaultRating={avgRating}
 									disabled
 									icon="star"
 									maxRating={5}
+									rating={avgRating === null ? 0 : avgRating}
 								/>{" "}
 								{reviewCount} {formatPlural(reviewCount, "review")}
 							</Header.Subheader>
@@ -273,12 +276,12 @@ class Stores extends Component {
 			const RightColumn = name ? (
 				<div style={{ width: "100%" }}>
 					<MapBox
-						markerId={_store.id}
+						markerId="0"
 						markers={[
 							{
-								id: _store.id,
-								lat: _store.lat,
-								lon: _store.lon
+								id,
+								lat,
+								lon
 							}
 						]}
 						height="280px"
@@ -410,6 +413,7 @@ Stores.propTypes = {
 	addToCart: PropTypes.func,
 	createReview: PropTypes.func,
 	getStore: PropTypes.func,
+	resetToDefault: PropTypes.func,
 	settings: PropTypes.object,
 	store: PropTypes.shape({
 		address: PropTypes.string,
@@ -455,6 +459,7 @@ Stores.defaultProps = {
 	addToCart,
 	createReview,
 	getStore,
+	resetToDefault,
 	store: {
 		error: false
 	}
@@ -470,5 +475,6 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(mapStateToProps, {
 	addToCart,
 	createReview,
-	getStore
+	getStore,
+	resetToDefault
 })(Stores)

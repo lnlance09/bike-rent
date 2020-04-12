@@ -40,6 +40,7 @@ class Checkout extends Component {
 			auth,
 			bearer,
 			email: "",
+			loading: false,
 			paymentId: null,
 			showForm: true,
 			userData: userData.user
@@ -54,8 +55,10 @@ class Checkout extends Component {
 
 	toggleForm = () => this.setState({ showForm: !this.state.showForm })
 
+	toggleLoading = () => this.setState({ loading: !this.state.loading })
+
 	render() {
-		const { auth, bearer, email, paymentId, showForm, userData } = this.state
+		const { auth, bearer, email, loading, paymentId, showForm, userData } = this.state
 		const { data, order, settings } = this.props
 		const { checkoutPage } = settings
 		const { cart } = data
@@ -78,9 +81,9 @@ class Checkout extends Component {
 							Congratulations
 						</Header>
 						<Modal.Description>
-							<Header size="large">
+							<Header textAlign="center">
 								Check your email for a confirmation at{" "}
-								{auth ? userData.email : email}
+								<a href="#">{auth ? userData.email : email}</a>
 							</Header>
 						</Modal.Description>
 					</Modal.Content>
@@ -104,7 +107,7 @@ class Checkout extends Component {
 						height="300px"
 						lat={storeInfo.lat}
 						lng={storeInfo.lon}
-						markerId={`${storeInfo.id}`}
+						markerId="0"
 						markers={[
 							{
 								id: storeInfo.id,
@@ -202,13 +205,21 @@ class Checkout extends Component {
 								/>
 								<Divider />
 								<Button
-									color="blue"
-									content="Complete Purchase"
+									color={order.confettiVisible ? "green" : "blue"}
+									content={
+										order.confettiVisible
+											? "Purchase Completed!"
+											: "Complete Purchase"
+									}
 									disabled={cartEmpty}
 									fluid
+									icon={order.confettiVisible ? "checkmark" : null}
+									loading={loading}
 									onClick={() => {
+										this.toggleLoading()
 										this.props.createOrder({
 											bearer,
+											callback: this.toggleLoading,
 											cart,
 											email,
 											paymentId,
@@ -224,7 +235,7 @@ class Checkout extends Component {
 
 					{ConfirmationModal}
 
-					{order.confirmationModalOpen && (
+					{order.confettiVisible && (
 						<Confetti
 						// colors={["#B5CC18"]}
 						/>
@@ -241,6 +252,7 @@ Checkout.propTypes = {
 	createOrder: PropTypes.func,
 	editItemHour: PropTypes.func,
 	order: PropTypes.shape({
+		confettiVisible: PropTypes.bool,
 		confirmationModalOpen: PropTypes.bool,
 		error: PropTypes.bool,
 		errorMsg: PropTypes.string
@@ -254,6 +266,7 @@ Checkout.defaultProps = {
 	createOrder,
 	editItemHour,
 	order: {
+		confettiVisible: false,
 		confirmationModalOpen: false,
 		error: false,
 		errorMsg: ""
