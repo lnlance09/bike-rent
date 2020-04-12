@@ -3,7 +3,17 @@ import { addImageToLibrary, getImages, toggleAddImageModal } from "redux/actions
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import { toast } from "react-toastify"
 import { connect } from "react-redux"
-import { Button, Divider, Grid, Header, Image, List, Modal, Placeholder } from "semantic-ui-react"
+import {
+	Button,
+	Divider,
+	Form,
+	Grid,
+	Header,
+	Image,
+	Input,
+	Modal,
+	Placeholder
+} from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import ImagePic from "images/images/image-square.png"
 import ImageUpload from "components/imageUpload/v1/"
@@ -43,84 +53,72 @@ class AdminLibrary extends Component {
 			>
 				{!currentImg && <Modal.Header>Add a photo</Modal.Header>}
 
-				<Modal.Content image>
-					{!currentImg ? (
-						<ImageUpload
-							bearer={bearer}
-							callback={(bearer, file) => {
-								this.props.addImageToLibrary({
-									bearer,
-									file
-								})
-								this.toggleLoading()
-							}}
-							fluid={false}
-						/>
-					) : (
-						<Fragment>
-							<Image
-								bordered
-								onError={i => (i.target.src = ImagePic)}
-								rounded
-								size="medium"
-								src={`${baseUrl}${currentImg}`}
+				<Modal.Content>
+					<Grid>
+						{!currentImg ? (
+							<ImageUpload
+								bearer={bearer}
+								callback={(bearer, file) => {
+									this.props.addImageToLibrary({
+										bearer,
+										file
+									})
+									this.toggleLoading()
+								}}
+								fluid={false}
 							/>
-							<Modal.Description>
-								<List relaxed="very">
-									<List.Item>
-										<CopyToClipboard
-											onCopy={() => toast.success("Copied to clipboard")}
-											text={`${baseUrl}${currentImg}`}
-										>
-											<List.Icon
-												className="clipboardIcon"
-												color="blue"
-												name="clipboard"
-											/>
-										</CopyToClipboard>
-										<List.Content>
-											<List.Header>Public Url:</List.Header>
-											<List.Description>
-												<a
-													href={`${baseUrl}${currentImg}`}
-													rel="noopener noreferrer"
-													target="_blank"
-												>
-													{baseUrl}
-													{currentImg}
-												</a>
-											</List.Description>
-										</List.Content>
-									</List.Item>
-									<List.Item>
-										<CopyToClipboard
-											onCopy={() => toast.success("Copied to clipboard")}
-											text={`${s3Url}${currentImg}`}
-										>
-											<List.Icon
-												className="clipboardIcon"
-												color="blue"
-												name="clipboard"
-											/>
-										</CopyToClipboard>
-										<List.Content>
-											<List.Header>S3 Url:</List.Header>
-											<List.Description>
-												<a
-													href={`${s3Url}${currentImg}`}
-													rel="noopener noreferrer"
-													target="_blank"
-												>
-													{s3Url}
-													{currentImg}
-												</a>
-											</List.Description>
-										</List.Content>
-									</List.Item>
-								</List>
-							</Modal.Description>
-						</Fragment>
-					)}
+						) : (
+							<Fragment>
+								<Grid.Column width={6}>
+									<Image
+										bordered
+										onError={i => (i.target.src = ImagePic)}
+										rounded
+										size="medium"
+										src={`${baseUrl}${currentImg}`}
+									/>
+								</Grid.Column>
+								<Grid.Column width={10}>
+									<Form>
+										<Form.Field>
+											<label>Public URL</label>
+										</Form.Field>
+										<Form.Field>
+											<CopyToClipboard
+												onCopy={() => toast.success("Copied to clipboard")}
+												text={`${baseUrl}${currentImg}`}
+											>
+												<Input
+													className="copyToClipboard"
+													fluid
+													icon="copy"
+													value={`${baseUrl}${currentImg}`}
+												/>
+											</CopyToClipboard>
+										</Form.Field>
+
+										<Form.Field>
+											<label>S3 URL</label>
+										</Form.Field>
+
+										<Form.Field>
+											<CopyToClipboard
+												onCopy={() => toast.success("Copied to clipboard")}
+												text={`${s3Url}${currentImg}`}
+											>
+												<Input
+													className="copyToClipboard"
+													fluid
+													icon="copy"
+													value={`${s3Url}${currentImg}`}
+												/>
+											</CopyToClipboard>
+										</Form.Field>
+									</Form>
+								</Grid.Column>
+							</Fragment>
+						)}
+					</Grid>
 				</Modal.Content>
 				<Modal.Actions>
 					<Button negative onClick={() => this.props.toggleAddImageModal()}>

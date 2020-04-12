@@ -1,7 +1,28 @@
+@import '../../../../css/colors.scss';
+
 .adminLibrary {
     .grid {
         img {
             cursor: pointer !important;
+        }
+    }
+}
+
+.ui.input.copyToClipboard input {
+    cursor: pointer !important;
+
+    &:hover {
+        .copy.icon {
+            color: $blue;
+        }
+    }
+}
+
+.ui.input.copyToClipboard {
+    &:hover {
+        .copy.icon {
+            color: $green;
+            transition: 0.6s;
         }
     }
 }
