@@ -57,6 +57,10 @@ class ResultItem extends Component {
 			if (props.type === "lazyLoad" && !validDescription) {
 				return <LazyLoad />
 			}
+			let soldOut = null
+			if (props.addToCart) {
+				soldOut = props.cartData.bike.quantity === "0"
+			}
 
 			return (
 				<Item.Content>
@@ -76,12 +80,16 @@ class ResultItem extends Component {
 					{props.addToCart && (
 						<Item.Extra>
 							<Button
-								color="blue"
+								color={soldOut ? "red" : "blue"}
 								compact
-								content="Add to cart"
-								icon="add"
+								content={soldOut ? "Sold out!" : "Add to cart"}
+								disabled={soldOut}
+								icon={soldOut ? "warning" : "add"}
 								onClick={e => {
 									e.stopPropagation()
+									if (soldOut) {
+										return
+									}
 									this.props.cartFunction({ item: props.cartData })
 								}}
 							/>
@@ -119,7 +127,7 @@ class ResultItem extends Component {
 
 		const FullItem = (
 			<Item
-				className={`resultItem${redirect ? "hover" : ""}`}
+				className={`resultItem ${redirect ? "hover" : ""}`}
 				key={id}
 				onClick={this.redirectToUrl}
 			>

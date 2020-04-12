@@ -1,7 +1,7 @@
 import * as constants from "./constants"
 import request from "request"
 
-export const getStores = ({ cityId, page, q, sort, storeId }) => dispatch => {
+export const getStores = ({ cityId, page, q, showHidden, sort, storeId }) => dispatch => {
 	request.get(
 		`${window.location.origin}/api/store/search`,
 		{
@@ -10,6 +10,7 @@ export const getStores = ({ cityId, page, q, sort, storeId }) => dispatch => {
 				cityId,
 				page,
 				q,
+				showHidden,
 				sort,
 				storeId
 			}
@@ -23,7 +24,14 @@ export const getStores = ({ cityId, page, q, sort, storeId }) => dispatch => {
 	)
 }
 
-export const getStoresByBike = ({ bikeId, cityId, limit = 25, page = 0, storeId }) => dispatch => {
+export const getStoresByBike = ({
+	bikeId,
+	cityId,
+	limit = 25,
+	page = 0,
+	showHidden,
+	storeId
+}) => dispatch => {
 	request.get(
 		`${window.location.origin}/api/store/getBikes`,
 		{
@@ -33,6 +41,7 @@ export const getStoresByBike = ({ bikeId, cityId, limit = 25, page = 0, storeId 
 				cityId,
 				limit,
 				page,
+				showHidden,
 				storeId
 			}
 		},

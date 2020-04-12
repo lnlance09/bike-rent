@@ -72,6 +72,8 @@ class StoreModel extends CI_Model {
 			$this->db->where('sb.bike_id', $bike_id);
 		}
 
+		$this->db->where('sb.visible', '1');
+
 		if (!$just_count) {
 			$start = $page*$limit;
 			$this->db->limit($limit, $start);
@@ -79,6 +81,10 @@ class StoreModel extends CI_Model {
 
 		if ($bike_id && $store_id) {
 			$this->db->group_by('s.id');
+		}
+
+		if ($store_id && !$bike_id) {
+			$this->db->group_by('b.id');
 		}
 
 		$results = $this->db->get('store_bikes sb')->result_array();
@@ -173,16 +179,14 @@ class StoreModel extends CI_Model {
 	}
 
 	public function search(
-		$radius,
-		$lat,
-		$lon,
 		$cityId,
 		$storeId,
-		$just_count,
+		$show_hidden = false,
+		$just_count = false,
 		$page = 0,
 		$limit = 25
 	) {
-		$select = "s.address, s.city, s.closing_time AS closingTime, s.description, s.id, s.image, s.lat, s.lon, s.name, s.opening_time AS openingTime, s.order, s.phone_number AS phone, s.state, s.visible, s.zip_code, ";
+		$select = "s.address, s.city, s.closing_time AS closingTime, s.description, s.id, s.image, s.lat, s.lon, s.location_id, s.name, s.opening_time AS openingTime, s.order, s.phone_number AS phone, s.state, s.visible, s.zip_code, ";
 
 		$select .= "GROUP_CONCAT(DISTINCT b.id ORDER BY b.id ASC SEPARATOR '| ') bike_ids, GROUP_CONCAT(DISTINCT b.name ORDER BY b.id ASC SEPARATOR '| ') AS bike_names";
 
@@ -194,7 +198,11 @@ class StoreModel extends CI_Model {
 
 		if (!$just_count) {
 			$this->db->join('store_bikes sb', 's.id = sb.store_id', 'left');
-			$this->db->join('bikes b', 'sb.bike_id = b.id');
+			$this->db->join('bikes b', 'sb.bike_id = b.id', 'left');
+
+			if (!$show_hidden) {
+				$this->db->where('sb.visible', '1');
+			}
 		}
 
 		if (!empty($cityId)) {
@@ -203,6 +211,10 @@ class StoreModel extends CI_Model {
 
 		if (!empty($storeId)) {
 			$this->db->where('s.id', $storeId);
+		}
+
+		if (!$just_count && !$show_hidden) {
+			$this->db->where('s.visible', '1');
 		}
 
 		if (!$just_count) {
@@ -241,13 +253,23 @@ class StoreModel extends CI_Model {
 			if ($result[0]->count == 0) {
 				$this->db->insert('store_bikes', [
 					'bike_id' => $bike_id,
+					'store_id' => $id,
+				]);
+			} else {
+				$this->db->where([
+					'bike_id' => $bike_id,
 					'store_id' => $id
+				]);
+				$this->db->update('store_bikes', [
+					'visible' => 1
 				]);
 			}
 		}
 
 		$this->db->where('store_id', $id);
 		$this->db->where_not_in('bike_id', $bikes);
-		$this->db->delete('store_bikes');
+		$this->db->update('store_bikes', [
+			'visible' => 0
+		]);
 	}
 }

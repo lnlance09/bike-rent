@@ -1,5 +1,5 @@
 import "./style.css"
-import { fetchBikes } from "utils/selectOptions"
+import { fetchCities, fetchBikes } from "utils/selectOptions"
 import { addStore, editStore, toggleAddStoreModal } from "redux/actions/app"
 import { connect } from "react-redux"
 import {
@@ -13,17 +13,15 @@ import {
 	Message,
 	Modal,
 	Radio,
-	Select,
 	TextArea
 } from "semantic-ui-react"
 import React, { Component } from "react"
-import _ from "lodash"
-import faker from "faker"
 import ImagePic from "images/images/image-square.png"
 import PropTypes from "prop-types"
 
 const StoreForm = ({
 	bikeOptions,
+	cityOptions,
 	error,
 	errorMsg,
 	item,
@@ -38,29 +36,20 @@ const StoreForm = ({
 	onChangeName,
 	onChangeOpeningTime,
 	onChangePhone,
-	onChangeState,
 	toggleVisibilty
 }) => {
-	const addressDefinitions = faker.definitions.address
-	const stateOptions = _.map(addressDefinitions.state, (state, index) => ({
-		key: addressDefinitions.state_abbr[index],
-		text: state,
-		value: addressDefinitions.state_abbr[index]
-	}))
-
 	const {
 		address,
 		bike_ids,
-		city,
 		closingTime,
 		description,
 		image,
 		name,
+		location_id,
 		lon,
 		lat,
 		openingTime,
 		phone,
-		state,
 		visible
 	} = item
 
@@ -87,21 +76,17 @@ const StoreForm = ({
 				<Input fluid onChange={onChangeAddress} placeholder="Address" value={address} />
 			</Form.Field>
 
-			<Form.Group widths="equal">
-				<Form.Field>
-					<label>City</label>
-					<Input onChange={onChangeCity} placeholder="City" value={city} />
-				</Form.Field>
-				<Form.Field>
-					<label>State</label>
-					<Select
-						onChange={onChangeState}
-						options={stateOptions}
-						placeholder="State"
-						value={state}
-					/>
-				</Form.Field>
-			</Form.Group>
+			<Form.Field>
+				<label>City</label>
+				<Dropdown
+					onChange={onChangeCity}
+					options={cityOptions}
+					placeholder="City"
+					search
+					selection
+					value={location_id}
+				/>
+			</Form.Field>
 
 			<Form.Group widths="equal">
 				<Form.Field>
@@ -218,18 +203,18 @@ class AdminStores extends Component {
 			address: "",
 			bike_ids: null,
 			bike_names: null,
-			city: "",
+			cityOptions: [],
 			closingTime: "",
 			description: "",
 			id: "",
 			image: "",
+			location_id: "",
 			lat: "",
 			lon: "",
 			name: "",
 			phone: "",
 			openingTime: "",
 			order: 0,
-			state: "",
 			visible: "0"
 		}
 	}
@@ -237,6 +222,9 @@ class AdminStores extends Component {
 	async componentDidMount() {
 		const bikeOptions = await fetchBikes("")
 		this.setState({ bikeOptions })
+
+		const cityOptions = await fetchCities("")
+		this.setState({ cityOptions })
 	}
 
 	onChangeAddress = (e, { value }) => this.setState({ address: value })
@@ -246,7 +234,7 @@ class AdminStores extends Component {
 		this.setState({ bike_ids: newBikes })
 	}
 
-	onChangeCity = (e, { value }) => this.setState({ city: value })
+	onChangeCity = (e, { value }) => this.setState({ location_id: value })
 
 	onChangeClosingTime = (e, { value }) => this.setState({ closingTime: value })
 
@@ -264,24 +252,21 @@ class AdminStores extends Component {
 
 	onChangePhone = (e, { value }) => this.setState({ phone: value })
 
-	onChangeState = (e, { value }) => this.setState({ state: value })
-
 	setActive = (item, reset) => {
 		const {
 			address,
 			bike_ids,
 			bike_names,
-			city,
 			closingTime,
 			description,
 			id,
 			image,
 			name,
-			lon,
 			lat,
+			location_id,
+			lon,
 			openingTime,
 			phone,
-			state,
 			visible
 		} = item
 
@@ -289,18 +274,17 @@ class AdminStores extends Component {
 			address,
 			bike_ids,
 			bike_names,
-			city,
 			closingTime,
 			description,
 			id,
 			image,
 			isNew: false,
 			lat,
+			location_id,
 			lon,
 			name,
 			openingTime,
 			phone,
-			state,
 			visible
 		}
 
@@ -309,19 +293,18 @@ class AdminStores extends Component {
 				address: "",
 				bike_ids: null,
 				bike_names: null,
-				city: "",
 				closingTime: "",
 				description: "",
 				id: "",
 				image: "",
 				isNew: true,
+				location_id: "",
 				lat: "",
 				lon: "",
 				name: "",
 				phone: "",
 				openingTime: "",
 				order: 0,
-				state: "",
 				visible: 0
 			}
 		}
@@ -339,18 +322,18 @@ class AdminStores extends Component {
 			bikeOptions,
 			bike_ids,
 			bike_names,
-			city,
+			cityOptions,
 			closingTime,
 			description,
 			id,
 			image,
 			isNew,
+			location_id,
 			lat,
 			lon,
 			name,
 			openingTime,
 			phone,
-			state,
 			visible
 		} = this.state
 		const { bearer, error, errorMsg, modalOpen, stores } = this.props
@@ -366,22 +349,22 @@ class AdminStores extends Component {
 				<Modal.Content>
 					<StoreForm
 						bikeOptions={bikeOptions}
+						cityOptions={cityOptions}
 						error={error}
 						errorMsg={errorMsg}
 						item={{
 							address,
 							bike_ids,
 							bike_names,
-							city,
 							closingTime,
 							description,
 							image,
 							lat,
+							location_id,
 							lon,
 							name,
 							openingTime,
 							phone,
-							state,
 							visible
 						}}
 						onChangeAddress={this.onChangeAddress}
@@ -395,7 +378,6 @@ class AdminStores extends Component {
 						onChangeName={this.onChangeName}
 						onChangePhone={this.onChangePhone}
 						onChangeOpeningTime={this.onChangeOpeningTime}
-						onChangeState={this.onChangeState}
 						toggleVisibilty={this.toggleVisibilty}
 					/>
 				</Modal.Content>
@@ -412,16 +394,15 @@ class AdminStores extends Component {
 									bike_ids,
 									bike_names,
 									bearer,
-									city,
 									closingTime,
 									description,
 									image,
 									lat,
+									location_id,
 									lon,
 									name,
 									openingTime,
 									phone,
-									state,
 									visible
 								})
 							} else {
@@ -430,17 +411,16 @@ class AdminStores extends Component {
 									bearer,
 									bike_ids,
 									bike_names,
-									city,
 									closingTime,
 									description,
 									id,
 									image,
 									lat,
+									location_id,
 									lon,
 									name,
 									openingTime,
 									phone,
-									state,
 									visible
 								})
 							}

@@ -37,7 +37,7 @@ class BikeModel extends CI_Model {
 	}
 
 	public function search(
-		$visible,
+		$show_hidden,
 		$just_count,
 		$page = 0,
 		$limit = 25
@@ -49,7 +49,10 @@ class BikeModel extends CI_Model {
 		}
 
 		$this->db->select($select);
-		$this->db->where('visible', 1);
+
+		if (!$show_hidden) {
+			$this->db->where('visible', '1');
+		}
 
 		if (!$just_count) {
 			$start = $page*$limit;

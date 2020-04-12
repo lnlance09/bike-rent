@@ -29,12 +29,14 @@ class StoresList extends Component {
 				bikeId: this.props.bikeId,
 				cityId: this.props.cityId,
 				page: 0,
+				showHidden: 0,
 				storeId: this.props.storeId
 			})
 		} else {
 			this.props.getStores({
 				cityId: this.props.cityId,
 				page: 0,
+				showHidden: 0,
 				storeId: this.props.storeId
 			})
 		}

@@ -105,21 +105,21 @@ class Bike extends CI_Controller {
 	public function search() {
 		$page = $this->input->get('page');
 		$limit = $this->input->get('limit');
-		$visible = $this->input->get('visible');
+		$showHidden = (int)$this->input->get('showHidden');
 
 		if ($limit === null) {
 			$limit = 25;
 		}
 
 		$count = $this->bike->search(
-			$visible,
+			$showHidden,
 			true,
 			$page,
 			$limit
 		);
 
 		$results = $this->bike->search(
-			$visible,
+			$showHidden,
 			false,
 			$page,
 			$limit
