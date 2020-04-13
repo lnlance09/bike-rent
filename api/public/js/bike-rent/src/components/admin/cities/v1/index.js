@@ -178,20 +178,39 @@ class AdminCities extends Component {
 										<Item.Header as="h1">{title}</Item.Header>
 										<Item.Description>
 											<Form>
-												<TextArea
-													onChange={this.onChangeDescription}
-													onClick={() =>
-														this.setActive(
-															i,
-															description,
-															image,
-															visible
-														)
-													}
-													placeholder="Enter a description"
-													value={isActive ? descriptionVal : description}
-												/>
-												<Divider />
+												<Form.Field>
+													<TextArea
+														onChange={this.onChangeDescription}
+														onClick={() =>
+															this.setActive(
+																i,
+																description,
+																image,
+																visible
+															)
+														}
+														placeholder="Enter a description"
+														value={isActive ? descriptionVal : description}
+													/>
+												</Form.Field>
+												<Form.Field>
+													<Input
+														fluid
+														icon="image"
+														iconPosition="left"
+														onChange={this.onChangeImage}
+														onClick={() =>
+															this.setActive(
+																i,
+																description,
+																image,
+																visible
+															)
+														}
+														placeholder="Image"
+														value={isActive ? imageVal : image}
+													/>
+												</Form.Field>
 												<Form.Field>
 													<label>
 														<b>Visible</b>
@@ -239,22 +258,6 @@ class AdminCities extends Component {
 														value="off"
 													/>
 												</Form.Field>
-												<Input
-													fluid
-													icon="image"
-													iconPosition="left"
-													onChange={this.onChangeImage}
-													onClick={() =>
-														this.setActive(
-															i,
-															description,
-															image,
-															visible
-														)
-													}
-													placeholder="Image"
-													value={isActive ? imageVal : image}
-												/>
 												{isActive && (
 													<Fragment>
 														<Divider />
