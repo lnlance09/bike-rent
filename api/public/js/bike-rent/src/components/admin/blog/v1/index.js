@@ -17,8 +17,7 @@ import {
 	Item,
 	Label,
 	Message,
-	Modal,
-	Segment
+	Modal
 } from "semantic-ui-react"
 import React, { Component } from "react"
 import Moment from "react-moment"
@@ -111,7 +110,7 @@ class AdminBlog extends Component {
 				<Divider />
 
 				<Button
-					color="green"
+					color="blue"
 					content="Publish"
 					fluid
 					onClick={() => {
@@ -254,7 +253,7 @@ class AdminBlog extends Component {
 			<div className="adminBlog">
 				<Header size="huge">Blogs</Header>
 
-				{createNewBlog && <Segment>{AddBlogPanel}</Segment>}
+				{createNewBlog && <div>{AddBlogPanel}</div>}
 
 				{!createNewBlog && <div>{DisplayBlogPosts}</div>}
 
