@@ -15,6 +15,7 @@ import {
 	Header,
 	Input,
 	Item,
+	Label,
 	Message,
 	Modal,
 	Segment
@@ -240,6 +241,9 @@ class AdminBlog extends Component {
 								className="blogItemEntry"
 								dangerouslySetInnerHTML={{ __html: blog.entry }}
 							/>
+							<Item.Extra>
+								<Label basic color="green">{blog.city}, {blog.state}</Label>
+							</Item.Extra>
 						</Item.Content>
 					</Item>
 				))}
@@ -270,9 +274,11 @@ AdminBlog.propTypes = {
 		page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		results: PropTypes.arrayOf(
 			PropTypes.shape({
+				city: PropTypes.string,
 				date_created: PropTypes.string,
 				date_updated: PropTypes.string,
 				entry: PropTypes.string,
+				state: PropTypes.string,
 				title: PropTypes.string
 			})
 		)

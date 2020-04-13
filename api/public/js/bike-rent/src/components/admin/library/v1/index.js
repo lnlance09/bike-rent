@@ -92,7 +92,7 @@ class AdminLibrary extends Component {
 													className="copyToClipboard"
 													fluid
 													icon="copy"
-													readonly
+													readOnly
 													value={`${baseUrl}${currentImg}`}
 												/>
 											</CopyToClipboard>
@@ -111,7 +111,7 @@ class AdminLibrary extends Component {
 													className="copyToClipboard"
 													fluid
 													icon="copy"
-													readonly
+													readOnly
 													value={`${s3Url}${currentImg}`}
 												/>
 											</CopyToClipboard>
