@@ -63,6 +63,7 @@ class AdminGeneral extends Component {
 					</Form.Field>
 					<Form.Field>
 						<Input
+							className="facebookIcon"
 							icon="facebook f"
 							iconPosition="left"
 							onChange={this.onChangeFbAppId}
@@ -76,6 +77,7 @@ class AdminGeneral extends Component {
 					</Form.Field>
 					<Form.Field>
 						<Input
+							className="facebookIcon"
 							icon="facebook f"
 							iconPosition="left"
 							onChange={this.onChangeFbHandle}
@@ -89,6 +91,7 @@ class AdminGeneral extends Component {
 					</Form.Field>
 					<Form.Field>
 						<Input
+							className="twitterIcon"
 							icon="twitter"
 							iconPosition="left"
 							onChange={this.onChangeTwitterHandle}
@@ -102,6 +105,7 @@ class AdminGeneral extends Component {
 					</Form.Field>
 					<Form.Field>
 						<Input
+							className="instagramIcon"
 							icon="instagram"
 							iconPosition="left"
 							onChange={this.onChangeInstagramHandle}

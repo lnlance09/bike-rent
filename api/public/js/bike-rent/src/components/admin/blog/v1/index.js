@@ -241,7 +241,7 @@ class AdminBlog extends Component {
 								dangerouslySetInnerHTML={{ __html: blog.entry }}
 							/>
 							<Item.Extra>
-								<Label basic color="green">{blog.city}, {blog.state}</Label>
+								<Label basic color="blue">{blog.city}, {blog.state}</Label>
 							</Item.Extra>
 						</Item.Content>
 					</Item>
