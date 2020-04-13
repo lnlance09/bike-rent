@@ -34,7 +34,7 @@ class BlogModel extends CI_Model {
 		$page = 0,
 		$limit = 25
 	) {
-		$select = "city_id, date_created, date_updated, entry, id, title";
+		$select = "b.city_id, b.date_created, b.date_updated, b.entry, b.id, title, l.city, l.state";
 
 		if ($just_count) {
 			$select = 'COUNT(*) AS count';
@@ -45,6 +45,8 @@ class BlogModel extends CI_Model {
 		if (!empty($city_id)) {
 			$this->db->where('city_id', $city_id);
 		}
+
+		$this->db->join('locations l', 'b.city_id = l.id');
 
 		if (!$just_count) {
 			$start = $page*$limit;
