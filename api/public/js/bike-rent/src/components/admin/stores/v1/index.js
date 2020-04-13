@@ -465,7 +465,8 @@ class AdminStores extends Component {
 										</Item.Description>
 										<Item.Extra>
 											<Button
-												color="blue"
+												basic
+												color="green"
 												content="Edit"
 												icon="pencil"
 												onClick={() => {

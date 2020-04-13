@@ -34,7 +34,7 @@ class AdminThemes extends Component {
 								</Card.Content>
 								<Card.Content extra>
 									<Button
-										color={item.title === theme ? "red" : "green"}
+										color={item.title === theme ? "red" : "blue"}
 										fluid
 										onClick={() =>
 											this.props.setTheme({ bearer, theme: item.title })
