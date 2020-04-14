@@ -11,7 +11,7 @@ import {
 	getSitemap,
 	getStores
 } from "redux/actions/app"
-import { logout } from "components/authentication/v1/actions"
+import { logout } from "components/secondary/authentication/v1/actions"
 import { Accordion, Button, Divider, Grid, Header, Menu, Responsive } from "semantic-ui-react"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import React, { Component } from "react"

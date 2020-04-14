@@ -1,9 +1,9 @@
 import "./style.css"
-import { logout } from "components/authentication/v1/actions"
+import { logout } from "components/secondary/authentication/v1/actions"
 import { Provider, connect } from "react-redux"
 import { Container, Dropdown, Label, Menu, Segment } from "semantic-ui-react"
 import React, { Component } from "react"
-import Cart from "components/cart/v1/"
+import Cart from "components/primary/cart/v1/"
 import PropTypes from "prop-types"
 import store from "store"
 

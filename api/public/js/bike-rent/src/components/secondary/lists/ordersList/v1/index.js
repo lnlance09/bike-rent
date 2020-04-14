@@ -4,10 +4,10 @@ import { getOrders, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
 import { Button, Card, Header, Item, Modal, Segment, Visibility } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
-import LazyLoad from "components/lazyLoad/v1/"
+import LazyLoad from "components/primary/lazyLoad/v1/"
 import Moment from "react-moment"
 import PropTypes from "prop-types"
-import ResultItem from "components/item/v1/"
+import ResultItem from "components/primary/item/v1/"
 import store from "store"
 
 class OrdersList extends Component {

@@ -4,9 +4,9 @@ import { getStores, getStoresByBike, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
 import { Card, Divider, Dropdown, Header, Item, List, Segment, Visibility } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
-import LazyLoad from "components/lazyLoad/v1/"
+import LazyLoad from "components/primary/lazyLoad/v1/"
 import PropTypes from "prop-types"
-import ResultItem from "components/item/v1/"
+import ResultItem from "components/primary/item/v1/"
 import store from "store"
 
 class StoresList extends Component {

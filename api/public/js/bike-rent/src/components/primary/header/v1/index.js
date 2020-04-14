@@ -1,5 +1,5 @@
 import "./style.css"
-import { logout } from "components/authentication/v1/actions"
+import { logout } from "components/secondary/authentication/v1/actions"
 import { Provider, connect } from "react-redux"
 import {
 	Button,

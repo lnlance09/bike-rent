@@ -1,7 +1,7 @@
 import { connect, Provider } from "react-redux"
 import { DisplayMetaTags } from "utils/metaFunctions"
 import { createOrder, toggleConfirmationModal } from "redux/actions/order"
-import { editItemHour, removeFromCart } from "components/authentication/v1/actions"
+import { editItemHour, removeFromCart } from "components/secondary/authentication/v1/actions"
 import {
 	Button,
 	Container,
@@ -15,14 +15,14 @@ import {
 } from "semantic-ui-react"
 import { Link } from "react-router-dom"
 import React, { Component, Fragment } from "react"
-import Cart from "components/cart/v1/"
+import Cart from "components/primary/cart/v1/"
 import Confetti from "react-confetti"
-import MapBox from "components/mapBox/v1/"
-import PageFooter from "components/footer/v1/"
-import PageHeader from "components/header/v1/"
-import PaymentsList from "components/paymentMethod/v1/list/"
-import PaymentMethod from "components/paymentMethod/v1/"
-import StepProcess from "components/step/v1/"
+import MapBox from "components/primary/mapBox/v1/"
+import PageFooter from "components/primary/footer/v1/"
+import PageHeader from "components/primary/header/v1/"
+import PaymentsList from "components/secondary/paymentMethod/v1/list/"
+import PaymentMethod from "components/secondary/paymentMethod/v1/"
+import StepProcess from "components/primary/step/v1/"
 import PropTypes from "prop-types"
 import store from "store"
 

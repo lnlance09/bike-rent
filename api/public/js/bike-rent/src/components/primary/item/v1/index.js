@@ -3,7 +3,7 @@ import { formatNumber, formatPlural } from "utils/textFunctions"
 import { Button, Card, Image, Item, Label, List } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import ImagePic from "images/images/image-square.png"
-import LazyLoad from "components/lazyLoad/v1/"
+import LazyLoad from "components/primary/lazyLoad/v1/"
 import PropTypes from "prop-types"
 import TextTruncate from "react-text-truncate"
 

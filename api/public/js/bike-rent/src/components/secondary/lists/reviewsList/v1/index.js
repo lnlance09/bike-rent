@@ -16,7 +16,7 @@ import {
 import React, { Component } from "react"
 import CreateReview from "./createReview"
 import ImagePic from "images/avatar/small/nan.jpg"
-import LazyLoad from "components/lazyLoad/v1/"
+import LazyLoad from "components/primary/lazyLoad/v1/"
 import Moment from "react-moment"
 import PropTypes from "prop-types"
 import store from "store"

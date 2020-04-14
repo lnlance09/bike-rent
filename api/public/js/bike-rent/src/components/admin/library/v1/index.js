@@ -16,7 +16,7 @@ import {
 } from "semantic-ui-react"
 import React, { Component, Fragment } from "react"
 import ImagePic from "images/images/image-square.png"
-import ImageUpload from "components/imageUpload/v1/"
+import ImageUpload from "components/primary/imageUpload/v1/"
 import PropTypes from "prop-types"
 
 toast.configure({

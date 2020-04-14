@@ -11,8 +11,8 @@ import {
 	Segment,
 	TextArea
 } from "semantic-ui-react"
-import PageFooter from "components/footer/v1/"
-import PageHeader from "components/header/v1/"
+import PageFooter from "components/primary/footer/v1/"
+import PageHeader from "components/primary/header/v1/"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import store from "store"

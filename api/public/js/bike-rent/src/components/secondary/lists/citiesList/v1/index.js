@@ -3,9 +3,9 @@ import { getCities, toggleLoading } from "./actions"
 import { connect, Provider } from "react-redux"
 import { Card, Header, Item, Segment, Visibility } from "semantic-ui-react"
 import React, { Component } from "react"
-import LazyLoad from "components/lazyLoad/v1/"
+import LazyLoad from "components/primary/lazyLoad/v1/"
 import PropTypes from "prop-types"
-import ResultItem from "components/item/v1/"
+import ResultItem from "components/primary/item/v1/"
 import store from "store"
 
 class CitiesList extends Component {
