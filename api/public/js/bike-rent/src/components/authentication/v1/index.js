@@ -188,7 +188,7 @@ class Authentication extends Component {
 							<Fragment>
 								<Button
 									color="facebook"
-									content="Login with Facebook"
+									content={`${login ? "Sign in" : "Sign up"} with Facebook`}
 									fluid
 									icon="facebook f"
 									onClick={this.handleClick}
