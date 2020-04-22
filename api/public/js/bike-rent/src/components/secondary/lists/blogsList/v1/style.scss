@@ -1,0 +1,31 @@
+@import '../../../../../css/colors.scss';
+
+.bikesList {
+    width: 100%;
+
+    .emptyContainer {
+        text-align: center;
+    }
+
+    .cards {
+        @media only screen and (max-width: 1025px) {
+            margin-top: 10px;
+        }
+
+        .card {
+            .content {
+                word-break: break-word;
+
+                .description {
+                    max-height: 240px;
+                    overflow: hidden;
+                    white-space: pre-line;
+                }
+            }
+
+            .image {
+
+            }
+        }
+    }
+}

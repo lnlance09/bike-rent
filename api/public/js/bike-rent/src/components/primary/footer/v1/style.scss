@@ -1,0 +1,11 @@
+@import '../../../../css/colors.scss';
+
+.footerSegment {
+    padding: 5em 0em !important;
+
+    .list {
+        .item {
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,37 @@
+@import '../../../../css/colors.scss';
+
+.authComponent {
+    .signInLogo {
+        display: inline;
+        fill: $blue;
+        height: 48px;
+        width: 48px;
+    }
+
+    .authSegment {
+        .error.message {
+            margin-bottom: 14px;
+        }
+    }
+
+    .registerText {
+        background: $white;
+        border-top: solid 1px $lightGrey;
+        text-align: center;
+
+        .registerLink {
+            color: $blue;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .googleBtn {
+        font-weight: bold;
+        margin-top: 12px;
+        width: 100%;
+    }
+}

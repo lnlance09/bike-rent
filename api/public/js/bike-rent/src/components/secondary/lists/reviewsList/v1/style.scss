@@ -1,0 +1,13 @@
+@import '../../../../../css/colors.scss';
+
+.reviewsList {
+    width: 100%;
+
+    .emptyContainer {
+        text-align: center;
+    }
+
+    .comments {
+        max-width: none !important;
+    }
+}

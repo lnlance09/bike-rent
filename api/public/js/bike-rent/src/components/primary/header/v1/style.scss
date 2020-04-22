@@ -1,0 +1,157 @@
+@import '../../../../css/colors.scss';
+
+.pageHeader {
+	.languageMenu {
+		background: $offWhite !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		margin: 0 !important;
+
+		.languageContainer {
+			border-bottom: solid 1px $darkWhite;
+			padding: 10px 0;
+
+			.ui.segment.menu.transition.visible {
+				width: 340px;
+			}
+		}
+	}
+
+	.mobileSegment, .desktopSegment {
+		min-height: 700px;
+		padding: 0 !important;
+
+		.globalHeaderMenu {
+			border-radius: 0 !important;
+			height: 60px;
+			margin-bottom: 0;
+			padding: 0;
+			z-index: 1000 !important;
+
+			.headerLink {
+				font-size: 15px !important;
+				font-weight: bold !important;
+			}
+
+			.headerLogo {
+				cursor: pointer;
+				display: inline;
+				margin-right: 12px;
+				vertical-align: middle;
+				width: 50px;
+			}
+
+			.logoText {
+				font-size: 32px;
+				margin: 0 10px 0 0;
+			}
+
+			.signInLink {
+				padding-right: 0;
+			}
+		}
+	}
+}
+
+.ui.sidebarContainer {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+.mainWrapper {
+	.gridSegment {
+		padding: 4em 0;
+
+		&.noPadding {
+			padding: 0;
+
+			.grid .row .column {
+				padding-bottom: 4em;
+				padding-top: 4em;
+			}
+		}
+
+		.divider {
+			margin: 3em 0em;
+			text-transform: uppercase;
+		}
+
+		h3 {
+			font-size: 1.8em;
+		}
+
+		p {
+			font-size: 1.25em;
+		}
+	}
+
+	.ui.container.heroContainer {
+		background: rgba(255,255,255,0);
+		background-size: cover;
+		height: 600px;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		padding-top: 50px;
+		width: 100% !important;
+
+		.heroHeaderOne, .heroHeaderTwo {
+			color: $black;
+			font-size: 4em;
+			font-weight: bold;
+		}
+
+		.heroHeaderTwo {
+			font-size: 1.7em;
+			font-weight: normal;
+		}
+
+		.button {
+			margin-top: 15px;
+		}
+
+		.container {
+			padding: 0 20px;
+		}
+
+		.heroSegment {
+			margin-top: 50px !important;
+			opacity: 0.9;
+
+			.grid {
+				.column {
+					margin-bottom: 0;
+
+					.react-datepicker-wrapper {
+						width: 100% !important;
+					}
+
+					.storeDropdown, .timeDropdown {
+						font-size: 18px;
+						height: 98.5%;
+						min-height: 98.5%;
+					}
+
+					.button {
+						margin-top: 0 !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 1025px) {
+	.ui.container.heroContainer {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+
+	.ui.container.sidebarContainer {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+}
+
+.ui.vertical.ui.push.left.sidebar.menu {
+	z-index: 1001 !important;
+}
