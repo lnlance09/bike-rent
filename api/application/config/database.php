@@ -81,7 +81,7 @@ $db['default'] = [
 
 	'hostname' => 'bike-rent.cni5l9jtlymn.us-west-2.rds.amazonaws.com:3306',
 	'username' => 'admin',
-	'password' => '7,C35-K4ns9SC2e',
+	'password' => 'v1{8Ko}Ts*f0ePF',
 
 	'database' => 'bike-rent',
 	'dbdriver' => 'mysqli',
